@@ -14,12 +14,12 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 				<Route path="/profil" element={<App />} />
 				<Route path="/income" element={<App />} />
 				<Route path="/customer">
-					<Route path="/atur-customer" element={<App />} />
+					<Route path="atur-customer" element={<App />} />
 				</Route>
 				<Route path="/learning">
 					<Route path=":nama" element={<App />} />
-					<Route path="/kuis" element={<App />} />
-					<Route path="/modul" element={<App />} />
+					<Route path="kuis" element={<App />} />
+					<Route path="modul" element={<App />} />
 				</Route>
 				<Route path="/chat" element={<App />} />
 			</Routes>
