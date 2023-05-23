@@ -17,10 +17,9 @@
 	margin: 0 0.5em;
 }
 
-.primary,
-.secondary,
-.danger,
-.tagContainer {
+.buttonContainer,
+.tagContainer,
+.outlineTagContainer {
 	margin: 1em 0;
 	display: flex;
 	flex-direction: row;
@@ -28,6 +27,13 @@
 	flex-wrap: wrap;
 }
 
-.tag {
+.tag,
+.outlineTag {
 	margin-right: 1em;
+}
+
+.otherContainer {
+	position: absolute;
+	top: 2em;
+	right: 4em;
 }
