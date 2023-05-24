@@ -1,4 +1,4 @@
-import { NavBar } from "../components";
+import NavBar from "../../components/Navbar.jsx";
 import {
   Box,
   Button,
@@ -7,6 +7,7 @@ import {
   ListItem,
   Typography,
 } from "@mui/material";
+import React from "react";
 
 export default function LandingPage() {
   const ellipseImg = Array(5).fill(
