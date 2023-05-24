@@ -20,7 +20,7 @@ export default function BasicBreadcrumbs({ name, link1, link2 }) {
                     <Paper style={{ height: '75%', margin: 10, borderRadius: 8 }}>
                         <div style={{ paddingLeft: 40, color: '#212121' }}>
                             <p style={{ paddingTop: 16, fontSize: 24, fontWeight: 600, marginBottom: 12 }}>{name}</p>
-                            <Breadcrumbs aria-label="breadcrumb" onClick={handleClick} style={{ paddingBottom: 10, fontSize: 14 }}>
+                            <Breadcrumbs aria-label="breadcrumb" onClick={handleClick} style={{ paddingBottom: 20, fontSize: 14 }}>
                                 <Link underline="none" color="inherit" href="/">
                                     {link1}
                                 </Link>
