@@ -2,6 +2,7 @@ import styles from './App.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faTrash, faLink } from '@fortawesome/free-solid-svg-icons';
 import { Button, Tag, OutlineTag, Profile } from './components';
+import BasicBreadcrumbs from './components/Breadcrumbs';
 
 function App() {
 	return (
@@ -65,6 +66,7 @@ function App() {
 			<div className={styles.otherContainer}>
 				<Profile name="Jennie BP" pic="src/assets/ava.jpg" email="jennieblpk20@email.com" />
 			</div>
+			<BasicBreadcrumbs name="Modul" link1="Dashboard" link2="Pembelajaran" />
 		</div>
 	);
 }
