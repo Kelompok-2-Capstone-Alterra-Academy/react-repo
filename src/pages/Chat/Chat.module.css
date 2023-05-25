@@ -160,6 +160,7 @@
 
 .content {
 	overflow-y: auto;
+	height: 100%;
 }
 
 .content::-webkit-scrollbar {
@@ -176,7 +177,8 @@
 	background-color: #a0a0a0;
 }
 
-.list {
+.list,
+.emptyList {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
@@ -186,6 +188,18 @@
 	padding: 0.5em 1em;
 	margin-bottom: 1em;
 	transition: all 0.3s ease-in-out;
+}
+
+.emptyList {
+	justify-content: center;
+	height: 100%;
+	margin-bottom: 0;
+	background: transparent;
+}
+
+.emptyTitle {
+	font-size: 20px;
+	font-weight: 400;
 }
 
 .list:last-child {

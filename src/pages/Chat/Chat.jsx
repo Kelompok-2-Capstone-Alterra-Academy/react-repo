@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './Chat.module.css';
-import { faArrowDown, faArrowUp, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faArrowDown, faArrowUp, faSearch, faFolderOpen } from '@fortawesome/free-solid-svg-icons';
 import { useState, useEffect } from 'react';
 
 export default function Chat() {
@@ -85,7 +85,7 @@ export default function Chat() {
 	return (
 		<div className={styles.container}>
 			<div className={styles.logoContainer}>
-				<img src="public/img/StarMyDashboard.png" className={styles.logoImage} />
+				<img src="img/StarMyDashboard.png" className={styles.logoImage} />
 			</div>
 			<div className={styles.cardContainer}>
 				<div className={styles.header}>
@@ -130,15 +130,24 @@ export default function Chat() {
 					</div>
 				</div>
 				<div className={styles.content}>
-					{data.map((item) => (
-						<div className={styles.list} key={item.id}>
+					{data.length == 0 ? (
+						<div className={styles.emptyList}>
 							<div className={styles.item}>
-								<img src={item.avatar} alt={item.name} className={styles.avatar} />
-								<span className={styles.name}>{item.name}</span>
+								<FontAwesomeIcon icon={faFolderOpen} className={styles.avatar} />
+								<span className={styles.emptyTitle}>Tidak ada siswa yang ditemukan</span>
 							</div>
-							<img src={'src/assets/whatsapp.png'} className={styles.icon} />
 						</div>
-					))}
+					) : (
+						data.map((item) => (
+							<div className={styles.list} key={item.id}>
+								<div className={styles.item}>
+									<img src={item.avatar} alt={item.name} className={styles.avatar} />
+									<span className={styles.name}>{item.name}</span>
+								</div>
+								<img src={'src/assets/whatsapp.png'} className={styles.icon} />
+							</div>
+						))
+					)}
 				</div>
 			</div>
 		</div>
