@@ -3,14 +3,24 @@
 	top: 50;
 	left: 50;
 	transform: translate(-50%, -50%);
-	width: 60vw;
-	height: 60vh;
+}
+
+.logoContainer {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	margin-bottom: 1em;
+}
+
+.cardContainer {
 	background: white;
 	box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
 	border-radius: 8px;
-	padding: 3em 2em 1em 2em;
+	padding: 2em 2em 1em 2em;
 	display: flex;
 	flex-direction: column;
+	width: 60vw;
+	height: 80vh;
 }
 
 .header {
@@ -25,7 +35,51 @@
 	font-weight: 600;
 }
 
+.actionContainer {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+.searchWrapper {
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	width: fit-content;
+	padding: 0.5em 0.5em;
+	border-radius: 8px;
+	cursor: pointer;
+	width: 30%;
+	border: 2px solid #e0e0e0;
+	margin-right: 0.5em;
+}
+
+.searchIcon {
+	width: 16px;
+	height: 16px;
+	margin-right: 0.5em;
+}
+
+.searchInput {
+	font-size: 12px;
+	font-weight: 500;
+	border: none;
+	outline: none;
+	width: 100%;
+}
+
+.search::placeholder {
+	font-size: 12px;
+	font-weight: 500;
+	margin-left: 1em;
+}
+
 .selectWrapper {
+	font-size: 12px;
 	position: relative;
 	display: flex;
 	flex-direction: row;
@@ -106,6 +160,7 @@
 
 .content {
 	overflow-y: auto;
+	height: 100%;
 }
 
 .content::-webkit-scrollbar {
@@ -122,7 +177,8 @@
 	background-color: #a0a0a0;
 }
 
-.list {
+.list,
+.emptyList {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
@@ -132,6 +188,18 @@
 	padding: 0.5em 1em;
 	margin-bottom: 1em;
 	transition: all 0.3s ease-in-out;
+}
+
+.emptyList {
+	justify-content: center;
+	height: 100%;
+	margin-bottom: 0;
+	background: transparent;
+}
+
+.emptyTitle {
+	font-size: 20px;
+	font-weight: 400;
 }
 
 .list:last-child {

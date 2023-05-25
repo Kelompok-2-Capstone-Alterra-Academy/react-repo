@@ -1,12 +1,15 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './Chat.module.css';
-import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
+import { faArrowDown, faArrowUp, faSearch, faFolderOpen } from '@fortawesome/free-solid-svg-icons';
+import { useState, useEffect } from 'react';
 
 export default function Chat() {
 	const [isSelectOpen, setIsSelectOpen] = useState(false);
 	const [selectedSubject, setSelectedSubject] = useState('Matematika');
-	const data = [
+	const [searchValue, setSearchValue] = useState('');
+	const [data, setData] = useState([]);
+
+	const tempData = [
 		{
 			id: 1,
 			name: 'Jacob Jones',
@@ -72,44 +75,80 @@ export default function Chat() {
 		},
 	];
 
+	useEffect(() => {
+		const filteredData = tempData.filter((item) =>
+			item.name.toLowerCase().includes(searchValue.toLowerCase())
+		);
+		setData(filteredData);
+	}, [searchValue]);
+
 	return (
 		<div className={styles.container}>
-			<div className={styles.header}>
-				<span className={styles.title}>Chat</span>
-				<div className={styles.selectWrapper} onClick={() => setIsSelectOpen(!isSelectOpen)}>
-					<span>{selectedSubject}</span>
-					<FontAwesomeIcon icon={faArrowDown} className={styles.arrowIcon} />
-					{isSelectOpen && (
-						<div className={styles.optionContainer}>
-							<span className={styles.selectTitle}>Mata Pelajaran</span>
-							<div className={styles.option}>
-								{subject.map((item) => (
-									<div
-										key={item.id}
-										className={styles.optionItem}
-										onClick={() => {
-											setSelectedSubject(item.name);
-											setIsSelectOpen(false);
-										}}
-									>
-										{item.name}
+			<div className={styles.logoContainer}>
+				<img src="img/StarMyDashboard.png" className={styles.logoImage} />
+			</div>
+			<div className={styles.cardContainer}>
+				<div className={styles.header}>
+					<span className={styles.title}>Chat</span>
+					<div className={styles.actionContainer}>
+						<div className={styles.searchWrapper}>
+							<FontAwesomeIcon icon={faSearch} className={styles.searchIcon} />
+							<input
+								type="text"
+								className={styles.searchInput}
+								placeholder="Cari Nama Siswa"
+								value={searchValue}
+								onChange={(e) => setSearchValue(e.target.value)}
+							/>
+						</div>
+						<div className={styles.selectWrapper} onClick={() => setIsSelectOpen(!isSelectOpen)}>
+							<span>{selectedSubject}</span>
+							<FontAwesomeIcon
+								icon={isSelectOpen ? faArrowUp : faArrowDown}
+								className={styles.arrowIcon}
+							/>
+							{isSelectOpen && (
+								<div className={styles.optionContainer}>
+									<span className={styles.selectTitle}>Mata Pelajaran</span>
+									<div className={styles.option}>
+										{subject.map((item) => (
+											<div
+												key={item.id}
+												className={styles.optionItem}
+												onClick={() => {
+													setSelectedSubject(item.name);
+													setIsSelectOpen(false);
+												}}
+											>
+												{item.name}
+											</div>
+										))}
 									</div>
-								))}
+								</div>
+							)}
+						</div>
+					</div>
+				</div>
+				<div className={styles.content}>
+					{data.length == 0 ? (
+						<div className={styles.emptyList}>
+							<div className={styles.item}>
+								<FontAwesomeIcon icon={faFolderOpen} className={styles.avatar} />
+								<span className={styles.emptyTitle}>Tidak ada siswa yang ditemukan</span>
 							</div>
 						</div>
+					) : (
+						data.map((item) => (
+							<div className={styles.list} key={item.id}>
+								<div className={styles.item}>
+									<img src={item.avatar} alt={item.name} className={styles.avatar} />
+									<span className={styles.name}>{item.name}</span>
+								</div>
+								<img src={'src/assets/whatsapp.png'} className={styles.icon} />
+							</div>
+						))
 					)}
 				</div>
-			</div>
-			<div className={styles.content}>
-				{data.map((item) => (
-					<div className={styles.list} key={item.id}>
-						<div className={styles.item}>
-							<img src={item.avatar} alt={item.name} className={styles.avatar} />
-							<span className={styles.name}>{item.name}</span>
-						</div>
-						<img src={'src/assets/whatsapp.png'} className={styles.icon} />
-					</div>
-				))}
 			</div>
 		</div>
 	);
