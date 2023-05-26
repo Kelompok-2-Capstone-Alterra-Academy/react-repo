@@ -63,7 +63,11 @@ function App() {
 				</OutlineTag>
 			</div>
 			<div className={styles.otherContainer}>
-				<Profile name="Jennie BP" pic="src/assets/ava.jpg" email="jennieblpk20@email.com" />
+				<Profile
+					name="Jennie BP"
+					pic={'https://i.pravatar.cc/150?img=13'}
+					email="jennieblpk20@email.com"
+				/>
 			</div>
 		</div>
 	);
