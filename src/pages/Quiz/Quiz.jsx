@@ -4,6 +4,7 @@ import { Button, OutlineTag } from '../../components';
 import { tempData } from './constants';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import FormModal from './FormModal/FormModal';
+import DeleteModal from './DeleteModal/DeleteModal';
 import { useState } from 'react';
 import Modal from '@mui/material/Modal';
 
@@ -100,22 +101,11 @@ export default function Quiz() {
 			)}
 			{showDeleteModal && (
 				<Modal open={showDeleteModal} onClose={() => setShowDeleteModal(false)}>
-					<div className={styles.deleteModal}>
-						<div className={styles.deleteModalHeader}>
-							<span className={styles.deleteModalHeaderTitle}>Hapus Kuis</span>
-						</div>
-						<div className={styles.deleteModalContent}>
-							<span className={styles.deleteModalContentText}>
-								Apakah anda yakin ingin menghapus kuis ini?
-							</span>
-						</div>
-						<div className={styles.deleteModalFooter}>
-							<Button type="Secondary" onClick={() => setShowDeleteModal(false)}>
-								Batal
-							</Button>
-							<Button type="Primary">Hapus</Button>
-						</div>
-					</div>
+					<DeleteModal
+						closeFunction={() => {
+							setShowDeleteModal(false);
+						}}
+					/>
 				</Modal>
 			)}
 		</div>

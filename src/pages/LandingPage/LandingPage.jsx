@@ -14,7 +14,7 @@ export default function LandingPage() {
 				<Grid container spacing={2} sx={{ my: '50px' }}>
 					<Grid item xs={12} md={6} sx={{ display: { xs: '', md: 'none' } }}>
 						<div>
-							<img src="src/assets/bg-landing1.png" alt="" />
+							<img src="/images/bg-landing1.png" alt="" />
 						</div>
 					</Grid>
 					<Grid item xs={12} md={6}>
@@ -88,7 +88,7 @@ export default function LandingPage() {
 					</Grid>
 					<Grid item md={6} sx={{ display: { xs: 'none', md: 'block' } }}>
 						<Box sx={{ display: 'flex', justifyContent: 'center' }}>
-							<img src="src/assets/bg-landing1.png" alt="" />
+							<img src="/images/bg-landing1.png" alt="" />
 						</Box>
 					</Grid>
 				</Grid>
@@ -110,7 +110,7 @@ export default function LandingPage() {
 							}}
 						>
 							<Box width={'200px'}>
-								<img src="src/assets/landing-benefitSharing.png" alt="" />
+								<img src="/images/landing-benefitSharing.png" alt="" />
 							</Box>
 							<Box>
 								<Typography mb={1.5} sx={{ fontSize: '17pt', fontWeight: '600', color: '#212121' }}>
@@ -135,7 +135,7 @@ export default function LandingPage() {
 							}}
 						>
 							<Box width={'200px'}>
-								<img src="src/assets/landing-benefitFlexible.png" alt="" />
+								<img src="/images/landing-benefitFlexible.png" alt="" />
 							</Box>
 							<Box
 								sx={{
@@ -164,7 +164,7 @@ export default function LandingPage() {
 							}}
 						>
 							<Box width={'200px'}>
-								<img src="src/assets/landing-benefitIncome.png" alt="" />
+								<img src="/images/landing-benefitIncome.png" alt="" />
 							</Box>
 							<Box>
 								<Typography mb={1.5} sx={{ fontSize: '17pt', fontWeight: '600', color: '#212121' }}>
@@ -199,7 +199,7 @@ export default function LandingPage() {
 								gap: '20px',
 							}}
 						>
-							<img src="src/assets/bg-landing2.png" alt="" />
+							<img src="/images/bg-landing2.png" alt="" />
 						</Grid>
 						<Grid item xs={12} md={7} sx={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
 							<Box>
