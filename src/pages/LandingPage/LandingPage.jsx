@@ -14,10 +14,7 @@ export default function LandingPage() {
 				<Grid container spacing={2} sx={{ my: '50px' }}>
 					<Grid item xs={12} md={6} sx={{ display: { xs: '', md: 'none' } }}>
 						<div>
-							<img
-								src="/img/How_to_create_an_online_course__anatomy_of_a_great_E-Learning_class.png"
-								alt=""
-							/>
+							<img src="/images/bg-landing1.png" alt="" />
 						</div>
 					</Grid>
 					<Grid item xs={12} md={6}>
@@ -91,10 +88,7 @@ export default function LandingPage() {
 					</Grid>
 					<Grid item md={6} sx={{ display: { xs: 'none', md: 'block' } }}>
 						<Box sx={{ display: 'flex', justifyContent: 'center' }}>
-							<img
-								src="img/How_to_create_an_online_course__anatomy_of_a_great_E-Learning_class.png"
-								alt=""
-							/>
+							<img src="/images/bg-landing1.png" alt="" />
 						</Box>
 					</Grid>
 				</Grid>
@@ -116,7 +110,7 @@ export default function LandingPage() {
 							}}
 						>
 							<Box width={'200px'}>
-								<img src="/img/5Asset.png" alt="" />
+								<img src="/images/landing-benefitSharing.png" alt="" />
 							</Box>
 							<Box>
 								<Typography mb={1.5} sx={{ fontSize: '17pt', fontWeight: '600', color: '#212121' }}>
@@ -141,7 +135,7 @@ export default function LandingPage() {
 							}}
 						>
 							<Box width={'200px'}>
-								<img src="/img/Group.png" alt="" />
+								<img src="/images/landing-benefitFlexible.png" alt="" />
 							</Box>
 							<Box
 								sx={{
@@ -170,10 +164,7 @@ export default function LandingPage() {
 							}}
 						>
 							<Box width={'200px'}>
-								<img
-									src="/img/Happy_rich_banker_celebrating_income_growth_Free_Vector.png"
-									alt=""
-								/>
+								<img src="/images/landing-benefitIncome.png" alt="" />
 							</Box>
 							<Box>
 								<Typography mb={1.5} sx={{ fontSize: '17pt', fontWeight: '600', color: '#212121' }}>
@@ -208,7 +199,7 @@ export default function LandingPage() {
 								gap: '20px',
 							}}
 						>
-							<img src="/img/Free_Vector___Colleagues_working_together_on_project.png" alt="" />
+							<img src="/images/bg-landing2.png" alt="" />
 						</Grid>
 						<Grid item xs={12} md={7} sx={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
 							<Box>

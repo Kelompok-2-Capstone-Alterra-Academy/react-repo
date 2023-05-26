@@ -85,7 +85,7 @@ export default function Chat() {
 	return (
 		<div className={styles.container}>
 			<div className={styles.logoContainer}>
-				<img src="img/StarMyDashboard.png" className={styles.logoImage} />
+				<img src="/images/logo-starMyDashboard.png" className={styles.logoImage} />
 			</div>
 			<div className={styles.cardContainer}>
 				<div className={styles.header}>
@@ -144,7 +144,7 @@ export default function Chat() {
 									<img src={item.avatar} alt={item.name} className={styles.avatar} />
 									<span className={styles.name}>{item.name}</span>
 								</div>
-								<img src={'src/assets/whatsapp.png'} className={styles.icon} />
+								<img src={'/images/icon-whatsapp.png'} className={styles.icon} />
 							</div>
 						))
 					)}
