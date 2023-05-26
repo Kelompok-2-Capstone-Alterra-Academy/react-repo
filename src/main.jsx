@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material';
 import App from './App.jsx';
-import { Chat, LandingPage } from './pages';
+import { Chat, LandingPage, Quiz } from './pages';
 import './index.css';
 
 const theme = createTheme({
@@ -18,6 +18,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 			<BrowserRouter>
 				<Routes>
 					<Route path="/" element={<LandingPage />} />
+					<Route path="/dashboard" element={<App />} />
 					<Route path="/login" element={<App />} />
 					<Route path="/register" element={<App />} />
 					<Route path="/profil" element={<App />} />
@@ -27,7 +28,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 					</Route>
 					<Route path="/learning">
 						<Route path=":nama" element={<App />} />
-						<Route path="kuis" element={<App />} />
+						<Route path="kuis" element={<Quiz />} />
 						<Route path="modul" element={<App />} />
 					</Route>
 					<Route path="/chat" element={<Chat />} />
