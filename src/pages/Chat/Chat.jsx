@@ -85,7 +85,7 @@ export default function Chat() {
 	return (
 		<div className={styles.container}>
 			<div className={styles.logoContainer}>
-				<img src="img/StarMyDashboard.png" className={styles.logoImage} />
+				<img src="src/assets/logo-starMyDashboard.png" className={styles.logoImage} />
 			</div>
 			<div className={styles.cardContainer}>
 				<div className={styles.header}>
