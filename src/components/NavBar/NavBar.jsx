@@ -29,7 +29,7 @@ export default function NavBar() {
 			<Container maxWidth="xl">
 				<Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
 					<Box>
-						<img src="src/assets/logo-starMyDashboard.png" alt="" width={210} />
+						<img src="/images/logo-starMyDashboard.png" alt="" width={210} />
 					</Box>
 					<Box>
 						<Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
