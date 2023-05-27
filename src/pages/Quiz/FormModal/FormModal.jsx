@@ -54,7 +54,7 @@ export default function FormModal({ closeFunction }) {
 				<>
 					<span className={styles.createdHeaderTitle}>Kuis Baru Dibuat!</span>
 					<div className={styles.createdContent}>
-						<img src={'/images/quiz-created.png'} className={styles.createdImage} />
+						<img src={'/image/quiz-created.png'} className={styles.createdImage} />
 						<span>Kuis baru berhasil dibuat, terbitkan segera!</span>
 					</div>
 					<div className={styles.createdFooter}>
