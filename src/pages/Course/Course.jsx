@@ -12,7 +12,7 @@ import {
 	faVideo,
 } from '@fortawesome/free-solid-svg-icons';
 import { useState, useEffect } from 'react';
-import NavBar from './NavBar/Navbar';
+import NavBar from './NavBar/NavBar';
 import Header from './Header/Header';
 import Content from './Content/Content';
 import classNames from 'classnames/bind';
