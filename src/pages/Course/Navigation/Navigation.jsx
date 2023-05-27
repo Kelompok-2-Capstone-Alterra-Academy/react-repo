@@ -1,9 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import styles from './NavBar.module.css';
+import styles from './Navigation.module.css';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { Profile } from '../../../components';
 
-export default function NavBar({ onCloseSidebar }) {
+export default function Navigation({ onCloseSidebar }) {
 	return (
 		<div className={styles.container}>
 			<FontAwesomeIcon icon={faBars} className={styles.burger} onClick={onCloseSidebar} />

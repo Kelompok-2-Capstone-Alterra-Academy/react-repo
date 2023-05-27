@@ -12,7 +12,7 @@ import {
 	faVideo,
 } from '@fortawesome/free-solid-svg-icons';
 import { useState, useEffect } from 'react';
-import NavBar from './NavBar/NavBar';
+import Navigation from './Navigation/Navigation';
 import Header from './Header/Header';
 import Content from './Content/Content';
 import classNames from 'classnames/bind';
@@ -24,7 +24,7 @@ export default function Course() {
 
 	return (
 		<div className={styles.container}>
-			<NavBar onCloseSidebar={() => setShowSidebar(!showSidebar)} />
+			<Navigation onCloseSidebar={() => setShowSidebar(!showSidebar)} />
 			<div className={styles.content}>
 				<div className={classNames(styles.sidebar, showSidebar && styles.hideSidebar)}>
 					<div>
