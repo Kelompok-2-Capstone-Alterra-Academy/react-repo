@@ -6,7 +6,7 @@ export default function DeleteModal({ closeFunction }) {
 		<div className={styles.container}>
 			<span className={styles.headerTitle}>Hapus Kuis?</span>
 			<div className={styles.content}>
-				<img src={'/images/quiz-delete.png'} alt="" className={styles.image} />
+				<img src={'/image/quiz-delete.png'} alt="" className={styles.image} />
 				<span>Apakah anda yakin untuk menghapus kuis?</span>
 			</div>
 			<div className={styles.footer}>
