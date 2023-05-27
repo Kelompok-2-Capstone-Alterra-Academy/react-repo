@@ -1,13 +1,29 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './Chat.module.css';
 import { faArrowDown, faArrowUp, faSearch, faFolderOpen } from '@fortawesome/free-solid-svg-icons';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { SelectionBox } from '../../components';
 
 export default function Chat() {
 	const [isSelectOpen, setIsSelectOpen] = useState(false);
 	const [selectedSubject, setSelectedSubject] = useState('Matematika');
 	const [searchValue, setSearchValue] = useState('');
 	const [data, setData] = useState([]);
+
+	const containerRef = useRef(null);
+
+	const handleClickOutside = (event) => {
+		if (containerRef.current && !containerRef.current.contains(event.target)) {
+			setIsSelectOpen(false);
+		}
+	};
+
+	useEffect(() => {
+		document.addEventListener('mousedown', handleClickOutside);
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside);
+		};
+	}, []);
 
 	const tempData = [
 		{
@@ -85,7 +101,7 @@ export default function Chat() {
 	return (
 		<div className={styles.container}>
 			<div className={styles.logoContainer}>
-				<img src="src/assets/logo-starMyDashboard.png" className={styles.logoImage} />
+				<img src="/images/logo-starMyDashboard.png" className={styles.logoImage} />
 			</div>
 			<div className={styles.cardContainer}>
 				<div className={styles.header}>
@@ -101,31 +117,32 @@ export default function Chat() {
 								onChange={(e) => setSearchValue(e.target.value)}
 							/>
 						</div>
-						<div className={styles.selectWrapper} onClick={() => setIsSelectOpen(!isSelectOpen)}>
+						<div
+							className={styles.selectWrapper}
+							onClick={() => setIsSelectOpen(isSelectOpen ? false : true)}
+							ref={containerRef}
+						>
 							<span>{selectedSubject}</span>
 							<FontAwesomeIcon
 								icon={isSelectOpen ? faArrowUp : faArrowDown}
 								className={styles.arrowIcon}
 							/>
-							{isSelectOpen && (
-								<div className={styles.optionContainer}>
-									<span className={styles.selectTitle}>Mata Pelajaran</span>
-									<div className={styles.option}>
-										{subject.map((item) => (
-											<div
-												key={item.id}
-												className={styles.optionItem}
-												onClick={() => {
-													setSelectedSubject(item.name);
-													setIsSelectOpen(false);
-												}}
-											>
-												{item.name}
-											</div>
-										))}
-									</div>
-								</div>
-							)}
+							<SelectionBox
+								isShow={isSelectOpen}
+								options={{
+									title: 'Jenis Konten',
+									data: [
+										{ id: 1, option: 'Matematika' },
+										{ id: 2, option: 'Fisika' },
+										{ id: 3, option: 'Sejarah Indonesia' },
+										{ id: 4, option: 'Ekonomi' },
+										{ id: 5, option: 'Bahasa Inggris' },
+									],
+								}}
+								handleSelected={(id) =>
+									setSelectedSubject(subject.find((item) => item.id == id).name)
+								}
+							/>
 						</div>
 					</div>
 				</div>
@@ -144,7 +161,7 @@ export default function Chat() {
 									<img src={item.avatar} alt={item.name} className={styles.avatar} />
 									<span className={styles.name}>{item.name}</span>
 								</div>
-								<img src={'src/assets/whatsapp.png'} className={styles.icon} />
+								<img src={'/images/icon-whatsapp.png'} className={styles.icon} />
 							</div>
 						))
 					)}

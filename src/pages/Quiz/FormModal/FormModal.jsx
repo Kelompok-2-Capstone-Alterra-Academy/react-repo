@@ -1,15 +1,15 @@
 import styles from './FormModal.module.css';
-import { Button } from '../../../components';
-import { useState, useEffect } from 'react';
+import { Button, SelectionBox } from '../../../components';
+import { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
 	faArrowUp,
 	faArrowDown,
 	faCheckCircle,
 	faXmarkCircle,
+	faRotateRight,
 } from '@fortawesome/free-solid-svg-icons';
 import { tempData } from '../constants';
-// import logo from '../../../assets/quiz-created.png';
 
 export default function FormModal({ closeFunction }) {
 	const [form, setForm] = useState({
@@ -23,8 +23,33 @@ export default function FormModal({ closeFunction }) {
 	const [isSelectKelas, setIsSelectKelas] = useState(false);
 	const [isSelectMataPelajaran, setIsSelectMataPelajaran] = useState(false);
 	const [isSelectJurusan, setIsSelectJurusan] = useState(false);
+	const [isCheckingGForm, setIsCheckingGForm] = useState(false);
+	const [checkingGFormLoading, setCheckingGFormLoading] = useState(false);
 	const [isValidGForm, setIsValidGForm] = useState(false);
-	const [isSuccessCreateQuiz, setIsSuccessCreateQuiz] = useState(true);
+	const [isSuccessCreateQuiz, setIsSuccessCreateQuiz] = useState(false);
+
+	const kelasRef = useRef(null);
+	const mataPelajaranRef = useRef(null);
+	const jurusanRef = useRef(null);
+
+	const handleClickOutside = (event) => {
+		if (kelasRef.current && !kelasRef.current.contains(event.target)) {
+			setIsSelectKelas(false);
+		}
+		if (mataPelajaranRef.current && !mataPelajaranRef.current.contains(event.target)) {
+			setIsSelectMataPelajaran(false);
+		}
+		if (jurusanRef.current && !jurusanRef.current.contains(event.target)) {
+			setIsSelectJurusan(false);
+		}
+	};
+
+	useEffect(() => {
+		document.addEventListener('mousedown', handleClickOutside);
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside);
+		};
+	}, []);
 
 	useEffect(() => {
 		if (
@@ -46,6 +71,16 @@ export default function FormModal({ closeFunction }) {
 			/^https?:\/\/(docs\.google\.com\/forms\/[a-zA-Z0-9_-]+|forms\.gle\/[a-zA-Z0-9_-]+)/;
 		const isValidURL = regex.test(url);
 		return isValidURL;
+	};
+
+	const handleClickCheckingGForm = () => {
+		setCheckingGFormLoading(true);
+
+		setTimeout(() => {
+			setCheckingGFormLoading(false);
+			setIsCheckingGForm(true);
+			setIsValidGForm(checkGFormExistence(form.linkGForm));
+		}, 1000);
 	};
 
 	return (
@@ -85,9 +120,8 @@ export default function FormModal({ closeFunction }) {
 								className={styles.formSelect}
 								onClick={() => {
 									setIsSelectKelas(!isSelectKelas);
-									setIsSelectMataPelajaran(false);
-									setIsSelectJurusan(false);
 								}}
+								ref={kelasRef}
 							>
 								<span className={form.kelas === '' ? styles.placeholder : styles.selected}>
 									{form.kelas === '' ? 'Kelas' : form.kelas}
@@ -96,33 +130,30 @@ export default function FormModal({ closeFunction }) {
 									icon={isSelectKelas ? faArrowUp : faArrowDown}
 									className={styles.arrowIcon}
 								/>
-								{isSelectKelas && (
-									<div className={styles.optionContainer}>
-										<span className={styles.selectTitle}>Kelas</span>
-										<div className={styles.option}>
-											{tempData.kelas.map((item) => (
-												<div
-													key={item.id}
-													className={styles.optionItem}
-													onClick={() => {
-														setForm({ ...form, kelas: item.nama });
-														setIsSelectKelas(false);
-													}}
-												>
-													{item.nama}
-												</div>
-											))}
-										</div>
-									</div>
-								)}
+								<SelectionBox
+									isShow={isSelectKelas}
+									className={styles.kelasSelection}
+									handleClose={() => setIsSelectKelas(false)}
+									options={{
+										title: 'Kelas',
+										data: tempData.kelas.map((item) => {
+											return {
+												id: item.id,
+												option: item.nama,
+											};
+										}),
+									}}
+									handleSelected={(id) =>
+										setForm({ ...form, kelas: tempData.kelas.find((item) => item.id === id).nama })
+									}
+								/>
 							</div>
 							<div
 								className={styles.formSelect}
 								onClick={() => {
 									setIsSelectMataPelajaran(!isSelectMataPelajaran);
-									setIsSelectKelas(false);
-									setIsSelectJurusan(false);
 								}}
+								ref={mataPelajaranRef}
 							>
 								<span className={form.mataPelajaran === '' ? styles.placeholder : styles.selected}>
 									{form.mataPelajaran === '' ? 'Mata Pelajaran' : form.mataPelajaran}
@@ -131,33 +162,33 @@ export default function FormModal({ closeFunction }) {
 									icon={isSelectMataPelajaran ? faArrowUp : faArrowDown}
 									className={styles.arrowIcon}
 								/>
-								{isSelectMataPelajaran && (
-									<div className={styles.optionContainer}>
-										<span className={styles.selectTitle}>Mata Pelajaran</span>
-										<div className={styles.option}>
-											{tempData.mataPelajaran.map((item) => (
-												<div
-													key={item.id}
-													className={styles.optionItem}
-													onClick={() => {
-														setForm({ ...form, mataPelajaran: item.nama });
-														setIsSelectMataPelajaran(false);
-													}}
-												>
-													{item.nama}
-												</div>
-											))}
-										</div>
-									</div>
-								)}
+								<SelectionBox
+									isShow={isSelectMataPelajaran}
+									className={styles.mataPelajaranSelection}
+									handleClose={() => setIsSelectMataPelajaran(false)}
+									options={{
+										title: 'Mata Pelajaran',
+										data: tempData.mataPelajaran.map((item) => {
+											return {
+												id: item.id,
+												option: item.nama,
+											};
+										}),
+									}}
+									handleSelected={(id) =>
+										setForm({
+											...form,
+											mataPelajaran: tempData.mataPelajaran.find((item) => item.id === id).nama,
+										})
+									}
+								/>
 							</div>
 							<div
 								className={styles.formSelect}
 								onClick={() => {
 									setIsSelectJurusan(!isSelectJurusan);
-									setIsSelectKelas(false);
-									setIsSelectMataPelajaran(false);
 								}}
+								ref={jurusanRef}
 							>
 								<span className={form.jurusan === '' ? styles.placeholder : styles.selected}>
 									{form.jurusan === '' ? 'Jurusan' : form.jurusan}
@@ -166,25 +197,26 @@ export default function FormModal({ closeFunction }) {
 									icon={isSelectJurusan ? faArrowUp : faArrowDown}
 									className={styles.arrowIcon}
 								/>
-								{isSelectJurusan && (
-									<div className={styles.optionContainer}>
-										<span className={styles.selectTitle}>Jurusan</span>
-										<div className={styles.option}>
-											{tempData.jurusan.map((item) => (
-												<div
-													key={item.id}
-													className={styles.optionItem}
-													onClick={() => {
-														setForm({ ...form, jurusan: item.nama });
-														setIsSelectJurusan(false);
-													}}
-												>
-													{item.nama}
-												</div>
-											))}
-										</div>
-									</div>
-								)}
+								<SelectionBox
+									isShow={isSelectJurusan}
+									className={styles.jurusanSelection}
+									handleClose={() => setIsSelectJurusan(false)}
+									options={{
+										title: 'Jurusan',
+										data: tempData.jurusan.map((item) => {
+											return {
+												id: item.id,
+												option: item.nama,
+											};
+										}),
+									}}
+									handleSelected={(id) =>
+										setForm({
+											...form,
+											jurusan: tempData.jurusan.find((item) => item.id === id).nama,
+										})
+									}
+								/>
 							</div>
 							<div className={styles.gFormInput}>
 								<input
@@ -194,14 +226,26 @@ export default function FormModal({ closeFunction }) {
 									value={form.linkGForm}
 									onChange={(e) => {
 										setForm({ ...form, linkGForm: e.target.value });
-										setIsValidGForm(checkGFormExistence(e.target.value));
+										setIsValidGForm(false);
+										setIsCheckingGForm(false);
 									}}
 								/>
 								<div className={styles.checkingIconContainer}>
-									{!isValidGForm && (
+									{!isCheckingGForm && !checkingGFormLoading && (
+										<FontAwesomeIcon
+											icon={faRotateRight}
+											className={styles.checkingIcon}
+											onClick={handleClickCheckingGForm}
+										/>
+									)}
+									{!isCheckingGForm && checkingGFormLoading && (
+										<FontAwesomeIcon icon={faRotateRight} className={styles.checkingIcon} spin />
+									)}
+
+									{!isValidGForm && isCheckingGForm && (
 										<FontAwesomeIcon icon={faXmarkCircle} className={styles.checkingErrorIcon} />
 									)}
-									{isValidGForm && (
+									{isValidGForm && isCheckingGForm && (
 										<FontAwesomeIcon icon={faCheckCircle} className={styles.checkingSuccessIcon} />
 									)}
 								</div>
