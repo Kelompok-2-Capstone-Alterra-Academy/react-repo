@@ -7,26 +7,26 @@
 }
 
 .green {
-	border: 2px solid #4caf50;
+	border: 1px solid #4caf50;
 	color: #4caf50;
 }
 
 .blue {
-	border: 2px solid #1976d2;
+	border: 1px solid #1976d2;
 	color: #1976d2;
 }
 
 .yellow {
-	border: 2px solid #ff9800;
+	border: 1px solid #ff9800;
 	color: #ff9800;
 }
 
 .red {
-	border: 2px solid #f44336;
+	border: 1px solid #f44336;
 	color: #f44336;
 }
 
 .grey {
-	border: 2px solid #9e9e9e;
+	border: 1px solid #9e9e9e;
 	color: #9e9e9e;
 }

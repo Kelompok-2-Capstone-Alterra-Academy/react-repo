@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './Quiz.module.css';
 import { Button, OutlineTag } from '../../components';
 import { tempData } from './constants';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
 import FormModal from './FormModal/FormModal';
 import DeleteModal from './DeleteModal/DeleteModal';
 import { useState } from 'react';
@@ -28,31 +28,31 @@ export default function Quiz() {
 				</Button>
 			</div>
 			<div className={styles.content}>
-				{tempData.data.length != 0 && (
-					<table className={styles.table}>
-						<thead className={styles.tableHeader}>
-							<tr>
-								<th>
-									<span>Nama Kuis</span>
-								</th>
-								<th>
-									<span>Kelas</span>
-								</th>
-								<th>
-									<span>Mata Pelajaran</span>
-								</th>
-								<th>
-									<span>Jurusan</span>
-								</th>
-								<th>
-									<span>Status</span>
-								</th>
-								<th>
-									<span>Tindakan</span>
-								</th>
-							</tr>
-							<div className={styles.splitter}></div>
-						</thead>
+				<table className={styles.table}>
+					<thead className={styles.tableHeader}>
+						<tr>
+							<th>
+								<span>Nama Kuis</span>
+							</th>
+							<th>
+								<span>Kelas</span>
+							</th>
+							<th>
+								<span>Mata Pelajaran</span>
+							</th>
+							<th>
+								<span>Jurusan</span>
+							</th>
+							<th>
+								<span>Status</span>
+							</th>
+							<th>
+								<span>Tindakan</span>
+							</th>
+						</tr>
+						<div className={styles.splitter}></div>
+					</thead>
+					{tempData.data.length != 0 && (
 						<tbody className={styles.tableBody}>
 							{tempData.data.map((item) => (
 								<tr key={item.id}>
@@ -87,7 +87,16 @@ export default function Quiz() {
 								</tr>
 							))}
 						</tbody>
-					</table>
+					)}
+				</table>
+				{tempData.data.length == 0 && (
+					<div className={styles.empty}>
+						<FontAwesomeIcon icon={faXmarkCircle} className={styles.emptyIcon} />
+						<span className={styles.emptyText}>Belum ada kuis yang dibuat</span>
+						<span className={styles.emptyDesc}>
+							Klik tombol <b>Kuis Baru</b> untuk membuat kuis baru
+						</span>
+					</div>
 				)}
 			</div>
 			{showFormModal && (

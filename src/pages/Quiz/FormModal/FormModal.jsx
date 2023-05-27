@@ -7,6 +7,7 @@ import {
 	faArrowDown,
 	faCheckCircle,
 	faXmarkCircle,
+	faRotateRight,
 } from '@fortawesome/free-solid-svg-icons';
 import { tempData } from '../constants';
 // import logo from '../../../assets/quiz-created.png';
@@ -23,8 +24,10 @@ export default function FormModal({ closeFunction }) {
 	const [isSelectKelas, setIsSelectKelas] = useState(false);
 	const [isSelectMataPelajaran, setIsSelectMataPelajaran] = useState(false);
 	const [isSelectJurusan, setIsSelectJurusan] = useState(false);
+	const [isCheckingGForm, setIsCheckingGForm] = useState(false);
+	const [checkingGFormLoading, setCheckingGFormLoading] = useState(false);
 	const [isValidGForm, setIsValidGForm] = useState(false);
-	const [isSuccessCreateQuiz, setIsSuccessCreateQuiz] = useState(true);
+	const [isSuccessCreateQuiz, setIsSuccessCreateQuiz] = useState(false);
 
 	useEffect(() => {
 		if (
@@ -46,6 +49,16 @@ export default function FormModal({ closeFunction }) {
 			/^https?:\/\/(docs\.google\.com\/forms\/[a-zA-Z0-9_-]+|forms\.gle\/[a-zA-Z0-9_-]+)/;
 		const isValidURL = regex.test(url);
 		return isValidURL;
+	};
+
+	const handleClickCheckingGForm = () => {
+		setCheckingGFormLoading(true);
+
+		setTimeout(() => {
+			setCheckingGFormLoading(false);
+			setIsCheckingGForm(true);
+			setIsValidGForm(checkGFormExistence(form.linkGForm));
+		}, 1000);
 	};
 
 	return (
@@ -194,14 +207,26 @@ export default function FormModal({ closeFunction }) {
 									value={form.linkGForm}
 									onChange={(e) => {
 										setForm({ ...form, linkGForm: e.target.value });
-										setIsValidGForm(checkGFormExistence(e.target.value));
+										setIsValidGForm(false);
+										setIsCheckingGForm(false);
 									}}
 								/>
 								<div className={styles.checkingIconContainer}>
-									{!isValidGForm && (
+									{!isCheckingGForm && !checkingGFormLoading && (
+										<FontAwesomeIcon
+											icon={faRotateRight}
+											className={styles.checkingIcon}
+											onClick={handleClickCheckingGForm}
+										/>
+									)}
+									{!isCheckingGForm && checkingGFormLoading && (
+										<FontAwesomeIcon icon={faRotateRight} className={styles.checkingIcon} spin />
+									)}
+
+									{!isValidGForm && isCheckingGForm && (
 										<FontAwesomeIcon icon={faXmarkCircle} className={styles.checkingErrorIcon} />
 									)}
-									{isValidGForm && (
+									{isValidGForm && isCheckingGForm && (
 										<FontAwesomeIcon icon={faCheckCircle} className={styles.checkingSuccessIcon} />
 									)}
 								</div>

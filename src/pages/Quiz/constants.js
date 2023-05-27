@@ -168,4 +168,5 @@ export const tempData = {
 			nama: 'Pendidikan Agama Kristen',
 		},
 	],
+	emptyData: [],
 };

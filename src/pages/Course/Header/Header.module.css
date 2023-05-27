@@ -1,0 +1,163 @@
+.container {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	border: 1px solid #e0e0e0;
+	padding: 1em;
+	border-radius: 8px;
+}
+
+.headerTitle {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.headerTitleCourse,
+.headerTitleCoursePlaceholder,
+.headerTitleInput {
+	font-size: 24px;
+	font-weight: 600;
+}
+
+.headerTitleCourse {
+	color: #212121;
+}
+
+.headerTitleCoursePlaceholder,
+.headerTitleSectionPlaceholder {
+	color: #bdbdbd;
+}
+
+.headerTitleEditIcon,
+.headerTitleSectionEditIcon {
+	width: 20px;
+	height: 20px;
+	margin-left: 1em;
+	cursor: pointer;
+	transition: all 0.2s ease-in-out;
+}
+
+.headerTitleSectionEditIcon {
+	width: 16px;
+	height: 16px;
+}
+
+.headerTitleEditIcon:hover,
+.headerTitleSectionEditIcon:hover {
+	transform: scale(1.1);
+}
+
+.headerTitleInput,
+.headerTitleSectionInput {
+	border: none;
+	outline: none;
+	color: #212121;
+	width: 100%;
+}
+
+.headerTitleSection {
+	font-size: 16px;
+	font-weight: 400;
+	color: #212121;
+}
+
+.headerButton {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.headerButton svg {
+	width: 20px;
+	height: 20px;
+}
+
+.headerButton span {
+	font-size: 14px;
+	font-weight: 500;
+}
+
+.button {
+	height: 100%;
+	padding: 0.5em 1em;
+	margin-left: 1em;
+}
+
+.selectWrapper {
+	position: relative;
+}
+
+.optionContainer {
+	position: absolute;
+	top: 100%;
+	right: 0;
+	width: 300%;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	padding: 1em;
+	background: #ffffff;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.35);
+	border-radius: 8px;
+	margin-top: 2em;
+	color: black;
+	opacity: 0;
+	visibility: hidden;
+	animation: slideDown 0.3s ease-in-out forwards;
+}
+
+@keyframes slideDown {
+	0% {
+		opacity: 0;
+		transform: translateY(-10px);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+		visibility: visible;
+	}
+}
+
+.selectTitle {
+	font-weight: 400;
+	font-size: 14px;
+}
+
+.option {
+	margin-top: 0.5em;
+	display: flex;
+	flex-direction: column;
+	font-weight: 600;
+	font-size: 14px;
+	width: 100%;
+}
+
+.optionItem {
+	padding: 0.5em 0;
+	cursor: pointer;
+	transition: all 0.3s ease-in-out;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.optionItem:hover {
+	color: white !important;
+	background: #1976d2;
+	border-radius: 8px;
+	padding: 1em;
+	& {
+		.optionItemIcon {
+			color: white;
+		}
+	}
+}
+
+.optionItemIcon {
+	width: 20px;
+	height: 20px;
+	margin-right: 1em;
+	color: #1976d2;
+}
