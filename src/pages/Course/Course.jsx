@@ -14,17 +14,19 @@ import {
 import { useState, useEffect } from 'react';
 import NavBar from './NavBar/Navbar';
 import Header from './Header/Header';
+import Content from './Content/Content';
 import classNames from 'classnames/bind';
 import { tempData } from './constans';
 
 export default function Course() {
 	const [showModulChild, setShowModulChild] = useState(false);
+	const [showSidebar, setShowSidebar] = useState(false);
 
 	return (
 		<div className={styles.container}>
-			<NavBar />
+			<NavBar onCloseSidebar={() => setShowSidebar(!showSidebar)} />
 			<div className={styles.content}>
-				<div className={styles.sidebar}>
+				<div className={classNames(styles.sidebar, showSidebar && styles.hideSidebar)}>
 					<div>
 						<span className={styles.menuTitle}>Kursus Saya</span>
 						<div className={styles.menuBoxContainer}>
@@ -96,6 +98,10 @@ export default function Course() {
 				</div>
 				<div className={styles.main}>
 					<Header />
+					<Content type={'video'} />
+					<Content type={'materi'} />
+					<Content type={'tugas'} />
+					<Content type={'quiz'} />
 				</div>
 			</div>
 		</div>

@@ -1,5 +1,5 @@
 import styles from './Header.module.css';
-import { Button } from '../../../components';
+import { Button, SelectionBox } from '../../../components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
 	faEdit,
@@ -10,8 +10,7 @@ import {
 	faVideo,
 	faTasks,
 } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
-import { tempData } from '../constans';
+import { useState, useEffect, useRef } from 'react';
 
 export default function Header() {
 	const [isEditingCourseName, setIsEditingCourseName] = useState(false);
@@ -19,6 +18,37 @@ export default function Header() {
 	const [isEditingCourseSection, setIsEditingCourseSection] = useState(false);
 	const [courseSection, setCourseSection] = useState('Section 1');
 	const [isSelectContent, setIsSelectContent] = useState(false);
+
+	const containerRef = useRef(null);
+
+	const handleClickOutside = (event) => {
+		if (containerRef.current && !containerRef.current.contains(event.target)) {
+			setIsSelectContent(false);
+		}
+	};
+
+	useEffect(() => {
+		document.addEventListener('mousedown', handleClickOutside);
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside);
+		};
+	}, []);
+
+	const renderOption = (option) => {
+		const icon = {
+			Materi: faFileAlt,
+			Quiz: faQuestionCircle,
+			Video: faVideo,
+			Tugas: faTasks,
+		};
+
+		return (
+			<>
+				<FontAwesomeIcon icon={icon[option]} className={styles.optionItemIcon} />
+				<span>{option}</span>
+			</>
+		);
+	};
 
 	return (
 		<div className={styles.container}>
@@ -94,42 +124,28 @@ export default function Header() {
 				<Button type="Danger" className={styles.button}>
 					<FontAwesomeIcon icon={faTrash} />
 				</Button>
-				<div className={styles.selectWrapper} onClick={() => setIsSelectContent(!isSelectContent)}>
+				<div
+					className={styles.selectWrapper}
+					onClick={() => setIsSelectContent(!isSelectContent)}
+					ref={containerRef}
+				>
 					<Button type="Secondary" className={styles.button}>
 						<FontAwesomeIcon icon={faPlus} />
 					</Button>
-					{isSelectContent && (
-						<div className={styles.optionContainer}>
-							<span className={styles.selectTitle}>Jenis Konten</span>
-							<div className={styles.option}>
-								{tempData.contentType.map((item) => (
-									<div
-										key={item.id}
-										className={styles.optionItem}
-										onClick={() => {
-											setIsSelectContent(false);
-										}}
-									>
-										<FontAwesomeIcon
-											icon={
-												item.name == 'Video'
-													? faVideo
-													: item.name == 'Materi'
-													? faFileAlt
-													: item.name == 'Tugas'
-													? faTasks
-													: item.name == 'Quiz'
-													? faQuestionCircle
-													: faVideo
-											}
-											className={styles.optionItemIcon}
-										/>
-										{item.name}
-									</div>
-								))}
-							</div>
-						</div>
-					)}
+					<SelectionBox
+						isShow={isSelectContent}
+						className={styles.contentSelection}
+						options={{
+							title: 'Jenis Konten',
+							data: [
+								{ id: 1, option: renderOption('Video') },
+								{ id: 2, option: renderOption('Materi') },
+								{ id: 3, option: renderOption('Tugas') },
+								{ id: 4, option: renderOption('Quiz') },
+							],
+						}}
+						handleSelected={(id) => console.log(id)}
+					/>
 				</div>
 				<Button type="Primary" className={styles.button}>
 					<span>Simpan</span>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
 	faGear,
@@ -6,6 +6,7 @@ import {
 	faFolder,
 	faMoneyBill,
 	faPhone,
+	faArrowUp,
 } from '@fortawesome/free-solid-svg-icons';
 import styles from './Profile.module.css';
 
@@ -17,10 +18,25 @@ export default function ProfilePage({ name, pic, email }) {
 		{ icon: faMoneyBill, title: 'Income' },
 		{ icon: faPhone, title: 'Kontak CS' },
 	]);
+	const containerRef = useRef(null);
+
+	const handleClickOutside = (event) => {
+		if (containerRef.current && !containerRef.current.contains(event.target)) {
+			setMenuOpen(false);
+		}
+	};
+
+	useEffect(() => {
+		document.addEventListener('mousedown', handleClickOutside);
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside);
+		};
+	}, []);
 
 	return (
 		<div
 			className={styles.container}
+			ref={containerRef}
 			onClick={() => {
 				setMenuOpen(!isMenuOpen);
 			}}
@@ -33,34 +49,32 @@ export default function ProfilePage({ name, pic, email }) {
 					<span className={styles.role}>Instructors</span>
 				</div>
 			</div>
-			<FontAwesomeIcon icon={faArrowDown} className={styles.arrowIcon} />
+			<FontAwesomeIcon icon={isMenuOpen ? faArrowUp : faArrowDown} className={styles.arrowIcon} />
 
-			{isMenuOpen && (
-				<div className={isMenuOpen ? styles.menuContainer : styles.closedMenuContainer}>
-					<div className={styles.profileContainer}>
-						<img src={pic} alt="Avatar" className={styles.avatar} />
-						<div className={styles.nameContainer}>
-							<span className={styles.name}>{name}</span>
-							<span className={styles.email}>{email}</span>
-						</div>
-					</div>
-					<div className={styles.menuItemContainer}>
-						{menuItems.map((item, index) => (
-							<div key={index} className={styles.menuItem}>
-								<div>
-									<FontAwesomeIcon icon={item.icon} className={styles.menuIcon} />
-									<span className={styles.menuTitle}>{item.title}</span>
-								</div>
-							</div>
-						))}
-					</div>
-					<div className={styles.logoutContainer}>
-						<div>
-							<span className={styles.logoutTitle}>Logout</span>
-						</div>
+			<div className={isMenuOpen ? styles.menuContainer : styles.closedMenuContainer}>
+				<div className={styles.profileContainer}>
+					<img src={pic} alt="Avatar" className={styles.avatar} />
+					<div className={styles.nameContainer}>
+						<span className={styles.name}>{name}</span>
+						<span className={styles.email}>{email}</span>
 					</div>
 				</div>
-			)}
+				<div className={styles.menuItemContainer}>
+					{menuItems.map((item, index) => (
+						<div key={index} className={styles.menuItem}>
+							<div>
+								<FontAwesomeIcon icon={item.icon} className={styles.menuIcon} />
+								<span className={styles.menuTitle}>{item.title}</span>
+							</div>
+						</div>
+					))}
+				</div>
+				<div className={styles.logoutContainer}>
+					<div>
+						<span className={styles.logoutTitle}>Logout</span>
+					</div>
+				</div>
+			</div>
 		</div>
 	);
 }

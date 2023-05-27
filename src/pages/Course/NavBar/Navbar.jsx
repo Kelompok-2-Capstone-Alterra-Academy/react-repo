@@ -3,10 +3,10 @@ import styles from './Navbar.module.css';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { Profile } from '../../../components';
 
-export default function NavBar() {
+export default function NavBar({ onCloseSidebar }) {
 	return (
 		<div className={styles.container}>
-			<FontAwesomeIcon icon={faBars} className={styles.burger} />
+			<FontAwesomeIcon icon={faBars} className={styles.burger} onClick={onCloseSidebar} />
 			<div className={styles.logoImage}>
 				<img src="/images/logo-starMyDashboard.png" />
 			</div>

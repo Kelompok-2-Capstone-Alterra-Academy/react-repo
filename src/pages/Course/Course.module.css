@@ -8,6 +8,7 @@
 	display: flex;
 	flex: 1;
 	overflow-y: hidden;
+	transition: margin-left 0.3s ease;
 }
 
 .sidebar {
@@ -16,6 +17,12 @@
 	background: #f0faff;
 	padding: 1em 1.5em;
 	overflow-y: auto;
+	transition: width 0.3s ease, padding 0.3s ease;
+}
+
+.hideSidebar {
+	padding: 1em 0;
+	width: 0;
 }
 
 .sidebar::-webkit-scrollbar {
@@ -35,6 +42,7 @@
 .main {
 	flex: 1;
 	padding: 1em;
+	transition: margin-left 0.3s ease;
 }
 
 .menuTitleContainer {

@@ -70,81 +70,14 @@
 	width: 48%;
 }
 
-.optionContainer {
-	position: absolute;
+.kelasSelection,
+.mataPelajaranSelection,
+.jurusanSelection {
 	top: 0;
 	left: 100%;
 	width: 50%;
 	max-height: 500%;
 	margin-left: 0.75em;
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	padding: 1em;
-	background: #ffffff;
-	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-	border-radius: 8px;
-	color: black;
-	opacity: 0;
-	visibility: hidden;
-	animation: slideDown 0.3s ease-in-out forwards;
-}
-
-@keyframes slideDown {
-	0% {
-		opacity: 0;
-		transform: translateY(-10px);
-	}
-	100% {
-		opacity: 1;
-		transform: translateY(0);
-		visibility: visible;
-	}
-}
-
-.selectTitle {
-	font-weight: 600;
-	font-size: 14px;
-	color: black;
-	margin-bottom: 0.5em;
-}
-
-.option {
-	margin-top: 0.5em;
-	display: flex;
-	flex-direction: column;
-	font-weight: 500;
-	font-size: 14px;
-	width: 100%;
-	overflow: auto;
-	max-height: 90%;
-}
-
-.option::-webkit-scrollbar {
-	width: 6px;
-	background-color: transparent;
-}
-
-.option::-webkit-scrollbar-thumb {
-	background-color: #c0c0c0;
-	border-radius: 3px;
-}
-
-.option::-webkit-scrollbar-thumb:hover {
-	background-color: #a0a0a0;
-}
-
-.optionItem {
-	padding: 0.5em 0;
-	cursor: pointer;
-	transition: all 0.3s ease-in-out;
-}
-
-.optionItem:hover {
-	color: white;
-	background: #1976d2;
-	border-radius: 8px;
-	padding: 1em;
 }
 
 .gFormInput {
