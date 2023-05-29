@@ -22,7 +22,7 @@ const HeaderDropdown = () => {
                             variant="contained" {...bindTrigger(popupState)}
                         >
                             <FontAwesomeIcon icon={faPlus} className={styles.headerButtonIcon} />
-                            Kuis Baru
+                            Tambah Modul
                         </Button>
                     </div>
                     <Menu style={{ width: 200, color: 'blue' }} {...bindMenu(popupState)}>
