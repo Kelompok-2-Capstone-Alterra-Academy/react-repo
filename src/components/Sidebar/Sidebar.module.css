@@ -1,0 +1,117 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+.container{
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar{
+    background-color: #4161FF;
+    width: 280px;
+    /* height: 1080px; */
+    padding: 24px;
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: column;
+}
+
+.mainContent{
+    background-color: #FFFFFF;
+    flex-grow: 1;
+}
+
+.sidebar .descriptionHeader{
+    font-style: italic;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 16px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+Link{
+    text-decoration: none;
+
+}
+
+.sidebar .header .listItem{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 67px 10px;
+    border-radius: 8px;
+    height: 40px;
+    box-sizing: border-box;
+}
+
+/* .sidebar .main .listItem{
+    background-color: aqua;
+} */
+
+.sidebar .main .listItem .description{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 16px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.sidebar .main .listItemActive .description{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 16px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+ /* hdjshs */
+ .listItemActive{
+    
+ }
+
+.icon{
+    margin-right: 15px;
+    margin-left: 10px;
+}
+
+/* .sidebar .main .listItemActive .icon{
+    margin-right: 15px;
+    margin-left: 10px;
+} */
+
+.sidebar .main .listItem{
+    display: flex;
+    flex-direction:  row;
+    align-items: center;
+    padding: 12px 10px;
+    border-radius: 8px;
+    width: 212px;
+    box-sizing: border-box;
+    /* transition: all ease-in .2s; */
+    /* background: #FFFFFF; */
+    margin-bottom: 20px;
+}
+
+.sidebar .main .listItemActive{
+    display: flex;
+    flex-direction:  row;
+    align-items: center;
+    padding: 12px 10px;
+    border-radius: 8px;
+    width: 212px;
+    box-sizing: border-box;
+    /* transition: all ease-in .2s; */
+    background: #0D47A1;
+    margin-bottom: 20px;
+}
+
+/* .sidebar .main .listItem:hover{
+background: #FF9900;
+transition: all ease-in .2s;
+
+} */

@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material';
 import App from './App.jsx';
-import { Chat, LandingPage, Quiz, Course } from './pages';
+import { Chat, LandingPage, Quiz, Course, LearningModule } from './pages';
 import './index.css';
+// import LearningModule from './pages/LearningModule/LearningModule.jsx';
 
 const theme = createTheme({
 	typography: {
@@ -29,7 +30,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 					<Route path="/learning">
 						<Route path=":nama" element={<App />} />
 						<Route path="kuis" element={<Quiz />} />
-						<Route path="modul" element={<App />} />
+						<Route path="modul" element={<LearningModule />} />
 					</Route>
 					<Route path="/course/:id" element={<Course />} />
 					<Route path="/chat" element={<Chat />} />
