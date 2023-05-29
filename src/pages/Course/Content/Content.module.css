@@ -17,6 +17,90 @@
 	width: 65%;
 }
 
+.contentDeadlineContainer {
+	position: relative;
+}
+
+.datePickerContainer {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 0 1em;
+	top: 100%;
+	left: 0;
+	width: fit-content;
+	height: fit-content;
+	margin: 0 !important;
+	border-radius: 14px;
+	background: #ffffff;
+	box-shadow: 4px 4px 10px 0px #0000001a;
+}
+
+.formGroup {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+}
+
+.dateButtonContainer {
+	margin: 1em;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	background: #f5f5f5;
+	border-radius: 8px;
+	width: 100%;
+}
+
+.dateButtonContainer {
+	background: transparent;
+	width: 100%;
+}
+
+.dateButtonContainer button {
+	font-size: 14px;
+	font-weight: 400;
+	width: 48%;
+}
+
+.dayPicker {
+	margin: 0 !important;
+}
+
+.dayPicker div[role='presentation'] {
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.dayPicker > div > div > div:nth-child(1) button:focus,
+.dayPicker > div > div > div:nth-child(1) button:focus-visible {
+	background-color: none;
+	border-color: none;
+	color: black;
+	outline: none;
+}
+
+.dayPicker button:hover,
+.dayPicker button:focus-visible,
+.dayPicker button[aria-selected='true'] {
+	background-color: #2196f3 !important;
+	border-color: #2196f3 !important;
+	color: white !important;
+	outline: none !important;
+}
+
+.timePicker {
+	margin: 0 !important;
+	color: #2196f3 !important;
+}
+
+.timePicker > div > div {
+	padding: 0.5em;
+}
+
 .contentTitle {
 	color: #212121;
 }

@@ -1,5 +1,6 @@
 .container,
-.hideContainer {
+.hideContainer,
+.firstRender {
 	position: absolute;
 	top: 100%;
 	right: 0;
@@ -30,6 +31,11 @@
 		transform: translateY(0);
 		visibility: visible;
 	}
+}
+
+.firstRender {
+	visibility: hidden;
+	animation: none !important;
 }
 
 .hideContainer {

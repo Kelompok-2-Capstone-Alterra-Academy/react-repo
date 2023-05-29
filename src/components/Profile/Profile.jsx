@@ -18,6 +18,7 @@ export default function ProfilePage({ name, pic, email }) {
 		{ icon: faMoneyBill, title: 'Income' },
 		{ icon: faPhone, title: 'Kontak CS' },
 	]);
+	const [isFirstRender, setIsFirstRender] = useState(true);
 	const containerRef = useRef(null);
 
 	const handleClickOutside = (event) => {
@@ -32,6 +33,12 @@ export default function ProfilePage({ name, pic, email }) {
 			document.removeEventListener('mousedown', handleClickOutside);
 		};
 	}, []);
+
+	useEffect(() => {
+		if (isMenuOpen) {
+			setIsFirstRender(false);
+		}
+	}, [isMenuOpen]);
 
 	return (
 		<div
@@ -51,7 +58,15 @@ export default function ProfilePage({ name, pic, email }) {
 			</div>
 			<FontAwesomeIcon icon={isMenuOpen ? faArrowUp : faArrowDown} className={styles.arrowIcon} />
 
-			<div className={isMenuOpen ? styles.menuContainer : styles.closedMenuContainer}>
+			<div
+				className={
+					isMenuOpen
+						? styles.menuContainer
+						: isFirstRender
+						? styles.firstRender
+						: styles.closedMenuContainer
+				}
+			>
 				<div className={styles.profileContainer}>
 					<img src={pic} alt="Avatar" className={styles.avatar} />
 					<div className={styles.nameContainer}>

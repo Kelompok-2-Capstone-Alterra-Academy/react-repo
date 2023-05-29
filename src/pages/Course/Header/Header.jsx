@@ -1,5 +1,5 @@
 import styles from './Header.module.css';
-import { Button, SelectionBox } from '../../../components';
+import { Button, Select } from '../../../components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
 	faEdit,
@@ -132,7 +132,7 @@ export default function Header() {
 					<Button type="Secondary" className={styles.button}>
 						<FontAwesomeIcon icon={faPlus} />
 					</Button>
-					<SelectionBox
+					<Select
 						isShow={isSelectContent}
 						className={styles.contentSelection}
 						options={{

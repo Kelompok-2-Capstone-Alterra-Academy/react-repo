@@ -98,10 +98,10 @@ export default function Course() {
 				</div>
 				<div className={styles.main}>
 					<Header />
-					<Content type={'video'} />
+					{/* <Content type={'video'} />
 					<Content type={'materi'} />
+					<Content type={'quiz'} /> */}
 					<Content type={'tugas'} />
-					<Content type={'quiz'} />
 				</div>
 			</div>
 		</div>

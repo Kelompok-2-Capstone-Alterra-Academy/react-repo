@@ -1,5 +1,5 @@
 import styles from './FormModal.module.css';
-import { Button, SelectionBox } from '../../../components';
+import { Button, Select } from '../../../components';
 import { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -130,7 +130,7 @@ export default function FormModal({ closeFunction }) {
 									icon={isSelectKelas ? faArrowUp : faArrowDown}
 									className={styles.arrowIcon}
 								/>
-								<SelectionBox
+								<Select
 									isShow={isSelectKelas}
 									className={styles.kelasSelection}
 									handleClose={() => setIsSelectKelas(false)}
@@ -162,7 +162,7 @@ export default function FormModal({ closeFunction }) {
 									icon={isSelectMataPelajaran ? faArrowUp : faArrowDown}
 									className={styles.arrowIcon}
 								/>
-								<SelectionBox
+								<Select
 									isShow={isSelectMataPelajaran}
 									className={styles.mataPelajaranSelection}
 									handleClose={() => setIsSelectMataPelajaran(false)}
@@ -197,7 +197,7 @@ export default function FormModal({ closeFunction }) {
 									icon={isSelectJurusan ? faArrowUp : faArrowDown}
 									className={styles.arrowIcon}
 								/>
-								<SelectionBox
+								<Select
 									isShow={isSelectJurusan}
 									className={styles.jurusanSelection}
 									handleClose={() => setIsSelectJurusan(false)}

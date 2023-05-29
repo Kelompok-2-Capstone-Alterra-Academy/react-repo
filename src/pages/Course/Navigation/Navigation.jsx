@@ -8,7 +8,7 @@ export default function Navigation({ onCloseSidebar }) {
 		<div className={styles.container}>
 			<FontAwesomeIcon icon={faBars} className={styles.burger} onClick={onCloseSidebar} />
 			<div className={styles.logoImage}>
-				<img src="/images/logo-starMyDashboard.png" />
+				<img src="/image/logo-starMyDashboard.png" />
 			</div>
 			<div className={styles.profile}>
 				<Profile
