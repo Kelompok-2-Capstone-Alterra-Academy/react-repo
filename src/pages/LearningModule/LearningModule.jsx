@@ -1,29 +1,19 @@
-import { Profile, Sidebar } from "../../components";
-import BasicBreadcrumbs from "../../components/Breadcrumbs/Breadcrumbs";
-import CardFile from "../../components/CardFile/CardFile";
-import CardFolder from "../../components/CardFolder/CardFolder";
-import HeaderDropdown from "../../components/HeaderDropdown/HeaderDropdown";
-import styles from "../LearningModule/Learning.module.css"
-import ava from "../../../public/image/ava.jpg"
-import Grid from '@mui/material/Grid';
-
-
+import { Profile } from '../../components';
+import styles from '../LearningModule/Learning.module.css';
+import ava from '../../../public/image/ava.jpg';
+import { CardFile, CardFolder, HeaderDropdown, Header } from '../../components';
 
 function LearningModule() {
-    return (
-        <div className={styles.container}>
-            <Sidebar />
-            <div className={styles.mainContent}>
-                <div style={{ display: 'flex' }}>
-                    <BasicBreadcrumbs name="Modul" link1="Dashboard" link2="Pembelajaran" />
-                    <Profile name="Jennie BP" pic={ava} email="jennieblpk20@email.com" />
-                </div>
-                <HeaderDropdown />
-                <CardFolder />
-                <CardFile />
-            </div>
-        </div>
-    );
+	return (
+		<div className={styles.container}>
+			<Header />
+			<div className={styles.mainContent}>
+				<HeaderDropdown />
+				<CardFolder />
+				<CardFile />
+			</div>
+		</div>
+	);
 }
 
 export default LearningModule;

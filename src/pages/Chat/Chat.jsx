@@ -100,9 +100,6 @@ export default function Chat() {
 
 	return (
 		<div className={styles.container}>
-			<div className={styles.logoContainer}>
-				<img src="/image/logo-starMyDashboard.png" className={styles.logoImage} />
-			</div>
 			<div className={styles.cardContainer}>
 				<div className={styles.header}>
 					<span className={styles.title}>Chat</span>

@@ -10,11 +10,12 @@ import {
 	faQuestionCircle,
 	faTasks,
 	faVideo,
+	faBars,
 } from '@fortawesome/free-solid-svg-icons';
 import { useState, useEffect } from 'react';
-import Navigation from './Navigation/Navigation';
-import Header from './Header/Header';
+import Controller from './Controller/Controller';
 import Content from './Content/Content';
+import { Header } from '../../components';
 import classNames from 'classnames/bind';
 import { tempData } from './constans';
 
@@ -24,7 +25,13 @@ export default function Course() {
 
 	return (
 		<div className={styles.container}>
-			<Navigation onCloseSidebar={() => setShowSidebar(!showSidebar)} />
+			<div className={styles.barContainer}>
+				<FontAwesomeIcon
+					icon={faBars}
+					className={styles.burger}
+					onClick={() => setShowSidebar(!showSidebar)}
+				/>
+			</div>
 			<div className={styles.content}>
 				<div className={classNames(styles.sidebar, showSidebar && styles.hideSidebar)}>
 					<div>
@@ -98,6 +105,7 @@ export default function Course() {
 				</div>
 				<div className={styles.main}>
 					<Header />
+					<Controller />
 					{/* <Content type={'video'} />
 					<Content type={'materi'} />
 					<Content type={'quiz'} /> */}

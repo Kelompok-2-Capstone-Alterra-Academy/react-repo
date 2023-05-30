@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material';
 import App from './App.jsx';
 import { Chat, LandingPage, Quiz, Course, LearningModule } from './pages';
+import ProtectedRoute from '../ProtectedRoute.jsx';
 import './index.css';
 // import LearningModule from './pages/LearningModule/LearningModule.jsx';
 
@@ -29,11 +30,32 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 					</Route>
 					<Route path="/learning">
 						<Route path=":nama" element={<App />} />
-						<Route path="kuis" element={<Quiz />} />
-						<Route path="modul" element={<LearningModule />} />
+						<Route
+							path="kuis"
+							element={
+								<ProtectedRoute>
+									<Quiz />
+								</ProtectedRoute>
+							}
+						/>
+						<Route
+							path="modul"
+							element={
+								<ProtectedRoute>
+									<LearningModule />
+								</ProtectedRoute>
+							}
+						/>
 					</Route>
 					<Route path="/course/:id" element={<Course />} />
-					<Route path="/chat" element={<Chat />} />
+					<Route
+						path="/chat"
+						element={
+							<ProtectedRoute>
+								<Chat />
+							</ProtectedRoute>
+						}
+					/>
 				</Routes>
 			</BrowserRouter>
 		</ThemeProvider>

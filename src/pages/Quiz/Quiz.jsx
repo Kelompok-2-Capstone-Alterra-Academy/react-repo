@@ -1,22 +1,24 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './Quiz.module.css';
-import { Button, OutlineTag } from '../../components';
+import { Button, OutlineTag, ConfirmationModal, Header } from '../../components';
 import { tempData } from './constants';
 import { faPlus, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
 import FormModal from './FormModal/FormModal';
-import DeleteModal from './DeleteModal/DeleteModal';
 import { useState } from 'react';
 import Modal from '@mui/material/Modal';
+import { truncateString } from '../../utilities/string';
 
 export default function Quiz() {
 	const [showFormModal, setShowFormModal] = useState(false);
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
+	const [showPublishModal, setShowPublishModal] = useState(false);
 
 	return (
 		<div className={styles.container}>
+			<Header />
 			<div className={styles.header}>
 				<span className={styles.headerTitle}>
-					<b>{tempData.totalQuiz}</b> Kuis telah dibuat
+					<b>{tempData.data.length}</b> Kuis telah dibuat
 				</span>
 				<Button
 					className={styles.headerButton}
@@ -35,13 +37,7 @@ export default function Quiz() {
 								<span>Nama Kuis</span>
 							</th>
 							<th>
-								<span>Kelas</span>
-							</th>
-							<th>
-								<span>Mata Pelajaran</span>
-							</th>
-							<th>
-								<span>Jurusan</span>
+								<span>Preview Link</span>
 							</th>
 							<th>
 								<span>Status</span>
@@ -60,13 +56,7 @@ export default function Quiz() {
 										<span>{item.namaKuis}</span>
 									</td>
 									<td>
-										<span>{item.kelas}</span>
-									</td>
-									<td>
-										<span>{item.mataPelajaran}</span>
-									</td>
-									<td>
-										<span>{item.jurusan}</span>
+										<a href={item.link}>{truncateString(item.link, 50)}</a>
 									</td>
 									<td>
 										<span>
@@ -79,7 +69,9 @@ export default function Quiz() {
 										</span>
 									</td>
 									<td>
-										<Button type="Primary">Terbitkan</Button>
+										<Button type="Primary" onClick={() => setShowPublishModal(true)}>
+											Terbitkan
+										</Button>
 										<Button type="Secondary" onClick={() => setShowDeleteModal(true)}>
 											Hapus
 										</Button>
@@ -99,24 +91,34 @@ export default function Quiz() {
 					</div>
 				)}
 			</div>
-			{showFormModal && (
-				<Modal open={showFormModal} onClose={() => setShowFormModal(false)}>
-					<FormModal
-						closeFunction={() => {
-							setShowFormModal(false);
-						}}
-					/>
-				</Modal>
-			)}
-			{showDeleteModal && (
-				<Modal open={showDeleteModal} onClose={() => setShowDeleteModal(false)}>
-					<DeleteModal
-						closeFunction={() => {
-							setShowDeleteModal(false);
-						}}
-					/>
-				</Modal>
-			)}
+			<Modal open={showFormModal} onClose={() => setShowFormModal(false)}>
+				<FormModal
+					closeFunction={() => {
+						setShowFormModal(false);
+					}}
+				/>
+			</Modal>
+			<ConfirmationModal
+				show={showDeleteModal}
+				primaryButtonName="Hapus"
+				secondaryButtonName="Batal"
+				onPrimaryButtonClick={() => setShowDeleteModal(false)}
+				onSecondaryButtonClick={() => setShowDeleteModal(false)}
+				title="Hapus Kuis?"
+				image={'/image/quiz-delete.png'}
+				confirmationText="Apakah Anda yakin ingin menghapus kuis ini?"
+			/>
+
+			<ConfirmationModal
+				show={showPublishModal}
+				primaryButtonName="Terbitkan"
+				secondaryButtonName="Batal"
+				onPrimaryButtonClick={() => setShowPublishModal(false)}
+				onSecondaryButtonClick={() => setShowPublishModal(false)}
+				title="Terbitkan Kuis?"
+				image={'/image/quiz-publish.png'}
+				confirmationText="Apakah Anda yakin ingin menerbitkan kuis ini?"
+			/>
 		</div>
 	);
 }
