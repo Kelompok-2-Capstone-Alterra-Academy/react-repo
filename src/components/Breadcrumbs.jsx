@@ -17,7 +17,7 @@ export default function BasicBreadcrumbs({ name, link1, link2 }) {
         <>
             <Grid container style={{ width: '90%', margin: '0 auto' }}>
                 <Grid item xs={12}>
-                    <Paper elevation={2} style={{ height: '75%', margin: 10, borderRadius: 8 }}>
+                    <Paper elevation={0} style={{ height: '75%', margin: 10, borderRadius: 8, border: '2px solid #f5f5f5' }}>
                         <div style={{ paddingLeft: 40, color: '#212121' }}>
                             <p style={{ paddingTop: 16, fontSize: 24, fontWeight: 600, marginBottom: 12 }}>{name}</p>
                             <Breadcrumbs aria-label="breadcrumb" onClick={handleClick} style={{ paddingBottom: 20, fontSize: 14 }}>
