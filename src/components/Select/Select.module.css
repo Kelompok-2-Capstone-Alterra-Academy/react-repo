@@ -1,5 +1,6 @@
 .container,
-.hideContainer {
+.hideContainer,
+.firstRender {
 	position: absolute;
 	top: 100%;
 	right: 0;
@@ -9,7 +10,7 @@
 	align-items: flex-start;
 	padding: 1em;
 	background: #ffffff;
-	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.35);
+	box-shadow: 0 3px 11px #0000001a, 0 3px 6px #00000026;
 	border-radius: 8px;
 	margin-top: 1em;
 	color: black;
@@ -30,6 +31,11 @@
 		transform: translateY(0);
 		visibility: visible;
 	}
+}
+
+.firstRender {
+	visibility: hidden;
+	animation: none !important;
 }
 
 .hideContainer {

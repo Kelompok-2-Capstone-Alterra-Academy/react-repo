@@ -4,19 +4,18 @@
 	flex-direction: row;
 	cursor: pointer;
 	position: relative;
+	box-shadow: 0 3px 11px #0000001a, 0 3px 6px #00000026;
+	padding: 0.5em 1em;
+	border-radius: 8px;
+	width: 250px;
 }
 
 .profileContainer {
 	display: flex;
 	flex-direction: row;
-	align-items: space-around;
-	justify-content: center;
-}
-
-.gearIcon {
-	width: 20px;
-	height: 20px;
-	margin-right: 1.5em;
+	align-items: center;
+	justify-content: flex-start;
+	width: 100%;
 }
 
 .arrowIcon {
@@ -30,7 +29,7 @@
 	height: 3em;
 	border-radius: 50%;
 	object-fit: cover;
-	margin-right: 20px;
+	margin-right: 1em;
 }
 
 .nameContainer {
@@ -38,12 +37,14 @@
 	flex-direction: column;
 	align-items: flex-start;
 	justify-content: center;
+	word-break: break-word;
 }
 
 .name {
 	font-size: 16px;
 	font-weight: 600;
 	margin-bottom: 5px;
+	width: fit-content;
 }
 
 .role {
@@ -59,7 +60,8 @@
 }
 
 .menuContainer,
-.closedMenuContainer {
+.closedMenuContainer,
+.firstRender {
 	position: absolute;
 	top: 100%;
 	right: 0;
@@ -69,11 +71,12 @@
 	justify-content: center;
 	align-items: center;
 	background-color: #fff;
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 3px 11px #0000001a, 0 3px 6px #00000026;
 	padding: 1em;
-	margin-top: 1.5em;
+	margin-top: 0.5em;
 	border-radius: 8px;
 	opacity: 0;
+	z-index: 1;
 }
 
 .menuContainer {
@@ -91,6 +94,11 @@
 		transform: translateY(0);
 		visibility: visible;
 	}
+}
+
+.firstRender {
+	visibility: hidden;
+	animation: none !important;
 }
 
 .closedMenuContainer {
