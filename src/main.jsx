@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material';
 import App from './App.jsx';
-import { Chat, LandingPage, Quiz, Course } from './pages';
+import { Chat, LandingPage, Quiz, Course, Dashboard, EditProfile } from './pages';
 import './index.css';
 
 const theme = createTheme({
@@ -18,11 +18,12 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 			<BrowserRouter>
 				<Routes>
 					<Route path="/" element={<LandingPage />} />
-					<Route path="/dashboard" element={<App />} />
+					<Route path="/dashboard" element={<Dashboard />} />
 					<Route path="/login" element={<App />} />
 					<Route path="/register" element={<App />} />
 					<Route path="/profil" element={<App />} />
 					<Route path="/income" element={<App />} />
+					<Route path="/edit-profile" element={<EditProfile />} />
 					<Route path="/customer">
 						<Route path="atur-customer" element={<App />} />
 					</Route>

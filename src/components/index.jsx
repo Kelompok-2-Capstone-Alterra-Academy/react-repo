@@ -5,3 +5,6 @@ export * from './Sidebar';
 export * from './Profile';
 export * from './SelectionBox';
 export * from './NavBar';
+export * from './Footer';
+export * from './MyTextField';
+export * from './CardKursus'
