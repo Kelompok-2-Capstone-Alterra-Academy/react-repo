@@ -8,7 +8,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 const CardFolder = () => {
     return (
 
-        <Card sx={{ maxWidth: 200, minHeight: 170, borderRadius: 2.5, margin: 10 }}>
+        <Card elevation={0} sx={{ maxWidth: 200, minHeight: 170, borderRadius: 2.5, margin: 10, border: '2px solid #f5f5f5' }}>
             <div style={{ paddingTop: 20, display: "flex" }}>
                 <CardMedia
                     component="img"
@@ -17,7 +17,7 @@ const CardFolder = () => {
                     image={imgFolder}
                     style={{ paddingLeft: 15, width: 77 }}
                 />
-                <MoreHorizIcon style={{ marginLeft: 70, color: '#E0E0E0', fontSize: 30 }} />
+                <MoreHorizIcon style={{ marginLeft: 70, color: '#E0E0E0', fontSize: 28 }} />
             </div>
             <CardContent>
                 <Typography style={{ fontSize: 14 }} gutterBottom variant="h6" component="div">
