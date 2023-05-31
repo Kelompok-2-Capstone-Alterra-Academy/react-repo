@@ -1,5 +1,5 @@
-import styles from './Header.module.css';
-import { Button, SelectionBox } from '../../../components';
+import styles from './Controller.module.css';
+import { Button, Select } from '../../../components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
 	faEdit,
@@ -67,6 +67,8 @@ export default function Header() {
 							onChange={(e) => setCourseName(e.target.value)}
 							autoFocus
 							maxLength={50}
+							placeholder={'Masukkan nama kursus'}
+							onBlur={() => setIsEditingCourseName(false)}
 						/>
 					</form>
 				) : (
@@ -99,6 +101,8 @@ export default function Header() {
 							onChange={(e) => setCourseSection(e.target.value)}
 							autoFocus
 							maxLength={50}
+							placeholder={'Masukkan nama section'}
+							onBlur={() => setIsEditingCourseSection(false)}
 						/>
 					</form>
 				) : (
@@ -110,7 +114,7 @@ export default function Header() {
 									: styles.headerTitleSection
 							}
 						>
-							{courseSection === '' ? 'Masukkan nama kursus' : courseSection}
+							{courseSection === '' ? 'Masukkan nama section' : courseSection}
 						</span>
 						<FontAwesomeIcon
 							icon={faEdit}
@@ -132,7 +136,7 @@ export default function Header() {
 					<Button type="Secondary" className={styles.button}>
 						<FontAwesomeIcon icon={faPlus} />
 					</Button>
-					<SelectionBox
+					<Select
 						isShow={isSelectContent}
 						className={styles.contentSelection}
 						options={{

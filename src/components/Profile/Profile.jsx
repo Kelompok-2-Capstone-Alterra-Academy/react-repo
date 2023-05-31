@@ -9,15 +9,17 @@ import {
 	faArrowUp,
 } from '@fortawesome/free-solid-svg-icons';
 import styles from './Profile.module.css';
+import { truncateString } from '../../utilities/string';
 
-export default function ProfilePage({ name, pic, email }) {
+export default function ProfilePage({ data }) {
 	const [isMenuOpen, setMenuOpen] = useState(false);
-	const [menuItems, setMenuItems] = useState([
+	const menuItems = [
 		{ icon: faGear, title: 'Edit Profile' },
 		{ icon: faFolder, title: 'Kursus Saya' },
 		{ icon: faMoneyBill, title: 'Income' },
 		{ icon: faPhone, title: 'Kontak CS' },
-	]);
+	];
+	const [isFirstRender, setIsFirstRender] = useState(true);
 	const containerRef = useRef(null);
 
 	const handleClickOutside = (event) => {
@@ -33,6 +35,12 @@ export default function ProfilePage({ name, pic, email }) {
 		};
 	}, []);
 
+	useEffect(() => {
+		if (isMenuOpen) {
+			setIsFirstRender(false);
+		}
+	}, [isMenuOpen]);
+
 	return (
 		<div
 			className={styles.container}
@@ -41,22 +49,29 @@ export default function ProfilePage({ name, pic, email }) {
 				setMenuOpen(!isMenuOpen);
 			}}
 		>
-			<FontAwesomeIcon icon={faGear} className={styles.gearIcon} />
 			<div className={styles.profileContainer}>
-				<img src={pic} alt="Avatar" className={styles.avatar} />
+				<img src={data.pic} alt="Avatar" className={styles.avatar} />
 				<div className={styles.nameContainer}>
-					<span className={styles.name}>{name}</span>
+					<span className={styles.name}>{truncateString(data.name, 10)}</span>
 					<span className={styles.role}>Instructors</span>
 				</div>
 			</div>
 			<FontAwesomeIcon icon={isMenuOpen ? faArrowUp : faArrowDown} className={styles.arrowIcon} />
 
-			<div className={isMenuOpen ? styles.menuContainer : styles.closedMenuContainer}>
+			<div
+				className={
+					isMenuOpen
+						? styles.menuContainer
+						: isFirstRender
+						? styles.firstRender
+						: styles.closedMenuContainer
+				}
+			>
 				<div className={styles.profileContainer}>
-					<img src={pic} alt="Avatar" className={styles.avatar} />
+					<img src={data.pic} alt="Avatar" className={styles.avatar} />
 					<div className={styles.nameContainer}>
-						<span className={styles.name}>{name}</span>
-						<span className={styles.email}>{email}</span>
+						<span className={styles.name}>{data.name}</span>
+						<span className={styles.email}>{data.email}</span>
 					</div>
 				</div>
 				<div className={styles.menuItemContainer}>
