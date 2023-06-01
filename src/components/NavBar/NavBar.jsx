@@ -4,7 +4,7 @@ import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const pages = ['Beranda', 'Komunitas', 'Tentang Kami', 'Customer Service'];
-const url = ['/', '#', '#', '#'];
+const url = ['/', 'https://t.me/+starEdu', '/about-us', 'https://wa.me/+6288888888888'];
 
 export default function NavBar({ active }) {
 	const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -21,7 +21,11 @@ export default function NavBar({ active }) {
 	};
 
 	const handlePageClick = (url) => {
-		navigate(url);
+		if (url.startsWith('https://')) {
+			window.open(url, '_blank');
+		} else {
+			navigate(url);
+		}
 		handleCloseNavMenu();
 	};
 
@@ -108,7 +112,6 @@ export default function NavBar({ active }) {
 								</MenuItem>
 							</Menu>
 						</Box>
-
 						<Box
 							sx={{
 								flexGrow: 1,

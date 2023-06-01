@@ -3,6 +3,7 @@ export * from './Button';
 export * from './CardFile';
 export * from './CardFolder';
 export * from './ConfirmationModal';
+export * from './Footer';
 export * from './Header';
 export * from './HeaderDropdown';
 export * from './NavBar';

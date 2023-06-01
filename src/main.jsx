@@ -6,7 +6,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute.jsx';
 import App from './App.jsx';
 import './index.css';
-import { Chat, Course, LandingPage, LearningModule, Quiz } from './pages';
+import { AboutUs, Chat, Course, LandingPage, LearningModule, Quiz } from './pages';
 import { store } from './redux/store';
 
 const theme = createTheme({
@@ -22,6 +22,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 				<BrowserRouter>
 					<Routes>
 						<Route path="/" element={<LandingPage />} />
+						<Route path="/about-us" element={<AboutUs />} />
 						<Route path="/dashboard" element={<App />} />
 						<Route path="/login" element={<App />} />
 						<Route path="/register" element={<App />} />

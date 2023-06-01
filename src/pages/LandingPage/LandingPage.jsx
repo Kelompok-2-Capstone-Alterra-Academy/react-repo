@@ -1,4 +1,3 @@
-import { FacebookRounded, Instagram, Twitter, WhatsApp, YouTube } from '@mui/icons-material';
 import {
 	Box,
 	Button,
@@ -7,12 +6,11 @@ import {
 	CardMedia,
 	Container,
 	Grid,
-	Link,
 	List,
 	ListItem,
 	Typography,
 } from '@mui/material';
-import { NavBar } from '../../components';
+import { Footer, NavBar } from '../../components';
 
 export default function LandingPage() {
 	const ellipseImg = Array(5).fill(
@@ -21,7 +19,7 @@ export default function LandingPage() {
 
 	return (
 		<div>
-			<NavBar />
+			<NavBar active={'Beranda'} />
 
 			<Container maxWidth={'xl'}>
 				<Grid container spacing={2} sx={{ my: '50px' }}>
@@ -217,15 +215,17 @@ export default function LandingPage() {
 								</Typography>
 								<List>
 									<ListItem my={3} sx={{ display: 'block' }}>
-										<li className="py-1.5">Meningkatkan pengalaman mengajar</li>
-										<li className="py-1.5">Akses ke jaringan mentor dan siswa yang lebih luas</li>
-										<li className="py-1.5">
-											Dukungan teknologi yang kuat untuk memudahkan pengajaran online
-										</li>
-										<li className="py-1.5">
-											Peluang untuk memperluas bisnis Anda dan mendapatkan penghasilan yang lebih
-											besar
-										</li>
+										<ul style={{ listStyleType: 'disc' }}>
+											<li className="py-1.5">Meningkatkan pengalaman mengajar</li>
+											<li className="py-1.5">Akses ke jaringan mentor dan siswa yang lebih luas</li>
+											<li className="py-1.5">
+												Dukungan teknologi yang kuat untuk memudahkan pengajaran online
+											</li>
+											<li className="py-1.5">
+												Peluang untuk memperluas bisnis Anda dan mendapatkan penghasilan yang lebih
+												besar
+											</li>
+										</ul>
 									</ListItem>
 								</List>
 								<Button
@@ -591,53 +591,7 @@ export default function LandingPage() {
 					</Box>
 				</Container>
 			</Box>
-
-			<Box sx={{ bgcolor: '#4161FF', p: '5rem' }}>
-				<Container maxWidth={'xl'}>
-					<Grid container spacing={7}>
-						<Grid item xs={12} md={4} sx={{}}>
-							<img src="/image/logo-starEdu.png" alt="" className="mb-7" />
-							<Typography sx={{ fontSize: '11pt', color: '#fff' }}>
-								Jl. Ibrahim Adjie No. 20 Kota Bandung <br />
-								Jawa Barat - Indonesia
-							</Typography>
-						</Grid>
-
-						<Grid item xs={12} md={4} sx={{}}>
-							<List>
-								<ListItem>
-									<Link href="#" underline="none" color={'#fff'}>
-										<Typography>Kontak Kami</Typography>
-									</Link>
-								</ListItem>
-								<ListItem>
-									<Box sx={{ display: 'flex', gap: '1.5rem' }}>
-										<Link href="#" underline="none" color={'#fff'}>
-											<FacebookRounded />
-										</Link>
-
-										<Link href="#" underline="none" color={'#fff'}>
-											<Twitter />
-										</Link>
-
-										<Link href="#" underline="none" color={'#fff'}>
-											<YouTube />
-										</Link>
-
-										<Link href="#" underline="none" color={'#fff'}>
-											<Instagram />
-										</Link>
-
-										<Link href="#" underline="none" color={'#fff'}>
-											<WhatsApp />
-										</Link>
-									</Box>
-								</ListItem>
-							</List>
-						</Grid>
-					</Grid>
-				</Container>
-			</Box>
+			<Footer />
 		</div>
 	);
 }
