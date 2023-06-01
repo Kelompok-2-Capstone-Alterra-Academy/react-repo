@@ -1,27 +1,25 @@
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import styles from './Course.module.css';
-import {
-	faArrowDown,
-	faArrowUp,
-	faBookBookmark,
-	faFileAlt,
-	faPeopleGroup,
-	faPlus,
-	faQuestionCircle,
-	faTasks,
-	faVideo,
-	faBars,
-} from '@fortawesome/free-solid-svg-icons';
-import { useState, useEffect } from 'react';
-import Controller from './Controller/Controller';
-import Content from './Content/Content';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Header } from '../../components';
-import classNames from 'classnames/bind';
-import { tempData } from './constans';
+import styles from './Course.module.css';
+import Section from './Section/Section';
+import Sidebar from './Sidebar/Sidebar';
 
 export default function Course() {
-	const [showModulChild, setShowModulChild] = useState(false);
-	const [showSidebar, setShowSidebar] = useState(false);
+	const [showSidebar, setShowSidebar] = useState(true);
+	const [selectedSection, setSelectedSection] = useState({});
+	const [selectedContent, setSelectedContent] = useState({});
+
+	const data = useSelector((state) => state.section);
+	console.log(data);
+
+	useEffect(() => {
+		if (Object.keys(selectedSection).length === 0 && data.section.length > 0) {
+			setSelectedSection(data.section[0]);
+		}
+	}, [data]);
 
 	return (
 		<div className={styles.container}>
@@ -33,83 +31,31 @@ export default function Course() {
 				/>
 			</div>
 			<div className={styles.content}>
-				<div className={classNames(styles.sidebar, showSidebar && styles.hideSidebar)}>
-					<div>
-						<span className={styles.menuTitle}>Kursus Saya</span>
-						<div className={styles.menuBoxContainer}>
-							<div className={styles.menuBoxSelected}>
-								<FontAwesomeIcon icon={faBookBookmark} className={styles.menuIcon} />
-								<span>Matematika</span>
-							</div>
-							<div className={styles.menuBox}>
-								<FontAwesomeIcon icon={faPeopleGroup} className={styles.menuParticipantIcon} />
-								<span>Partisipan</span>
-							</div>
-						</div>
-					</div>
-					<div>
-						<div className={styles.menuTitleContainer}>
-							<span className={styles.menuTitle}>Sesi Materi (1)</span>
-							<FontAwesomeIcon icon={faPlus} className={styles.menuAddIcon} />
-						</div>
-						<div className={styles.menuCourseContainer}>
-							<div className={styles.menuCourse}>
-								<div className={styles.menuCourseTitle}>
-									<span className={styles.menuCourseTitleSection}>Section 1</span>
-									<span className={styles.menuCourseTitleCourse}>Matematika Dasar</span>
-								</div>
-								<div className={styles.menuCourseArrowContainer}>
-									<FontAwesomeIcon
-										icon={showModulChild ? faArrowUp : faArrowDown}
-										className={styles.menuArrowIcon}
-										onClick={() => setShowModulChild(!showModulChild)}
-									/>
-								</div>
-							</div>
-						</div>
-						{showModulChild && (
-							<div className={styles.modulContainer}>
-								{tempData.modul.map((item) => {
-									return (
-										<div
-											key={item.id}
-											className={classNames(
-												styles.modulChild,
-												item.id == 4 && styles.modulChildSelected
-											)}
-										>
-											<span className={styles.modulType}>{item.type}</span>
-											<div className={styles.modulContent}>
-												<FontAwesomeIcon
-													icon={
-														item.type === 'Video'
-															? faVideo
-															: item.type === 'Materi'
-															? faFileAlt
-															: item.type === 'Tugas'
-															? faTasks
-															: item.type === 'Quiz'
-															? faQuestionCircle
-															: faVideo
-													}
-													className={styles.modulTypeIcon}
-												/>
-												<span className={styles.modulTitle}>{item.name}</span>
-											</div>
-										</div>
-									);
-								})}
-							</div>
-						)}
-					</div>
-				</div>
-				<div className={styles.main}>
+				<Sidebar
+					show={showSidebar}
+					onSelectContent={(content) => {
+						setSelectedContent(content);
+					}}
+					onSelectSection={(section) => {
+						setSelectedSection(section);
+					}}
+					selectedContent={{
+						sectionId: selectedSection.id ?? '',
+						id: selectedContent.id ?? '',
+					}}
+				/>
+				<div className={showSidebar ? styles.main : styles.mainWithoutSidebar}>
 					<Header />
-					<Controller />
-					{/* <Content type={'video'} />
-					<Content type={'materi'} />
-					<Content type={'quiz'} /> */}
-					<Content type={'tugas'} />
+					{Object.keys(selectedSection).length !== 0 && (
+						<Section
+							section={selectedSection}
+							content={selectedContent}
+							onReset={() => {
+								setSelectedSection({});
+								setSelectedContent({});
+							}}
+						/>
+					)}
 				</div>
 			</div>
 		</div>

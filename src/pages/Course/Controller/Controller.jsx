@@ -1,38 +1,77 @@
-import styles from './Controller.module.css';
-import { Button, Select } from '../../../components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
 	faEdit,
-	faPlus,
-	faTrash,
 	faFileAlt,
+	faPlus,
 	faQuestionCircle,
-	faVideo,
 	faTasks,
+	faTrash,
+	faVideo,
 } from '@fortawesome/free-solid-svg-icons';
-import { useState, useEffect, useRef } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Button, ConfirmationModal, Select } from '../../../components';
+import { useClickOutside } from '../../../hooks';
+import { deleteSection } from '../../../redux/actions/sectionActions';
+import styles from './Controller.module.css';
 
-export default function Header() {
+export default function Header({ data, onAddContent, onSave, onReset }) {
 	const [isEditingCourseName, setIsEditingCourseName] = useState(false);
-	const [courseName, setCourseName] = useState('Matematika Dasar');
+	const [courseName, setCourseName] = useState('');
 	const [isEditingCourseSection, setIsEditingCourseSection] = useState(false);
-	const [courseSection, setCourseSection] = useState('Section 1');
+	const [courseSection, setCourseSection] = useState('');
 	const [isSelectContent, setIsSelectContent] = useState(false);
+	const [showSaveModal, setShowSaveModal] = useState(false);
+	const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-	const containerRef = useRef(null);
+	const dispatch = useDispatch();
 
-	const handleClickOutside = (event) => {
-		if (containerRef.current && !containerRef.current.contains(event.target)) {
-			setIsSelectContent(false);
-		}
-	};
+	const containerRef = useClickOutside(() => {
+		setIsSelectContent(false);
+	});
 
 	useEffect(() => {
-		document.addEventListener('mousedown', handleClickOutside);
-		return () => {
-			document.removeEventListener('mousedown', handleClickOutside);
-		};
-	}, []);
+		setCourseName(data.title);
+		setCourseSection(data.sectionTitle);
+	}, [data]);
+
+	const handleClickOption = (id) => {
+		switch (id) {
+			case 1:
+				onAddContent({
+					type: 'Video',
+					title: '',
+					link: [],
+				});
+				break;
+			case 2:
+				onAddContent({
+					type: 'Materi',
+					title: '',
+					link: [],
+				});
+				break;
+			case 3:
+				onAddContent({
+					type: 'Tugas',
+					title: '',
+					deadline: Date.now(),
+					link: [],
+					description: '',
+				});
+				break;
+			case 4:
+				onAddContent({
+					type: 'Quiz',
+					title: '',
+					quiz: [],
+				});
+				break;
+			default:
+				break;
+		}
+		setIsSelectContent(false);
+	};
 
 	const renderOption = (option) => {
 		const icon = {
@@ -58,8 +97,7 @@ export default function Header() {
 						onSubmit={(e) => {
 							e.preventDefault();
 							setIsEditingCourseName(false);
-						}}
-					>
+						}}>
 						<input
 							type="text"
 							className={styles.headerTitleInput}
@@ -76,8 +114,7 @@ export default function Header() {
 						<span
 							className={
 								courseName === '' ? styles.headerTitleCoursePlaceholder : styles.headerTitleCourse
-							}
-						>
+							}>
 							{courseName === '' ? 'Masukkan nama kursus' : courseName}
 						</span>
 						<FontAwesomeIcon
@@ -92,8 +129,7 @@ export default function Header() {
 						onSubmit={(e) => {
 							e.preventDefault();
 							setIsEditingCourseSection(false);
-						}}
-					>
+						}}>
 						<input
 							type="text"
 							className={styles.headerTitleSectionInput}
@@ -112,8 +148,7 @@ export default function Header() {
 								courseSection === ''
 									? styles.headerTitleSectionPlaceholder
 									: styles.headerTitleSection
-							}
-						>
+							}>
 							{courseSection === '' ? 'Masukkan nama section' : courseSection}
 						</span>
 						<FontAwesomeIcon
@@ -125,14 +160,13 @@ export default function Header() {
 				)}
 			</div>
 			<div className={styles.headerButton}>
-				<Button type="Danger" className={styles.button}>
+				<Button type="Danger" className={styles.button} onClick={() => setShowDeleteModal(true)}>
 					<FontAwesomeIcon icon={faTrash} />
 				</Button>
 				<div
 					className={styles.selectWrapper}
 					onClick={() => setIsSelectContent(!isSelectContent)}
-					ref={containerRef}
-				>
+					ref={containerRef}>
 					<Button type="Secondary" className={styles.button}>
 						<FontAwesomeIcon icon={faPlus} />
 					</Button>
@@ -148,13 +182,54 @@ export default function Header() {
 								{ id: 4, option: renderOption('Quiz') },
 							],
 						}}
-						handleSelected={(id) => console.log(id)}
+						handleSelected={(id) => {
+							handleClickOption(id);
+						}}
 					/>
 				</div>
-				<Button type="Primary" className={styles.button}>
+				<Button
+					type="Primary"
+					className={styles.button}
+					onClick={() => {
+						setShowSaveModal(true);
+					}}>
 					<span>Simpan</span>
 				</Button>
 			</div>
+			<ConfirmationModal
+				title="Simpan Section"
+				image="/image/course-save.png"
+				confirmationText="Apakah kamu yakin untuk menyimpan section ini?"
+				primaryButtonName={'Simpan'}
+				onPrimaryButtonClick={() => {
+					onSave({
+						title: courseName,
+						sectionTitle: courseSection,
+					});
+					setShowSaveModal(false);
+				}}
+				onSecondaryButtonClick={() => {
+					setShowSaveModal(false);
+				}}
+				secondaryButtonName={'Batal'}
+				show={showSaveModal}
+			/>
+			<ConfirmationModal
+				title="Hapus Section"
+				image="/image/section-delete.png"
+				confirmationText="Apakah kamu yakin untuk menghapus section ini?"
+				primaryButtonName={'Hapus'}
+				onPrimaryButtonClick={() => {
+					dispatch(deleteSection(data));
+					onReset();
+					setShowDeleteModal(false);
+				}}
+				onSecondaryButtonClick={() => {
+					setShowDeleteModal(false);
+				}}
+				secondaryButtonName={'Batal'}
+				show={showDeleteModal}
+			/>
 		</div>
 	);
 }

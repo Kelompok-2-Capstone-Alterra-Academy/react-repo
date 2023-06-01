@@ -1,5 +1,5 @@
 export * from './Chat';
-export * from './LandingPage';
-export * from './Quiz';
 export * from './Course';
+export * from './LandingPage';
 export * from './LearningModule';
+export * from './Quiz';

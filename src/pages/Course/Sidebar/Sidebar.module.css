@@ -1,32 +1,3 @@
-.container {
-	display: flex;
-	flex-direction: column;
-	height: 100vh;
-}
-
-.barContainer {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	padding: 0.5em 1.5em;
-	z-index: 1;
-	width: 100%;
-	border-bottom: 1px solid #e0e0e0;
-}
-
-.burger {
-	align-items: flex-start;
-	width: 24px;
-	height: 24px;
-	cursor: pointer;
-}
-
-.content {
-	display: flex;
-	flex: 1;
-	transition: margin-left 0.3s ease;
-}
-
 .sidebar {
 	position: fixed;
 	height: 100vh;
@@ -55,18 +26,6 @@
 
 .sidebar::-webkit-scrollbar-thumb:hover {
 	background-color: #a0a0a0;
-}
-
-.main,
-.mainWithoutSidebar {
-	margin-left: 20%;
-	flex: 1;
-	padding: 1em;
-	transition: margin-left 0.3s ease;
-}
-
-.mainWithoutSidebar {
-	margin-left: 0;
 }
 
 .menuTitleContainer {
@@ -156,25 +115,30 @@
 	background: #2196f3;
 	color: white;
 	font-size: 14px;
+	cursor: pointer;
 }
 
 .menuCourseTitle {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	word-break: break-all;
 }
 
 .menuCourseTitleSection {
 	font-weight: 400;
+	word-break: break-all;
 }
 
 .menuCourseTitleCourse {
 	font-weight: 600;
+	word-break: break-all;
 }
 
 .menuCourseArrowContainer {
 	display: flex;
 	align-items: center;
+	margin-left: 0.5em;
 }
 
 .menuArrowIcon {
@@ -184,8 +148,9 @@
 }
 
 .modulContainer {
-	margin-top: 1em;
+	margin-top: 0.5em;
 	background: #ffffff;
+	box-shadow: 0 3px 11px #0000001a, 0 3px 6px #00000026;
 	width: 100%;
 	border-radius: 8px;
 	padding: 0.5em;
@@ -200,6 +165,12 @@
 	opacity: 0;
 	visibility: hidden;
 	animation: slideDown 0.3s ease-in-out forwards;
+	transition: all 0.3s ease-in-out;
+	cursor: pointer;
+}
+
+.modulChild:hover {
+	background: #bbdefb;
 }
 
 @keyframes slideDown {

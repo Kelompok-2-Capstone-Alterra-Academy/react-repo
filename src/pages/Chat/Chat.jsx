@@ -1,8 +1,9 @@
+import { faArrowDown, faArrowUp, faFolderOpen, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import styles from './Chat.module.css';
-import { faArrowDown, faArrowUp, faSearch, faFolderOpen } from '@fortawesome/free-solid-svg-icons';
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { Select } from '../../components';
+import { useClickOutside } from '../../hooks';
+import styles from './Chat.module.css';
 
 export default function Chat() {
 	const [isSelectOpen, setIsSelectOpen] = useState(false);
@@ -10,20 +11,9 @@ export default function Chat() {
 	const [searchValue, setSearchValue] = useState('');
 	const [data, setData] = useState([]);
 
-	const containerRef = useRef(null);
-
-	const handleClickOutside = (event) => {
-		if (containerRef.current && !containerRef.current.contains(event.target)) {
-			setIsSelectOpen(false);
-		}
-	};
-
-	useEffect(() => {
-		document.addEventListener('mousedown', handleClickOutside);
-		return () => {
-			document.removeEventListener('mousedown', handleClickOutside);
-		};
-	}, []);
+	const containerRef = useClickOutside(() => {
+		setIsSelectOpen(false);
+	});
 
 	const tempData = [
 		{
@@ -117,8 +107,7 @@ export default function Chat() {
 						<div
 							className={styles.selectWrapper}
 							onClick={() => setIsSelectOpen(isSelectOpen ? false : true)}
-							ref={containerRef}
-						>
+							ref={containerRef}>
 							<span>{selectedSubject}</span>
 							<FontAwesomeIcon
 								icon={isSelectOpen ? faArrowUp : faArrowDown}

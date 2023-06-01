@@ -1,6 +1,6 @@
-import styles from './Select.module.css';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
+import styles from './Select.module.css';
 
 export default function Select({ isShow, options, handleSelected, className }) {
 	const [isFirstRender, setIsFirstRender] = useState(true);
@@ -18,16 +18,14 @@ export default function Select({ isShow, options, handleSelected, className }) {
 				isShow
 					? classNames(styles.container)
 					: classNames(isFirstRender ? styles.firstRender : styles.hideContainer)
-			)}
-		>
+			)}>
 			<span className={styles.selectTitle}>{options.title}</span>
 			<div className={styles.option}>
 				{options.data.map((item) => (
 					<div
 						key={item.id}
 						className={styles.optionContainer}
-						onClick={() => handleSelected(item.id)}
-					>
+						onClick={() => handleSelected(item.id)}>
 						{item.option}
 					</div>
 				))}

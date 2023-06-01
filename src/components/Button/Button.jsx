@@ -1,5 +1,5 @@
-import styles from './Button.module.css';
 import classNames from 'classnames/bind';
+import styles from './Button.module.css';
 
 export default function Button({ onClick, type, children, className }) {
 	const colorStyle = (type) => {
@@ -19,8 +19,7 @@ export default function Button({ onClick, type, children, className }) {
 		<button
 			disabled={type == 'Disabled'}
 			className={classNames(styles.button, colorStyle(type), className)}
-			onClick={type == 'Disabled' ? () => {} : onClick}
-		>
+			onClick={type == 'Disabled' ? () => {} : onClick}>
 			{children}
 		</button>
 	);

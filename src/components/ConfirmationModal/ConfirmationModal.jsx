@@ -1,6 +1,6 @@
-import styles from './ConfirmationModal.module.css';
-import { Button } from '../../components';
 import Modal from '@mui/material/Modal';
+import { Button } from '../../components';
+import styles from './ConfirmationModal.module.css';
 
 export default function ConfirmationModal({
 	show,

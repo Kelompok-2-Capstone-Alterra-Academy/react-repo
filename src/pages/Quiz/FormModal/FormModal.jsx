@@ -1,9 +1,8 @@
-import styles from './FormModal.module.css';
-import { Button } from '../../../components';
-import { useState, useEffect } from 'react';
+import { faCheckCircle, faRotateRight, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle, faXmarkCircle, faRotateRight } from '@fortawesome/free-solid-svg-icons';
-import { tempData } from '../constants';
+import { useEffect, useState } from 'react';
+import { Button } from '../../../components';
+import styles from './FormModal.module.css';
 
 export default function FormModal({ closeFunction }) {
 	const [form, setForm] = useState({
@@ -56,8 +55,7 @@ export default function FormModal({ closeFunction }) {
 							onClick={() => {
 								setIsSuccessCreateQuiz(false);
 								closeFunction();
-							}}
-						>
+							}}>
 							Tutup
 						</Button>
 					</div>
@@ -117,8 +115,7 @@ export default function FormModal({ closeFunction }) {
 									linkGForm: '',
 								});
 								closeFunction();
-							}}
-						>
+							}}>
 							Batal
 						</Button>
 						<Button type={formValidation ? 'Primary' : 'Disabled'}>Buat</Button>
