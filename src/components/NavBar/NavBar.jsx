@@ -1,10 +1,10 @@
 import * as React from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Button, AppBar, MenuItem, Container, Toolbar, Box, IconButton, Menu, Typography } from '@mui/material';
+import { Button, AppBar, MenuItem, Container, Toolbar, Box, IconButton, Menu } from '@mui/material';
 import { useNavigate } from "react-router-dom";
 
 const pages = ['Beranda', 'Komunitas', 'Tentang Kami', 'Customer Service'];
-const url = ['/', '#', '#', '#'];
+const url = ['/', 'https://t.me/+starEdu', '/about-us', 'https://wa.me/+6288888888888'];
 
 export default function NavBar({ active }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -21,8 +21,12 @@ export default function NavBar({ active }) {
   };
 
   const handlePageClick = (url) => {
+    if (url.startsWith('https://')) {
+    window.open(url, '_blank');
+  } else {
     navigate(url);
-    handleCloseNavMenu();
+  }
+  handleCloseNavMenu();
   };
 
   return (

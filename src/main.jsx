@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material';
 import App from './App.jsx';
-import { Chat, LandingPage, Quiz, Course, LearningModule } from './pages';
+import { Chat, LandingPage, Quiz, Course, LearningModule, AboutUs } from './pages';
 import ProtectedRoute from '../ProtectedRoute.jsx';
 import './index.css';
 // import LearningModule from './pages/LearningModule/LearningModule.jsx';
@@ -20,6 +20,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 			<BrowserRouter>
 				<Routes>
 					<Route path="/" element={<LandingPage />} />
+					<Route path="/about-us" element={<AboutUs />} />
 					<Route path="/dashboard" element={<App />} />
 					<Route path="/login" element={<App />} />
 					<Route path="/register" element={<App />} />
