@@ -21,15 +21,6 @@ export default function Content({ data }) {
 	const [isSeeingPreview, setIsSeeingPreview] = useState(false);
 	const [deadline, setDeadline] = useState('');
 
-	
-
-	useEffect(() => {
-		document.addEventListener('mousedown', handleClickOutside);
-		return () => {
-			document.removeEventListener('mousedown', handleClickOutside);
-		};
-	}, []);
-
 	const placeholder = {
 		video: 'Masukkan nama video materi disini',
 		tugas: 'Masukkan nama tugas materi disini',
@@ -187,14 +178,13 @@ export default function Content({ data }) {
 				<Button type="Danger" className={styles.button}>
 					<FontAwesomeIcon icon={faTrash} />
 				</Button>
-				<div 
-				className={styles.selectWrapper} 
-				onClick={() => setIsSelectContent(!isSelectContent)}
-				ref={containerRef}>
+				<div
+					className={styles.selectWrapper}
+					onClick={() => setIsSelectContent(!isSelectContent)}
+					ref={containerRef}>
 					<Button type="Primary" className={styles.button}>
 						<span>Tambahkan Media</span>
 					</Button>
-					
 				</div>
 			</div>
 		</div>
