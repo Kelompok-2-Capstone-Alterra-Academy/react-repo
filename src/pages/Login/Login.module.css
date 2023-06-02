@@ -1,0 +1,110 @@
+.con {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 25px;
+    border-radius: 20px;
+}
+
+.title {
+    margin-bottom: 10px;
+    width: 407px;
+    height: 36px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 36px;
+    /* identical to box height */
+    display: flex;
+    align-items: center;
+    /* Neutral Color/Netral 100 */
+    color: #212121;
+}
+
+.desc {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    width: 266px;
+    height: 24px;
+    color: #616161;
+}
+
+.start {
+    color: #4161FF;
+}
+
+.My {
+    color: #22BDFF;
+}
+
+.Btn {
+    width: 100%;
+    color: black;
+    background-color: #2196F3;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.gambar {
+    width: max-content;
+    height: 90%;
+}
+
+.email {
+    margin-right: 10px;
+}
+
+.tampilan {
+    position: block;
+    margin: 50px 30px 30px 30px;
+}
+
+.tes {
+    margin-bottom: 20px;
+}
+
+.Lupa {
+    text-align: right;
+}
+
+.username {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 21px;
+    display: flex;
+    align-items: center;
+    color: #212121;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    width: 73px;
+    height: 21px;
+    font: bold;
+}
+
+.Sandi {
+    width: 77px;
+    height: 21px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 21px;
+    align-items: center;
+    color: #212121;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}

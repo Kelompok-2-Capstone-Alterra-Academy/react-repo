@@ -3,10 +3,20 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import ProtectedRoute from '../ProtectedRoute.jsx';
 import App from './App.jsx';
+
+import ProtectedRoute from '../ProtectedRoute.jsx';
 import './index.css';
-import { AboutUs, Chat, Course, LandingPage, LearningModule, Quiz } from './pages';
+import {
+	AboutUs,
+	Chat,
+	Course,
+	LandingPage,
+	LearningModule,
+	Login,
+	LupaPassword,
+	Quiz,
+} from './pages';
 import { store } from './redux/store';
 
 const theme = createTheme({
@@ -24,7 +34,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 						<Route path="/" element={<LandingPage />} />
 						<Route path="/about-us" element={<AboutUs />} />
 						<Route path="/dashboard" element={<App />} />
-						<Route path="/login" element={<App />} />
+						<Route path="/login" element={<Login />} />
+						<Route path="/Lupa" element={<LupaPassword />} />
 						<Route path="/register" element={<App />} />
 						<Route path="/profil" element={<App />} />
 						<Route path="/income" element={<App />} />

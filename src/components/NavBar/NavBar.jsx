@@ -106,7 +106,8 @@ export default function NavBar({ active }) {
 											fontWeight: 600,
 											textTransform: 'capitalize',
 										}}
-										variant="outlined">
+										variant="outlined"
+										href="/login">
 										Login
 									</Button>
 								</MenuItem>
@@ -146,7 +147,8 @@ export default function NavBar({ active }) {
 								fontWeight: 600,
 								textTransform: 'capitalize',
 							}}
-							variant="outlined">
+							variant="outlined"
+							href="/login">
 							Login
 						</Button>
 						<Button
