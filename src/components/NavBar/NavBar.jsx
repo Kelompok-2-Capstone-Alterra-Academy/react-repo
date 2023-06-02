@@ -97,6 +97,7 @@ export default function NavBar() {
 											textTransform: 'capitalize',
 										}}
 										variant="outlined"
+										href="/login"
 									>
 										Login
 									</Button>
@@ -139,6 +140,7 @@ export default function NavBar() {
 								textTransform: 'capitalize',
 							}}
 							variant="outlined"
+							href='/login'
 						>
 							Login
 						</Button>

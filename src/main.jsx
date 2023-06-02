@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material';
 import App from './App.jsx';
-import { Chat, LandingPage, Quiz, Course } from './pages';
+import { Chat, LandingPage, Quiz, Course, Login, LupaPassword } from './pages';
+
 import './index.css';
 
 const theme = createTheme({
@@ -13,28 +14,31 @@ const theme = createTheme({
 });
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-	<React.StrictMode>
-		<ThemeProvider theme={theme}>
-			<BrowserRouter>
-				<Routes>
-					<Route path="/" element={<LandingPage />} />
-					<Route path="/dashboard" element={<App />} />
-					<Route path="/login" element={<App />} />
-					<Route path="/register" element={<App />} />
-					<Route path="/profil" element={<App />} />
-					<Route path="/income" element={<App />} />
-					<Route path="/customer">
-						<Route path="atur-customer" element={<App />} />
-					</Route>
-					<Route path="/learning">
-						<Route path=":nama" element={<App />} />
-						<Route path="kuis" element={<Quiz />} />
-						<Route path="modul" element={<App />} />
-					</Route>
-					<Route path="/course/:id" element={<Course />} />
-					<Route path="/chat" element={<Chat />} />
-				</Routes>
-			</BrowserRouter>
-		</ThemeProvider>
-	</React.StrictMode>
+		<React.StrictMode>
+			<ThemeProvider theme={theme}>
+				<BrowserRouter>
+					<Routes>
+						<Route path="/" element={<LandingPage />} />
+						<Route path="/dashboard" element={<App />} />
+						<Route path="/login" element={<Login />} />
+						<Route path="/Lupa" element={<LupaPassword />} />
+						<Route path="/register" element={<App />} />
+
+						<Route path="/profil" element={<App />} />
+						<Route path="/income" element={<App />} />
+						<Route path="/customer">
+							<Route path="atur-customer" element={<App />} />
+						</Route>
+						<Route path="/learning">
+							<Route path=":nama" element={<App />} />
+							<Route path="kuis" element={<Quiz />} />
+							<Route path="modul" element={<App />} />
+						</Route>
+						<Route path="/course/:id" element={<Course />} />
+						<Route path="/chat" element={<Chat />} />
+					</Routes>
+				</BrowserRouter>
+			</ThemeProvider>
+		</React.StrictMode>
+
 );

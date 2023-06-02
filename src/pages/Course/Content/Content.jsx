@@ -1,23 +1,61 @@
 import styles from './Content.module.css';
-import { Button } from '../../../components';
+import { Button, SelectionBox } from '../../../components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
+import { useState, useEffect, useRef  } from 'react';
+import {
+	faFileAlt,
+	faQuestionCircle,
+	faVideo,
+	faTasks,
+} from '@fortawesome/free-solid-svg-icons';
+
 
 export default function Content({ type }) {
 	const [isEditingContentName, setIsEditingContentName] = useState(false);
 	const [contentName, setContentName] = useState('Matematika Dasar');
 	const [isSelectContent, setIsSelectContent] = useState(false);
 
+	const containerRef = useRef(null);
+
+	const handleClickOutside = (event) => {
+		if (containerRef.current && !containerRef.current.contains(event.target)) {
+			setIsSelectContent(false);
+		}
+	};
+
+	useEffect(() => {
+		document.addEventListener('mousedown', handleClickOutside);
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside);
+		};
+	}, []);
+
 	const placeholder = {
 		video: 'Masukkan nama video materi disini',
 		file: 'Masukkan nama file materi disini',
 		quiz: 'Masukkan nama quiz materi disini',
-		materi: 'Masukkan nama materi disini',
+		File: 'Masukkan nama materi disini',
 		default: 'Masukkan nama video materi disini',
 	};
 
 	const placeholderValue = placeholder[type] || placeholder.default;
+
+	const renderOption = (option) => {
+		const icon = {
+			'PPT/docx/pdf': faFileAlt,
+			Gambar: faQuestionCircle,
+			Video: faVideo,
+			Teks: faTasks,
+		};
+
+		return (
+			<>
+				<FontAwesomeIcon icon={icon[option]} className={styles.optionItemIcon} />
+				<span>{option}</span>
+			</>
+		);
+	};
 
 	return (
 		<div className={styles.container}>
@@ -59,10 +97,14 @@ export default function Content({ type }) {
 				<Button type="Danger" className={styles.button}>
 					<FontAwesomeIcon icon={faTrash} />
 				</Button>
-				<div className={styles.selectWrapper} onClick={() => setIsSelectContent(!isSelectContent)}>
+				<div 
+				className={styles.selectWrapper} 
+				onClick={() => setIsSelectContent(!isSelectContent)}
+				ref={containerRef}>
 					<Button type="Primary" className={styles.button}>
 						<span>Tambahkan Media</span>
 					</Button>
+					
 				</div>
 			</div>
 		</div>

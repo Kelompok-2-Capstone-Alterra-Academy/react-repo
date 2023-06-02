@@ -1,69 +1,69 @@
 .container {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: space-between;
-	padding: 1em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1em;
 }
 
 .contentTitle,
 .contentTitlePlaceholder,
 .contentTitleInput {
-	font-size: 20px;
-	font-weight: 600;
+    font-size: 20px;
+    font-weight: 600;
 }
 
 .contentTitleContainer {
-	width: 65%;
+    width: 65%;
 }
 
 .contentTitle {
-	color: #212121;
+    color: #212121;
 }
 
 .contentTitlePlaceholder {
-	color: #bdbdbd;
+    color: #bdbdbd;
 }
 
 .contentTitleEditIcon {
-	width: 20px;
-	height: 20px;
-	margin-left: 1em;
-	cursor: pointer;
-	transition: all 0.2s ease-in-out;
+    width: 20px;
+    height: 20px;
+    margin-left: 1em;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
 }
 
 .contentTitleEditIcon:hover {
-	transform: scale(1.1);
+    transform: scale(1.1);
 }
 
 .contentTitleInput {
-	border: none;
-	outline: none;
-	color: #212121;
-	width: 100%;
+    border: none;
+    outline: none;
+    color: #212121;
+    width: 100%;
 }
 
 .contentButton {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: flex-end;
-	width: 30%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    width: 30%;
 }
 
 .contentButton svg {
-	width: 20px;
-	height: 20px;
+    width: 20px;
+    height: 20px;
 }
 
 .contentButton span {
-	font-size: 14px;
-	font-weight: 500;
+    font-size: 14px;
+    font-weight: 500;
 }
 
 .button {
-	height: 100%;
-	padding: 0.5em 1em;
-	margin-left: 1em;
+    height: 100%;
+    padding: 0.5em 1em;
+    margin-left: 1em;
 }
