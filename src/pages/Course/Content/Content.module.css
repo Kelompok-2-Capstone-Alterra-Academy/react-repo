@@ -1,9 +1,15 @@
 .container {
 	display: flex;
+	flex-direction: column;
+	padding: 1em;
+}
+
+.headerContainer {
+	display: flex;
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-between;
-	padding: 1em;
+	margin-bottom: 1em;
 }
 
 .contentTitle,
@@ -20,6 +26,10 @@
 .contentDeadlineContainer {
 	position: relative;
 	margin-top: 0.5em;
+}
+
+.contentDeadlineWrapper {
+	margin-bottom: 1em;
 }
 
 .datePickerWrapper {
@@ -120,7 +130,8 @@
 }
 
 .contentTitlePlaceholder,
-.contentTitleInput::placeholder {
+.contentTitleInput::placeholder,
+.contentDescription::placeholder {
 	color: #bdbdbd;
 }
 
@@ -248,4 +259,181 @@
 
 .previewCloseIcon:hover {
 	transform: scale(1.1);
+}
+
+.contentVideoContainer {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.contentVideoBackground {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	background-color: #bdbdbd;
+	border-radius: 8px;
+}
+
+.documentCard {
+	cursor: pointer;
+	width: 300px;
+	padding: 10px;
+	background-color: white;
+	border-radius: 8px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 1em;
+	border: 1px solid #e0e0e0;
+	transition: all 0.2s ease-in-out;
+}
+
+.documentCard:hover {
+	border: 1px solid #2196f3;
+}
+
+.previewDocument {
+	width: 100%;
+	height: auto;
+	max-height: 200px;
+	object-fit: cover;
+	border-radius: 8px;
+}
+
+.documentTitle {
+	margin-top: 0.5em;
+	color: black;
+	font-size: 16px;
+	font-weight: 500;
+	word-break: break-word;
+	align-self: flex-start;
+}
+
+.documentSize {
+	margin-top: 0.25em;
+	color: #9e9e9e;
+	font-size: 14px;
+	font-weight: 500;
+	align-self: flex-start;
+}
+
+.documentDescription {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	margin-top: 0.5em;
+	color: #9e9e9e;
+	font-size: 12px;
+	font-weight: 400;
+	align-self: flex-start;
+	position: relative;
+}
+
+.toolTipIcon {
+	width: 16px;
+	height: 16px;
+	cursor: pointer;
+}
+
+.tooltip {
+	visibility: hidden;
+	width: 300px;
+	background-color: #333;
+	color: #fff;
+	border-radius: 8px;
+	padding: 1em;
+	position: absolute;
+	z-index: 1;
+	bottom: 125%;
+	left: 50%;
+	transform: translateX(-50%);
+	opacity: 0;
+	transition: all 0.2s ease-in-out;
+	white-space: pre-line;
+	text-align: left;
+	margin-bottom: 0.5em;
+}
+
+.documentDescription:hover .tooltip {
+	visibility: visible;
+	opacity: 1;
+}
+
+.modalContainer {
+	padding: 3em;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.modalContent {
+	position: relative;
+	width: 90%;
+	border-radius: 8px;
+	outline: none;
+}
+
+.closePreviewContainer {
+	position: absolute;
+	top: calc(-10px - 0.25em);
+	right: calc(-10px - 0.25em);
+	padding: 0.5em;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition: all 0.2s ease-in-out;
+	background-color: #bdbdbd;
+	z-index: 1;
+	border-radius: 50px;
+}
+
+.closePreviewContainer:hover {
+	background-color: #9e9e9e;
+}
+
+.closePreviewIcon {
+	width: 20px;
+	height: 20px;
+}
+
+.modalDocument {
+	width: 100%;
+	height: calc(100vh - 5em);
+	border: none;
+}
+
+.contentQuizContainer {
+	width: 20%;
+	background: #bbdefb;
+	padding: 2em;
+	border-radius: 8px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition: all 0.2s ease-in-out;
+}
+
+.contentQuizContainer:hover {
+	background: #90caf9;
+}
+
+.quizIcon {
+	width: 20px;
+	height: 20px;
+	margin-right: 1em;
+	color: #212121;
+}
+
+.quizName {
+	font-size: 16px;
+	font-weight: 400;
+	color: #212121;
 }

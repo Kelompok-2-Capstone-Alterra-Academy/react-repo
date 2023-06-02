@@ -44,7 +44,7 @@ export default function Sidebar({ show, onSelectSection, onSelectContent, select
 							const newSection = {
 								title: `Section x`,
 								sectionTitle: `Section x`,
-								isDrillDown: false,
+								isDrillDown: true,
 								content: [],
 							};
 							dispatch(addSection(newSection));

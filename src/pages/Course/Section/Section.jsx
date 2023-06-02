@@ -3,7 +3,7 @@ import { addContent, updateSection } from '../../../redux/actions/sectionActions
 import Content from '../Content/Content';
 import Controller from '../Controller/Controller';
 
-export default function Section({ section, content, onReset }) {
+export default function Section({ section, content, onResetSection, onResetContent }) {
 	const dispatch = useDispatch();
 	return (
 		<>
@@ -13,15 +13,11 @@ export default function Section({ section, content, onReset }) {
 					dispatch(
 						addContent({
 							sectionId: section.id,
-							content: {
-								type: content.type,
-								title: content.title,
-								content: content.content,
-							},
+							content: content,
 						})
 					);
 				}}
-				onReset={onReset}
+				onResetSection={onResetSection}
 				onSave={(newData) => {
 					dispatch(
 						updateSection({
@@ -34,7 +30,14 @@ export default function Section({ section, content, onReset }) {
 					);
 				}}
 			/>
-			{Object.keys(content).length !== 0 && <Content key={content.id} data={content} />}
+			{Object.keys(content).length !== 0 && (
+				<Content
+					key={content.id}
+					data={content}
+					sectionId={section.id}
+					onResetContent={onResetContent}
+				/>
+			)}
 		</>
 	);
 }

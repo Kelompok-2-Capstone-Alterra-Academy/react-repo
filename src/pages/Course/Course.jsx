@@ -13,7 +13,6 @@ export default function Course() {
 	const [selectedContent, setSelectedContent] = useState({});
 
 	const data = useSelector((state) => state.section);
-	console.log(data);
 
 	useEffect(() => {
 		if (Object.keys(selectedSection).length === 0 && data.section.length > 0) {
@@ -50,8 +49,11 @@ export default function Course() {
 						<Section
 							section={selectedSection}
 							content={selectedContent}
-							onReset={() => {
+							onResetSection={() => {
 								setSelectedSection({});
+								setSelectedContent({});
+							}}
+							onResetContent={() => {
 								setSelectedContent({});
 							}}
 						/>

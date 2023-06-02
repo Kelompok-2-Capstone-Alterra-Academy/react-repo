@@ -12,10 +12,10 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Button, ConfirmationModal, Select } from '../../../components';
 import { useClickOutside } from '../../../hooks';
-import { deleteSection } from '../../../redux/actions/sectionActions';
+import { deleteSection, updateSection } from '../../../redux/actions/sectionActions';
 import styles from './Controller.module.css';
 
-export default function Header({ data, onAddContent, onSave, onReset }) {
+export default function Header({ data, onAddContent, onSave, onResetSection }) {
 	const [isEditingCourseName, setIsEditingCourseName] = useState(false);
 	const [courseName, setCourseName] = useState('');
 	const [isEditingCourseSection, setIsEditingCourseSection] = useState(false);
@@ -35,36 +35,56 @@ export default function Header({ data, onAddContent, onSave, onReset }) {
 		setCourseSection(data.sectionTitle);
 	}, [data]);
 
+	useEffect(() => {
+		dispatch(
+			updateSection({
+				id: data.id,
+				title: courseName,
+				sectionTitle: courseSection,
+			})
+		);
+	}, [courseName, courseSection]);
+
 	const handleClickOption = (id) => {
 		switch (id) {
 			case 1:
 				onAddContent({
 					type: 'Video',
 					title: '',
-					link: [],
+					video: 'https://youtube.com/embed/Z5NoQg8LdDk',
 				});
 				break;
 			case 2:
 				onAddContent({
 					type: 'Materi',
 					title: '',
-					link: [],
+					file: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+					filePreview: 'https://picsum.photos/400/300',
+					fileName: 'Materi Matematika Dasar.doc',
+					fileSize: '78 kb',
 				});
 				break;
 			case 3:
 				onAddContent({
 					type: 'Tugas',
 					title: '',
-					deadline: Date.now(),
-					link: [],
-					description: '',
+					deadline: '',
+					file: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+					filePreview: 'https://picsum.photos/400/300',
+					fileName: 'Materi Matematika Dasar.doc',
+					fileSize: '78 kb',
+					fileDesc: `Kerjakan Tugas Matematika Dasar pada dokumen dibawah ini. \n
+							Jawaban di tulis tangan kemudian diFoto/discan dan kemudian diupload dalam bentuk pdf \n
+							Nama file (no induk_nama_jenis latihan)`,
 				});
 				break;
 			case 4:
 				onAddContent({
 					type: 'Quiz',
 					title: '',
-					quiz: [],
+					quizName: 'Matematika Dasar',
+					quizLink:
+						'https://docs.google.com/forms/d/e/1FAIpQLSeoGW97EUf_NFU7m3Q-KplrzOJ5oYHlXETTegkMgnNgpBqYow/viewform?usp=sf_link',
 				});
 				break;
 			default:
@@ -221,7 +241,7 @@ export default function Header({ data, onAddContent, onSave, onReset }) {
 				primaryButtonName={'Hapus'}
 				onPrimaryButtonClick={() => {
 					dispatch(deleteSection(data));
-					onReset();
+					onResetSection();
 					setShowDeleteModal(false);
 				}}
 				onSecondaryButtonClick={() => {

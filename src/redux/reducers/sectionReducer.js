@@ -63,7 +63,7 @@ const sectionReducer = (state = initialState, action = defaultAction) => {
 			};
 
 		case 'UPDATE_CONTENT':
-			selectedSection = state.section.find((sec) => sec.id === payload.secctionid);
+			selectedSection = state.section.find((sec) => sec.id === payload.sectionId);
 			selectedContent = selectedSection.content.find((cont) => cont.id === payload.content.id);
 			newContent = {
 				...selectedContent,
