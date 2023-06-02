@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './Chat.module.css';
 import { faArrowDown, faArrowUp, faSearch, faFolderOpen } from '@fortawesome/free-solid-svg-icons';
 import { useState, useEffect, useRef } from 'react';
-import { SelectionBox } from '../../components';
+import { Select } from '../../components';
 
 export default function Chat() {
 	const [isSelectOpen, setIsSelectOpen] = useState(false);
@@ -100,9 +100,6 @@ export default function Chat() {
 
 	return (
 		<div className={styles.container}>
-			<div className={styles.logoContainer}>
-				<img src="/images/logo-starMyDashboard.png" className={styles.logoImage} />
-			</div>
 			<div className={styles.cardContainer}>
 				<div className={styles.header}>
 					<span className={styles.title}>Chat</span>
@@ -127,7 +124,7 @@ export default function Chat() {
 								icon={isSelectOpen ? faArrowUp : faArrowDown}
 								className={styles.arrowIcon}
 							/>
-							<SelectionBox
+							<Select
 								isShow={isSelectOpen}
 								options={{
 									title: 'Jenis Konten',
@@ -161,7 +158,7 @@ export default function Chat() {
 									<img src={item.avatar} alt={item.name} className={styles.avatar} />
 									<span className={styles.name}>{item.name}</span>
 								</div>
-								<img src={'/images/icon-whatsapp.png'} className={styles.icon} />
+								<img src={'/image/icon-whatsapp.png'} className={styles.icon} />
 							</div>
 						))
 					)}

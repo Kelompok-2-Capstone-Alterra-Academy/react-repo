@@ -1,0 +1,115 @@
+.sidebar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100vh;
+	background-color: #4161ff;
+	width: 20%;
+	padding: 3em 1.5em 1em 1.5em;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.logo {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 3em;
+}
+
+.footer {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	color: black;
+	font-size: 12px;
+	font-weight: 500;
+	width: 100%;
+	background-color: white;
+	padding: 0.5em;
+	border-radius: 8px;
+}
+
+.mainContent {
+	background-color: #ffffff;
+	flex-grow: 1;
+}
+
+.descriptionHeader {
+	font-style: italic;
+	font-weight: 700;
+	font-size: 20px;
+	text-align: center;
+	color: #ffffff;
+}
+
+.description {
+	font-style: normal;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 16px;
+	text-align: center;
+	color: #ffffff;
+}
+
+.icon {
+	margin-right: 15px;
+	color: white;
+}
+
+.listItem,
+.listItemActive,
+.logoutItem,
+.listCourse {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding: 1em;
+	border-radius: 8px;
+	width: 100%;
+	box-sizing: border-box;
+	margin-bottom: 1em;
+	transition: 0.2s all ease-in-out;
+}
+
+.listItemActive {
+	background-color: #0d47a1;
+}
+
+.listCourse {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	border-radius: 8px;
+	width: 100%;
+	background-color: #ffffff;
+	color: black;
+}
+
+.logoutItem {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	border-radius: 8px;
+	width: 100%;
+	margin-bottom: 0.5em;
+	border: 2px solid #ffffff;
+	color: black;
+}
+
+.listItem:hover {
+	background-color: #0d47a1;
+}
+
+.listCourse:hover {
+	background-color: #dedede;
+	color: black;
+}
+
+.logoutItem:hover {
+	background-color: #284cff;
+}

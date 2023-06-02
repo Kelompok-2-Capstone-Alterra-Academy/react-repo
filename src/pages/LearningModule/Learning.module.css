@@ -1,0 +1,11 @@
+.container {
+	display: flex;
+	flex-direction: column;
+}
+
+.mainContent {
+	background-color: #ffffff;
+	flex-grow: 1;
+	margin: 10px;
+	padding: 10px;
+}

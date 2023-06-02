@@ -1,0 +1,96 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #e0e0e0;
+    padding: 1em;
+    border-radius: 8px;
+}
+
+.headerTitle {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.headerTitleCourse,
+.headerTitleCoursePlaceholder,
+.headerTitleInput {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.headerTitleCourse {
+    color: #212121;
+}
+
+.headerTitleCoursePlaceholder,
+.headerTitleSectionPlaceholder,
+.headerTitleInput::placeholder,
+.headerTitleSectionInput::placeholder {
+    color: #bdbdbd;
+}
+
+.headerTitleEditIcon,
+.headerTitleSectionEditIcon {
+    width: 20px;
+    height: 20px;
+    margin-left: 1em;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.headerTitleSectionEditIcon {
+    width: 16px;
+    height: 16px;
+}
+
+.headerTitleEditIcon:hover,
+.headerTitleSectionEditIcon:hover {
+    transform: scale(1.1);
+}
+
+.headerTitleInput,
+.headerTitleSectionInput {
+    border: none;
+    outline: none;
+    color: #212121;
+    width: 100%;
+}
+
+.headerTitleSection {
+    font-size: 16px;
+    font-weight: 400;
+    color: #212121;
+}
+
+.headerButton {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.headerButton svg {
+    width: 20px;
+    height: 20px;
+}
+
+.headerButton span {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.button {
+    height: 100%;
+    padding: 0.5em 1em;
+    margin-left: 1em;
+}
+
+.selectWrapper {
+    position: relative;
+}
+
+.contentSelection {
+    width: 300%;
+}
