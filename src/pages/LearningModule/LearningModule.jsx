@@ -1,6 +1,5 @@
-import { Profile } from '../../components';
 import styles from '../LearningModule/Learning.module.css';
-import ava from '../../../public/image/ava.jpg';
+import Grid from '@mui/material/Grid';
 import { CardFile, CardFolder, HeaderDropdown, Header } from '../../components';
 
 function LearningModule() {
@@ -9,8 +8,49 @@ function LearningModule() {
 			<Header />
 			<div className={styles.mainContent}>
 				<HeaderDropdown />
-				<CardFolder />
-				<CardFile />
+				<p className={styles.paragraph}>File dan Folder</p>
+				<Grid container spacing={0.5} columns={{ xs: 4, sm: 8, md: 12 }}>
+
+					<Grid item xs={2}>
+						<CardFolder />
+					</Grid>
+
+					<Grid item xs={2}>
+						<CardFolder />
+					</Grid>
+
+					<Grid item xs={2}>
+						<CardFolder />
+					</Grid>
+
+					<Grid item xs={2}>
+						<CardFolder />
+					</Grid>
+
+					<Grid item xs={2}>
+						<CardFolder />
+					</Grid>
+
+					<Grid item xs={2}>
+						<CardFolder />
+					</Grid>
+				</Grid>
+
+				<p className={styles.paragraph}>File (3)</p>
+				<Grid container spacing={0.5} columns={{ xs: 4, sm: 8, md: 12 }}>
+
+					<Grid item xs={2}>
+						<CardFile />
+					</Grid>
+
+					<Grid item xs={2}>
+						<CardFile />
+					</Grid>
+
+					<Grid item xs={2}>
+						<CardFile />
+					</Grid>
+				</Grid>
 			</div>
 		</div>
 	);

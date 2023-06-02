@@ -1,6 +1,6 @@
 // import styles from '../../App.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faFolderOpen, faFile, faLink } from '@fortawesome/free-solid-svg-icons';
 import { Button } from '../../components';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -18,7 +18,7 @@ const HeaderDropdown = () => {
                 <>
                     <div className={styles.header}>
                         <span className={styles.headerTitle}>
-                            <b>15</b> File, <b>10</b> Folder
+                            <b>15</b> File, <b>20px</b> Folder
                         </span>
                         <Button
                             className={styles.headerButton}
@@ -36,34 +36,13 @@ const HeaderDropdown = () => {
                             borderRadius: '8px',
                             border: '1px solid #2196F3',
                             marginTop: '10px',
-                            // overflow: 'visible',
-                            // filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-                            // mt: 1.5,
-                            // '& .MuiAvatar-root': {
-                            //     width: 100,
-                            //     height: 32,
-                            //     ml: -0.5,
-                            //     mr: 1,
-                            // },
-                            // '&:before': {
-                            //     content: '""',
-                            //     display: 'block',
-                            //     position: 'absolute',
-                            //     top: 0,
-                            //     right: 14,
-                            //     width: 10,
-                            //     height: 10,
-                            //     bgcolor: 'background.paper',
-                            //     transform: 'translateY(-50%) rotate(45deg)',
-                            //     zIndex: 0,
-                            // },
                         },
                     }} {...bindMenu(popupState)}>
-                        <MenuItem onClick={popupState.close}><Typography sx={{ fontSize: '14px' }} color="#2196F3">File</Typography></MenuItem>
+                        <MenuItem onClick={popupState.close}><Typography sx={{ fontSize: '14px' }} color="#2196F3"><FontAwesomeIcon style={{ marginLeft: 8, marginRight: '20px' }} icon={faFile} />File</Typography></MenuItem>
                         <Divider sx={{ bgcolor: "#2196F3" }} />
-                        <MenuItem onClick={popupState.close}><Typography sx={{ fontSize: '14px' }} color="#2196F3">Modul</Typography></MenuItem>
+                        <MenuItem onClick={popupState.close}><Typography sx={{ fontSize: '14px' }} color="#2196F3"><FontAwesomeIcon style={{ marginLeft: 8, marginRight: '20px' }} icon={faFolderOpen} />Folder</Typography></MenuItem>
                         <Divider sx={{ bgcolor: "#2196F3" }} />
-                        <MenuItem onClick={popupState.close}><Typography sx={{ fontSize: '14px' }} color="#2196F3">Attachment</Typography></MenuItem>
+                        <MenuItem onClick={popupState.close}><Typography sx={{ fontSize: '14px' }} color="#2196F3"><FontAwesomeIcon style={{ marginLeft: 8, marginRight: '20px' }} icon={faLink} />Attach Link</Typography></MenuItem>
                     </Menu>
                 </>
             )}

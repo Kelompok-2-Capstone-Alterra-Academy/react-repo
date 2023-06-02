@@ -4,13 +4,53 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import imgVideo from '../../../public/image/icon-videoPlayer.png'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFile, faDownload, faPen } from '@fortawesome/free-solid-svg-icons';
 
 const CardFile = () => {
     return (
 
-        <Card elevation={0} sx={{ maxWidth: 200, minHeight: 170, borderRadius: 2.5, margin: 10, border: '2px solid #f5f5f5' }}>
+        <Card elevation={0} sx={{ maxWidth: 200, minHeight: 170, borderRadius: 2.5, marginBottom: '10px', border: '2px solid #f5f5f5' }}>
             <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                <MoreHorizIcon style={{ paddingRight: 20, color: '#E0E0E0', fontSize: 50 }} />
+                <PopupState variant="popover" popupId="demo-popup-menu">
+                    {(popupState) => (
+                        <>
+                            <MoreHorizIcon variant="contained" {...bindTrigger(popupState)} style={{ paddingRight: 20, color: '#E0E0E0', fontSize: 50 }} />
+                            <Menu PaperProps={{
+                                style: {
+                                    transform: 'translateX(-83%) translateY(-6%)',
+                                },
+                                elevation: 0,
+                                sx: {
+                                    bgcolor: "#F0FAFF",
+                                    overflow: 'visible',
+                                    ml: '0px',
+                                    borderRadius: '8px',
+                                    '&:before': {
+                                        content: '""',
+                                        display: 'block',
+                                        position: 'absolute',
+                                        top: 0,
+                                        right: 14,
+                                        width: 10,
+                                        height: 10,
+                                        bgcolor: '#F0FAFF',
+                                        transform: 'translateY(-50%) rotate(45deg)',
+                                        zIndex: 0,
+                                    },
+                                },
+                            }}{...bindMenu(popupState)}>
+                                <MenuItem style={{ marginTop: 12, marginBottom: 12 }} onClick={popupState.close}><Typography sx={{ fontSize: '14px' }} color="#2196F3"><FontAwesomeIcon style={{ marginRight: '20px' }} icon={faPen} />Ganti Nama Berkas</Typography></MenuItem>
+                                <MenuItem style={{ marginTop: 12, marginBottom: 12 }} onClick={popupState.close}><Typography sx={{ fontSize: '14px' }} color="#2196F3"><FontAwesomeIcon style={{ marginRight: '20px' }} icon={faDownload} />Unduh Berkas</Typography></MenuItem>
+                                <MenuItem style={{ marginTop: 12, marginBottom: 12 }} onClick={popupState.close}><Typography sx={{ fontSize: '14px' }} color="#2196F3"><FontAwesomeIcon style={{ marginRight: '20px' }} icon={faFile} />Lihat Detail</Typography></MenuItem>
+                                <MenuItem style={{ marginTop: 12, marginBottom: 12 }} onClick={popupState.close}><Typography sx={{ fontSize: '14px' }} color="#2196F3"><FontAwesomeIcon style={{ marginRight: '20px' }} icon={faFile} />Hapus Berkas</Typography></MenuItem>
+                            </Menu>
+                        </>
+                    )}
+                </PopupState>
             </div>
             <CardMedia
                 component="img"
