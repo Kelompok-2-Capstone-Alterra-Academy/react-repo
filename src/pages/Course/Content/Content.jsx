@@ -18,11 +18,20 @@ export default function Content({ type }) {
 	const [selectedDeadlineTime, setSelectedDeadlineTime] = useState('00:00');
 	const [deadline, setDeadline] = useState('');
 
+	
+
+	useEffect(() => {
+		document.addEventListener('mousedown', handleClickOutside);
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside);
+		};
+	}, []);
+
 	const placeholder = {
 		video: 'Masukkan nama video materi disini',
 		tugas: 'Masukkan nama tugas materi disini',
 		quiz: 'Masukkan nama quiz materi disini',
-		materi: 'Masukkan nama materi disini',
+		File: 'Masukkan nama materi disini',
 		default: 'Masukkan nama video materi disini',
 	};
 
@@ -45,6 +54,22 @@ export default function Content({ type }) {
 
 	const handleSelectDay = (day) => {
 		setSelectedDeadlineDay(dateToTimestamp(day));
+	};
+
+	const renderOption = (option) => {
+		const icon = {
+			'PPT/docx/pdf': faFileAlt,
+			Gambar: faQuestionCircle,
+			Video: faVideo,
+			Teks: faTasks,
+		};
+
+		return (
+			<>
+				<FontAwesomeIcon icon={icon[option]} className={styles.optionItemIcon} />
+				<span>{option}</span>
+			</>
+		);
 	};
 
 	return (
@@ -143,10 +168,14 @@ export default function Content({ type }) {
 				<Button type="Danger" className={styles.button}>
 					<FontAwesomeIcon icon={faTrash} />
 				</Button>
-				<div className={styles.selectWrapper} onClick={() => setIsSelectContent(!isSelectContent)}>
+				<div 
+				className={styles.selectWrapper} 
+				onClick={() => setIsSelectContent(!isSelectContent)}
+				ref={containerRef}>
 					<Button type="Primary" className={styles.button}>
 						<span>Tambahkan Media</span>
 					</Button>
+					
 				</div>
 			</div>
 		</div>

@@ -1,0 +1,111 @@
+.con {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.title {
+    margin-bottom: 10px;
+    width: 407px;
+    height: 36px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 36px;
+    align-items: center;
+    color: #212121;
+}
+
+.desc {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    color: #616161;
+}
+
+.start {
+    color: #4161FF;
+}
+
+.My {
+    color: #22BDFF;
+}
+
+.Button {
+    width: 100%;
+    color: white;
+    background-color: #2196F3;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gambar {
+    width: 200%;
+}
+
+.content {
+    width: 550px;
+    box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
+    border-radius: 8px;
+    background-color: white;
+}
+
+.formContent {
+    padding-top: 8%;
+    padding-bottom: 8%;
+    padding-left: 8%;
+    padding-right: 8%;
+}
+
+.containerGambar {
+    width: 750px;
+    justify-content: center;
+    text-align: center;
+}
+
+.titleBawah {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #000000;
+}
+
+.username {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 21px;
+    display: flex;
+    align-items: center;
+    color: #212121;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    width: 73px;
+    height: 21px;
+    font: bold;
+    margin-bottom: 5px;
+}
