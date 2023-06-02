@@ -5,6 +5,7 @@ export * from './Sidebar';
 export * from './Header';
 export * from './Select';
 export * from './NavBar';
+export * from './Footer';
 export * from './CardFile';
 export * from './CardFolder';
 export * from './HeaderDropdown';
