@@ -1,0 +1,113 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 37px;
+}
+
+.containerGambar {
+    width: 750px;
+    justify-content: center;
+    text-align: center;
+}
+
+.content {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.titleBawah {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #000000;
+}
+
+.con {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.Title {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 23px;
+    line-height: 36px;
+    margin-bottom: 10px;
+}
+
+.content {
+    width: 500px;
+    height: 730px;
+    box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
+    border-radius: 8px;
+    background-color: white;
+}
+
+.formContent {
+    padding-top: 5%;
+    padding-bottom: 8%;
+    padding-left: 8%;
+    padding-right: 8%;
+}
+
+.desc {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 24px;
+    margin-bottom: 20px;
+}
+
+.start {
+    color: #4161FF;
+}
+
+.My {
+    color: #22BDFF;
+}
+
+.button {
+    width: 100%;
+    color: white;
+    background-color: #2196F3;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.Judul {
+    font-weight: bold;
+    font-family: 'Poppins';
+    font-style: normal;
+}
+
+.deskripsi {
+    display: flex;
+}
+
+.conn {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+    margin-bottom: 3rem;
+    font-size: 12px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+}

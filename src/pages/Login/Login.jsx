@@ -9,6 +9,7 @@ import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import LockIcon from '@material-ui/icons/Lock';
 import { useNavigate } from 'react-router-dom';
+import { Footer } from '../../components';
 
 export default function Login () {
 
@@ -45,13 +46,13 @@ export default function Login () {
 
     }
     return (
-      <div className='w-full h-screen'>
+      <div >
         <div className={styles.con}>
           <h3 className={styles.start}>Star</h3>
           <h3 className={styles.My}>MyDashboard</h3>
         </div>
-          <div className='grid grid-cols-1 md:grid-cols-2 m-auto h-[500px] shadow-lg shadow-gray-500 sm:max-w-[900px]' style={{borderRadius:"16px"}}>
-            <div className='w-full h-[500px]  md:block'>
+          <div className='grid grid-cols-1 md:grid-cols-2 m-auto h-[470px] shadow-lg shadow-gray-500 sm:max-w-[900px]' style={{borderRadius:"16px", marginBottom:"75px"}}>
+            <div className='w-full h-[470px]  md:block'>
                 <img className='w-full h-full' src={gambar} alt="/" />
             </div>
             <div className={styles.tampilan}>
@@ -89,11 +90,11 @@ export default function Login () {
                                       </InputAdornment>
                                     ),
                                   }}/>
-                              <p className={styles.Lupa}>
+                              <Typography className={styles.Lupa}>
                                   <Link style={{color: "#212121", textDecoration:"none"}} href="/Lupa" >
                                       Lupa Kata Sandi?
                               </Link>
-                              </p>
+                              </Typography>
                               <Button type='submit' variant="contained" disabled={props.isSubmitting} style={btnstyle}
                                     fullWidth>{props.isSubmitting ? "Loading" : "Login"}</Button>
                           </Form>
@@ -101,7 +102,9 @@ export default function Login () {
                   </Formik>
             </div>
           </div>
+          <Footer/>
       </div>
+      
     )
 }
 

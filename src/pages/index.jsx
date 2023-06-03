@@ -6,3 +6,4 @@ export * from './Course';
 export * from './Login';
 export * from './LupaPassword';
 export * from './LearningModule';
+export * from './Register'

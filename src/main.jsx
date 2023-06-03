@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material';
 import App from './App.jsx';
 
-import { Chat, LandingPage, Quiz, Course, LearningModule, AboutUs, Login, LupaPassword} from './pages';
+import { Chat, LandingPage, Quiz, Course, LearningModule, AboutUs, Login, LupaPassword, Register} from './pages';
 import ProtectedRoute from '../ProtectedRoute.jsx';
 import './index.css';
 // import LearningModule from './pages/LearningModule/LearningModule.jsx';
@@ -25,7 +25,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 					<Route path="/dashboard" element={<App />} />
 					<Route path="/login" element={<Login />} />
 					<Route path="/Lupa" element={<LupaPassword />} />
-					<Route path="/register" element={<App />} />
+					<Route path="/register" element={<Register />} />
 					<Route path="/profil" element={<App />} />
 					<Route path="/income" element={<App />} />
 					<Route path="/customer">

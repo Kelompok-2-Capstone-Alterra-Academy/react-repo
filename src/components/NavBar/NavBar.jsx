@@ -81,7 +81,7 @@ export default function NavBar({ active }) {
                   </MenuItem>
                 ))}
                 <MenuItem>
-                  <Button sx={{ width: '100%', bgcolor:'#2196F3', borderRadius: '8px', fontWeight: 600, textTransform: 'capitalize'}} variant='contained'>Daftar</Button>
+                  <Button sx={{ width: '100%', bgcolor:'#2196F3', borderRadius: '8px', fontWeight: 600, textTransform: 'capitalize'}} variant='contained' href='/register'>Daftar</Button>
                 </MenuItem>
                 <MenuItem>
                   <Button sx={{ width: '100%', color:'#2196F3', borderRadius: '8px', fontWeight: 600, textTransform: 'capitalize'}} variant="outlined" href='/login'>Login</Button>
@@ -112,7 +112,7 @@ export default function NavBar({ active }) {
 
           <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex', gap: '5px' } }}>
               <Button sx={{ width: '120px', color:'#2196F3', borderRadius: '8px', fontWeight: 600, textTransform: 'capitalize'}} variant="outlined" href='/login'>Login</Button>
-              <Button sx={{ width: '120px', bgcolor:'#2196F3', borderRadius: '8px', fontWeight: 600, textTransform: 'capitalize'}} variant='contained'>Daftar</Button>
+              <Button sx={{ width: '120px', bgcolor:'#2196F3', borderRadius: '8px', fontWeight: 600, textTransform: 'capitalize'}} variant='contained' href='/register'>Daftar</Button>
           </Box>
         </Toolbar>
       </Container>

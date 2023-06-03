@@ -6,6 +6,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import gambar from '../../../public/image/Daftar.png'
 import { useNavigate } from 'react-router-dom';
+import { Footer } from '../../components';
 
 
 
@@ -35,7 +36,7 @@ export default function LupaPassword() {
 
   }
   return (
-    <div className='w-full h-screen'>
+    <div>
       <div className={styles.con}>
         <h3 className={styles.start}>Star</h3>
         <h3 className={styles.My}>MyDashboard</h3>
@@ -71,6 +72,7 @@ export default function LupaPassword() {
           </div>
           </div>
         </div>
+        <Footer/>
     </div>
   )
 }
