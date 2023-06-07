@@ -3,11 +3,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Header } from '../../components';
-import styles from './Course.module.css';
-import Section from './Section/Section';
+import Controller from './Controller/Controller';
+import styles from './ManageCourse.module.css';
 import Sidebar from './Sidebar/Sidebar';
 
-export default function Course() {
+export default function ManageCourse() {
 	const [showSidebar, setShowSidebar] = useState(true);
 	const [selectedSection, setSelectedSection] = useState({});
 	const [selectedContent, setSelectedContent] = useState({});
@@ -45,19 +45,17 @@ export default function Course() {
 				/>
 				<div className={showSidebar ? styles.main : styles.mainWithoutSidebar}>
 					<Header />
-					{Object.keys(selectedSection).length !== 0 && (
-						<Section
-							section={selectedSection}
-							content={selectedContent}
-							onResetSection={() => {
-								setSelectedSection({});
-								setSelectedContent({});
-							}}
-							onResetContent={() => {
-								setSelectedContent({});
-							}}
-						/>
-					)}
+					<Controller
+						selectedSection={selectedSection}
+						selectedContent={selectedContent}
+						onResetSection={() => {
+							setSelectedSection({});
+							setSelectedContent({});
+						}}
+						onResetContent={() => {
+							setSelectedContent({});
+						}}
+					/>
 				</div>
 			</div>
 		</div>

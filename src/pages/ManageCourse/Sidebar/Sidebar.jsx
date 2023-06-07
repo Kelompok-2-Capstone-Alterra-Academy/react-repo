@@ -42,8 +42,8 @@ export default function Sidebar({ show, onSelectSection, onSelectContent, select
 						className={styles.menuAddIcon}
 						onClick={() => {
 							const newSection = {
-								title: `Section x`,
-								sectionTitle: `Section x`,
+								title: '',
+								sectionTitle: '',
 								isDrillDown: true,
 								content: [],
 							};
@@ -68,8 +68,12 @@ export default function Sidebar({ show, onSelectSection, onSelectContent, select
 										onSelectContent({});
 									}}>
 									<div className={styles.menuCourseTitle}>
-										<span className={styles.menuCourseTitleSection}>{section.sectionTitle}</span>
-										<span className={styles.menuCourseTitleCourse}>{section.title}</span>
+										<span className={styles.menuCourseTitleSection}>
+											{section.sectionTitle ? section.sectionTitle : 'Untitled Section'}
+										</span>
+										<span className={styles.menuCourseTitleCourse}>
+											{section.title ? section.title : 'Untitled Course'}
+										</span>
 									</div>
 									<div className={styles.menuCourseArrowContainer}>
 										<FontAwesomeIcon
@@ -99,13 +103,13 @@ export default function Sidebar({ show, onSelectSection, onSelectContent, select
 												<div className={styles.modulContent}>
 													<FontAwesomeIcon
 														icon={
-															content.type === 'Video'
+															content.type === 'video'
 																? faVideo
-																: content.type === 'Materi'
+																: content.type === 'materi'
 																? faFileAlt
-																: content.type === 'Tugas'
+																: content.type === 'tugas'
 																? faTasks
-																: content.type === 'Quiz'
+																: content.type === 'quiz'
 																? faQuestionCircle
 																: faVideo
 														}

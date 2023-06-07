@@ -10,11 +10,11 @@ import './index.css';
 import {
 	AboutUs,
 	Chat,
-	Course,
 	LandingPage,
 	LearningModule,
 	Login,
 	LupaPassword,
+	ManageCourse,
 	Quiz,
 } from './pages';
 import { store } from './redux/store';
@@ -61,7 +61,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 								}
 							/>
 						</Route>
-						<Route path="/course/:id" element={<Course />} />
+						<Route path="/course/:id" element={<ManageCourse />} />
 						<Route
 							path="/chat"
 							element={
