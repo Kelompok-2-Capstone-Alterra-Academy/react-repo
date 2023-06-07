@@ -12,7 +12,7 @@ import styles from './ContentCard.module.css';
 export default function Quiz({ data }) {
 	const [showVideoModal, setShowVideoModal] = useState(false);
 	const [showFileModal, setShowFileModal] = useState(false);
-	console.log(data);
+
 	if (!data.name) return null;
 
 	if (data.type === 'quiz') {

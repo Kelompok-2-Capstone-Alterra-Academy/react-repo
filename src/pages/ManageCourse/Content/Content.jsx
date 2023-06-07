@@ -20,16 +20,16 @@ export default function Content({ data, sectionId, onResetContent }) {
 	const [contentName, setContentName] = useState('');
 	const [deadline, setDeadline] = useState('');
 	const [contentDescription, setContentDescription] = useState('');
+
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
 	const [isEditingContentName, setIsEditingContentName] = useState(false);
 	const [isSelectDeadline, setIsSelectDeadline] = useState(false);
 	const [isShowAddTextModal, setIsShowAddTextModal] = useState(false);
 	const [isShowAddMediaModal, setIsShowAddMediaModal] = useState(false);
 	const [isShowAddLinkModal, setIsShowAddLinkModal] = useState(false);
+
 	const [selectedDeadlineDay, setSelectedDeadlineDay] = useState(Date.now());
 	const [selectedDeadlineTime, setSelectedDeadlineTime] = useState('00:00');
-
-	console.log(deadline);
 
 	const stateData = useSelector((state) => state.section);
 	const selectedSection = stateData.section.find((section) => section.id === sectionId);
