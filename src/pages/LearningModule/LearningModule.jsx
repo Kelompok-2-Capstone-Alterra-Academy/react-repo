@@ -1,7 +1,5 @@
-import { Profile } from '../../components';
+import { CardFile, CardFolder, Header, HeaderDropdown } from '../../components';
 import styles from '../LearningModule/Learning.module.css';
-import ava from '../../../public/image/ava.jpg';
-import { CardFile, CardFolder, HeaderDropdown, Header } from '../../components';
 
 function LearningModule() {
 	return (

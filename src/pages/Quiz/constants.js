@@ -30,6 +30,18 @@ export const tempData = {
 			link: 'https://docs.google.com/forms/d/e/1FAIpQLSeoGW97EUf_NFU7m3Q-KplrzOJ5oYHlXETTegkMgnNgpBqYow/viewform?usp=sf_link',
 			status: 'Draf',
 		},
+		{
+			id: 6,
+			namaKuis: 'Aljabar Linear',
+			link: 'https://docs.google.com/forms/d/e/1FAIpQLSeoGW97EUf_NFU7m3Q-KplrzOJ5oYHlXETTegkMgnNgpBqYow/viewform?usp=sf_link',
+			status: 'Draf',
+		},
+		{
+			id: 7,
+			namaKuis: 'Aljabar Linear',
+			link: 'https://docs.google.com/forms/d/e/1FAIpQLSeoGW97EUf_NFU7m3Q-KplrzOJ5oYHlXETTegkMgnNgpBqYow/viewform?usp=sf_link',
+			status: 'Draf',
+		},
 	],
 	emptyData: [],
 };

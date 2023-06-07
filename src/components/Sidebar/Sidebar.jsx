@@ -1,9 +1,8 @@
-import { Link } from 'react-router-dom';
-import { faCommentDots, faUsers, faBookOpen, faPowerOff } from '@fortawesome/free-solid-svg-icons';
+import { faBookOpen, faCommentDots, faPowerOff, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import styles from '../Sidebar/Sidebar.module.css';
-import Button from '@mui/material/Button';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { Link } from 'react-router-dom';
+import styles from '../Sidebar/Sidebar.module.css';
 
 const Sidebar = () => {
 	return (

@@ -1,15 +1,16 @@
-import { useState, useRef, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-	faGear,
 	faArrowDown,
+	faArrowUp,
 	faFolder,
+	faGear,
 	faMoneyBill,
 	faPhone,
-	faArrowUp,
 } from '@fortawesome/free-solid-svg-icons';
-import styles from './Profile.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useEffect, useState } from 'react';
+import { useClickOutside } from '../../hooks';
 import { truncateString } from '../../utilities/string';
+import styles from './Profile.module.css';
 
 export default function ProfilePage({ data }) {
 	const [isMenuOpen, setMenuOpen] = useState(false);
@@ -20,20 +21,9 @@ export default function ProfilePage({ data }) {
 		{ icon: faPhone, title: 'Kontak CS' },
 	];
 	const [isFirstRender, setIsFirstRender] = useState(true);
-	const containerRef = useRef(null);
-
-	const handleClickOutside = (event) => {
-		if (containerRef.current && !containerRef.current.contains(event.target)) {
-			setMenuOpen(false);
-		}
-	};
-
-	useEffect(() => {
-		document.addEventListener('mousedown', handleClickOutside);
-		return () => {
-			document.removeEventListener('mousedown', handleClickOutside);
-		};
-	}, []);
+	const containerRef = useClickOutside(() => {
+		setMenuOpen(false);
+	});
 
 	useEffect(() => {
 		if (isMenuOpen) {
@@ -47,8 +37,7 @@ export default function ProfilePage({ data }) {
 			ref={containerRef}
 			onClick={() => {
 				setMenuOpen(!isMenuOpen);
-			}}
-		>
+			}}>
 			<div className={styles.profileContainer}>
 				<img src={data.pic} alt="Avatar" className={styles.avatar} />
 				<div className={styles.nameContainer}>
@@ -65,8 +54,7 @@ export default function ProfilePage({ data }) {
 						: isFirstRender
 						? styles.firstRender
 						: styles.closedMenuContainer
-				}
-			>
+				}>
 				<div className={styles.profileContainer}>
 					<img src={data.pic} alt="Avatar" className={styles.avatar} />
 					<div className={styles.nameContainer}>

@@ -1,5 +1,5 @@
-import styles from './OutlineTag.module.css';
 import classNames from 'classnames/bind';
+import styles from './OutlineTag.module.css';
 
 export default function OutlineTag({ type, children, className }) {
 	const colorStyle = (type) => {

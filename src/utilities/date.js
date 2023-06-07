@@ -8,6 +8,6 @@ export function dateToTimestamp(dateString) {
 
 export function convertToDate(date, time) {
 	const momentObj = moment(date);
-	const formattedDate = momentObj.format('DD/MM/YY');
-	return formattedDate + ' ' + time;
+	const formattedDate = momentObj.format('DD MMMM YYYY');
+	return time + ' | ' + formattedDate;
 }

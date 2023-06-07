@@ -8,15 +8,11 @@ const axios = AxiosInstances.create({
 	},
 });
 
-export const DASHBOARD_PREFIX = '/dashboard';
-export const AUTH_PREFIX = '/auth';
-export const SISWA_PREFIX = '/siswa';
-export const NILAI_PREFIX = '/nilai';
-export const CHAT_PREFIX = '/chat';
-export const QUIZ_PREFIX = '/quiz';
-export const COURSE_PREFIX = '/course';
-export const LEARNING_MODUL_PREFIX = '/learning-modul';
-export const PROFILE_PREFIX = '/profile';
-export const INCOME_PREFIX = '/income';
+export const AUTH_PREFIX = '/mentors';
+export const COURSE_PREFIX = '/mentors/course';
+export const DASHBOARD_PREFIX = '/mentors/dashboard';
+export const CUSTOMER_PREFIX = '/mentors/my-customer';
+export const QUIZ_PREFIX = '/mentors/quiz';
+export const CHAT_PREFIX = '/mentors/chat';
 
 export default axios;

@@ -1,12 +1,12 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import styles from './Quiz.module.css';
-import { Button, OutlineTag, ConfirmationModal, Header } from '../../components';
-import { tempData } from './constants';
 import { faPlus, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
-import FormModal from './FormModal/FormModal';
-import { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from '@mui/material/Modal';
+import { useState } from 'react';
+import { Button, ConfirmationModal, Header, OutlineTag } from '../../components';
 import { truncateString } from '../../utilities/string';
+import FormModal from './FormModal/FormModal';
+import styles from './Quiz.module.css';
+import { tempData } from './constants';
 
 export default function Quiz() {
 	const [showFormModal, setShowFormModal] = useState(false);
@@ -23,8 +23,7 @@ export default function Quiz() {
 				<Button
 					className={styles.headerButton}
 					type="Primary"
-					onClick={() => setShowFormModal(true)}
-				>
+					onClick={() => setShowFormModal(true)}>
 					<FontAwesomeIcon icon={faPlus} className={styles.headerButtonIcon} />
 					Kuis Baru
 				</Button>
@@ -62,8 +61,7 @@ export default function Quiz() {
 										<span>
 											<OutlineTag
 												type={item.status == 'Draf' ? 'Yellow' : 'Green'}
-												className={styles.tag}
-											>
+												className={styles.tag}>
 												{item.status}
 											</OutlineTag>
 										</span>

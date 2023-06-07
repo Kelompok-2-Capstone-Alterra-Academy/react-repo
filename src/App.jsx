@@ -1,7 +1,7 @@
-import styles from './App.module.css';
+import { faLink, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faTrash, faLink } from '@fortawesome/free-solid-svg-icons';
-import { Button, Tag, OutlineTag, Profile } from './components';
+import styles from './App.module.css';
+import { Button, OutlineTag, Profile, Tag } from './components';
 
 function App() {
 	return (
@@ -64,9 +64,12 @@ function App() {
 			</div>
 			<div className={styles.otherContainer}>
 				<Profile
-					name="Jennie BP"
-					pic={'https://i.pravatar.cc/150?img=13'}
-					email="jennieblpk20@email.com"
+					data={{
+						name: 'Aldi Taher',
+						pic: 'https://avatars.githubusercontent.com/u/55269572?v=4',
+						email: 'coldplay@gmail.com',
+						role: 'Instructor',
+					}}
 				/>
 			</div>
 		</div>

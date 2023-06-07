@@ -1,0 +1,85 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+}
+
+.barContainer {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding: 0.5em 1.5em;
+	z-index: 1;
+	width: 100%;
+	border-bottom: 1px solid #e0e0e0;
+}
+
+.burger {
+	align-items: flex-start;
+	width: 24px;
+	height: 24px;
+	cursor: pointer;
+}
+
+.content {
+	display: flex;
+	flex: 1;
+	transition: margin-left 0.3s ease;
+}
+
+.main,
+.mainWithoutSidebar {
+	margin-left: 20%;
+	flex: 1;
+	padding: 1em;
+	transition: margin-left 0.3s ease;
+}
+
+.mainWithoutSidebar {
+	margin-left: 0;
+}
+
+.menuTitleContainer {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.menuTitle {
+	font-size: 14px;
+	font-weight: 600;
+	color: #212121;
+}
+
+.menuBoxContainer {
+	margin-top: 1em;
+	font-size: 14px;
+	font-weight: 500;
+}
+
+.menuBoxSelected,
+.menuBox {
+	border-radius: 8px;
+	padding: 1em;
+	margin-bottom: 1em;
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+	flex-direction: row;
+}
+
+.menuIcon,
+.menuParticipantIcon,
+.menuAddIcon {
+	width: 24px;
+	height: 24px;
+}
+
+.selectWrapper {
+	position: relative;
+}
+
+.contentSelection {
+	width: 600%;
+}
