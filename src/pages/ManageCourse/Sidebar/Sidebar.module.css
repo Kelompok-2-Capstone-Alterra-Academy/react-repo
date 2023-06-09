@@ -41,13 +41,6 @@
 	color: #212121;
 }
 
-.menuBoxContainer {
-	margin-top: 1em;
-	font-size: 14px;
-	font-weight: 500;
-}
-
-.menuBoxSelected,
 .menuBox {
 	border-radius: 8px;
 	padding: 1em;
@@ -58,7 +51,6 @@
 	flex-direction: row;
 }
 
-.menuIcon,
 .menuParticipantIcon,
 .menuAddIcon {
 	width: 24px;
@@ -73,7 +65,6 @@
 	width: 600%;
 }
 
-.menuIcon,
 .menuParticipantIcon {
 	margin-right: 1em;
 }
@@ -90,14 +81,14 @@
 	cursor: pointer;
 }
 
-.menuBoxSelected {
-	background: #2196f3;
-	color: white;
-}
-
 .menuBox {
 	background: #ffffff;
 	box-shadow: 0 3px 11px #0000001a, 0 3px 6px #00000026;
+	transition: all 0.3s ease-in-out;
+}
+
+.menuBox:hover {
+	background: #bbdefb;
 }
 
 .menuCourseContainer {

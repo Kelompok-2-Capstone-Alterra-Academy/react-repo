@@ -1,9 +1,8 @@
 import {
-	faArrowDown,
-	faArrowUp,
-	faBookBookmark,
+	faChevronDown,
+	faChevronUp,
 	faFileAlt,
-	faPeopleGroup,
+	faHomeUser,
 	faPlus,
 	faQuestionCircle,
 	faTasks,
@@ -21,18 +20,13 @@ export default function Sidebar({ show, onSelectSection, onSelectContent, select
 
 	return (
 		<div className={classNames(styles.sidebar, !show && styles.hideSidebar)}>
-			<div>
-				<span className={styles.menuTitle}>Kursus Saya</span>
-				<div className={styles.menuBoxContainer}>
-					<div className={styles.menuBoxSelected}>
-						<FontAwesomeIcon icon={faBookBookmark} className={styles.menuIcon} />
-						<span>Matematika</span>
-					</div>
-					<div className={styles.menuBox}>
-						<FontAwesomeIcon icon={faPeopleGroup} className={styles.menuParticipantIcon} />
-						<span>Partisipan</span>
-					</div>
-				</div>
+			<div
+				className={styles.menuBox}
+				onClick={() => {
+					window.location.href = '/dashboard';
+				}}>
+				<FontAwesomeIcon icon={faHomeUser} className={styles.menuParticipantIcon} />
+				<span>Kembali ke Dashboard</span>
 			</div>
 			<div>
 				<div className={styles.menuTitleContainer}>
@@ -77,7 +71,7 @@ export default function Sidebar({ show, onSelectSection, onSelectContent, select
 									</div>
 									<div className={styles.menuCourseArrowContainer}>
 										<FontAwesomeIcon
-											icon={section.isDrillDown ? faArrowUp : faArrowDown}
+											icon={section.isDrillDown ? faChevronUp : faChevronDown}
 											className={styles.menuArrowIcon}
 										/>
 									</div>

@@ -1,4 +1,4 @@
-import { faArrowDown, faSearch, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faSearch, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from '@mui/material/Modal';
 import React, { useEffect, useState } from 'react';
@@ -61,7 +61,7 @@ export default function LinkModal({ data, show, onClose, onSubmit }) {
 							onClick={() => setIsSelectShowPerPage(!isSelectShowPerPage)}
 							ref={containerRef}>
 							{quizLinkShowPerPage}
-							<FontAwesomeIcon icon={faArrowDown} className={styles.modalContentSelectIcon} />
+							<FontAwesomeIcon icon={faChevronDown} className={styles.modalContentSelectIcon} />
 							{isSelectShowPerPage && (
 								<Select
 									isShow={isSelectShowPerPage}

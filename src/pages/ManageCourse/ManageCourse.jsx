@@ -2,6 +2,7 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { Header } from '../../components';
 import Controller from './Controller/Controller';
 import styles from './ManageCourse.module.css';
@@ -11,6 +12,8 @@ export default function ManageCourse() {
 	const [showSidebar, setShowSidebar] = useState(true);
 	const [selectedSection, setSelectedSection] = useState({});
 	const [selectedContent, setSelectedContent] = useState({});
+
+	const { id: courseId } = useParams();
 
 	const data = useSelector((state) => state.section);
 
@@ -44,7 +47,31 @@ export default function ManageCourse() {
 					}}
 				/>
 				<div className={showSidebar ? styles.main : styles.mainWithoutSidebar}>
-					<Header />
+					<Header
+						breadCrumbData={{
+							name: courseId,
+							links: [
+								{
+									link: '/dashboard',
+									title: 'Dashboard',
+								},
+								{
+									link: '/',
+									title: 'Kursus Saya',
+								},
+								{
+									link: `/course/${courseId}`,
+									title: courseId,
+								},
+							],
+						}}
+						profileData={{
+							name: 'Admin',
+							role: 'Admin',
+							pic: 'https://i.pravatar.cc/150?img=68',
+							email: 'testing@gmail.com',
+						}}
+					/>
 					<Controller
 						selectedSection={selectedSection}
 						selectedContent={selectedContent}

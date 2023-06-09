@@ -15,9 +15,7 @@ export default function Select({ isShow, options, handleSelected, className }) {
 		<div
 			className={classNames(
 				className,
-				isShow
-					? classNames(styles.container)
-					: classNames(isFirstRender ? styles.firstRender : styles.hideContainer)
+				isShow ? styles.container : isFirstRender ? styles.firstRender : styles.hideContainer
 			)}>
 			<span className={styles.selectTitle}>{options.title}</span>
 			<div className={styles.option}>

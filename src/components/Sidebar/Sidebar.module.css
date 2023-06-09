@@ -62,6 +62,7 @@
 
 .listItem,
 .listItemActive,
+.listLearning,
 .logoutItem,
 .listCourse {
 	display: flex;
@@ -75,8 +76,65 @@
 	transition: 0.2s all ease-in-out;
 }
 
+.courseListContainer,
+.learningListContainer {
+	position: absolute;
+	top: calc(100% + 0.5em);
+	left: 0;
+	width: 100%;
+	background-color: #ffffff;
+	border-radius: 8px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+	padding: 0.5em;
+	z-index: 2;
+	animation: slideDown 0.3s ease-in-out;
+	box-shadow: 0 3px 11px #0000001a, 0 3px 6px #00000026;
+}
+
+@keyframes slideDown {
+	0% {
+		opacity: 0;
+		visibility: hidden;
+		transform: translateY(-10px);
+	}
+	100% {
+		opacity: 1;
+		visibility: visible;
+		transform: translateY(0px);
+	}
+}
+
+.courseListItem,
+.learningListItem {
+	padding: 0.5em;
+	width: 100%;
+	color: black;
+	border-radius: 8px;
+	transition: 0.2s all ease-in-out;
+}
+
+.courseListItem:hover,
+.learningListItem:hover {
+	background-color: #dedede;
+	color: black;
+}
+
+.courseListItemTitle,
+.learningListItemTitle {
+	color: black;
+	font-weight: 400;
+	font-size: 16px;
+}
+
 .listItemActive {
 	background-color: #0d47a1;
+}
+
+.listLearning {
+	position: relative;
 }
 
 .listCourse {
@@ -88,6 +146,7 @@
 	width: 100%;
 	background-color: #ffffff;
 	color: black;
+	position: relative;
 }
 
 .logoutItem {
@@ -101,7 +160,8 @@
 	color: black;
 }
 
-.listItem:hover {
+.listItem:hover,
+.listLearning:hover {
 	background-color: #0d47a1;
 }
 

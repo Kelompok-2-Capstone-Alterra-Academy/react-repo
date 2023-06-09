@@ -1,24 +1,48 @@
-import { faPlus, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from '@mui/material/Modal';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, ConfirmationModal, Header, OutlineTag } from '../../components';
+import { addQuiz, deleteQuiz, publishQuiz } from '../../redux/actions/quizActions';
 import { truncateString } from '../../utilities/string';
 import FormModal from './FormModal/FormModal';
 import styles from './Quiz.module.css';
-import { tempData } from './constants';
 
 export default function Quiz() {
 	const [showFormModal, setShowFormModal] = useState(false);
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
 	const [showPublishModal, setShowPublishModal] = useState(false);
 
+	const [selectedDeleteQuiz, setSelectedDeleteQuiz] = useState(null);
+	const [selectedPublishQuiz, setSelectedPublishQuiz] = useState(null);
+
+	const quizList = useSelector((state) => state.quiz).quiz;
+	console.log(quizList);
+
+	const dispatch = useDispatch();
+
 	return (
 		<div className={styles.container}>
-			<Header />
+			<Header
+				breadCrumbData={{
+					name: 'Kuis',
+					links: [
+						{ link: '/dashboard', title: 'Dashboard' },
+						{ link: '/', title: 'Pembelajaran' },
+						{ link: '/', title: 'Kuis' },
+					],
+				}}
+				profileData={{
+					name: 'Admin',
+					role: 'Admin',
+					pic: 'https://i.pravatar.cc/150?img=21',
+					email: 'testing@gmail.com',
+				}}
+			/>
 			<div className={styles.header}>
 				<span className={styles.headerTitle}>
-					<b>{tempData.data.length}</b> Kuis telah dibuat
+					<b>{quizList.length}</b> Kuis telah dibuat
 				</span>
 				<Button
 					className={styles.headerButton}
@@ -28,71 +52,85 @@ export default function Quiz() {
 					Kuis Baru
 				</Button>
 			</div>
-			<div className={styles.content}>
-				<table className={styles.table}>
-					<thead className={styles.tableHeader}>
-						<tr>
-							<th>
-								<span>Nama Kuis</span>
-							</th>
-							<th>
-								<span>Preview Link</span>
-							</th>
-							<th>
-								<span>Status</span>
-							</th>
-							<th>
-								<span>Tindakan</span>
-							</th>
-						</tr>
-						<div className={styles.splitter}></div>
-					</thead>
-					{tempData.data.length != 0 && (
+			{quizList.length != 0 && (
+				<div className={styles.content}>
+					<table className={styles.table}>
+						<thead className={styles.tableHeader}>
+							<tr>
+								<th>
+									<span>Nama Kuis</span>
+								</th>
+								<th>
+									<span>Preview Link</span>
+								</th>
+								<th>
+									<span>Status</span>
+								</th>
+								<th>
+									<span>Tindakan</span>
+								</th>
+							</tr>
+							<div className={styles.splitter}></div>
+						</thead>
 						<tbody className={styles.tableBody}>
-							{tempData.data.map((item) => (
+							{quizList.map((item) => (
 								<tr key={item.id}>
 									<td>
-										<span>{item.namaKuis}</span>
+										<span>{truncateString(item.name, 40)}</span>
+									</td>
+									<td span>
+										<a href={item.link} target="_blank" rel="noreferrer" className={styles.preview}>
+											<span>Lihat Preview</span>
+											<FontAwesomeIcon icon={faUpRightFromSquare} className={styles.previewIcon} />
+										</a>
 									</td>
 									<td>
-										<a href={item.link}>{truncateString(item.link, 50)}</a>
+										<OutlineTag
+											type={item.status == 'Draf' ? 'Yellow' : 'Green'}
+											className={styles.tag}>
+											{item.status}
+										</OutlineTag>
 									</td>
-									<td>
-										<span>
-											<OutlineTag
-												type={item.status == 'Draf' ? 'Yellow' : 'Green'}
-												className={styles.tag}>
-												{item.status}
-											</OutlineTag>
-										</span>
-									</td>
-									<td>
-										<Button type="Primary" onClick={() => setShowPublishModal(true)}>
-											Terbitkan
-										</Button>
-										<Button type="Secondary" onClick={() => setShowDeleteModal(true)}>
+									<td
+										className={
+											item.status == 'Draf'
+												? styles.actionButtonContainer
+												: styles.actionOneButtonContainer
+										}>
+										{item.status == 'Draf' && (
+											<Button
+												type="Primary"
+												onClick={() => {
+													setSelectedPublishQuiz(item.id);
+													setShowPublishModal(true);
+												}}
+												className={styles.actionButton}>
+												Terbitkan
+											</Button>
+										)}
+										<Button
+											type="Secondary"
+											onClick={() => {
+												setSelectedDeleteQuiz(item.id);
+												setShowDeleteModal(true);
+											}}
+											className={styles.actionButton}>
 											Hapus
 										</Button>
 									</td>
 								</tr>
 							))}
 						</tbody>
-					)}
-				</table>
-				{tempData.data.length == 0 && (
-					<div className={styles.empty}>
-						<FontAwesomeIcon icon={faXmarkCircle} className={styles.emptyIcon} />
-						<span className={styles.emptyText}>Belum ada kuis yang dibuat</span>
-						<span className={styles.emptyDesc}>
-							Klik tombol <b>Kuis Baru</b> untuk membuat kuis baru
-						</span>
-					</div>
-				)}
-			</div>
+					</table>
+				</div>
+			)}
 			<Modal open={showFormModal} onClose={() => setShowFormModal(false)}>
 				<FormModal
-					closeFunction={() => {
+					onClose={() => {
 						setShowFormModal(false);
+					}}
+					onSubmit={(data) => {
+						dispatch(addQuiz(data));
 					}}
 				/>
 			</Modal>
@@ -100,7 +138,10 @@ export default function Quiz() {
 				show={showDeleteModal}
 				primaryButtonName="Hapus"
 				secondaryButtonName="Batal"
-				onPrimaryButtonClick={() => setShowDeleteModal(false)}
+				onPrimaryButtonClick={() => {
+					dispatch(deleteQuiz(selectedDeleteQuiz));
+					setShowDeleteModal(false);
+				}}
 				onSecondaryButtonClick={() => setShowDeleteModal(false)}
 				title="Hapus Kuis?"
 				image={'/image/quiz-delete.png'}
@@ -111,7 +152,10 @@ export default function Quiz() {
 				show={showPublishModal}
 				primaryButtonName="Terbitkan"
 				secondaryButtonName="Batal"
-				onPrimaryButtonClick={() => setShowPublishModal(false)}
+				onPrimaryButtonClick={() => {
+					dispatch(publishQuiz(selectedPublishQuiz));
+					setShowPublishModal(false);
+				}}
 				onSecondaryButtonClick={() => setShowPublishModal(false)}
 				title="Terbitkan Kuis?"
 				image={'/image/quiz-publish.png'}

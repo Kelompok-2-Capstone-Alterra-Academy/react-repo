@@ -4,7 +4,6 @@
 	align-items: center;
 	justify-content: flex-start;
 	width: 100%;
-	padding: 1em;
 }
 
 .header {
@@ -56,7 +55,7 @@
 
 .tableHeader span {
 	color: #616161;
-	font-size: 16px;
+	font-size: 14px;
 	font-weight: 500;
 }
 
@@ -70,58 +69,40 @@
 }
 
 .tableBody td {
-	padding-bottom: 2em;
+	padding-bottom: 0.5em;
 }
 
-.tableBody span {
+.tableBody span,
+.tableBody a {
 	color: #212121;
-	font-size: 16px;
+	font-size: 14px;
 	font-weight: 500;
-}
-
-.table td:nth-child(2),
-.table th:nth-child(2),
-.table td:nth-child(3),
-.table th:nth-child(3) {
-	text-align: center;
-}
-
-.table td:nth-child(3) span {
-	display: flex;
-	justify-content: center;
-	align-items: center;
 }
 
 .table th:nth-child(1),
 .table td:nth-child(1) {
-	width: 20%;
+	width: 30%;
 	word-break: break-all;
 }
 
-.table th:nth-child(4),
+.table th:nth-child(4) {
+	width: 30%;
+}
+
 .table td:nth-child(4) {
-	width: 25%;
+	width: 100%;
 }
 
 .table th:nth-child(2),
 .table td:nth-child(2) {
-	width: 45%;
+	width: 15%;
+	padding: 0 1em;
 	word-break: break-all;
-}
-
-.table td:nth-child(2) {
-	background-color: #f5f5f5;
-	border-radius: 8px;
-	width: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	padding: 0.5em;
 }
 
 .table td:nth-child(3),
 .table th:nth-child(3) {
-	width: 10%;
+	width: 15%;
 }
 
 .table a {
@@ -130,19 +111,42 @@
 	cursor: pointer;
 }
 
-.table td:nth-child(4) {
+.actionButtonContainer {
 	width: 100%;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-gap: 0.5em;
+}
+
+.actionOneButtonContainer {
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(1, 1fr);
 }
 
 .table td:nth-child(4) > button {
-	min-width: 48%;
+	width: 100%;
+}
+
+.preview {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	padding: 0.5em;
+	background-color: #f5f5f5;
+	border-radius: 8px;
+	transition: all 0.2s ease-in-out;
+}
+
+.preview:hover {
+	background-color: #e0e0e0;
 }
 
 .tag {
-	width: 60%;
+	height: 100%;
+	width: 80%;
 	font-size: 12px;
 	font-weight: 600;
 	display: flex;
@@ -158,30 +162,6 @@
 	background-color: #d9d9d9;
 }
 
-.empty {
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	margin-top: 1em;
-	padding: 2em;
-}
-
-.emptyIcon {
-	color: #616161;
-	font-size: 60px;
-	margin-bottom: 10px;
-}
-
-.emptyText {
-	color: #616161;
-	font-size: 24px;
-	font-weight: 500;
-}
-
-.emptyDesc {
-	color: #616161;
-	font-size: 16px;
-	font-weight: 400;
+.actionButton {
+	font-size: 14px;
 }
