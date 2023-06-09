@@ -21,7 +21,7 @@ export default function ConfirmationModal({
 					<span>{confirmationText}</span>
 				</div>
 				<div className={styles.footer}>
-					<Button type="Danger" onClick={onSecondaryButtonClick}>
+					<Button type="Secondary" onClick={onSecondaryButtonClick}>
 						{secondaryButtonName}
 					</Button>
 					<Button type="Primary" onClick={onPrimaryButtonClick}>

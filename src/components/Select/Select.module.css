@@ -70,7 +70,7 @@
 	font-size: 14px;
 	width: 100%;
 	overflow: auto;
-	max-height: 90%;
+	max-height: 200px;
 }
 
 .option::-webkit-scrollbar {
@@ -88,7 +88,7 @@
 }
 
 .optionContainer {
-	padding: 0.5em 0;
+	padding: 1em 0.5em;
 	cursor: pointer;
 	transition: all 0.3s ease-in-out;
 	display: flex;
@@ -106,7 +106,6 @@
 	color: white !important;
 	background: #1976d2;
 	border-radius: 8px;
-	padding: 1em;
 	& svg {
 		color: white;
 	}

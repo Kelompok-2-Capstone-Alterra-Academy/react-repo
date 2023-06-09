@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react';
 import { Button } from '../../../components';
 import styles from './FormModal.module.css';
 
-export default function FormModal({ closeFunction }) {
+export default function FormModal({ onClose, onSubmit }) {
 	const [form, setForm] = useState({
-		namaKuis: '',
-		linkGForm: '',
+		name: '',
+		link: '',
 	});
 	const [formValidation, setFormValidation] = useState(false);
 	const [isCheckingGForm, setIsCheckingGForm] = useState(false);
@@ -16,7 +16,7 @@ export default function FormModal({ closeFunction }) {
 	const [isSuccessCreateQuiz, setIsSuccessCreateQuiz] = useState(false);
 
 	useEffect(() => {
-		if (form.namaKuis !== '' && form.linkGForm !== '' && isValidGForm) {
+		if (form.name !== '' && form.link !== '' && isValidGForm) {
 			setFormValidation(true);
 		} else {
 			setFormValidation(false);
@@ -36,7 +36,7 @@ export default function FormModal({ closeFunction }) {
 		setTimeout(() => {
 			setCheckingGFormLoading(false);
 			setIsCheckingGForm(true);
-			setIsValidGForm(checkGFormExistence(form.linkGForm));
+			setIsValidGForm(checkGFormExistence(form.link));
 		}, 1000);
 	};
 
@@ -54,7 +54,7 @@ export default function FormModal({ closeFunction }) {
 							type="Secondary"
 							onClick={() => {
 								setIsSuccessCreateQuiz(false);
-								closeFunction();
+								onClose();
 							}}>
 							Tutup
 						</Button>
@@ -69,17 +69,17 @@ export default function FormModal({ closeFunction }) {
 								className={styles.formInput}
 								type="text"
 								placeholder="Nama Kuis"
-								value={form.namaKuis}
-								onChange={(e) => setForm({ ...form, namaKuis: e.target.value })}
+								value={form.name}
+								onChange={(e) => setForm({ ...form, name: e.target.value })}
 							/>
 							<div className={styles.gFormInput}>
 								<input
 									className={styles.formInput}
 									type="text"
 									placeholder="Link G-Form"
-									value={form.linkGForm}
+									value={form.link}
 									onChange={(e) => {
-										setForm({ ...form, linkGForm: e.target.value });
+										setForm({ ...form, link: e.target.value });
 										setIsValidGForm(false);
 										setIsCheckingGForm(false);
 									}}
@@ -111,14 +111,21 @@ export default function FormModal({ closeFunction }) {
 							type="Danger"
 							onClick={() => {
 								setForm({
-									namaKuis: '',
-									linkGForm: '',
+									name: '',
+									link: '',
 								});
-								closeFunction();
+								onClose();
 							}}>
 							Batal
 						</Button>
-						<Button type={formValidation ? 'Primary' : 'Disabled'}>Buat</Button>
+						<Button
+							type={formValidation ? 'Primary' : 'Disabled'}
+							onClick={() => {
+								onSubmit(form);
+								setIsSuccessCreateQuiz(true);
+							}}>
+							Buat
+						</Button>
 					</div>
 				</>
 			)}

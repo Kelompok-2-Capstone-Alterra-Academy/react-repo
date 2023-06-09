@@ -1,4 +1,9 @@
-import { faArrowDown, faArrowUp, faFolderOpen, faSearch } from '@fortawesome/free-solid-svg-icons';
+import {
+	faChevronDown,
+	faChevronUp,
+	faFolderOpen,
+	faSearch,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import { Select } from '../../components';
@@ -110,7 +115,7 @@ export default function Chat() {
 							ref={containerRef}>
 							<span>{selectedSubject}</span>
 							<FontAwesomeIcon
-								icon={isSelectOpen ? faArrowUp : faArrowDown}
+								icon={isSelectOpen ? faChevronUp : faChevronDown}
 								className={styles.arrowIcon}
 							/>
 							<Select

@@ -1,18 +1,19 @@
 import {
-	faArrowDown,
-	faArrowUp,
+	faChevronDown,
+	faChevronUp,
 	faFolder,
 	faGear,
 	faMoneyBill,
 	faPhone,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import { useClickOutside } from '../../hooks';
 import { truncateString } from '../../utilities/string';
 import styles from './Profile.module.css';
 
-export default function ProfilePage({ data }) {
+export default function Profile({ data, className }) {
 	const [isMenuOpen, setMenuOpen] = useState(false);
 	const menuItems = [
 		{ icon: faGear, title: 'Edit Profile' },
@@ -33,7 +34,7 @@ export default function ProfilePage({ data }) {
 
 	return (
 		<div
-			className={styles.container}
+			className={classNames(styles.container, className)}
 			ref={containerRef}
 			onClick={() => {
 				setMenuOpen(!isMenuOpen);
@@ -45,7 +46,10 @@ export default function ProfilePage({ data }) {
 					<span className={styles.role}>Instructors</span>
 				</div>
 			</div>
-			<FontAwesomeIcon icon={isMenuOpen ? faArrowUp : faArrowDown} className={styles.arrowIcon} />
+			<FontAwesomeIcon
+				icon={isMenuOpen ? faChevronUp : faChevronDown}
+				className={styles.arrowIcon}
+			/>
 
 			<div
 				className={

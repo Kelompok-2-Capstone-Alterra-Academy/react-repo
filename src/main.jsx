@@ -10,14 +10,14 @@ import './index.css';
 import {
 	AboutUs,
 	Chat,
+	Dashboard,
+	EditProfile,
 	LandingPage,
 	LearningModule,
 	Login,
 	LupaPassword,
 	ManageCourse,
 	Quiz,
-	Dashboard,
-	EditProfile,
 } from './pages';
 import { store } from './redux/store';
 
@@ -35,40 +35,54 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 					<Routes>
 						<Route path="/" element={<LandingPage />} />
 						<Route path="/about-us" element={<AboutUs />} />
-						<Route path="/dashboard" element={
-							<ProtectedRoute>
-								<Dashboard />
-							</ProtectedRoute>}
+						<Route
+							path="/dashboard"
+							element={
+								<ProtectedRoute>
+									<Dashboard />
+								</ProtectedRoute>
+							}
 						/>
 						<Route path="/login" element={<Login />} />
 						<Route path="/Lupa" element={<LupaPassword />} />
 						<Route path="/register" element={<App />} />
 						<Route path="/profil" element={<App />} />
-						<Route path="/edit-profile" element={<EditProfile />} />
+						<Route
+							path="/edit-profile"
+							element={
+								<ProtectedRoute>
+									<EditProfile />
+								</ProtectedRoute>
+							}
+						/>
 						<Route path="/income" element={<App />} />
 						<Route path="/customer">
 							<Route path="atur-customer" element={<App />} />
 						</Route>
-						<Route path="/learning">
-							<Route path=":nama" element={<App />} />
-							<Route
-								path="kuis"
-								element={
-									<ProtectedRoute>
-										<Quiz />
-									</ProtectedRoute>
-								}
-							/>
-							<Route
-								path="modul"
-								element={
-									<ProtectedRoute>
-										<LearningModule />
-									</ProtectedRoute>
-								}
-							/>
-						</Route>
-						<Route path="/course/:id" element={<ManageCourse />} />
+						<Route
+							path="/quiz"
+							element={
+								<ProtectedRoute>
+									<Quiz />
+								</ProtectedRoute>
+							}
+						/>
+						<Route
+							path="/modul"
+							element={
+								<ProtectedRoute>
+									<LearningModule />
+								</ProtectedRoute>
+							}
+						/>
+						<Route
+							path="/course/:id"
+							element={
+								<ProtectedRoute isUsingSidebar={false}>
+									<ManageCourse />
+								</ProtectedRoute>
+							}
+						/>
 						<Route
 							path="/chat"
 							element={
