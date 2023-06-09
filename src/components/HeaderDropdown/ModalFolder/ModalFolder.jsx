@@ -1,20 +1,20 @@
 import { useState } from "react";
-import styles from "../FormModal/FormModal.module.css"
-import { Button } from "../../components";
+import styles from "../ModalFolder/ModalFolder.module.css"
+import { Button } from "../../../components";
 
-const FormModal = ({ closeFunction, header, placeholder }) => {
-    const [contentForm, setContentForm] = useState('');
+const ModalFolder = ({ closeFunction }) => {
+    const [folder, setFolder] = useState('');
     return (
         <div className={styles.container}>
-            <span className={styles.headerTitle}>{header}</span>
+            <span className={styles.headerTitle}>Folder Baru</span>
             <div className={styles.content}>
                 <form className={styles.form}>
                     <input
                         className={styles.formInput}
                         type="text"
-                        placeholder={placeholder}
-                        value={contentForm}
-                        onChange={(e) => setContentForm(e.target.value)}
+                        placeholder="Nama Folder Baru"
+                        value={folder}
+                        onChange={(e) => setFolder(e.target.value)}
                     />
                 </form>
             </div>
@@ -22,7 +22,7 @@ const FormModal = ({ closeFunction, header, placeholder }) => {
                 <Button
                     type="Danger"
                     onClick={() => {
-                        setContentForm('');
+                        setFolder('');
                         closeFunction();
                     }}
                 >
@@ -34,4 +34,4 @@ const FormModal = ({ closeFunction, header, placeholder }) => {
     )
 }
 
-export default FormModal
+export default ModalFolder

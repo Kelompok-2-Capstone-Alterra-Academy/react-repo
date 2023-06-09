@@ -12,12 +12,15 @@ import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThLarge, faDownload, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { ConfirmationModal } from '../ConfirmationModal';
-import FormModal from '../FormModal/FormModal';
 import Modal from '@mui/material/Modal';
+import ModalDetail from './ModalDetail/ModalDetail';
+import ModalEditFile from './ModalEditFile/ModalEditFile';
 
 const CardFile = () => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showFormModalBerkas, setShowFormModalBerkas] = useState(false);
+    const [showFormModalDetail, setShowFormModalDetail] = useState(false);
+
 
     return (
 
@@ -57,7 +60,7 @@ const CardFile = () => {
                                         setShowFormModalBerkas(true);
                                     }}><Typography sx={{ fontSize: '14px' }} color="#2196F3"><FontAwesomeIcon style={{ marginRight: '20px' }} icon={faPen} />Ganti Nama Berkas</Typography></MenuItem>
                                     <MenuItem style={{ marginTop: 12, marginBottom: 12 }} onClick={popupState.close}><Typography sx={{ fontSize: '14px' }} color="#2196F3"><FontAwesomeIcon style={{ marginRight: '20px' }} icon={faDownload} />Unduh Berkas</Typography></MenuItem>
-                                    <MenuItem style={{ marginTop: 12, marginBottom: 12 }} onClick={popupState.close}><Typography sx={{ fontSize: '14px' }} color="#2196F3"><FontAwesomeIcon style={{ marginRight: '20px' }} icon={faThLarge} />Lihat Detail</Typography></MenuItem>
+                                    <MenuItem style={{ marginTop: 12, marginBottom: 12 }} onClick={() => setShowFormModalDetail(true)}><Typography sx={{ fontSize: '14px' }} color="#2196F3"><FontAwesomeIcon style={{ marginRight: '20px' }} icon={faThLarge} />Lihat Detail</Typography></MenuItem>
                                     <MenuItem style={{ marginTop: 12, marginBottom: 12 }} onClick={() => setShowDeleteModal(true)}><Typography sx={{ fontSize: '14px' }} color="#2196F3"><FontAwesomeIcon style={{ marginRight: '20px' }} icon={faTrash} />Hapus Berkas</Typography></MenuItem>
                                 </Menu>
                             </>
@@ -86,13 +89,9 @@ const CardFile = () => {
                 </CardContent>
             </Card>
             <Modal open={showFormModalBerkas} onClose={() => setShowFormModalBerkas(false)}>
-                <FormModal
-                    header="Ubah Nama Berkas"
-                    placeholder="Nama Berkas"
-                    closeFunction={() => {
-                        setShowFormModalBerkas(false);
-                    }}
-                />
+                <ModalEditFile closeFunction={() => {
+                    setShowFormModalBerkas(false);
+                }} />
             </Modal>
             <ConfirmationModal
                 show={showDeleteModal}
@@ -104,6 +103,9 @@ const CardFile = () => {
                 image={'/image/quiz-delete.png'}
                 confirmationText="Apakah Anda yakin ingin menghapus berkas ini?"
             />
+            <Modal open={showFormModalDetail} onClose={() => setShowFormModalDetail(false)}>
+                <ModalDetail />
+            </Modal>
         </>
     )
 }

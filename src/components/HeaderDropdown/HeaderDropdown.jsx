@@ -7,15 +7,18 @@ import MenuItem from '@mui/material/MenuItem';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import styles from "../HeaderDropdown/HeaderDropdown.module.css";
 import Divider from '@mui/material/Divider';
-import FormModal from '../FormModal/FormModal';
 import Modal from '@mui/material/Modal';
 import { useState } from 'react';
+import ModalUploadFile from './ModalUploadFile/ModalUploadFile';
+import ModalFolder from './ModalFolder/ModalFolder';
+import ModalLink from './ModalLink/ModalLink';
 
 
 
 const HeaderDropdown = () => {
     const [showFormModalFolder, setShowFormModalFolder] = useState(false);
     const [showFormModalLink, setShowFormModalLink] = useState(false);
+    const [showFormModalFile, setShowFormModalFile] = useState(false);
 
     return (
         <>
@@ -44,7 +47,7 @@ const HeaderDropdown = () => {
                                 marginTop: '10px',
                             },
                         }} {...bindMenu(popupState)}>
-                            <MenuItem sx={[{ '&:hover': { backgroundColor: '#2196F3', color: '#FFFFFF', transition: '0.3s ease-in-out' }, color: "#2196F3" }]} color="#2196F3" onClick={popupState.close}><FontAwesomeIcon style={{ marginLeft: 8, marginRight: '20px' }} icon={faFile} />File</MenuItem>
+                            <MenuItem sx={[{ '&:hover': { backgroundColor: '#2196F3', color: '#FFFFFF', transition: '0.3s ease-in-out' }, color: "#2196F3" }]} color="#2196F3" onClick={() => setShowFormModalFile(true)}><FontAwesomeIcon style={{ marginLeft: 8, marginRight: '20px' }} icon={faFile} />File</MenuItem>
                             <Divider sx={{ bgcolor: "#2196F3", padding: '0px' }} />
                             <MenuItem sx={[{ '&:hover': { backgroundColor: '#2196F3', color: '#FFFFFF', transition: '0.3s ease-in-out' }, color: "#2196F3" }]} color="#2196F3" onClick={() => setShowFormModalFolder(true)}><FontAwesomeIcon style={{ marginLeft: 8, marginRight: '20px' }} icon={faFolderOpen} />Folder</MenuItem>
                             <Divider sx={{ bgcolor: "#2196F3" }} />
@@ -54,22 +57,17 @@ const HeaderDropdown = () => {
                 )}
             </PopupState>
             <Modal open={showFormModalFolder} onClose={() => setShowFormModalFolder(false)}>
-                <FormModal
-                    header="Folder Baru"
-                    placeholder="Nama Folder Baru"
-                    closeFunction={() => {
-                        setShowFormModalFolder(false);
-                    }}
-                />
+                <ModalFolder closeFunction={() => {
+                    setShowFormModalFolder(false);
+                }} />
             </Modal>
             <Modal open={showFormModalLink} onClose={() => setShowFormModalLink(false)}>
-                <FormModal
-                    header="Masukan Link Video"
-                    placeholder="Link Video"
-                    closeFunction={() => {
-                        setShowFormModalLink(false);
-                    }}
-                />
+                <ModalLink closeFunction={() => {
+                    setShowFormModalLink(false);
+                }} />
+            </Modal>
+            <Modal open={showFormModalFile} onClose={() => setShowFormModalFile(false)}>
+                <ModalUploadFile />
             </Modal>
         </>
     )
