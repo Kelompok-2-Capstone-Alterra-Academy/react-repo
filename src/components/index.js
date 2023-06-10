@@ -13,4 +13,6 @@ export * from './Select';
 export * from './Sidebar';
 export * from './Tag';
 export * from './MyTextField';
-export * from './CardKursus'
+export * from './CardKursus';
+export * from './ResponseModal';
+export * from './OutlinedButton';
