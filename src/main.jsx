@@ -18,6 +18,7 @@ import {
 	LupaPassword,
 	ManageCourse,
 	Quiz,
+	ManageCustomer,
 } from './pages';
 import { store } from './redux/store';
 
@@ -56,9 +57,14 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 							}
 						/>
 						<Route path="/income" element={<App />} />
-						<Route path="/customer">
-							<Route path="atur-customer" element={<App />} />
-						</Route>
+						<Route
+							path="/manage-customer"
+							element={
+								<ProtectedRoute>
+									<ManageCustomer />
+								</ProtectedRoute>
+							}
+						/>
 						<Route
 							path="/quiz"
 							element={
