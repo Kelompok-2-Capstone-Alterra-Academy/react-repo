@@ -16,7 +16,7 @@ import {
 } from "react-hook-form";
 import {  InputAdornment, InputLabel, Select, MenuItem, ButtonGroup} from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMars, faVenus } from '@fortawesome/free-solid-svg-icons';
+import { faM, faMars, faVenus } from '@fortawesome/free-solid-svg-icons';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import styles from './Register.module.css'
 import gambar from '../../../public/image/Daftar.png'
@@ -142,6 +142,13 @@ import { useNavigate } from "react-router-dom";
       const handleChange = (event) => {
         setAge(event.target.value);
       };
+      const [gender, setGender] = useState('');
+      const [selectedBorder, setSelectedBorder] = useState('');
+
+      const handleGenderClick = (selectedGender) => {
+        setGender(selectedGender);
+      };
+
       return (
         <>
         <label className={styles.Judul}>Nama Lengkap</label>
@@ -205,14 +212,31 @@ import { useNavigate } from "react-router-dom";
           <label className={styles.Judul}>Jenis Kelamin</label>
           <Controller
             control={control}
-            name="jenisKelamin"
+            name="setGender"
             render={({ field }) => (
               <FormControl fullWidth
               {...field}
-              id="jenisKelamin"
+              id="setGender"
               label="bidangKeahlian"
               required
               >
+                <div style={{display:"flex"}}>
+                <div className={`${styles.Gender} ${selectedBorder === 'Laki-Laki' ? styles.selected : ''}`} onClick={() => handleGenderClick('Laki-Laki')}>
+                  <div className={styles.Btn_GenderLak}>
+                    <FontAwesomeIcon icon={faMars} />
+                    <h6>Laki-Laki</h6>
+                  </div>
+                  </div>
+                  <div className={styles.Gender}>
+                  <div className={styles.Btn_GenderPer} onClick={() => handleGenderClick('Perempuan')}>
+                    <FontAwesomeIcon icon={faVenus} />
+                    <p>Perempuan</p>
+                    <img src={faMars} alt="" />
+                  </div>
+                  </div>
+                </div>
+                
+                
                 <RadioGroup
                   row
                   aria-labelledby="demo-row-radio-buttons-group-label"
@@ -237,19 +261,7 @@ import { useNavigate } from "react-router-dom";
         </>
       );
     };
-    const StyledRadio = (props) => (
-  <Radio
-    {...props}
-    sx={{
-      "& .MuiSvgIcon-root": {
-        borderRadius: "50%",
-        width: "16px",
-        height: "16px",
-        backgroundColor: "currentColor",
-      },
-    }}
-  />
-);
+  
 
 function getStepContent(step) {
   switch (step) {
@@ -273,7 +285,7 @@ const Register = () => {
       namaLengkap: "",
       tanggalLahir: "",
       bidangKeahlian: "",
-      jenisKelamin:"",
+      setGender:"",
     },
   });
 
