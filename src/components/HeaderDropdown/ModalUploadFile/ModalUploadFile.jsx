@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowUpFromBracket, faRectangleXmark } from '@fortawesome/free-solid-svg-icons';
+import { faArrowUpFromBracket } from '@fortawesome/free-solid-svg-icons';
 import styles from "../ModalUploadFile/ModalUploadFile.module.css"
 import { Button } from '../../../components';
 
@@ -13,21 +13,11 @@ const ModalUploadFile = () => {
                     <FontAwesomeIcon className={styles.icon} icon={faArrowUpFromBracket} />
                 </div>
                 <span className={styles.textInformation}>Seret dan lepas berkas anda disini</span>
-                <Button type="Secondary">Pilih Berkas</Button>
+                <label htmlFor="inputTag">
+                    <span className={styles.inputFile}>Pilih Berkas</span>
+                    <input id="inputTag" type="file" />
+                </label>
                 <span className={styles.textProvision}>Anda bisa unggah .PDF .DOC .XML .MP3 .MP4</span>
-            </div>
-            <div className={styles.footer}>
-
-                {/* <Button
-                    type="Danger"
-                    onClick={() => {
-                        setContentForm('');
-                        closeFunction();
-                    }}
-                >
-                    Batal
-                </Button>
-                <Button type='Primary'>Simpan</Button> */}
             </div>
         </div>
     )
