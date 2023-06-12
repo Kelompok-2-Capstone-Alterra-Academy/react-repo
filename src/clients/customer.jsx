@@ -1,4 +1,4 @@
-import axios, { CUSTOMER_PREFIX } from 'axios';
+import axios, { CUSTOMER_PREFIX } from './axios';
 
 export function createCourse() {
 	return axios({

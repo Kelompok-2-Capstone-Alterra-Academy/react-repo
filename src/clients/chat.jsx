@@ -1,4 +1,4 @@
-import axios, { CHAT_PREFIX } from 'axios';
+import axios, { CHAT_PREFIX } from './axios';
 
 export function getStudent(params) {
 	return axios({

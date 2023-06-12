@@ -1,10 +1,9 @@
 import AxiosInstances from 'axios';
 
 const axios = AxiosInstances.create({
-	baseURL: 'https://baseURL', //TODO change baseURL
+	baseURL: 'https://3.26.234.145:8081',
 	headers: {
 		'Content-Type': 'application/json',
-		Bearer: 'Bearer', //TODO change Bearer
 	},
 });
 
