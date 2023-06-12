@@ -25,7 +25,7 @@
 	color: #616161;
 	font-weight: 400;
     font-size: 14px;
-	margin-bottom: 2em;
+	margin-bottom: 3.3em;
 }
 
 .content{
@@ -36,6 +36,23 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: space-between;
+}
+
+.progress{
+    width: 780px;
+    height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.title{
+	display: flex;
+	font-weight: 600;
+	font-size: 14px;
+	color: #000000;
+	position: relative;
+	margin-bottom: 20px;
 }
 
 .icon{
@@ -101,4 +118,60 @@
   }
   label{
 	cursor:pointer;
+  }
+
+  .textInfo{
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	position: relative;
+	justify-content: space-between;
+	font-weight: 600;
+	font-size: 12px;
+	color: #000000;
+  }
+
+  .nameInfo{
+	
+  }
+
+  .sizeInfo{
+	
+  }
+
+  .removeFile{
+	
+  }
+
+  .actions{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-top: 5em;
+	margin-bottom: 1em;
+  }
+
+  .actionFile{
+	display: flex;
+  }
+
+  .button{
+	margin: 15px;
+  }
+
+  .inputAddFile{
+	background-color: #F0FAFF;
+	/* border: 2px solid #2196f3; */
+	color: #2196F3;
+	width: fit-content;
+	cursor: pointer;
+	font-weight: 600;
+	font-size: 15px;
+	border-radius: 8px;
+	padding: 0.5em 1.5em;
+	transition: all 0.2s ease-in-out;
+	outline: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
   }
