@@ -7,7 +7,6 @@ import { useClickOutside } from '../../hooks';
 import styles from './CardKursus.module.css';
 
 export default function CardKursus({ data }) {
-	console.log(data);
 	const [isShowPublishModal, setIsShowPublishModal] = useState(false);
 	const [isShowClassSelect, setIsShowClassSelect] = useState(false);
 	const [isShowMajorSelect, setIsShowMajorSelect] = useState(false);

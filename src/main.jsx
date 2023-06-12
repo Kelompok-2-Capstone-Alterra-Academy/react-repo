@@ -15,10 +15,9 @@ import {
 	LandingPage,
 	LearningModule,
 	Login,
-	LupaPassword,
+	ForgotPassword,
 	ManageCourse,
 	Quiz,
-	ManageCustomer,
 } from './pages';
 import { store } from './redux/store';
 
@@ -45,23 +44,13 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 							}
 						/>
 						<Route path="/login" element={<Login />} />
-						<Route path="/Lupa" element={<LupaPassword />} />
+						<Route path="/forgot-password" element={<ForgotPassword />} />
 						<Route path="/register" element={<App />} />
-						<Route path="/profil" element={<App />} />
 						<Route
 							path="/edit-profile"
 							element={
 								<ProtectedRoute>
 									<EditProfile />
-								</ProtectedRoute>
-							}
-						/>
-						<Route path="/income" element={<App />} />
-						<Route
-							path="/manage-customer"
-							element={
-								<ProtectedRoute>
-									<ManageCustomer />
 								</ProtectedRoute>
 							}
 						/>
