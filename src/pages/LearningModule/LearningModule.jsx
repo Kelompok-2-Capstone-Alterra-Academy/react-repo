@@ -1,4 +1,6 @@
-import { CardFile, CardFolder, Header, HeaderDropdown } from '../../components';
+import Grid from '@mui/material/Grid';
+import { CardFile, Header, HeaderDropdown } from '../../components';
+import SidebarContent from '../../components/SidebarContent/SidebarContent';
 import styles from '../LearningModule/Learning.module.css';
 
 function LearningModule() {
@@ -8,31 +10,50 @@ function LearningModule() {
 				breadCrumbData={{
 					name: 'Modul',
 					links: [
-						{
-							link: '/dashboard',
-							title: 'Dashboard',
-						},
-						{
-							link: '/',
-							title: 'Pembelajaran',
-						},
-						{
-							link: '/',
-							title: 'Modul',
-						},
+						{ link: '/dashboard', title: 'Dashboard' },
+						{ link: '/', title: 'Pembelajaran' },
+						{ link: '/', title: 'Modul' },
 					],
 				}}
 				profileData={{
 					name: 'Admin',
 					role: 'Admin',
-					pic: 'https://i.pravatar.cc/150?img=68',
+					pic: 'https://i.pravatar.cc/150?img=21',
 					email: 'testing@gmail.com',
 				}}
 			/>
 			<div className={styles.mainContent}>
 				<HeaderDropdown />
-				<CardFolder />
-				<CardFile />
+				<div className={styles.content}>
+					<SidebarContent />
+					<div>
+						<p className={styles.paragraph}>File (6)</p>
+						<Grid container spacing={3.5}>
+							<Grid item xs={12} sm={6} md={4} lg={3} xl={2.4}>
+								<CardFile />
+							</Grid>
+
+							<Grid item xs={12} sm={6} md={4} lg={3} xl={2.4}>
+								<CardFile />
+							</Grid>
+
+							<Grid item xs={12} sm={6} md={4} lg={3} xl={2.4}>
+								<CardFile />
+							</Grid>
+							<Grid item xs={12} sm={6} md={4} lg={3} xl={2.4}>
+								<CardFile />
+							</Grid>
+
+							<Grid item xs={12} sm={6} md={4} lg={3} xl={2.4}>
+								<CardFile />
+							</Grid>
+
+							<Grid item xs={12} sm={6} md={4} lg={3} xl={2.4}>
+								<CardFile />
+							</Grid>
+						</Grid>
+					</div>
+				</div>
 			</div>
 		</div>
 	);
