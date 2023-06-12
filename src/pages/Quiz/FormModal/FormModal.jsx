@@ -108,7 +108,7 @@ export default function FormModal({ onClose, onSubmit }) {
 					</div>
 					<div className={styles.footer}>
 						<Button
-							type="Danger"
+							type="Secondary"
 							onClick={() => {
 								setForm({
 									name: '',

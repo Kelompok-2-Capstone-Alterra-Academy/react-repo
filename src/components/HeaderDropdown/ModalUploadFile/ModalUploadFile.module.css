@@ -1,10 +1,10 @@
-.container{
-    width: 45%;
-    height: fit-content;
+.container {
+	width: 45%;
+	height: fit-content;
 	position: absolute;
 	top: 50%;
 	left: 50%;
-    border-radius: 8px;
+	border-radius: 8px;
 	transform: translate(-50%, -50%);
 	background-color: white;
 	padding: 2em 3em;
@@ -14,39 +14,38 @@
 	justify-content: space-between;
 }
 
-
 .headerTitle {
 	font-size: 20px;
 	font-weight: 600;
 	margin-bottom: 0.3em;
 }
 
-.headerText{
+.headerText {
 	color: #616161;
 	font-weight: 400;
-    font-size: 14px;
+	font-size: 14px;
 	margin-bottom: 3.3em;
 }
 
-.content{
-    border: 2px solid #f5f5f5;
-    width: 780px;
-    height: 100%;
+.content {
+	border: 2px solid #f5f5f5;
+	width: 780px;
+	height: 100%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: space-between;
 }
 
-.progress{
-    width: 780px;
-    height: 100%;
+.progress {
+	width: 780px;
+	height: 100%;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 }
 
-.title{
+.title {
 	display: flex;
 	font-weight: 600;
 	font-size: 14px;
@@ -55,21 +54,21 @@
 	margin-bottom: 20px;
 }
 
-.icon{
-    margin-top: 30px;
-    margin-bottom: 30px;
-	color: #2196F3;
+.icon {
+	margin-top: 30px;
+	margin-bottom: 30px;
+	color: #2196f3;
 	font-size: 50px;
 }
 
-.textInformation{
+.textInformation {
 	font-weight: 600;
 	font-size: 14px;
-	color: #9E9E9E;
+	color: #9e9e9e;
 	margin-bottom: 1em;
 }
 
-.textProvision{
+.textProvision {
 	font-weight: 400;
 	font-size: 10px;
 	color: #616161;
@@ -77,11 +76,11 @@
 	margin-bottom: 7.5em;
 }
 
-.rounded{
+.rounded {
 	width: 120px;
 	height: 120px;
 	border-radius: 100%;
-	background-color: #F0FAFF;
+	background-color: #f0faff;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -90,7 +89,7 @@
 	margin-bottom: 20px;
 }
 
-.inputFile{
+.inputFile {
 	background-color: white;
 	border: 2px solid #2196f3;
 	color: #2196f3;
@@ -104,23 +103,23 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-} 
+}
 
 .inputFile:hover {
 	background-color: #1976d2;
 	border: 2px solid #1976d2;
 	color: #e3f2fd;
-
 }
 
-  input{
+.input {
 	display: none;
-  }
-  label{
-	cursor:pointer;
-  }
+}
 
-  .textInfo{
+.label {
+	cursor: pointer;
+}
+
+.textInfo {
 	display: flex;
 	align-items: center;
 	flex-direction: row;
@@ -129,40 +128,37 @@
 	font-weight: 600;
 	font-size: 12px;
 	color: #000000;
-  }
+}
 
-  .nameInfo{
-	
-  }
+.nameInfo {
+}
 
-  .sizeInfo{
-	
-  }
+.sizeInfo {
+}
 
-  .removeFile{
-	
-  }
+.removeFile {
+}
 
-  .actions{
+.actions {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	margin-top: 5em;
 	margin-bottom: 1em;
-  }
+}
 
-  .actionFile{
+.actionFile {
 	display: flex;
-  }
+}
 
-  .button{
+.button {
 	margin: 15px;
-  }
+}
 
-  .inputAddFile{
-	background-color: #F0FAFF;
+.inputAddFile {
+	background-color: #f0faff;
 	/* border: 2px solid #2196f3; */
-	color: #2196F3;
+	color: #2196f3;
 	width: fit-content;
 	cursor: pointer;
 	font-weight: 600;
@@ -174,4 +170,4 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-  }
+}

@@ -15,7 +15,7 @@ import {
 	LandingPage,
 	LearningModule,
 	Login,
-	LupaPassword,
+	ForgotPassword,
 	ManageCourse,
 	Quiz,
 } from './pages';
@@ -44,9 +44,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 							}
 						/>
 						<Route path="/login" element={<Login />} />
-						<Route path="/Lupa" element={<LupaPassword />} />
+						<Route path="/forgot-password" element={<ForgotPassword />} />
 						<Route path="/register" element={<App />} />
-						<Route path="/profil" element={<App />} />
 						<Route
 							path="/edit-profile"
 							element={
@@ -55,10 +54,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 								</ProtectedRoute>
 							}
 						/>
-						<Route path="/income" element={<App />} />
-						<Route path="/customer">
-							<Route path="atur-customer" element={<App />} />
-						</Route>
 						<Route
 							path="/quiz"
 							element={
