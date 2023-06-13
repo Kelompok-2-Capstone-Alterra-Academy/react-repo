@@ -1,6 +1,6 @@
 import axios, { TASK_PREFIX } from './axios';
 
-export function createTask(data) {
+export function postTask(data) {
 	return axios({
 		method: 'post',
 		url: `${TASK_PREFIX}`,
@@ -15,7 +15,7 @@ export function getTaskById(id) {
 	});
 }
 
-export function updateTask(data, id) {
+export function putTask(data, id) {
 	return axios({
 		method: 'put',
 		url: `${TASK_PREFIX}/${id}`,
@@ -23,7 +23,7 @@ export function updateTask(data, id) {
 	});
 }
 
-export function deleteTask(id) {
+export function delTask(id) {
 	return axios({
 		method: 'delete',
 		url: `${TASK_PREFIX}/${id}`,

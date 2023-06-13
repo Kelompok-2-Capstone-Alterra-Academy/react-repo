@@ -78,12 +78,9 @@ export default function Login() {
 						type="Primary"
 						className={styles.button}
 						onClick={() => {
-							login({ email: 'mentor.satu@gmail.com', password: '12345678' })
+							login({ email, password })
 								.then((res) => {
 									document.cookie = `token=${res.data.data.token}`;
-									console.log(res.data.data.token);
-									const cookies = document.cookie.split(';');
-									console.log(cookies);
 									navigate('/dashboard');
 								})
 								.catch((err) => {

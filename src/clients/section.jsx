@@ -1,6 +1,6 @@
 import axios, { SECTION_PREFIX } from './axios';
 
-export function createSection(data) {
+export function postSection(data) {
 	return axios({
 		method: 'post',
 		url: `${SECTION_PREFIX}`,
@@ -15,7 +15,7 @@ export function getSection() {
 	});
 }
 
-export function updateSection(data, id) {
+export function putSection(data, id) {
 	return axios({
 		method: 'put',
 		url: `${SECTION_PREFIX}/${id}`,
@@ -23,7 +23,7 @@ export function updateSection(data, id) {
 	});
 }
 
-export function deleteSection(id) {
+export function delSection(id) {
 	return axios({
 		method: 'delete',
 		url: `${SECTION_PREFIX}/${id}`,

@@ -24,15 +24,37 @@
 	align-items: center;
 }
 
-.uploadIcon {
-	width: 25px;
-	height: 25px;
-	color: #2196f3;
-	cursor: pointer;
-	transition: all 0.3s ease-in-out;
+.uploadIconContainer,
+.deleteIconContainer {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	padding: 0.5em;
 }
 
-.uploadIcon:hover {
+.uploadIcon {
+	width: 20px;
+	height: 20px;
+	margin-right: 0.5em;
+}
+
+.cardButton {
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-gap: 0.25em;
+	margin-top: 1em;
+}
+
+.deleteIcon {
+	width: 20px;
+	height: 20px;
+	margin-right: 0.5em;
+}
+
+.deleteIcon:hover {
 	transform: scale(1.1);
 }
 
@@ -59,6 +81,7 @@
 }
 
 .cardHeaderTitleText {
+	text-align: center;
 	font-size: 16px;
 	font-weight: 500;
 	color: #212121;
@@ -160,7 +183,7 @@
 	width: 40%;
 	height: fit-content;
 	position: absolute;
-	top: 50%;
+	top: 45%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	background-color: white;
@@ -200,31 +223,33 @@
 }
 
 .priceForm,
-.descriptionForm,
-.categoryForm,
-.thumbnailForm {
+.descriptionForm {
 	width: 100%;
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 1em;
 }
 
-.categoryForm {
-	margin-bottom: 0;
-	width: 75%;
+.categoryForm,
+.thumbnailForm {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
 }
 
-.thumbnailForm {
-	margin-bottom: 0;
-	width: 25%;
-	margin-left: 1em;
+.categorySelectContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: space-between;
+	height: 100%;
 }
 
 .categoryAndThumbnailForm {
 	width: 100%;
-	display: flex;
-	flex-direction: row;
-	align-items: flex-start;
+	display: grid;
+	grid-template-columns: 4fr 2fr;
+	grid-gap: 1em;
 	margin-bottom: 2em;
 }
 
@@ -295,7 +320,7 @@
 .thumbnailSelect {
 	position: absolute;
 	height: fit-content;
-	width: 350%;
+	width: 250%;
 	left: calc(100% + 0.5em);
 	bottom: 0px;
 	display: grid;
@@ -325,8 +350,8 @@
 }
 
 .thumbnailSelectedImage {
-	width: 100px;
-	height: 100px;
+	width: 80px;
+	height: 80px;
 }
 
 .thumbnailSelectOption {

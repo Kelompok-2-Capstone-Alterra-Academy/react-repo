@@ -1,6 +1,6 @@
 import axios, { COURSE_PREFIX } from './axios';
 
-export function createCourse(data) {
+export function postCourse(data) {
 	return axios({
 		method: 'post',
 		url: `${COURSE_PREFIX}`,
@@ -15,7 +15,7 @@ export function getCourse() {
 	});
 }
 
-export function updateCourse(data, id) {
+export function putCourse({ data, id }) {
 	return axios({
 		method: 'put',
 		url: `${COURSE_PREFIX}/${id}`,
@@ -23,7 +23,11 @@ export function updateCourse(data, id) {
 	});
 }
 
+<<<<<<< HEAD
+export function delCourse(id) {
+=======
 export function deleteCourse(id) {
+>>>>>>> d26bedf48e94ad07daece3400e0395719a08cbb8
 	return axios({
 		method: 'delete',
 		url: `${COURSE_PREFIX}/${id}`,

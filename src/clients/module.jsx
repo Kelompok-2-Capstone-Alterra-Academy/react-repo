@@ -1,6 +1,6 @@
 import axios, { MODULE_PREFIX } from './axios';
 
-export function createModule(data) {
+export function postModule(data) {
 	return axios({
 		method: 'post',
 		url: `${MODULE_PREFIX}`,
@@ -15,7 +15,7 @@ export function getModuleById(id) {
 	});
 }
 
-export function updateModule(data, id) {
+export function putModule(data, id) {
 	return axios({
 		method: 'put',
 		url: `${MODULE_PREFIX}/${id}`,
@@ -23,7 +23,7 @@ export function updateModule(data, id) {
 	});
 }
 
-export function deleteModule(id) {
+export function delModule(id) {
 	return axios({
 		method: 'delete',
 		url: `${MODULE_PREFIX}/${id}`,
