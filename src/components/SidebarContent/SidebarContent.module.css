@@ -44,7 +44,7 @@
 	align-items: center;
 	padding: 1em;
 	border-radius: 8px;
-	width: 100%; /* 100*/
+	width: 100%; 
 	box-sizing: border-box;
 	margin-bottom: 1em;
 	transition: 0.2s all ease-in-out;

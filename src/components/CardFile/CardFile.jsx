@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import Snackbar from '@mui/material/Snackbar';
-import CloseIcon from '@mui/icons-material/Close';
-import IconButton from '@mui/material/IconButton';
 import Alert from '@mui/material/Alert';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -13,7 +11,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThLarge, faDownload, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faThLarge, faDownload, faPen, faTrash, faTv } from '@fortawesome/free-solid-svg-icons';
 import { ConfirmationModal } from '../ConfirmationModal';
 import Modal from '@mui/material/Modal';
 import ModalDetail from './ModalDetail/ModalDetail';
@@ -89,8 +87,8 @@ const CardFile = () => {
 											Ganti Nama Berkas
 										</Typography>
 									</MenuItem>
-									<MenuItem style={{ marginTop: 12, marginBottom: 12 }} onClick={popupState.close}>
-										<Typography onClick={() => setOpen(true)} sx={{ fontSize: '14px' }} color="#2196F3">
+									<MenuItem style={{ marginTop: 12, marginBottom: 12 }} onClick={() => setOpen(true)} >
+										<Typography sx={{ fontSize: '14px' }} color="#2196F3">
 											<FontAwesomeIcon style={{ marginRight: '20px' }} icon={faDownload} />
 											Unduh Berkas
 										</Typography>
@@ -129,11 +127,14 @@ const CardFile = () => {
 					}}
 				/>
 				<hr style={{ width: 135, alignItems: 'center', marginLeft: 30 }} />
-				<CardContent>
-					<Typography style={{ fontSize: 14 }} gutterBottom variant="h6" component="div">
-						Matematika Dasar
-					</Typography>
-					<Typography variant="body2" color="text.secondary">
+				<CardContent style={{ paddingBottom: 13 }}>
+					<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+						<FontAwesomeIcon style={{ marginRight: '20px', color: '#2196F3', fontSize: 25 }} icon={faTv} />
+						<Typography style={{ fontSize: 14 }} gutterBottom variant="h6" component="div">
+							Matematika Dasar
+						</Typography>
+					</div>
+					<Typography style={{ fontWeight: 500, fontSize: 10, color: '#9E9E9E', marginTop: 3 }} variant="body2">
 						Lizards are a widesp
 					</Typography>
 				</CardContent>
