@@ -1,5 +1,8 @@
 import { useState } from 'react';
-
+import Snackbar from '@mui/material/Snackbar';
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
+import Alert from '@mui/material/Alert';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -20,6 +23,14 @@ const CardFile = () => {
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
 	const [showFormModalBerkas, setShowFormModalBerkas] = useState(false);
 	const [showFormModalDetail, setShowFormModalDetail] = useState(false);
+	const [open, setOpen] = useState(false)
+
+	const handleClose = (reason) => {
+		if (reason === 'clickaway') {
+			return;
+		}
+		setOpen(false);
+	};
 
 	return (
 		<>
@@ -79,7 +90,7 @@ const CardFile = () => {
 										</Typography>
 									</MenuItem>
 									<MenuItem style={{ marginTop: 12, marginBottom: 12 }} onClick={popupState.close}>
-										<Typography sx={{ fontSize: '14px' }} color="#2196F3">
+										<Typography onClick={() => setOpen(true)} sx={{ fontSize: '14px' }} color="#2196F3">
 											<FontAwesomeIcon style={{ marginRight: '20px' }} icon={faDownload} />
 											Unduh Berkas
 										</Typography>
@@ -147,6 +158,17 @@ const CardFile = () => {
 			<Modal open={showFormModalDetail} onClose={() => setShowFormModalDetail(false)}>
 				<ModalDetail />
 			</Modal>
+			<Snackbar
+				autoHideDuration={5000}
+				open={open}
+				onClose={handleClose}
+				anchorOrigin={{
+					vertical: 'bottom',
+					horizontal: 'right',
+				}}
+			>
+				<Alert severity="info" variant="filled" icon={false} onClose={handleClose}>Berkas di Unduh</Alert>
+			</Snackbar>
 		</>
 	);
 };
