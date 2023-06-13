@@ -18,7 +18,6 @@ export default function Quiz() {
 	const [selectedPublishQuiz, setSelectedPublishQuiz] = useState(null);
 
 	const quizList = useSelector((state) => state.quiz).quiz;
-	console.log(quizList);
 
 	const dispatch = useDispatch();
 

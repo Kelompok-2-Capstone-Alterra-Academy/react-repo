@@ -1,4 +1,4 @@
-import axios, { AUTH_PREFIX } from 'axios';
+import axios, { AUTH_PREFIX } from './axios';
 
 export function login(data) {
 	return axios({

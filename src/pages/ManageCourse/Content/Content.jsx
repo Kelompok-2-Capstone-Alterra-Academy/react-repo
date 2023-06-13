@@ -67,6 +67,7 @@ export default function Content({ data, sectionId, onResetContent }) {
 	}, [contentName]);
 
 	useEffect(() => {
+		console.log(deadline);
 		if (selectedContent.type === 'tugas') {
 			dispatch(
 				updateContent({

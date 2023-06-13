@@ -1,77 +1,94 @@
-import styles from './ForgotPassword.module.css';
-import { TextField } from '@material-ui/core';
-import Button from '@mui/material/Button';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-import gambar from '../../../public/image/Daftar.png';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Form, Formik } from 'formik';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import * as Yup from 'yup';
+import { login } from '../../clients';
+import { Button } from '../../components';
+import styles from './ForgotPassword.module.css';
 
-export default function ForgotPassword() {
+export default function Login() {
 	const navigate = useNavigate();
-	const btnstyle = { marginTop: '30px' };
+
+	const [showPassword, setShowPassword] = useState(false);
+
 	const initialValues = {
-		Username: '',
+		username: '',
+		password: '',
 		remember: false,
 	};
+
 	const validationSchema = Yup.object().shape({
-		Username: Yup.string()
+		username: Yup.string()
 			.required('Username wajib diisi')
 			.matches(/^(?=.*[a-z])(?=.*[0-9])/, 'Username harus ada huruf dan angka'),
+		password: Yup.string()
+			.required('Password Belum diisi')
+			.matches(
+				/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/,
+				'Kata sandi harus ada huruf besar, huruf kecil, dan angka'
+			),
 	});
-	const onSubmit = (values, props) => {
+
+	const onSubmit = (values) => {
 		console.log(values);
-		setTimeout(() => {
-			props.resetForm();
-			props.setSubmitting(false);
-		}, 2000);
-		navigate('/login');
+		login({
+			email: 'mentor.satu@gmail.com',
+			pass: '12345678',
+		})
+			.then((res) => {
+				console.log(res);
+				const token = res.data.token;
+				document.cookie = `token=${token}; path=/;`;
+				navigate('/dashboard');
+			})
+			.catch(() => {
+				// TODO handle error
+			});
 	};
+
 	return (
-		<div className="w-full h-screen">
-			<div className={styles.con}>
-				<h3 className={styles.start}>Star</h3>
-				<h3 className={styles.My}>MyDashboard</h3>
+		<div className={styles.container}>
+			<div className={styles.header}>
+				<img src="/image/logo-starMyDashboard.png" alt="logo" />
 			</div>
-			<div className={styles.container}>
-				<div className={styles.containerGambar}>
-					<img className={styles.gambar} src={gambar} />
-					<h5 className={styles.titleBawah}>Temukan Kembali Akses Akun </h5>
-					<h5 className={styles.titleBawah}>Anda dengan Mudah </h5>
+			<div className={styles.content}>
+				<div className={styles.imageContainer}>
+					<img src="/image/Daftar.png" alt="/" className={styles.image} />
+					<span className={styles.imageText}>Temukan Kembali Akses Akun Anda dengan Mudah</span>
 				</div>
-				<div className={styles.content}>
-					<div className={styles.formContent}>
-						<h6 className={styles.title}>Lupa Kata Sandi</h6>
-						<p className={styles.desc}>Silahkan masukan username untuk proses selanjutnya</p>
-						<Formik
-							initialValues={initialValues}
-							onSubmit={onSubmit}
-							validationSchema={validationSchema}>
-							{(props) => (
-								<Form>
-									<div className={styles.tes}>
-										<label className={styles.username}>Username</label>
-										<Field
-											as={TextField}
-											name="Username"
+				<div className={styles.tampilan}>
+					<div className={styles.tampilanHeader}>
+						<span className={styles.title}>Lupa Kata Sandi?</span>
+						<span className={styles.desc}>Silahkan masukkan username untuk proses selanjutnya</span>
+					</div>
+					<Formik
+						initialValues={initialValues}
+						onSubmit={onSubmit}
+						validationSchema={validationSchema}>
+						{(props) => (
+							<Form className={styles.form}>
+								<div className={styles.usernameForm}>
+									<span className={styles.label}>Username</span>
+									<div className={styles.inputContainer}>
+										<FontAwesomeIcon icon={faUser} className={styles.icon} />
+										<input
+											className={styles.input}
+											name="username"
 											placeholder="Username"
-											fullWidth
-											required
-											helperText={<ErrorMessage name="Username" />}
-											variant="outlined"
+											type="text"
+											value={props.values.username}
+											onChange={(e) => props.setFieldValue('username', e.target.value)}
 										/>
 									</div>
-									<Button
-										type="submit"
-										variant="contained"
-										disabled={props.isSubmitting}
-										style={btnstyle}
-										fullWidth>
-										{props.isSubmitting ? 'Loading' : 'Ajukan Perubahan Kata Sandi'}
-									</Button>
-								</Form>
-							)}
-						</Formik>
-					</div>
+								</div>
+								<Button type="Primary" className={styles.button}>
+									Ajukan Perubahan Kata Sandi
+								</Button>
+							</Form>
+						)}
+					</Formik>
 				</div>
 			</div>
 		</div>
