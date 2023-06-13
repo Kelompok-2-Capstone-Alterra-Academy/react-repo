@@ -1,6 +1,6 @@
 import axios, { FOLDER_PREFIX } from './axios';
 
-export function createFolder(data) {
+export function postFolder(data) {
 	return axios({
 		method: 'post',
 		url: `${FOLDER_PREFIX}`,
@@ -15,7 +15,7 @@ export function getFolder() {
 	});
 }
 
-export function updateFolder(data, id) {
+export function putFolder(data, id) {
 	return axios({
 		method: 'put',
 		url: `${FOLDER_PREFIX}/${id}`,
@@ -23,7 +23,7 @@ export function updateFolder(data, id) {
 	});
 }
 
-export function deleteFolder(id) {
+export function delFolder(id) {
 	return axios({
 		method: 'delete',
 		url: `${FOLDER_PREFIX}/${id}`,

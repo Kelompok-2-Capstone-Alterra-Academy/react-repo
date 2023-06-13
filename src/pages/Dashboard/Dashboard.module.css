@@ -4,12 +4,15 @@
 }
 
 .content {
-	margin-right: 25%;
 	padding: 1em;
 }
 
 .headerContainer {
-	margin-bottom: 2em;
+	margin-bottom: 3em;
+}
+
+.bannerImage {
+	width: 100%;
 }
 
 .kursusContainer,
@@ -98,26 +101,6 @@
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	grid-gap: 1em;
-}
-
-.infoContentContainer {
-	position: fixed;
-	top: 0;
-	right: 0;
-	width: 20%;
-	height: 100%;
-	background: #f0faff;
-}
-
-.profile {
-	width: 100%;
-}
-
-.infoContent {
-	padding: 2em 1em;
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
 }
 
 .createCourseModalContainer {
@@ -280,7 +263,7 @@
 }
 
 .emptyCourseTextContainer {
-	width: 50%;
+	width: 60%;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
@@ -343,7 +326,7 @@
 }
 
 .emptyCourseImageContainer {
-	width: 50%;
+	width: 40%;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;

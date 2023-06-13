@@ -7,7 +7,7 @@ export function getAttachment(id) {
 	});
 }
 
-export function createAttachment(data) {
+export function postAttachment(data) {
 	return axios({
 		method: 'post',
 		url: `${ATTACHMENT_PREFIX}`,
