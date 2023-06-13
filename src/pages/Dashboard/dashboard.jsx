@@ -332,9 +332,13 @@ export default function Dashboard() {
 										.then((res) => {
 											dispatch(addCourse(res.data.data));
 										})
+<<<<<<< HEAD
 										.catch((err) => {
 											console.log(err);
 										});
+=======
+									);
+>>>>>>> d26bedf48e94ad07daece3400e0395719a08cbb8
 									setCourseName('');
 									setCourseSchedule('');
 									setCourseThumbnail('apple');
