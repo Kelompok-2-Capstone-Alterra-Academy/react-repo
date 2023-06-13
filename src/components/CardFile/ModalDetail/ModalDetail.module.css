@@ -1,0 +1,50 @@
+.container {
+	width: 45%;
+	height: fit-content;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	border-radius: 8px;
+	transform: translate(-50%, -50%);
+	background-color: white;
+	padding: 2em 3em;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.headerTitle {
+	font-size: 20px;
+	font-weight: 600;
+	margin-bottom: 0.3em;
+}
+
+.content {
+	width: 780px;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.table {
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 2.5em;
+	margin-top: 1em;
+}
+
+.title {
+	width: 200px;
+	color: #9e9e9e;
+	font-weight: 600;
+	font-size: 14px;
+}
+
+.value {
+	font-weight: 600;
+	font-size: 16px;
+	color: #212121;
+}

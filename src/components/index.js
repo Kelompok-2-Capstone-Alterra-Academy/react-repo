@@ -11,6 +11,7 @@ export * from './OutlineTag';
 export * from './Profile';
 export * from './Select';
 export * from './Sidebar';
+export * from './SidebarContent';
 export * from './Tag';
 export * from './MyTextField';
 export * from './CardKursus';

@@ -3,7 +3,7 @@ export * from './Chat';
 export * from './LandingPage';
 export * from './LearningModule';
 export * from './Login';
-export * from './LupaPassword';
+export * from './ForgotPassword';
 export * from './ManageCourse';
 export * from './Quiz';
 export * from './Dashboard';
