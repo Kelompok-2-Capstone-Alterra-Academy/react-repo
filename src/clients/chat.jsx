@@ -1,13 +1,13 @@
 import axios, { CHAT_PREFIX } from './axios';
 
-export function getStudent(params) {
+export function getStudent(courseId) {
 	return axios({
 		method: 'get',
-		url: `${CHAT_PREFIX}/students/${params}`,
+		url: `${CHAT_PREFIX}/students/${courseId}`,
 	});
 }
 
-export function getCourse() {
+export function getChat() {
 	return axios({
 		method: 'get',
 		url: `${CHAT_PREFIX}/courses`,

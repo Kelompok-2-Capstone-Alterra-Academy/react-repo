@@ -1,7 +1,6 @@
 import {
 	faChevronDown,
 	faChevronUp,
-	faFolder,
 	faGear,
 	faMoneyBill,
 	faPhone,
@@ -9,6 +8,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useClickOutside } from '../../hooks';
 import { truncateString } from '../../utilities/string';
 import styles from './Profile.module.css';
@@ -16,15 +16,16 @@ import styles from './Profile.module.css';
 export default function Profile({ data, className }) {
 	const [isMenuOpen, setMenuOpen] = useState(false);
 	const menuItems = [
-		{ icon: faGear, title: 'Edit Profile' },
-		{ icon: faFolder, title: 'Kursus Saya' },
-		{ icon: faMoneyBill, title: 'Income' },
-		{ icon: faPhone, title: 'Kontak CS' },
+		{ icon: faGear, title: 'Edit Profile', link: '/edit-profile' },
+		{ icon: faMoneyBill, title: 'Income', link: '/income' },
+		{ icon: faPhone, title: 'Kontak CS', link: '/chat' },
 	];
 	const [isFirstRender, setIsFirstRender] = useState(true);
 	const containerRef = useClickOutside(() => {
 		setMenuOpen(false);
 	});
+
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (isMenuOpen) {
@@ -68,7 +69,12 @@ export default function Profile({ data, className }) {
 				</div>
 				<div className={styles.menuItemContainer}>
 					{menuItems.map((item, index) => (
-						<div key={index} className={styles.menuItem}>
+						<div
+							key={index}
+							className={styles.menuItem}
+							onClick={() => {
+								navigate(item.link);
+							}}>
 							<div>
 								<FontAwesomeIcon icon={item.icon} className={styles.menuIcon} />
 								<span className={styles.menuTitle}>{item.title}</span>

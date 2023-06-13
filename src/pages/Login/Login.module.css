@@ -1,110 +1,133 @@
-.con {
-    display: flex;
-    justify-content: center;
-    margin-top: 3rem;
-    margin-bottom: 3rem;
-    font-style: italic;
-    font-weight: bold;
-    font-size: 25px;
-    border-radius: 20px;
+.container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	width: 100%;
+	height: 100vh;
 }
 
-.title {
-    margin-bottom: 10px;
-    width: 407px;
-    height: 36px;
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 24px;
-    line-height: 36px;
-    /* identical to box height */
-    display: flex;
-    align-items: center;
-    /* Neutral Color/Netral 100 */
-    color: #212121;
+.header {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 3em;
+	width: 100%;
 }
 
-.desc {
-    margin-top: 10px;
-    margin-bottom: 20px;
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    width: 266px;
-    height: 24px;
-    color: #616161;
-}
-
-.start {
-    color: #4161FF;
-}
-
-.My {
-    color: #22BDFF;
-}
-
-.Btn {
-    width: 100%;
-    color: black;
-    background-color: #2196F3;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-}
-
-.gambar {
-    width: max-content;
-    height: 90%;
-}
-
-.email {
-    margin-right: 10px;
+.content {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: row;
+	box-shadow: 0 3px 11px #0000001a, 0 3px 6px #00000026;
 }
 
 .tampilan {
-    position: block;
-    margin: 50px 30px 30px 30px;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	flex-direction: column;
+	width: 100%;
+	height: 100%;
+	padding: 2em;
 }
 
-.tes {
-    margin-bottom: 20px;
+.tampilanHeader {
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-start;
+	flex-direction: column;
+	margin-bottom: 2em;
 }
 
-.Lupa {
-    text-align: right;
+.title {
+	font-size: 24px;
+	font-weight: 600;
+	color: #212121;
 }
 
-.username {
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 15px;
-    line-height: 21px;
-    display: flex;
-    align-items: center;
-    color: #212121;
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-    width: 73px;
-    height: 21px;
-    font: bold;
+.desc {
+	font-size: 16px;
+	font-weight: 400;
+	color: #616161;
 }
 
-.Sandi {
-    width: 77px;
-    height: 21px;
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 15px;
-    line-height: 21px;
-    align-items: center;
-    color: #212121;
-    flex: none;
-    order: 0;
-    flex-grow: 0;
+.image {
+	height: 500px;
+}
+
+.label {
+	font-size: 14px;
+	font-weight: 500;
+	color: #212121;
+	margin-bottom: 0.5em;
+}
+
+.form {
+	width: 100%;
+}
+
+.emailForm,
+.passwordForm {
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-start;
+	flex-direction: column;
+	margin-bottom: 1em;
+	width: 100%;
+}
+
+.inputContainer {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	flex-direction: row;
+	width: 100%;
+	box-shadow: 0px 0px 10px 0px #0000001a;
+	padding: 1em;
+	border-radius: 8px;
+}
+
+.icon {
+	width: 20px;
+	height: 20px;
+	margin-right: 1em;
+	color: #616161;
+}
+
+.forgotPassword {
+	font-size: 14px;
+	font-weight: 400;
+	color: #616161 !important;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+	transition: all 0.3s ease-in-out;
+	text-decoration: none !important;
+}
+
+.forgotPassword:hover {
+	color: #2196f3 !important;
+	text-decoration: none !important;
+}
+
+.eyeIcon {
+	width: 20px;
+	height: 20px;
+	color: #616161;
+	cursor: pointer;
+}
+
+.input {
+	outline: none;
+	border: none;
+	width: 100%;
+}
+
+.button {
+	width: 100%;
+	margin-top: 2em;
 }

@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from '@mui/material/Modal';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { getCourse } from '../../clients';
 import { Button, CardKursus, Profile } from '../../components';
 import { useClickOutside } from '../../hooks';
 import { addCourse } from '../../redux/actions/courseActions';
@@ -25,8 +26,6 @@ export default function Dashboard() {
 
 	const courseData = useSelector((state) => state.course).course;
 
-	console.log(courseData);
-
 	const dispatch = useDispatch();
 
 	const thumbnailRef = useClickOutside(() => {
@@ -36,6 +35,12 @@ export default function Dashboard() {
 	useEffect(() => {
 		setValidation(courseName && courseSchedule);
 	}, [courseName, courseSchedule]);
+
+	useEffect(() => {
+		getCourse().then((res) => {
+			console.log(res);
+		});
+	}, []);
 
 	return (
 		<>
@@ -323,7 +328,14 @@ export default function Dashboard() {
 					</div>
 				</div>
 			</div>
-			<Modal open={isShowCreateCourseModal} onClose={() => setIsShowCreateCourseModal(false)}>
+			<Modal
+				open={isShowCreateCourseModal}
+				onClose={() => {
+					setCourseName('');
+					setCourseSchedule('');
+					setCourseThumbnail('apple');
+					setIsShowCreateCourseModal(false);
+				}}>
 				<div className={styles.createCourseModalContainer}>
 					<div className={styles.createCourseModalHeader}>
 						<span className={styles.createCourseModalHeaderTitle}>Publish Kursus</span>
@@ -411,6 +423,9 @@ export default function Dashboard() {
 								type="Secondary"
 								className={styles.modalButton}
 								onClick={() => {
+									setCourseName('');
+									setCourseSchedule('');
+									setCourseThumbnail('apple');
 									setIsShowCreateCourseModal(false);
 								}}>
 								Batal
@@ -432,6 +447,9 @@ export default function Dashboard() {
 											totalSection: Math.floor(Math.random() * 10),
 										})
 									);
+									setCourseName('');
+									setCourseSchedule('');
+									setCourseThumbnail('apple');
 									setIsShowCreateCourseModal(false);
 								}}>
 								Buat Kursus

@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { logout } from '../../clients';
 import { useClickOutside } from '../../hooks';
 import styles from '../Sidebar/Sidebar.module.css';
 import { COURSE_LIST } from './constants';
@@ -42,7 +43,10 @@ const Sidebar = () => {
 						<FontAwesomeIcon icon={faCommentDots} className={styles.icon} />
 						<span className={styles.description}>Chat</span>
 					</Link>
-					<Link style={{ textDecoration: 'none' }} to="/learning/modul" className={styles.listItem}>
+					<Link
+						style={{ textDecoration: 'none' }}
+						to="/manage-customer"
+						className={styles.listItem}>
 						<FontAwesomeIcon icon={faUsers} className={styles.icon} />
 						<span className={styles.description}>Pelanggan</span>
 					</Link>
@@ -94,7 +98,18 @@ const Sidebar = () => {
 							</div>
 						)}
 					</Link>
-					<Link style={{ textDecoration: 'none' }} className={styles.logoutItem}>
+					<Link
+						style={{ textDecoration: 'none' }}
+						className={styles.logoutItem}
+						onClick={() => {
+							logout()
+								.then((res) => {
+									console.log(res);
+								})
+								.catch((err) => {
+									console.log(err);
+								});
+						}}>
 						<FontAwesomeIcon icon={faPowerOff} className={styles.icon} />
 						<span className={styles.description}>Keluar</span>
 					</Link>

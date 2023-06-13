@@ -4,3 +4,8 @@ export * from './chat';
 export * from './course';
 export * from './customer';
 export * from './dashboard';
+export * from './attachment';
+export * from './folder';
+export * from './section';
+export * from './task';
+export * from './module';
