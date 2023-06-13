@@ -15,3 +15,5 @@ export * from './SidebarContent';
 export * from './Tag';
 export * from './MyTextField';
 export * from './CardKursus';
+export * from './ResponseModal';
+export * from './OutlinedButton';

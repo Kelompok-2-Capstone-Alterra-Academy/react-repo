@@ -8,3 +8,4 @@ export * from './ManageCourse';
 export * from './Quiz';
 export * from './Dashboard';
 export * from './EditProfile';
+export * from './ManageCustomer';
