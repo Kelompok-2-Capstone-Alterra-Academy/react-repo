@@ -3,7 +3,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import App from './App.jsx';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import ProtectedRoute from '../ProtectedRoute.jsx';
 import './index.css';
@@ -12,13 +13,13 @@ import {
 	Chat,
 	Dashboard,
 	EditProfile,
+	ForgotPassword,
 	LandingPage,
 	LearningModule,
 	Login,
-	ForgotPassword,
 	ManageCourse,
-	Quiz,
 	ManageCustomer,
+	Quiz,
 } from './pages';
 import { store } from './redux/store';
 
@@ -46,7 +47,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 						/>
 						<Route path="/login" element={<Login />} />
 						<Route path="/forgot-password" element={<ForgotPassword />} />
-						<Route path="/register" element={<App />} />
+						<Route path="/register" element={<Dashboard />} />
 						<Route
 							path="/edit-profile"
 							element={
@@ -55,7 +56,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 								</ProtectedRoute>
 							}
 						/>
-						<Route path="/income" element={<App />} />
+						<Route path="/income" element={<Dashboard />} />
 						<Route
 							path="/manage-customer"
 							element={
@@ -100,12 +101,13 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 							path="*"
 							element={
 								<ProtectedRoute>
-									<App />
+									<Dashboard />
 								</ProtectedRoute>
 							}
 						/>
 					</Routes>
 				</BrowserRouter>
+				<ToastContainer />
 			</ThemeProvider>
 		</Provider>
 	</React.StrictMode>

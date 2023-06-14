@@ -1,4 +1,4 @@
-import axios, { DASHBOARD_PREFIX } from 'axios';
+import axios, { DASHBOARD_PREFIX } from './axios';
 
 export function statisctic() {
 	return axios({

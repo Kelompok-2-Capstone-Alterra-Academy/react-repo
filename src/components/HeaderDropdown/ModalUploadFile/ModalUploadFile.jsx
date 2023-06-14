@@ -13,7 +13,6 @@ const ModalUploadFile = () => {
 		let file = e.target.files[0];
 
 		setFile(file);
-		console.log(file);
 	}
 	return (
 		<div className={styles.container}>

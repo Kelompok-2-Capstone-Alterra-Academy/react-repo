@@ -1,9 +1,9 @@
-import axios, { COURSE_PREFIX } from 'axios';
+import axios, { COURSE_PREFIX } from './axios';
 
-export function createCourse(data) {
+export function postCourse(data) {
 	return axios({
 		method: 'post',
-		url: `${COURSE_PREFIX}/create`,
+		url: `${COURSE_PREFIX}`,
 		data: data,
 	});
 }
@@ -11,6 +11,21 @@ export function createCourse(data) {
 export function getCourse() {
 	return axios({
 		method: 'get',
-		url: `${COURSE_PREFIX}/my`,
+		url: `${COURSE_PREFIX}`,
+	});
+}
+
+export function putCourse({ data, id }) {
+	return axios({
+		method: 'put',
+		url: `${COURSE_PREFIX}/${id}`,
+		data: data,
+	});
+}
+
+export function delCourse(id) {
+	return axios({
+		method: 'delete',
+		url: `${COURSE_PREFIX}/${id}`,
 	});
 }
