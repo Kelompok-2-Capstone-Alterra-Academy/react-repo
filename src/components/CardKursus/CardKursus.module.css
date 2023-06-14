@@ -34,9 +34,15 @@
 	padding: 0.5em;
 }
 
+.uploadIconContainer span,
+.deleteIconContainer span {
+	font-size: 14px;
+	font-weight: 400;
+}
+
 .uploadIcon {
-	width: 20px;
-	height: 20px;
+	width: 16px;
+	height: 16px;
 	margin-right: 0.5em;
 }
 
@@ -44,13 +50,13 @@
 	width: 100%;
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
-	grid-gap: 0.25em;
+	grid-gap: 0.5em;
 	margin-top: 1em;
 }
 
 .deleteIcon {
-	width: 20px;
-	height: 20px;
+	width: 16px;
+	height: 16px;
 	margin-right: 0.5em;
 }
 

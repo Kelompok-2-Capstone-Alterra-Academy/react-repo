@@ -94,6 +94,28 @@
 	box-shadow: 0 3px 11px #0000001a, 0 3px 6px #00000026;
 }
 
+.courseListOptionContainer {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	overflow: auto;
+	max-height: 200px;
+}
+
+.courseListOptionContainer::-webkit-scrollbar {
+	width: 6px;
+	background-color: transparent;
+}
+
+.courseListOptionContainer::-webkit-scrollbar-thumb {
+	background-color: #c0c0c0;
+	border-radius: 3px;
+}
+
+.courseListOptionContainer::-webkit-scrollbar-thumb:hover {
+	background-color: #a0a0a0;
+}
+
 @keyframes slideDown {
 	0% {
 		opacity: 0;
@@ -118,13 +140,12 @@
 
 .courseListItem:hover,
 .learningListItem:hover {
-	background-color: #dedede;
-	color: black;
+	background-color: #4161ff;
+	color: white;
 }
 
 .courseListItemTitle,
 .learningListItemTitle {
-	color: black;
 	font-weight: 400;
 	font-size: 16px;
 }

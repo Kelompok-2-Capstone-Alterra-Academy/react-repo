@@ -8,15 +8,18 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { logout } from '../../clients';
 import { useClickOutside } from '../../hooks';
 import styles from '../Sidebar/Sidebar.module.css';
-import { COURSE_LIST } from './constants';
 
 const Sidebar = () => {
 	const [isCourseListOpen, setIsCourseListOpen] = useState(false);
 	const [isLearningListOpen, setIsLearningListOpen] = useState(false);
+
+	const courseList = useSelector((state) => state.course).course;
 
 	const courseListRef = useClickOutside(() => {
 		setIsCourseListOpen(false);
@@ -86,15 +89,17 @@ const Sidebar = () => {
 						<KeyboardArrowDownIcon style={{ color: '#212121' }} />
 						{isCourseListOpen && (
 							<div className={styles.courseListContainer}>
-								{COURSE_LIST.map((course) => (
-									<Link
-										key={course.id}
-										style={{ textDecoration: 'none' }}
-										to={`/course/${course.id}`}
-										className={styles.courseListItem}>
-										<span className={styles.courseListItemTitle}>{course.name}</span>
-									</Link>
-								))}
+								<div className={styles.courseListOptionContainer}>
+									{courseList.map((course) => (
+										<Link
+											key={course.ID}
+											style={{ textDecoration: 'none' }}
+											to={`/course/${course.ID}`}
+											className={styles.courseListItem}>
+											<span className={styles.courseListItemTitle}>{course.course_name}</span>
+										</Link>
+									))}
+								</div>
 							</div>
 						)}
 					</Link>
@@ -107,7 +112,9 @@ const Sidebar = () => {
 									console.log(res);
 								})
 								.catch((err) => {
-									console.log(err);
+									toast.error(err.response.data.message, {
+										position: toast.POSITION.TOP_RIGHT,
+									});
 								});
 						}}>
 						<FontAwesomeIcon icon={faPowerOff} className={styles.icon} />

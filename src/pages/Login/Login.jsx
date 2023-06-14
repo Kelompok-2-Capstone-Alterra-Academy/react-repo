@@ -1,14 +1,17 @@
-import { faEye, faEyeSlash, faLock, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faEyeSlash, faLock, faSpinner, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from '@material-ui/core';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { login } from '../../clients';
 import { Button } from '../../components';
 import styles from './Login.module.css';
 
 export default function Login() {
 	const [showPassword, setShowPassword] = useState(false);
+	const [loading, setLoading] = useState(false);
+
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
@@ -78,16 +81,24 @@ export default function Login() {
 						type="Primary"
 						className={styles.button}
 						onClick={() => {
+							setLoading(true);
 							login({ email, password })
 								.then((res) => {
 									document.cookie = `token=${res.data.data.token}`;
 									navigate('/dashboard');
 								})
 								.catch((err) => {
-									console.log(err);
+									toast.error(err.response.data.message, {
+										position: toast.POSITION.TOP_RIGHT,
+									});
+									setEmail('');
+									setPassword('');
+								})
+								.finally(() => {
+									setLoading(false);
 								});
 						}}>
-						Login
+						<span>{loading ? <FontAwesomeIcon icon={faSpinner} spin /> : 'Login'}</span>
 					</Button>
 				</div>
 			</div>

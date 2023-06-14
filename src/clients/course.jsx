@@ -23,11 +23,7 @@ export function putCourse({ data, id }) {
 	});
 }
 
-<<<<<<< HEAD
 export function delCourse(id) {
-=======
-export function deleteCourse(id) {
->>>>>>> d26bedf48e94ad07daece3400e0395719a08cbb8
 	return axios({
 		method: 'delete',
 		url: `${COURSE_PREFIX}/${id}`,
