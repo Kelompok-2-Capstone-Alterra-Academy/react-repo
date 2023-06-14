@@ -150,6 +150,23 @@
 	font-size: 16px;
 }
 
+.listCourseText {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-start;
+}
+
+.courseListLength {
+	font-weight: 400;
+	font-size: 14px;
+	color: white;
+	margin-left: 0.5em;
+	padding: 0.25em 0.5em;
+	border-radius: 8px;
+	background-color: #4161ff;
+}
+
 .listItemActive {
 	background-color: #0d47a1;
 }

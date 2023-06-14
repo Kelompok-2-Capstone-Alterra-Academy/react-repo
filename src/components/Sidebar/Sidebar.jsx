@@ -85,7 +85,10 @@ const Sidebar = () => {
 						className={styles.listCourse}
 						onClick={() => setIsCourseListOpen(!isCourseListOpen)}
 						ref={courseListRef}>
-						<span>Kursus Saya</span>
+						<div className={styles.listCourseText}>
+							<span>Kursus Saya</span>
+							<span className={styles.courseListLength}>{courseList.length}</span>
+						</div>
 						<KeyboardArrowDownIcon style={{ color: '#212121' }} />
 						{isCourseListOpen && (
 							<div className={styles.courseListContainer}>
