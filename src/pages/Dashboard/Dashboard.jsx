@@ -8,6 +8,7 @@ import Modal from '@mui/material/Modal';
 import { useEffect, useState } from 'react';
 import { LoopCircleLoading } from 'react-loadingg';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import { getCourse, postCourse } from '../../clients';
 import { Button, CardKursus } from '../../components';
 import { useClickOutside } from '../../hooks';
@@ -40,10 +41,18 @@ export default function Dashboard() {
 
 	useEffect(() => {
 		setLoadingFetch(true);
-		getCourse().then((res) => {
-			setLoadingFetch(false);
-			dispatch(setCourse(res.data.data));
-		});
+		getCourse()
+			.then((res) => {
+				dispatch(setCourse(res.data.data));
+			})
+			.catch((err) => {
+				toast.error(err.response.data.message, {
+					position: toast.POSITION.TOP_RIGHT,
+				});
+			})
+			.finally(() => {
+				setLoadingFetch(false);
+			});
 	}, []);
 
 	if (loadingFetch) {
@@ -332,13 +341,11 @@ export default function Dashboard() {
 										.then((res) => {
 											dispatch(addCourse(res.data.data));
 										})
-<<<<<<< HEAD
 										.catch((err) => {
-											console.log(err);
+											toast.error(err.response.data.message, {
+												position: toast.POSITION.TOP_RIGHT,
+											});
 										});
-=======
-									);
->>>>>>> d26bedf48e94ad07daece3400e0395719a08cbb8
 									setCourseName('');
 									setCourseSchedule('');
 									setCourseThumbnail('apple');

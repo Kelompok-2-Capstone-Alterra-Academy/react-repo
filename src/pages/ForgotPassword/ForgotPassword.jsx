@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Form, Formik } from 'formik';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 import { login } from '../../clients';
 import { Button } from '../../components';
@@ -43,8 +44,10 @@ export default function Login() {
 				document.cookie = `token=${token}; path=/;`;
 				navigate('/dashboard');
 			})
-			.catch(() => {
-				// TODO handle error
+			.catch((err) => {
+				toast.error(err.response.data.message, {
+					position: toast.POSITION.TOP_RIGHT,
+				});
 			});
 	};
 

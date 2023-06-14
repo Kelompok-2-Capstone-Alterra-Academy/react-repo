@@ -143,7 +143,14 @@ export default function CardKursus({ data }) {
 							icon={data.status === 'draft' ? faPaperPlane : faPaperclip}
 							className={styles.uploadIcon}
 						/>
-						<span>Publish</span>
+						<span>
+							{
+								{
+									publish: 'Unpublish',
+									draft: 'Publish',
+								}[data.status]
+							}
+						</span>
 					</Button>
 				</div>
 				<div className={styles.cardBorderColor}></div>
