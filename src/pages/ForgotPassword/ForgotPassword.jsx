@@ -1,6 +1,7 @@
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Form, Formik } from 'formik';
+import { Link } from '@material-ui/core';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -86,6 +87,9 @@ export default function Login() {
 										/>
 									</div>
 								</div>
+								<Link href="/login" className={styles.forgotPassword}>
+									<span>Kembali Login?</span>
+								</Link>
 								<Button type="Primary" className={styles.button}>
 									Ajukan Perubahan Kata Sandi
 								</Button>
