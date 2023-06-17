@@ -13,9 +13,13 @@ import {
 import { Footer, NavBar } from '../../components';
 
 export default function LandingPage() {
-	const ellipseImg = Array(5).fill(
-		'https://leaveitwithme.com.au/wp-content/uploads/2013/11/dummy-image-square.jpg'
-	);
+	const ellipseImg = [
+		'/image/landing-mentors/mentor-1.png',
+		'/image/landing-mentors/mentor-2.png',
+		'/image/landing-mentors/mentor-3.png',
+		'/image/landing-mentors/mentor-4.png',
+		'/image/landing-mentors/mentor-5.png'
+	  ];
 
 	return (
 		<div>
