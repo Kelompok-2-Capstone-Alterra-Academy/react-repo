@@ -4,7 +4,6 @@
     justify-content: center;
     flex-direction: column;
     width: 100%;
-    height: 100vh;
 }
 
 .header {
@@ -37,7 +36,6 @@
 
 .tampilanHeader {
     display: flex;
-    align-items: flex-start;
     justify-content: flex-start;
     flex-direction: column;
     margin-bottom: 2em;
@@ -51,6 +49,7 @@
 }
 
 .desc {
+    margin-top: 16px;
     font-size: 16px;
     font-weight: 400;
     color: #616161;
@@ -66,7 +65,8 @@
 }
 
 .image {
-    height: 400px;
+    height: 100%;
+    width: 100%;
     margin-bottom: -2em;
 }
 
@@ -82,18 +82,20 @@
     font-weight: 500;
     color: #212121;
     margin-bottom: 0.5em;
+    font-weight: bold;
 }
 
 .form {
     width: 100%;
 }
 
-.usernameForm {
+.usernameForm,
+.passwordForm {
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
     flex-direction: column;
-    margin-bottom: 1.5em;
+    margin-bottom: 1em;
     width: 100%;
 }
 
@@ -108,6 +110,11 @@
     border-radius: 8px;
 }
 
+.Steperr {
+    justify-content: center;
+    margin-top: 25px;
+}
+
 .icon {
     width: 20px;
     height: 20px;
@@ -119,7 +126,7 @@
     font-size: 14px;
     font-weight: 400;
     color: #616161 !important;
-    margin-top: 2em;
+    margin-top: 1em;
     margin-bottom: 1em;
     width: 100%;
     display: flex;
@@ -149,4 +156,26 @@
 .button {
     width: 100%;
     margin-top: 2em;
+}
+
+.TextLogin {
+    font-family: 'Poppins';
+    font-style: normal;
+    margin-top: 16px;
+    display: flex;
+    justify-content: center;
+}
+
+.deskripsi {
+    margin-right: 7px;
+}
+
+.error {
+    color: red;
+    visibility: visible;
+    opacity: 1;
+}
+
+.visible {
+    visibility: visible;
 }

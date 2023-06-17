@@ -93,7 +93,8 @@ export default function NavBar({ active }) {
 											fontWeight: 600,
 											textTransform: 'capitalize',
 										}}
-										variant="contained">
+										variant="contained"
+										href='/register'>
 										Daftar
 									</Button>
 								</MenuItem>
