@@ -31,29 +31,72 @@ import {
             <Grid item xs={12} md={4} sx={{}}>
               <List>
                 <ListItem>
-                  <Link href="#" underline="none" color={"#fff"}>
-                    <Typography>Kontak Kami</Typography>
-                  </Link>
+                  <Typography color={"#fff"}>Kontak Kami</Typography>
                 </ListItem>
                 <ListItem>
                   <Box sx={{ display: "flex", gap: "1.5rem" }}>
-                    <Link href="#" underline="none" color={"#fff"}>
+                    <Link
+                      href="https://web.facebook.com/staredu"
+                      underline="none"
+                      sx={{
+                        color: '#fff',
+                        '&:hover': {
+                          color: '#fff',
+                        },
+                      }}
+                    >
                       <FacebookRounded />
                     </Link>
-  
-                    <Link href="#" underline="none" color={"#fff"}>
+
+                    <Link
+                      href="https://twitter.com/staredu"
+                      underline="none"
+                      sx={{
+                        color: '#fff',
+                        '&:hover': {
+                          color: '#fff',
+                        },
+                      }}
+                    >
                       <Twitter />
                     </Link>
   
-                    <Link href="#" underline="none" color={"#fff"}>
+                    <Link
+                      href="https://youtube.com/@staredu"
+                      underline="none"
+                      sx={{
+                        color: '#fff',
+                        '&:hover': {
+                          color: '#fff',
+                        },
+                      }}
+                    >
                       <YouTube />
                     </Link>
   
-                    <Link href="#" underline="none" color={"#fff"}>
+                    <Link
+                      href="https://instagram.com/staredu"
+                      underline="none"
+                      sx={{
+                        color: '#fff',
+                        '&:hover': {
+                          color: '#fff',
+                        },
+                      }}
+                    >
                       <Instagram />
                     </Link>
   
-                    <Link href="#" underline="none" color={"#fff"}>
+                    <Link
+                      href="https://wa.me/+6288888888888"
+                      underline="none"
+                      sx={{
+                        color: '#fff',
+                        '&:hover': {
+                          color: '#fff',
+                        },
+                      }}
+                    >
                       <WhatsApp />
                     </Link>
                   </Box>
