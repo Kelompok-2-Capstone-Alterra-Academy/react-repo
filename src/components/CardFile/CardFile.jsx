@@ -17,7 +17,7 @@ import Modal from '@mui/material/Modal';
 import ModalDetail from './ModalDetail/ModalDetail';
 import ModalEditFile from './ModalEditFile/ModalEditFile';
 
-const CardFile = () => {
+const CardFile = ({ modul }) => {
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
 	const [showFormModalBerkas, setShowFormModalBerkas] = useState(false);
 	const [showFormModalDetail, setShowFormModalDetail] = useState(false);
@@ -36,7 +36,7 @@ const CardFile = () => {
 				elevation={0}
 				sx={{
 					maxWidth: 200,
-					minHeight: 170,
+					height: '100%',
 					borderRadius: 2.5,
 					marginBottom: '10px',
 					border: '2px solid #f5f5f5',
@@ -127,11 +127,11 @@ const CardFile = () => {
 					}}
 				/>
 				<hr style={{ width: 135, alignItems: 'center', marginLeft: 30 }} />
-				<CardContent style={{ paddingBottom: 13 }}>
-					<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+				<CardContent style={{ paddingBottom: 8 }}>
+					<div style={{ display: 'flex', alignItems: 'center' }}>
 						<FontAwesomeIcon style={{ marginRight: '20px', color: '#2196F3', fontSize: 25 }} icon={faTv} />
 						<Typography style={{ fontSize: 14 }} gutterBottom variant="h6" component="div">
-							Matematika Dasar
+							Matematika Diskrit
 						</Typography>
 					</div>
 					<Typography style={{ fontWeight: 500, fontSize: 10, color: '#9E9E9E', marginTop: 3 }} variant="body2">
