@@ -158,9 +158,14 @@ export default function NavBar({ active }) {
 								borderRadius: '8px',
 								fontWeight: 600,
 								textTransform: 'capitalize',
+								':hover': {
+									color: 'white',
+								}
 							}}
-							variant="contained">
-							Daftar
+							variant="contained"
+							href="/register"
+							>
+								Daftar
 						</Button>
 					</Box>
 				</Toolbar>

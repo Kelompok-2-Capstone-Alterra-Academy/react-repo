@@ -62,8 +62,11 @@ export default function LandingPage() {
 									transition: 'all ease-in 300',
 									':hover': {
 										background: 'linear-gradient(180deg, #1f87db 19.19%, #3854e0 100%)',
+										color: 'white'
 									},
-								}}>
+								}}
+								href="/register"
+								>
 								Gabung Sekarang
 							</Button>
 							<Box mt={3.5} sx={{ display: 'flex', alignItems: 'center' }}>
@@ -245,8 +248,11 @@ export default function LandingPage() {
 										transition: 'all ease-in 300',
 										':hover': {
 											background: 'linear-gradient(180deg, #1f87db 19.19%, #3854e0 100%)',
+											color: 'white',
 										},
-									}}>
+									}}
+									href="/register"
+									>
 									Gabung Sekarang
 								</Button>
 							</Box>
@@ -589,7 +595,9 @@ export default function LandingPage() {
 								textTransform: 'capitalize',
 								transition: 'all ease-in 300',
 								':hover': { background: '#F0FAFF' },
-							}}>
+							}}
+							href="/register"
+							>
 							Gabung Sekarang
 						</Button>
 					</Box>
