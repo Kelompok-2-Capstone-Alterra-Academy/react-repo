@@ -13,11 +13,9 @@ import {
   FormProvider,
   useFormContext,
 } from "react-hook-form";
-import { Select, MenuItem} from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import styles from './Register.module.css'
-import FormControl from '@mui/material/FormControl';
 import { useNavigate } from "react-router-dom";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useClickOutside } from '../../hooks';
@@ -58,7 +56,7 @@ import { useClickOutside } from '../../hooks';
               </div>
             </div>
             
-            <div className={styles.usernameForm}>
+            <div className={styles.emailForm}>
               <span className={styles.label}>Email</span>
                 <div className={styles.inputContainer}>
                   <Controller
@@ -78,7 +76,7 @@ import { useClickOutside } from '../../hooks';
                   />
                 </div>
             `</div>
-             <div className={styles.usernameForm} style={{marginTop:"-1.5em"}}>
+             <div className={styles.telponForm} style={{marginTop:"-1.5em"}}>
                <span className={styles.label}>No Telpon</span>
                 <div className={styles.inputContainer}>
                   <Controller
@@ -98,7 +96,7 @@ import { useClickOutside } from '../../hooks';
                   />
                 </div>
              </div>
-             <div className={styles.usernameForm}>
+             <div className={styles.passwordForm}>
               <label className={styles.label}>Kata Sandi</label>
                 <div className={styles.inputContainer}>
                 <Controller
@@ -124,7 +122,7 @@ import { useClickOutside } from '../../hooks';
                 />
                 </div>
             </div>
-            <div className={styles.passwordForm}>
+            <div className={styles.passwordAgainForm}>
              <span className={styles.label}>Ulang Kata Sandi</span>
               <div className={styles.inputContainer}>
                 <Controller
@@ -142,7 +140,6 @@ import { useClickOutside } from '../../hooks';
                       type={showPasswordAgain ? 'text' : 'password'}
                       onChange={(e) => setShowPasswordAgain(e.target.value)}
                       placeholder="Masukan kata sandi yang sama"
-                      fullWidth
                       {...field}
                     />
                   )}
@@ -183,7 +180,7 @@ import { useClickOutside } from '../../hooks';
 
       return (
         <>
-        <div className={styles.usernameForm}>
+        <div className={styles.namaLengkapForm}>
           <label className={styles.label} style={{marginTop:"27px"}}>Nama Lengkap</label>
             <div className={styles.inputContainer}>
               <Controller
@@ -201,9 +198,9 @@ import { useClickOutside } from '../../hooks';
               />
             </div>
         </div>
-        <div className={styles.usernameForm}>
+        <div className={styles.tanggalForm}>
           <label className={styles.label}>Tanggal Lahir</label>
-            <div className={styles.inputContainer} >
+            <div className={styles.inputContainer}>
               <Controller
                 control={control}
                 name="tanggalLahir"
@@ -221,12 +218,12 @@ import { useClickOutside } from '../../hooks';
               />
             </div>
         </div>
-        <div className={styles.usernameForm}
-          style={{marginBottom:"70px"}}
+        <div className={styles.bidangForm}
+          style={{marginBottom:"70px", cursor:"pointer"}}
           onClick={() => setIsLearningListOpen(!isLearningListOpen)}
           ref={learningListRef}>
           <label className={styles.label}>Bidang Keahlian</label>
-            <div className={styles.inputContainer} style={{cursor:"pointer"}}>
+            <div className={styles.inputContainer}>
               <Controller
                 control={control}
                 name="bidangKeahlian"
@@ -236,7 +233,7 @@ import { useClickOutside } from '../../hooks';
                     className={styles.input}
                     placeholder="Keahlian yang dimiliki"
                     value={selectedLearning}
-                    style={{cursor:"pointer", background:"white"}}
+                    style={{background:"white", cursor:"pointer"}}
                     {...field}
                   />
                 )}
@@ -369,10 +366,9 @@ const Register = () => {
               <form onSubmit={methods.handleSubmit(handleNext)}>
                 {getStepContent(activeStep)}
                 <Button
-                  style={{color:"white", backgroundColor:"#2196F3", }}
+                  style={{color:"white", backgroundColor:"#2196F3", width:"100%"}}
                   variant="contained"
                   type="submit"
-                  fullWidth
                 >
                   {activeStep === steps.length - 1 ? "Tambahkan Akun" : "Lanjut"}
                 </Button>

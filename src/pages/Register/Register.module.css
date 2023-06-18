@@ -90,7 +90,13 @@
 }
 
 .usernameForm,
-.passwordForm {
+.emailForm,
+.telponForm,
+.passwordForm,
+.passwordAgainForm,
+.namaLengkapForm,
+.tanggalForm,
+.bidangForm {
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
