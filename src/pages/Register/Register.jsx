@@ -13,6 +13,7 @@ import {
   FormProvider,
   useFormContext,
 } from "react-hook-form";
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import styles from './Register.module.css'
@@ -56,6 +57,7 @@ import { useClickOutside } from '../../hooks';
               </div>
             </div>
             
+
             <div className={styles.emailForm}>
               <span className={styles.label}>Email</span>
                 <div className={styles.inputContainer}>
@@ -206,6 +208,7 @@ import { useClickOutside } from '../../hooks';
                 name="tanggalLahir"
                 render={({ field }) => (
                   <input
+
                     className={styles.input}
                     required
                     id="tanggalLahir"
@@ -337,6 +340,7 @@ const Register = () => {
         <div className={styles.imageContainer}>
             <img src="/image/Daftar.png" alt="/" className={styles.image} />
             <span className={styles.imageText}>Temukan Kembali Akses Akun Anda dengan Mudah</span>
+
         </div>
         <div className={styles.tampilan}>
           <div className={styles.tampilanHeader}>
