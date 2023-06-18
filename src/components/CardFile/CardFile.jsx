@@ -17,7 +17,7 @@ import Modal from '@mui/material/Modal';
 import ModalDetail from './ModalDetail/ModalDetail';
 import ModalEditFile from './ModalEditFile/ModalEditFile';
 
-const CardFile = ({ modul }) => {
+const CardFile = ({ attachment }) => {
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
 	const [showFormModalBerkas, setShowFormModalBerkas] = useState(false);
 	const [showFormModalDetail, setShowFormModalDetail] = useState(false);
@@ -131,7 +131,7 @@ const CardFile = ({ modul }) => {
 					<div style={{ display: 'flex', alignItems: 'center' }}>
 						<FontAwesomeIcon style={{ marginRight: '20px', color: '#2196F3', fontSize: 25 }} icon={faTv} />
 						<Typography style={{ fontSize: 14 }} gutterBottom variant="h6" component="div">
-							Matematika Diskrit
+							{attachment.attachment_name}
 						</Typography>
 					</div>
 					<Typography style={{ fontWeight: 500, fontSize: 10, color: '#9E9E9E', marginTop: 3 }} variant="body2">

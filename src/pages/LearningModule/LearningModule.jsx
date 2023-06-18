@@ -4,17 +4,19 @@ import { toast } from 'react-toastify';
 import { LoopCircleLoading } from 'react-loadingg';
 import { CardFile, HeaderDropdown, Header } from '../../components';
 import SidebarContent from "../../components/SidebarContent/SidebarContent";
-import { getFolder, getModuleById } from '../../clients';
+import { getFolder, getAttachment } from '../../clients';
 import { setFolder } from '../../redux/actions/folderActions';
-import { setModul } from '../../redux/actions/modulActions';
+import { setAttachment } from '../../redux/actions/attachmentActions';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 
 function LearningModule() {
 	const [loadingFetch, setLoadingFetch] = useState(false);
 	const folderData = useSelector((state) => state.folder).folder;
-	const modulData = useSelector((state) => state.modul).modul;
+	const attachmentData = useSelector((state) => state.attachment).attachment;
+	const { id } = useParams();
 
 	const dispatch = useDispatch();
 	useEffect(() => {
@@ -31,11 +33,20 @@ function LearningModule() {
 			.finally(() => {
 				setLoadingFetch(false);
 			});
+
+		getAttachment(id)
+			.then((res) => {
+				dispatch(setAttachment(res.data.data));
+			})
+			.catch((err) => {
+				toast.error(err.response.data.message, {
+					position: toast.POSITION.TOP_RIGHT,
+				});
+			})
+			.finally(() => {
+				setLoadingFetch(false);
+			});
 	}, []);
-
-
-	console.log(folderData);
-	console.log(modulData);
 
 	if (loadingFetch) {
 		return <LoopCircleLoading size="large" color="#4161ff" />;
@@ -64,8 +75,21 @@ function LearningModule() {
 				<div className={styles.content}>
 					<SidebarContent folderData={folderData} />
 					<div className={styles.contentCard}>
-						<p className={styles.paragraph}>File (6)</p>
+						<p className={styles.paragraph}>File ({attachmentData.length})</p>
 						<Grid container spacing={3}>
+							{attachmentData.map((attachment) => (
+								<Grid key={attachment.id} item xs={12} sm={6} md={4} lg={4} xl={2.4}>
+									<CardFile attachment={attachment} />
+								</Grid>
+							))}
+
+							{/* <Grid item xs={12} sm={6} md={4} lg={4} xl={2.4}>
+								<CardFile />
+							</Grid>
+
+							<Grid item xs={12} sm={6} md={4} lg={4} xl={2.4}>
+								<CardFile />
+							</Grid>
 							<Grid item xs={12} sm={6} md={4} lg={4} xl={2.4}>
 								<CardFile />
 							</Grid>
@@ -76,18 +100,7 @@ function LearningModule() {
 
 							<Grid item xs={12} sm={6} md={4} lg={4} xl={2.4}>
 								<CardFile />
-							</Grid>
-							<Grid item xs={12} sm={6} md={4} lg={4} xl={2.4}>
-								<CardFile />
-							</Grid>
-
-							<Grid item xs={12} sm={6} md={4} lg={4} xl={2.4}>
-								<CardFile />
-							</Grid>
-
-							<Grid item xs={12} sm={6} md={4} lg={4} xl={2.4}>
-								<CardFile />
-							</Grid>
+							</Grid> */}
 						</Grid>
 					</div>
 				</div>

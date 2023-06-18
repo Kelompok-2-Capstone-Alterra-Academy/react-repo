@@ -3,12 +3,12 @@ import courseReducer from './courseReducer';
 import quizReducer from './quizReducer';
 import sectionReducer from './sectionReducer';
 import folderReducer from './folderReducer';
-import modulReducer from './modulReducer';
+import attachmentReducer from './attachmentReducer';
 
 export const rootReducer = combineReducers({
 	section: sectionReducer,
 	course: courseReducer,
 	quiz: quizReducer,
 	folder: folderReducer,
-	modul: modulReducer
+	attachment: attachmentReducer
 });
