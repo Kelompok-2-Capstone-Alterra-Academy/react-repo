@@ -19,6 +19,8 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import styles from './Register.module.css'
 import FormControl from '@mui/material/FormControl';
 import { useNavigate } from "react-router-dom";
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { useClickOutside } from '../../hooks';
 
     function getSteps() {
         return [
@@ -167,16 +169,22 @@ import { useNavigate } from "react-router-dom";
     };
 
     const DataDiri = () => {
-      const { control } = useFormContext();
-      const [age, setAge] = React.useState('');
-      const handleChange = (event) => {
-        setAge(event.target.value);
-      }
+      const { control, setValue  } = useFormContext();
+      const [isLearningListOpen, setIsLearningListOpen] = useState(false);
+      const [selectedLearning, setSelectedLearning] = useState('');
+      const learningListRef = useClickOutside(() => {
+        setIsLearningListOpen(false);
+      });
+      const handleLearningItemClick = (learning) => {
+        setValue('bidangKeahlian', learning);
+        setSelectedLearning(learning);
+        setIsLearningListOpen(false);
+      };
 
       return (
         <>
         <div className={styles.usernameForm}>
-          <label className={styles.label}>Nama Lengkap</label>
+          <label className={styles.label} style={{marginTop:"27px"}}>Nama Lengkap</label>
             <div className={styles.inputContainer}>
               <Controller
                 control={control}
@@ -195,47 +203,81 @@ import { useNavigate } from "react-router-dom";
         </div>
         <div className={styles.usernameForm}>
           <label className={styles.label}>Tanggal Lahir</label>
-            <div className={styles.inputContainer}>
+            <div className={styles.inputContainer} >
               <Controller
                 control={control}
                 name="tanggalLahir"
                 render={({ field }) => (
                   <input
-                  className={styles.input}
-                  required
+                    className={styles.input}
+                    required
                     id="tanggalLahir"
                     type="date"
+                    placeholder="dd/mm/yyyy"
+                    style={{color:"#9E9E9E", cursor:"pointer"}}
                     {...field}
                   />
                 )}
               />
             </div>
         </div>
-        <div className={styles.usernameForm}>
+        <div className={styles.usernameForm}
+          style={{marginBottom:"70px"}}
+          onClick={() => setIsLearningListOpen(!isLearningListOpen)}
+          ref={learningListRef}>
           <label className={styles.label}>Bidang Keahlian</label>
-            <div className={styles.inputContainer}>
+            <div className={styles.inputContainer} style={{cursor:"pointer"}}>
               <Controller
                 control={control}
                 name="bidangKeahlian"
                 render={({ field }) => (
-                  <FormControl fullWidth>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="bidangKeahlian"
-                      label="bidangKeahlian"
-                      placeholder="Bidang Keahlian"
-                      onChange={handleChange}
-                      {...field}
-                    >
-                      <MenuItem value={"Ilmu Terapan"}>Ilmu Terapan</MenuItem>
-                      <MenuItem value={"Ilmu Sosia"}>Ilmu Sosial</MenuItem>
-                      <MenuItem value={"Bahasa dan Sastra"}>Bahasa dan Sastra</MenuItem>
-                      <MenuItem value={"Ilmu Alam"}>Ilmu Alam</MenuItem>
-                      <MenuItem value={"Multimedia"}>Multimedia</MenuItem>
-                    </Select>
-                  </FormControl>
+                  <input disabled
+                    required
+                    className={styles.input}
+                    placeholder="Keahlian yang dimiliki"
+                    value={selectedLearning}
+                    style={{cursor:"pointer", background:"white"}}
+                    {...field}
+                  />
                 )}
               />
+              <KeyboardArrowDownIcon style={{ color: 'black' }} />
+              {isLearningListOpen && (
+							<div className={styles.learningListContainer}>
+                  <label style={{fontWeight:"bold"}}>Bidang Keahlian</label>
+                	<span
+									style={{ textDecoration: 'none' }}
+									className={styles.learningListItem}
+                  onClick={() => handleLearningItemClick('Ilmu Terapan')}
+                  >
+									<span className={styles.learningListItemTitle}>Ilmu Terapan</span>
+								</span>
+                	<span
+									style={{ textDecoration: 'none' }}
+									className={styles.learningListItem}
+                  onClick={() => handleLearningItemClick('Ilmu Sosial')}>
+									<span className={styles.learningListItemTitle}>Ilmu Sosial</span>
+								</span>
+                	<span
+									style={{ textDecoration: 'none' }}
+									className={styles.learningListItem}
+                  onClick={() => handleLearningItemClick('Bahasa dan Sastra')}>
+									<span className={styles.learningListItemTitle}>Bahasa dan Sastra</span>
+								</span>
+								<span
+									style={{ textDecoration: 'none' }}
+									className={styles.learningListItem}
+                  onClick={() => handleLearningItemClick('Ilmu Alam')}>
+									<span className={styles.learningListItemTitle}>Ilmu Alam</span>
+								</span>
+								<span
+									style={{ textDecoration: 'none' }}
+									className={styles.learningListItem}
+                  onClick={() => handleLearningItemClick('Multimedia')}>
+									<span className={styles.learningListItemTitle}>Multimedia</span>
+								</span>
+							</div>
+						)}
             </div>
         </div>
         </>
@@ -265,7 +307,6 @@ const Register = () => {
       namaLengkap: "",
       tanggalLahir: "",
       bidangKeahlian: "",
-      setGender:"",
     },
   });
 
@@ -299,12 +340,12 @@ const Register = () => {
         <div className={styles.imageContainer}>
             <img src="/image/Daftar.png" alt="/" className={styles.image} />
             <span className={styles.imageText}>Temukan Kembali Akses Akun Anda dengan Mudah</span>
-          </div>
-          <div className={styles.tampilan}>
-            <div className={styles.tampilanHeader}>
+        </div>
+        <div className={styles.tampilan}>
+          <div className={styles.tampilanHeader}>
             <h2 className={styles.title}>{activeStep === steps.length - 1 ? "Lengkapi Data Diri" : "Buat Akun Mentor" }</h2>
-              <span className={styles.desc}>Mulai dengan membuat akun baru</span>
-              <div className={styles.Steperr}>
+             <span className={styles.desc}>Mulai dengan membuat akun baru</span>
+             <div className={styles.Steperr}>
               <Stepper alternativeLabel activeStep={activeStep} >
                 {steps.map((step, index) => {
                   const labelProps = {};
@@ -316,7 +357,7 @@ const Register = () => {
                   );
                 })}
               </Stepper>
-              </div>
+             </div>
                 {activeStep === steps.length ? (
                   <Typography variant="h3" align="center">
                     Thank You

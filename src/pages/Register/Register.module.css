@@ -179,3 +179,46 @@
 .visible {
     visibility: visible;
 }
+
+.MuiIconButton-root {
+    padding: 4px;
+}
+
+.MuiSvgIcon-root {
+    width: 18px;
+    height: 18px;
+    color: #666;
+}
+
+.learningListContainer {
+    gap: 4px;
+    position: absolute;
+    background-color: #ffffff;
+    border-radius: 8px;
+    display: flex;
+    width: 301px;
+    height: 270px;
+    top: 580px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 1em;
+    z-index: 2;
+    animation: slideDown 0.3s ease-in-out;
+    box-shadow: 0 3px 11px #0000001a, 0 3px 6px #00000026;
+}
+
+.courseListItem,
+.learningListItem {
+    padding: 0.5em;
+    width: 100%;
+    color: black;
+    border-radius: 8px;
+    transition: 0.2s all ease-in-out;
+}
+
+.courseListItem:hover,
+.learningListItem:hover {
+    background-color: #1976D2;
+    color: white;
+}
