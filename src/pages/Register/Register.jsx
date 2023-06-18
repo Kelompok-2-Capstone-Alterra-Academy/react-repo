@@ -13,12 +13,13 @@ import {
   FormProvider,
   useFormContext,
 } from "react-hook-form";
-import { Select, MenuItem} from '@mui/material';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import styles from './Register.module.css'
-import FormControl from '@mui/material/FormControl';
 import { useNavigate } from "react-router-dom";
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { useClickOutside } from '../../hooks';
 
     function getSteps() {
         return [
@@ -56,7 +57,8 @@ import { useNavigate } from "react-router-dom";
               </div>
             </div>
             
-            <div className={styles.usernameForm}>
+
+            <div className={styles.emailForm}>
               <span className={styles.label}>Email</span>
                 <div className={styles.inputContainer}>
                   <Controller
@@ -76,7 +78,7 @@ import { useNavigate } from "react-router-dom";
                   />
                 </div>
             `</div>
-             <div className={styles.usernameForm} style={{marginTop:"-1.5em"}}>
+             <div className={styles.telponForm} style={{marginTop:"-1.5em"}}>
                <span className={styles.label}>No Telpon</span>
                 <div className={styles.inputContainer}>
                   <Controller
@@ -96,7 +98,7 @@ import { useNavigate } from "react-router-dom";
                   />
                 </div>
              </div>
-             <div className={styles.usernameForm}>
+             <div className={styles.passwordForm}>
               <label className={styles.label}>Kata Sandi</label>
                 <div className={styles.inputContainer}>
                 <Controller
@@ -122,7 +124,7 @@ import { useNavigate } from "react-router-dom";
                 />
                 </div>
             </div>
-            <div className={styles.passwordForm}>
+            <div className={styles.passwordAgainForm}>
              <span className={styles.label}>Ulang Kata Sandi</span>
               <div className={styles.inputContainer}>
                 <Controller
@@ -140,7 +142,6 @@ import { useNavigate } from "react-router-dom";
                       type={showPasswordAgain ? 'text' : 'password'}
                       onChange={(e) => setShowPasswordAgain(e.target.value)}
                       placeholder="Masukan kata sandi yang sama"
-                      fullWidth
                       {...field}
                     />
                   )}
@@ -167,16 +168,22 @@ import { useNavigate } from "react-router-dom";
     };
 
     const DataDiri = () => {
-      const { control } = useFormContext();
-      const [age, setAge] = React.useState('');
-      const handleChange = (event) => {
-        setAge(event.target.value);
-      }
+      const { control, setValue  } = useFormContext();
+      const [isLearningListOpen, setIsLearningListOpen] = useState(false);
+      const [selectedLearning, setSelectedLearning] = useState('');
+      const learningListRef = useClickOutside(() => {
+        setIsLearningListOpen(false);
+      });
+      const handleLearningItemClick = (learning) => {
+        setValue('bidangKeahlian', learning);
+        setSelectedLearning(learning);
+        setIsLearningListOpen(false);
+      };
 
       return (
         <>
-        <div className={styles.usernameForm}>
-          <label className={styles.label}>Nama Lengkap</label>
+        <div className={styles.namaLengkapForm}>
+          <label className={styles.label} style={{marginTop:"27px"}}>Nama Lengkap</label>
             <div className={styles.inputContainer}>
               <Controller
                 control={control}
@@ -193,7 +200,7 @@ import { useNavigate } from "react-router-dom";
               />
             </div>
         </div>
-        <div className={styles.usernameForm}>
+        <div className={styles.tanggalForm}>
           <label className={styles.label}>Tanggal Lahir</label>
             <div className={styles.inputContainer}>
               <Controller
@@ -201,41 +208,76 @@ import { useNavigate } from "react-router-dom";
                 name="tanggalLahir"
                 render={({ field }) => (
                   <input
-                  className={styles.input}
-                  required
+
+                    className={styles.input}
+                    required
                     id="tanggalLahir"
                     type="date"
+                    placeholder="dd/mm/yyyy"
+                    style={{color:"#9E9E9E", cursor:"pointer"}}
                     {...field}
                   />
                 )}
               />
             </div>
         </div>
-        <div className={styles.usernameForm}>
+        <div className={styles.bidangForm}
+          style={{marginBottom:"70px", cursor:"pointer"}}
+          onClick={() => setIsLearningListOpen(!isLearningListOpen)}
+          ref={learningListRef}>
           <label className={styles.label}>Bidang Keahlian</label>
             <div className={styles.inputContainer}>
               <Controller
                 control={control}
                 name="bidangKeahlian"
                 render={({ field }) => (
-                  <FormControl fullWidth>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="bidangKeahlian"
-                      label="bidangKeahlian"
-                      placeholder="Bidang Keahlian"
-                      onChange={handleChange}
-                      {...field}
-                    >
-                      <MenuItem value={"Ilmu Terapan"}>Ilmu Terapan</MenuItem>
-                      <MenuItem value={"Ilmu Sosia"}>Ilmu Sosial</MenuItem>
-                      <MenuItem value={"Bahasa dan Sastra"}>Bahasa dan Sastra</MenuItem>
-                      <MenuItem value={"Ilmu Alam"}>Ilmu Alam</MenuItem>
-                      <MenuItem value={"Multimedia"}>Multimedia</MenuItem>
-                    </Select>
-                  </FormControl>
+                  <input disabled
+                    required
+                    className={styles.input}
+                    placeholder="Keahlian yang dimiliki"
+                    value={selectedLearning}
+                    style={{background:"white", cursor:"pointer"}}
+                    {...field}
+                  />
                 )}
               />
+              <KeyboardArrowDownIcon style={{ color: 'black' }} />
+              {isLearningListOpen && (
+							<div className={styles.learningListContainer}>
+                  <label style={{fontWeight:"bold"}}>Bidang Keahlian</label>
+                	<span
+									style={{ textDecoration: 'none' }}
+									className={styles.learningListItem}
+                  onClick={() => handleLearningItemClick('Ilmu Terapan')}
+                  >
+									<span className={styles.learningListItemTitle}>Ilmu Terapan</span>
+								</span>
+                	<span
+									style={{ textDecoration: 'none' }}
+									className={styles.learningListItem}
+                  onClick={() => handleLearningItemClick('Ilmu Sosial')}>
+									<span className={styles.learningListItemTitle}>Ilmu Sosial</span>
+								</span>
+                	<span
+									style={{ textDecoration: 'none' }}
+									className={styles.learningListItem}
+                  onClick={() => handleLearningItemClick('Bahasa dan Sastra')}>
+									<span className={styles.learningListItemTitle}>Bahasa dan Sastra</span>
+								</span>
+								<span
+									style={{ textDecoration: 'none' }}
+									className={styles.learningListItem}
+                  onClick={() => handleLearningItemClick('Ilmu Alam')}>
+									<span className={styles.learningListItemTitle}>Ilmu Alam</span>
+								</span>
+								<span
+									style={{ textDecoration: 'none' }}
+									className={styles.learningListItem}
+                  onClick={() => handleLearningItemClick('Multimedia')}>
+									<span className={styles.learningListItemTitle}>Multimedia</span>
+								</span>
+							</div>
+						)}
             </div>
         </div>
         </>
@@ -265,7 +307,6 @@ const Register = () => {
       namaLengkap: "",
       tanggalLahir: "",
       bidangKeahlian: "",
-      setGender:"",
     },
   });
 
@@ -299,12 +340,13 @@ const Register = () => {
         <div className={styles.imageContainer}>
             <img src="/image/Daftar.png" alt="/" className={styles.image} />
             <span className={styles.imageText}>Temukan Kembali Akses Akun Anda dengan Mudah</span>
-          </div>
-          <div className={styles.tampilan}>
-            <div className={styles.tampilanHeader}>
+
+        </div>
+        <div className={styles.tampilan}>
+          <div className={styles.tampilanHeader}>
             <h2 className={styles.title}>{activeStep === steps.length - 1 ? "Lengkapi Data Diri" : "Buat Akun Mentor" }</h2>
-              <span className={styles.desc}>Mulai dengan membuat akun baru</span>
-              <div className={styles.Steperr}>
+             <span className={styles.desc}>Mulai dengan membuat akun baru</span>
+             <div className={styles.Steperr}>
               <Stepper alternativeLabel activeStep={activeStep} >
                 {steps.map((step, index) => {
                   const labelProps = {};
@@ -316,7 +358,7 @@ const Register = () => {
                   );
                 })}
               </Stepper>
-              </div>
+             </div>
                 {activeStep === steps.length ? (
                   <Typography variant="h3" align="center">
                     Thank You
@@ -328,10 +370,9 @@ const Register = () => {
               <form onSubmit={methods.handleSubmit(handleNext)}>
                 {getStepContent(activeStep)}
                 <Button
-                  style={{color:"white", backgroundColor:"#2196F3", }}
+                  style={{color:"white", backgroundColor:"#2196F3", width:"100%"}}
                   variant="contained"
                   type="submit"
-                  fullWidth
                 >
                   {activeStep === steps.length - 1 ? "Tambahkan Akun" : "Lanjut"}
                 </Button>
