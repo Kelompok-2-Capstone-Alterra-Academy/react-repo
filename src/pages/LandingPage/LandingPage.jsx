@@ -13,9 +13,13 @@ import {
 import { Footer, NavBar } from '../../components';
 
 export default function LandingPage() {
-	const ellipseImg = Array(5).fill(
-		'https://leaveitwithme.com.au/wp-content/uploads/2013/11/dummy-image-square.jpg'
-	);
+	const ellipseImg = [
+		'/image/landing-mentors/mentor-1.png',
+		'/image/landing-mentors/mentor-2.png',
+		'/image/landing-mentors/mentor-3.png',
+		'/image/landing-mentors/mentor-4.png',
+		'/image/landing-mentors/mentor-5.png'
+	  ];
 
 	return (
 		<div>
@@ -58,8 +62,11 @@ export default function LandingPage() {
 									transition: 'all ease-in 300',
 									':hover': {
 										background: 'linear-gradient(180deg, #1f87db 19.19%, #3854e0 100%)',
+										color: 'white'
 									},
-								}}>
+								}}
+								href="/register"
+								>
 								Gabung Sekarang
 							</Button>
 							<Box mt={3.5} sx={{ display: 'flex', alignItems: 'center' }}>
@@ -241,8 +248,11 @@ export default function LandingPage() {
 										transition: 'all ease-in 300',
 										':hover': {
 											background: 'linear-gradient(180deg, #1f87db 19.19%, #3854e0 100%)',
+											color: 'white',
 										},
-									}}>
+									}}
+									href="/register"
+									>
 									Gabung Sekarang
 								</Button>
 							</Box>
@@ -585,7 +595,9 @@ export default function LandingPage() {
 								textTransform: 'capitalize',
 								transition: 'all ease-in 300',
 								':hover': { background: '#F0FAFF' },
-							}}>
+							}}
+							href="/register"
+							>
 							Gabung Sekarang
 						</Button>
 					</Box>
