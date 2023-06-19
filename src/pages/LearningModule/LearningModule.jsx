@@ -76,31 +76,12 @@ function LearningModule() {
 					<SidebarContent folderData={folderData} />
 					<div className={styles.contentCard}>
 						<p className={styles.paragraph}>File ({attachmentData.length})</p>
-						<Grid container spacing={3}>
+						<Grid container spacing={2}>
 							{attachmentData.map((attachment) => (
 								<Grid key={attachment.id} item xs={12} sm={6} md={4} lg={4} xl={2.4}>
 									<CardFile attachment={attachment} />
 								</Grid>
 							))}
-
-							{/* <Grid item xs={12} sm={6} md={4} lg={4} xl={2.4}>
-								<CardFile />
-							</Grid>
-
-							<Grid item xs={12} sm={6} md={4} lg={4} xl={2.4}>
-								<CardFile />
-							</Grid>
-							<Grid item xs={12} sm={6} md={4} lg={4} xl={2.4}>
-								<CardFile />
-							</Grid>
-
-							<Grid item xs={12} sm={6} md={4} lg={4} xl={2.4}>
-								<CardFile />
-							</Grid>
-
-							<Grid item xs={12} sm={6} md={4} lg={4} xl={2.4}>
-								<CardFile />
-							</Grid> */}
 						</Grid>
 					</div>
 				</div>

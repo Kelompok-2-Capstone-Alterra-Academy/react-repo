@@ -1,10 +1,10 @@
 import { useState } from "react";
 import styles from "../ModalFolder/ModalFolder.module.css"
 import { Button } from "../../../components";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { postFolder } from '../../../clients';
 import { addFolder } from '../../../redux/actions/folderActions';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 const ModalFolder = ({ closeFunction }) => {
     const [folder, setFolder] = useState('');
@@ -56,7 +56,6 @@ const ModalFolder = ({ closeFunction }) => {
                         }
                         // window.location.reload();
                     }} type='Primary'>Simpan</Button>
-                {/* <ToastContainer /> */}
             </div>
         </div>
     )
