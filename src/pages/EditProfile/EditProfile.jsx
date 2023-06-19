@@ -26,7 +26,7 @@ export default function EditProfile() {
 					email: 'testing@gmail.com',
 				}}
 			/>
-			<div className="flex">
+			<div className="mb-10">
 				<div className="w-100 border rounded-2xl px-6">
 					<div className="flex items-center justify-between mt-10">
 						<div className="flex items-center">
@@ -87,7 +87,7 @@ export default function EditProfile() {
 								<option value="Option 3">Public Relation</option>
 							</select>
 						</div>
-						<div className="flex items-center gap-4">
+						<div className="flex items-center gap-4 mb-6">
 							<div>
 								<input
 									id="male"
@@ -116,7 +116,7 @@ export default function EditProfile() {
 							</div>
 						</div>
 
-						<div>
+						<div className='mb-6'>
 							<button className="bg-blue-500 hover:bg-blue-700 text-white py-1 px-4 border w-full border-blue-700 rounded">
 								Simpan Perubahan
 							</button>
