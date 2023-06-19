@@ -291,7 +291,6 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 					putModule({
 						data: {
 							ID: content.ID,
-							attachment_id: null,
 							module_name: contentType + '-' + contentName,
 						},
 						id: content.ID,
