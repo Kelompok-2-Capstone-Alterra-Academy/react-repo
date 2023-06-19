@@ -1,3 +1,8 @@
+export const setSection = (payload) => ({
+	type: 'SET_SECTION',
+	payload,
+});
+
 export const addSection = (payload) => ({
 	type: 'ADD_SECTION',
 	payload,
@@ -10,6 +15,11 @@ export const updateSection = (payload) => ({
 
 export const deleteSection = (payload) => ({
 	type: 'DELETE_SECTION',
+	payload,
+});
+
+export const setContent = (payload) => ({
+	type: 'SET_CONTENT',
 	payload,
 });
 

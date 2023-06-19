@@ -13,6 +13,12 @@
 	align-items: center;
 }
 
+.modalTablePreview {
+	color: black;
+	font-weight: 400;
+	text-decoration: underline;
+}
+
 .modalHeader {
 	width: 100%;
 	display: flex;
