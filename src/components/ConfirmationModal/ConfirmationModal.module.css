@@ -19,6 +19,10 @@
 	margin-bottom: 2em;
 }
 
+.confirmationText {
+	text-align: center;
+}
+
 .content {
 	display: flex;
 	flex-direction: column;

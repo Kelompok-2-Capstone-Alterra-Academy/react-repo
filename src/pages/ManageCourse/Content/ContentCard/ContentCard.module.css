@@ -1,16 +1,21 @@
 .contentContainer {
 	width: fit-content;
 	min-width: 15%;
-	background: #bbdefb;
 	padding: 1em;
 	border-radius: 8px;
 	cursor: pointer;
 	transition: all 0.2s ease-in-out;
 	margin-bottom: 1em;
+	box-shadow: 0 3px 11px #0000001a, 0 3px 6px #00000026;
 }
 
 .contentContainer:hover {
-	background: #90caf9;
+	background: #2196f3;
+}
+
+.contentContainer:hover .previewIcon,
+.contentContainer:hover .dataName {
+	color: white;
 }
 
 .contentTitleContainer {
@@ -36,43 +41,16 @@
 	border-radius: 8px;
 }
 
-.deadlineContainer {
-	background-color: #4caf50;
-}
-
-.noDeadlineContainer {
-	background-color: #f44336;
-}
-
-.deadlineIcon {
+.previewIcon {
 	width: 16px;
 	height: 16px;
-	margin-right: 1em;
-}
-
-.labelDeadline {
-	font-size: 12px;
-	font-weight: 600;
-	margin-right: 2em;
-}
-
-.previewIcon {
-	width: 20px;
-	height: 20px;
 	margin-left: 1em;
 	color: #212121;
 }
 
-.previewIconLeft {
-	width: 20px;
-	height: 20px;
-	color: #212121;
-	margin-right: 1em;
-}
-
 .dataName {
 	font-size: 16px;
-	font-weight: 500;
+	font-weight: 400;
 	color: #212121;
 }
 

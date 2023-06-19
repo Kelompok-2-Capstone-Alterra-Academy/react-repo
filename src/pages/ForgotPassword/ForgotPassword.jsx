@@ -33,7 +33,6 @@ export default function Login() {
 	});
 
 	const onSubmit = (values) => {
-		console.log(values);
 		login({
 			email: 'mentor.satu@gmail.com',
 			pass: '12345678',

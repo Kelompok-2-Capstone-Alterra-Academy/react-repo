@@ -1,13 +1,16 @@
 import { faCheckCircle, faRotateRight, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { postAttachment } from '../../../clients';
 import { Button } from '../../../components';
+import { addQuiz } from '../../../redux/actions/quizActions';
 import styles from './FormModal.module.css';
 
-export default function FormModal({ onClose, onSubmit }) {
+export default function FormModal({ onClose }) {
 	const [form, setForm] = useState({
-		name: '',
-		link: '',
+		attachment_name: '',
+		attachment_source: '',
 	});
 	const [formValidation, setFormValidation] = useState(false);
 	const [isCheckingGForm, setIsCheckingGForm] = useState(false);
@@ -15,8 +18,10 @@ export default function FormModal({ onClose, onSubmit }) {
 	const [isValidGForm, setIsValidGForm] = useState(false);
 	const [isSuccessCreateQuiz, setIsSuccessCreateQuiz] = useState(false);
 
+	const dispatch = useDispatch();
+
 	useEffect(() => {
-		if (form.name !== '' && form.link !== '' && isValidGForm) {
+		if (form.attachment_name !== '' && form.attachment_source !== '' && isValidGForm) {
 			setFormValidation(true);
 		} else {
 			setFormValidation(false);
@@ -36,7 +41,7 @@ export default function FormModal({ onClose, onSubmit }) {
 		setTimeout(() => {
 			setCheckingGFormLoading(false);
 			setIsCheckingGForm(true);
-			setIsValidGForm(checkGFormExistence(form.link));
+			setIsValidGForm(checkGFormExistence(form.attachment_source));
 		}, 1000);
 	};
 
@@ -69,17 +74,17 @@ export default function FormModal({ onClose, onSubmit }) {
 								className={styles.formInput}
 								type="text"
 								placeholder="Nama Kuis"
-								value={form.name}
-								onChange={(e) => setForm({ ...form, name: e.target.value })}
+								value={form.attachment_name}
+								onChange={(e) => setForm({ ...form, attachment_name: e.target.value })}
 							/>
 							<div className={styles.gFormInput}>
 								<input
 									className={styles.formInput}
 									type="text"
 									placeholder="Link G-Form"
-									value={form.link}
+									value={form.attachment_source}
 									onChange={(e) => {
-										setForm({ ...form, link: e.target.value });
+										setForm({ ...form, attachment_source: e.target.value });
 										setIsValidGForm(false);
 										setIsCheckingGForm(false);
 									}}
@@ -111,8 +116,8 @@ export default function FormModal({ onClose, onSubmit }) {
 							type="Secondary"
 							onClick={() => {
 								setForm({
-									name: '',
-									link: '',
+									attachment_name: '',
+									attachment_source: '',
 								});
 								onClose();
 							}}>
@@ -121,8 +126,18 @@ export default function FormModal({ onClose, onSubmit }) {
 						<Button
 							type={formValidation ? 'Primary' : 'Disabled'}
 							onClick={() => {
-								onSubmit(form);
-								setIsSuccessCreateQuiz(true);
+								postAttachment({
+									...form,
+									type: 'quiz',
+									status: 'draft',
+								})
+									.then((res) => {
+										dispatch(addQuiz(res.data.data.attachment));
+										setIsSuccessCreateQuiz(true);
+									})
+									.catch((err) => {
+										console.log(err);
+									});
 							}}>
 							Buat
 						</Button>

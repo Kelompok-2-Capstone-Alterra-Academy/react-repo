@@ -22,7 +22,36 @@
 }
 
 .contentTitleContainer {
-	width: 65%;
+	width: 80%;
+}
+
+.contentDescription {
+	position: relative;
+	cursor: pointer;
+	width: fit-content;
+	margin-top: 0.5em;
+}
+
+.contentDescriptionText {
+	white-space: pre-wrap;
+	width: 400px;
+	visibility: hidden;
+	position: absolute;
+	top: 0;
+	left: calc(100% + 1em);
+	background: #000000;
+	color: white;
+	padding: 1em;
+	border-radius: 8px;
+	opacity: 0;
+	font-size: 12px;
+	font-weight: 400;
+	transition: visibility 0s, opacity 0.3s;
+}
+
+.contentDescription:hover .contentDescriptionText {
+	visibility: visible;
+	opacity: 1;
 }
 
 .contentTitleInput {
@@ -32,12 +61,20 @@
 	width: 100%;
 }
 
+.dueDateContainer {
+	margin-top: 0.5em;
+}
+
+.deadlineIcon {
+	margin-right: 0.5em;
+}
+
 .contentButton {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	justify-content: flex-end;
-	width: 70%;
+	width: 100%;
 }
 
 .contentButton svg:nth-child(1) {
@@ -279,23 +316,7 @@
 	justify-content: flex-start;
 }
 
-.contentDescription {
-	width: 60%;
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	justify-content: flex-start;
-	text-align: justify;
-}
-
 .contentDescriptionTitle {
 	font-size: 20px;
 	font-weight: 600;
-}
-
-.contentDescriptionText {
-	font-size: 16px;
-	font-weight: 400;
-	color: #212121;
-	white-space: pre-wrap;
 }

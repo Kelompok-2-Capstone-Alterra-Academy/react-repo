@@ -1,12 +1,13 @@
 .sidebar {
 	position: fixed;
-	height: 100vh;
+	height: -webkit-fill-available;
 	flex: 0 0 auto;
 	width: 20%;
 	background: #f0faff;
-	padding: 1em 1.5em;
+	padding: 1em 1.5em 1.5em 1.5em;
 	overflow-y: auto;
 	transition: width 0.3s ease, padding 0.3s ease;
+	overflow-y: scroll;
 }
 
 .hideSidebar {
@@ -90,7 +91,6 @@
 .menuBox:hover {
 	background: #bbdefb;
 }
-
 .menuCourseContainer {
 	display: flex;
 	flex-direction: column;
@@ -202,4 +202,5 @@
 .modulTitle {
 	font-size: 14px;
 	font-weight: 600;
+	word-break: break-all;
 }
