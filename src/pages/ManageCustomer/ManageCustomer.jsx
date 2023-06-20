@@ -448,68 +448,37 @@ export default function ManageCustomer() {
 											</div>
 										</TableCell>
 										<TableCell>
-											{row.sectionProgress === 12 ? (
-												<div className="flex space-x-5 items-center">
-													<Button
-														sx={{
-															width: '100%',
-															color: '#2196F3',
-															borderRadius: '8px',
-															fontWeight: 600,
-															textTransform: 'capitalize',
-														}}
-														variant="outlined"
-														href={'https://wa.me/+62' + row.telp.replace(/-/g, '')}
-														target="_blank">
-														Hubungi
-													</Button>
-													<Button
-														sx={{
-															width: '100%',
-															borderRadius: '8px',
-															fontWeight: 600,
-															textTransform: 'capitalize',
-															':hover': {
-																bgcolor: '#d32f2f',
-																color: 'white',
-															},
-														}}
-														variant="outlined"
-														color={'error'}
-														onClick={handleOpenDeleteModal}>
-														Hapus Siswa
-													</Button>
-												</div>
-											) : (
-												<div className="flex space-x-5 items-center">
-													<Button
-														sx={{
-															width: '100%',
-															bgcolor: '#2196F3',
-															borderRadius: '8px',
-															boxShadow: 'none',
-															fontWeight: 600,
-															textTransform: 'capitalize',
-														}}
-														variant="contained"
-														onClick={handleOpenQuizForm}>
-														Berikan Quiz
-													</Button>
-													<Button
-														sx={{
-															width: '100%',
-															color: '#2196F3',
-															borderRadius: '8px',
-															fontWeight: 600,
-															textTransform: 'capitalize',
-														}}
-														variant="outlined"
-														href={'https://wa.me/+62' + row.telp.replace(/-/g, '')}
-														target="_blank">
-														Hubungi
-													</Button>
-												</div>
-											)}
+											<div className="flex space-x-5 items-center">
+												<Button
+													sx={{
+														width: '100%',
+														color: '#2196F3',
+														borderRadius: '8px',
+														fontWeight: 600,
+														textTransform: 'capitalize',
+													}}
+													variant="outlined"
+													href={'https://wa.me/+62' + row.telp.replace(/-/g, '')}
+													target="_blank">
+													Hubungi
+												</Button>
+												<Button
+													sx={{
+														width: '100%',
+														borderRadius: '8px',
+														fontWeight: 600,
+														textTransform: 'capitalize',
+														':hover': {
+															bgcolor: '#d32f2f',
+															color: 'white',
+														},
+													}}
+													variant="outlined"
+													color={'error'}
+													onClick={handleOpenDeleteModal}>
+													Hapus Siswa
+												</Button>
+											</div>
 										</TableCell>
 									</TableRow>
 								))}

@@ -119,7 +119,7 @@ export default function Dashboard() {
 							<button
 								className="bg-blue-600 hover:bg-blue-500 text-white text-xs rounded inline-flex items-center"
 								onClick={() => {
-									window.location.href = '/modul';
+									window.location.href = '/modul/2';
 								}}>
 								<img src="/icon/icon-unggah.svg" className="mr-2" alt="" />
 								<span>Kelola Modul</span>
@@ -164,7 +164,7 @@ export default function Dashboard() {
 												className={courseListPage == 0 ? styles.arrowDisabled : styles.arrowLeft}
 												onClick={
 													courseListPage == 0
-														? () => {}
+														? () => { }
 														: () => setCourseListPage(courseListPage - 1)
 												}
 											/>
@@ -177,7 +177,7 @@ export default function Dashboard() {
 												}
 												onClick={
 													courseListPage >= courseData.length / 3 - 1
-														? () => {}
+														? () => { }
 														: () => setCourseListPage(courseListPage + 1)
 												}
 											/>

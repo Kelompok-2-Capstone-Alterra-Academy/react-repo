@@ -12,7 +12,7 @@ import ModalUploadFile from './ModalUploadFile/ModalUploadFile';
 import ModalFolder from './ModalFolder/ModalFolder';
 import ModalLink from './ModalLink/ModalLink';
 
-const HeaderDropdown = () => {
+const HeaderDropdown = ({ folderData }) => {
 	const [showFormModalFolder, setShowFormModalFolder] = useState(false);
 	const [showFormModalLink, setShowFormModalLink] = useState(false);
 	const [showFormModalFile, setShowFormModalFile] = useState(false);
@@ -24,7 +24,7 @@ const HeaderDropdown = () => {
 					<>
 						<div className={styles.header}>
 							<span className={styles.headerTitle}>
-								<b>15</b> File, <b>20</b> Folder
+								<b>15</b> File, <b>{folderData.folders?.length}</b> Folder
 							</span>
 							<Button
 								className={styles.headerButton}
@@ -118,7 +118,11 @@ const HeaderDropdown = () => {
 				/>
 			</Modal>
 			<Modal open={showFormModalFile} onClose={() => setShowFormModalFile(false)}>
-				<ModalUploadFile />
+				<ModalUploadFile
+					closeFunction={() => {
+						setShowFormModalFile(false);
+					}}
+				/>
 			</Modal>
 		</>
 	);

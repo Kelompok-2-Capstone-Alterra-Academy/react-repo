@@ -1,34 +1,35 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { faFolderOpen, faFolder } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from '../SidebarContent/SidebarContent.module.css';
-import Button from '@mui/material/Button';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
-const SidebarContent = () => {
+const SidebarContent = ({ folderData }) => {
+	const { id } = useParams();
+	const navigate = useNavigate();
+
+	const handleClick = (id) => {
+		navigate(`/modul/${id}`)
+		console.log(id)
+		window.location.reload();
+	}
+	console.log(folderData)
 	return (
 		<div className={styles.sidebar}>
 			<div>
 				<div className={styles.header}>
-					<span>Folder (10)</span>
+					<span>Folder ({folderData.folders?.length})</span>
 				</div>
 				<div className={styles.main}>
-					<Link style={{ textDecoration: 'none' }} to="/chat" className={styles.listItemActive}>
-						<FontAwesomeIcon icon={faFolderOpen} className={styles.iconActive} />
-						<span className={styles.description}>Matematika Dasar</span>
-					</Link>
-					<Link style={{ textDecoration: 'none' }} to="/learning/modul" className={styles.listItem}>
-						<FontAwesomeIcon icon={faFolder} className={styles.icon} />
-						<span>Kelipatan dan Faktor</span>
-					</Link>
-					<Link style={{ textDecoration: 'none' }} to="/learning/modul" className={styles.listItem}>
-						<FontAwesomeIcon icon={faFolder} className={styles.icon} />
-						<span>Operasi Pengukuran</span>
-					</Link>
-					<Link style={{ textDecoration: 'none' }} to="/learning/modul" className={styles.listItem}>
-						<FontAwesomeIcon icon={faFolder} className={styles.icon} />
-						<span>Operasi Perhitungan</span>
-					</Link>
+					{folderData.folders?.map((data, index) => (
+						<div key={index}>
+							<Link style={{ textDecoration: 'none', cursor: 'pointer' }} onClick={() => handleClick(data.ID)} className={data.ID == id ? styles.listItemActive : styles.listItem
+							}>
+								<FontAwesomeIcon icon={data.ID == id ? faFolderOpen : faFolder} className={data.ID == id ? styles.iconActive : styles.icon} />
+								<span className={data.ID == id ? styles.descriptionActive : styles.description
+								}>{data.folder_name}</span>
+							</Link>
+						</div>
+					))}
 				</div>
 			</div>
 		</div>

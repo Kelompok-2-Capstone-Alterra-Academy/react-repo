@@ -75,7 +75,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 							}
 						/>
 						<Route
-							path="/modul"
+							path="/modul/:id"
 							element={
 								<ProtectedRoute>
 									<LearningModule />
