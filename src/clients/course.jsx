@@ -29,3 +29,17 @@ export function delCourse(id) {
 		url: `${COURSE_PREFIX}/${id}`,
 	});
 }
+
+export function getStudentByCourse() {
+	return axios({
+		method: 'get',
+		url: `${COURSE_PREFIX}`,
+	});
+}
+
+export function delStudentCourse(id) {
+	return axios({
+		method: 'delete',
+		url: `${COURSE_PREFIX}/${id}`,
+	});
+}
