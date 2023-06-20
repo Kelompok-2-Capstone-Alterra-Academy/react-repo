@@ -1,9 +1,10 @@
 import { faChevronDown, faSearch, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from '@mui/material/Modal';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Select } from '../../../../components';
 import { useClickOutside } from '../../../../hooks';
+import { truncateString } from '../../../../utilities/string';
 import styles from './LinkModal.module.css';
 
 export default function LinkModal({ data, show, onClose, onSubmit }) {
@@ -29,7 +30,9 @@ export default function LinkModal({ data, show, onClose, onSubmit }) {
 	}, [quizLinkSearched, quizLinkShowPerPage, show]);
 
 	const filterQuizLinkList = (searchedName, showPerPage) => {
-		const filteredList = data.filter((item) => item.name.toLowerCase().includes(searchedName));
+		const filteredList = data.filter((item) =>
+			item.attachment_name.toLowerCase().includes(searchedName.toLowerCase())
+		);
 		setQuizLinkList(filteredList.slice(0, showPerPage));
 	};
 
@@ -95,7 +98,7 @@ export default function LinkModal({ data, show, onClose, onSubmit }) {
 							<tbody className={styles.modalTableBody}>
 								{quizLinkList?.map((link) => {
 									return (
-										<tr key={link.id} className={styles.modalTableBodyRow}>
+										<tr key={link.ID} className={styles.modalTableBodyRow}>
 											<td>
 												<span
 													className={styles.modalTableSelect}
@@ -105,8 +108,16 @@ export default function LinkModal({ data, show, onClose, onSubmit }) {
 													Pilih
 												</span>
 											</td>
-											<td>{link.name}</td>
-											<td>{link.link}</td>
+											<td>{link.attachment_name}</td>
+											<td>
+												<a
+													href={link.attachment_source}
+													target="_blank"
+													rel="noreferrer"
+													className={styles.modalTablePreview}>
+													{truncateString(link.attachment_source, 40)}
+												</a>
+											</td>
 										</tr>
 									);
 								})}

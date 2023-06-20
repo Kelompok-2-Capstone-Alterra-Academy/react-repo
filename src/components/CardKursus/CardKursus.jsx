@@ -1,42 +1,38 @@
-import { faChevronDown, faMars, faUpload, faVenus } from '@fortawesome/free-solid-svg-icons';
+import {
+	faChevronDown,
+	faMars,
+	faPaperPlane,
+	faPaperclip,
+	faTrash,
+	faVenus,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from '@mui/material/Modal';
 import { useEffect, useState } from 'react';
-import { Button, OutlineTag, Select } from '../../components';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { delCourse, putCourse } from '../../clients';
+import { Button, ConfirmationModal, OutlineTag, Select } from '../../components';
 import { useClickOutside } from '../../hooks';
+import { deleteCourse, updateCourse } from '../../redux/actions/courseActions';
 import styles from './CardKursus.module.css';
 
-export default function CardKursus({ data }) {
-	console.log(data);
+export default function CardKursus({ data, category }) {
 	const [isShowPublishModal, setIsShowPublishModal] = useState(false);
 	const [isShowClassSelect, setIsShowClassSelect] = useState(false);
 	const [isShowMajorSelect, setIsShowMajorSelect] = useState(false);
 	const [isShowThumbnailSelect, setIsShowThumbnailSelect] = useState(false);
 	const [validation, setValidation] = useState(false);
-	const [coursePrice, setCoursePrice] = useState('');
-	const [courseDescription, setCourseDescription] = useState('');
-	const [courseClass, setCourseClass] = useState('');
-	const [courseMajor, setCourseMajor] = useState('');
-	const [courseThumbnail, setCourseThumbnail] = useState('apple');
+	const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
 
-	const classData = [
-		{ id: 1, option: 'Kelas 10' },
-		{ id: 2, option: 'Kelas 11' },
-		{ id: 3, option: 'Kelas 12' },
-	];
+	const [coursePrice, setCoursePrice] = useState(data.price);
+	const [courseDescription, setCourseDescription] = useState(data.description);
+	const [courseClass, setCourseClass] = useState(data.class_id);
+	const [courseMajor, setCourseMajor] = useState(data.major_id);
+	const [courseThumbnail, setCourseThumbnail] = useState(data.thumbnail);
 
-	const majorData = [
-		{ id: 1, option: 'IPA' },
-		{ id: 2, option: 'IPS' },
-		{ id: 3, option: 'Teknik Komputer Jaringan' },
-		{ id: 4, option: 'Rekayasa Perangkat Lunak' },
-		{ id: 5, option: 'Multimedia' },
-		{ id: 6, option: 'Akuntansi' },
-		{ id: 7, option: 'Administrasi Perkantoran' },
-		{ id: 8, option: 'Pemasaran' },
-		{ id: 9, option: 'Perhotelan' },
-		{ id: 10, option: 'Tata Boga' },
-	];
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	const classRef = useClickOutside(() => {
 		setIsShowClassSelect(false);
@@ -56,35 +52,43 @@ export default function CardKursus({ data }) {
 
 	return (
 		<>
-			<div className={styles.container}>
+			<div
+				className={styles.container}
+				onClick={() => {
+					navigate(`/course/${data.ID}`);
+				}}>
 				<div className={styles.cardNavigation}>
-					<OutlineTag type={data?.status === 'Terbit' ? 'Green' : 'Yellow'}>
-						{data?.status ? data?.status : 'Draf'}
+					<OutlineTag type={data.status === 'publish' ? 'Green' : 'Yellow'}>
+						{
+							{
+								publish: 'Publish',
+								draft: 'Draft',
+							}[data.status]
+						}
 					</OutlineTag>
-					<FontAwesomeIcon
-						icon={faUpload}
-						className={styles.uploadIcon}
-						onClick={() => setIsShowPublishModal(true)}
-					/>
 				</div>
 				<div className={styles.cardHeader}>
-					<img className={styles.cardHeaderImage} src={data?.image} alt="" />
+					<img
+						className={styles.cardHeaderImage}
+						src={`/thumbnail/${data.thumbnail}.png`}
+						alt="thumbnail"
+					/>
 					<div className={styles.cardHeaderTitle}>
 						<span className={styles.cardHeaderTitleText}>
-							{data?.title.length > 20 ? data?.title.slice(0, 20) + '...' : data?.title}
+							{data.course_name.length > 20
+								? data.course_name.slice(0, 20) + '...'
+								: data.course_name}
 						</span>
 						<div className={styles.cardHeaderGenderTag1}>
 							<FontAwesomeIcon icon={faMars} className={styles.maleIcon} />
 							<span className={styles.cardHeaderGenderTag1}>Laki Laki</span>
 						</div>
 						<div className={styles.genderLine}>
-							<div
-								className={styles.maleLine}
-								style={{ width: data?.malePercentage ? `${data?.malePercentage}%` : `50%` }}></div>
+							<div className={styles.maleLine} style={{ width: '50%' }}></div>
 							<div
 								className={styles.femaleLine}
 								style={{
-									width: data?.femalePercentage ? `${data?.femalePercentage}%` : `50%`,
+									width: '50%',
 								}}></div>
 						</div>
 						<div className={styles.cardHeaderGenderTag2}>
@@ -96,19 +100,62 @@ export default function CardKursus({ data }) {
 				<div className={styles.cardBody}>
 					<div className={styles.cardBodyItem1}>
 						<span className="text-[10px] text-gray-600">Jumlah Siswa</span>
-						<span className="text-[24px] font-bold">
-							{data?.totalStudent ? data?.totalStudent : 0}
-						</span>
+						<span className="text-[24px] font-bold">100</span>
 					</div>
 					<div className={styles.cardBodyItem2}>
 						<span className="text-[10px] text-gray-600">Jumlah Section</span>
-						<span className="text-[24px] font-bold">
-							{data?.totalSection ? data?.totalSection : 0}
-						</span>
+						<span className="text-[24px] font-bold">10</span>
 					</div>
 				</div>
 				<div className={styles.cardFooter}>
-					<span className="text-[10px] font-bold">{data?.liveSession}</span>
+					<span className="text-[12px]">{data.live_session_week || '-'}</span>
+				</div>
+				<div className={styles.cardButton}>
+					<Button
+						type="Secondary"
+						className={styles.deleteIconContainer}
+						onClick={(e) => {
+							e.stopPropagation();
+							setIsShowDeleteModal(true);
+						}}>
+						<FontAwesomeIcon icon={faTrash} className={styles.deleteIcon} />
+						<span>Hapus</span>
+					</Button>
+					<Button
+						type="Primary"
+						className={styles.uploadIconContainer}
+						onClick={(e) => {
+							e.stopPropagation();
+							data.status === 'draft'
+								? setIsShowPublishModal(true)
+								: putCourse({
+										id: data.ID,
+										data: {
+											ID: data.ID,
+											status: 'draft',
+										},
+								  }).then(() => {
+										dispatch(
+											updateCourse({
+												ID: data.ID,
+												status: 'draft',
+											})
+										);
+								  });
+						}}>
+						<FontAwesomeIcon
+							icon={data.status === 'draft' ? faPaperPlane : faPaperclip}
+							className={styles.uploadIcon}
+						/>
+						<span>
+							{
+								{
+									publish: 'Unpublish',
+									draft: 'Publish',
+								}[data.status]
+							}
+						</span>
+					</Button>
 				</div>
 				<div className={styles.cardBorderColor}></div>
 			</div>
@@ -155,7 +202,9 @@ export default function CardKursus({ data }) {
 										}}
 										ref={classRef}>
 										<span className={courseClass ? styles.classSelected : styles.classNotSelected}>
-											{courseClass ? courseClass : 'Pilih Kelas'}
+											{courseClass
+												? category.class.find((item) => item.ID === courseClass).class_name
+												: 'Pilih Kelas'}
 										</span>
 										<FontAwesomeIcon icon={faChevronDown} className={styles.arrowIcon} />
 										<Select
@@ -163,14 +212,13 @@ export default function CardKursus({ data }) {
 											className={styles.classSelect}
 											options={{
 												title: 'Kelas',
-												data: [
-													{ id: 1, option: 'Kelas 10' },
-													{ id: 2, option: 'Kelas 11' },
-													{ id: 3, option: 'Kelas 12' },
-												],
+												data: category.class.map((item) => ({
+													id: item.ID,
+													option: item.class_name,
+												})),
 											}}
 											handleSelected={(id) => {
-												setCourseClass(classData.find((item) => item.id === id).option);
+												setCourseClass(id);
 												setIsShowClassSelect(false);
 											}}
 										/>
@@ -182,7 +230,9 @@ export default function CardKursus({ data }) {
 										}}
 										ref={majorRef}>
 										<span className={courseMajor ? styles.majorSelected : styles.majorNotSelected}>
-											{courseMajor ? courseMajor : 'Pilih Jurusan'}
+											{courseMajor
+												? category.major.find((item) => item.ID === courseMajor).major_name
+												: 'Pilih Jurusan'}
 										</span>
 										<FontAwesomeIcon icon={faChevronDown} className={styles.arrowIcon} />
 										<Select
@@ -190,21 +240,13 @@ export default function CardKursus({ data }) {
 											className={styles.majorSelect}
 											options={{
 												title: 'Jurusan',
-												data: [
-													{ id: 1, option: 'IPA' },
-													{ id: 2, option: 'IPS' },
-													{ id: 3, option: 'Teknik Komputer Jaringan' },
-													{ id: 4, option: 'Rekayasa Perangkat Lunak' },
-													{ id: 5, option: 'Multimedia' },
-													{ id: 6, option: 'Akuntansi' },
-													{ id: 7, option: 'Administrasi Perkantoran' },
-													{ id: 8, option: 'Pemasaran' },
-													{ id: 9, option: 'Perhotelan' },
-													{ id: 10, option: 'Tata Boga' },
-												],
+												data: category.major.map((item) => ({
+													id: item.ID,
+													option: item.major_name,
+												})),
 											}}
 											handleSelected={(id) => {
-												setCourseMajor(majorData.find((item) => item.id === id).option);
+												setCourseMajor(id);
 												setIsShowMajorSelect(false);
 											}}
 										/>
@@ -278,6 +320,30 @@ export default function CardKursus({ data }) {
 								type={validation ? 'Primary' : 'Disabled'}
 								className={styles.modalButton}
 								onClick={() => {
+									putCourse({
+										id: data.ID,
+										data: {
+											ID: data.ID,
+											price: coursePrice,
+											description: courseDescription,
+											class_id: courseClass,
+											major_id: courseMajor,
+											thumbnail: courseThumbnail,
+											status: 'publish',
+										},
+									}).then(() => {
+										dispatch(
+											updateCourse({
+												ID: data.ID,
+												price: coursePrice,
+												description: courseDescription,
+												class_id: courseClass,
+												major_id: courseMajor,
+												thumbnail: courseThumbnail,
+												status: 'publish',
+											})
+										);
+									});
 									setIsShowPublishModal(false);
 								}}>
 								Publish Kursus
@@ -286,6 +352,23 @@ export default function CardKursus({ data }) {
 					</div>
 				</div>
 			</Modal>
+			<ConfirmationModal
+				show={isShowDeleteModal}
+				title="Hapus Kursus"
+				image="/image/customer-delete.png"
+				confirmationText={`Apakah kamu yakin ingin menghapus ${data.course_name}?`}
+				primaryButtonName="Hapus Kursus"
+				onPrimaryButtonClick={() => {
+					delCourse(data.ID).then(() => {
+						dispatch(deleteCourse(data.ID));
+					});
+					setIsShowDeleteModal(false);
+				}}
+				secondaryButtonName="Batal"
+				onSecondaryButtonClick={() => {
+					setIsShowDeleteModal(false);
+				}}
+			/>
 		</>
 	);
 }

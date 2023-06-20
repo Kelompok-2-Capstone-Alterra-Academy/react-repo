@@ -1,5 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
-
 const initialState = {
 	course: [],
 };
@@ -15,38 +13,33 @@ const sectionReducer = (state = initialState, action = defaultAction) => {
 	let selectedCourse;
 
 	switch (type) {
-		case 'ADD_COURSE':
-			newCourse = {
-				id: uuidv4(),
-				name: payload.name,
-				schedule: payload.schedule,
-				thumbnail: payload.thumbnail,
-				malePercentage: payload.malePercentage,
-				femalePercentage: payload.femalePercentage,
-				totalStudent: payload.totalStudent,
-				totalSection: payload.totalSection,
-				status: 'Draf',
-			};
+		case 'SET_COURSE':
 			return {
 				...state,
-				course: [...state.course, newCourse],
+				course: payload,
+			};
+
+		case 'ADD_COURSE':
+			return {
+				...state,
+				course: [...state.course, payload],
 			};
 
 		case 'UPDATE_COURSE':
-			selectedCourse = state.course.find((course) => course.id === payload.id);
+			selectedCourse = state.course.find((course) => course.ID === payload.ID);
 			newCourse = {
 				...selectedCourse,
 				...payload,
 			};
 			return {
 				...state,
-				course: state.course.map((course) => (course.id === payload.id ? newCourse : course)),
+				course: state.course.map((course) => (course.ID === payload.ID ? newCourse : course)),
 			};
 
 		case 'DELETE_COURSE':
 			return {
 				...state,
-				course: state.course.filter((course) => course.id !== payload.id),
+				course: state.course.filter((course) => course.ID !== payload),
 			};
 
 		default:

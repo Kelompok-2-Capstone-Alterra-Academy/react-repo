@@ -1,107 +1,107 @@
-import React from 'react'
-import { TextField, Typography, Link } from '@material-ui/core'
-import Button from '@mui/material/Button';
-import { Formik, Form, Field, ErrorMessage } from 'formik'
-import * as Yup from 'yup'
-import styles from './Login.module.css';
-import gambar from '../../../public/image/Mask.png'
-import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import LockIcon from '@material-ui/icons/Lock';
+import { faEye, faEyeSlash, faLock, faSpinner, faUser } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from '@material-ui/core';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { login } from '../../clients';
+import { Button } from '../../components';
+import styles from './Login.module.css';
 
-export default function Login () {
+export default function Login() {
+	const [showPassword, setShowPassword] = useState(false);
+	const [loading, setLoading] = useState(false);
 
-    const navigate = useNavigate();
-    const btnstyle = { marginTop:"20px" }
-    const initialValues = {
-        Username: '',
-        password: '',
-        remember: false
-    }
-    const validationSchema = Yup.object().shape({
-        Username: Yup
-        .string()
-        .required("Username wajib diisi")
-        .matches(
-          /^(?=.*[a-z])(?=.*[0-9])/,
-          "Username harus ada huruf dan angka"
-        ),
-        password: Yup
-        .string()
-        .required("Password Belum diisi")
-        .matches(
-          /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/,
-          "Kata sandi harus ada huruf besar, huruf kecil, dan angka"
-        ),
-    })
-    const onSubmit = (values, props) => {
-        console.log(values)
-        setTimeout(() => {
-            props.resetForm()
-            props.setSubmitting(false)
-        }, 2000)
-        navigate("/");
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
 
-    }
-    return (
-      <div className='w-full h-screen'>
-        <div className={styles.con}>
-          <h3 className={styles.start}>Star</h3>
-          <h3 className={styles.My}>MyDashboard</h3>
-        </div>
-          <div className='grid grid-cols-1 md:grid-cols-2 m-auto h-[500px] shadow-lg shadow-gray-500 sm:max-w-[900px]' style={{borderRadius:"16px"}}>
-            <div className='w-full h-[500px]  md:block'>
-                <img className='w-full h-full' src={gambar} alt="/" />
-            </div>
-            <div className={styles.tampilan}>
-            <h6 className={styles.title}>Selamat Datang di MyDashboard</h6>
-            <h6 className={styles.desc}>Silahkan login untuk melanjutkan</h6>
-            <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
-                      {(props) => (
-                          <Form>
-                            <div className={styles.tes}>
-                            <label className={styles.username}>Username</label>
-                              <Field 
-                                as={TextField}
-                                  name="Username"
-                                  placeholder='Username' fullWidth required
-                                  helperText={<ErrorMessage name="Username" />}
-                                  variant="outlined"
-                                  InputProps={{
-                                    startAdornment: (
-                                      <InputAdornment position="start">
-                                        <AccountCircleRoundedIcon style={{color: "#9E9E9E"}}/>
-                                      </InputAdornment>
-                                    ),
-                                  }}
-                              />
-                            </div>
-                              <label className={styles.Sandi}>Kata Sandi</label>
-                              <Field as={TextField}  name="password"
-                                  placeholder='Kata Sandi' type='password' fullWidth required
-                                  helperText={<ErrorMessage name="password" />} 
-                                  variant="outlined"
-                                  InputProps={{
-                                    startAdornment: (
-                                      <InputAdornment position="start">
-                                        <LockIcon style={{color: "#9E9E9E"}}/>
-                                      </InputAdornment>
-                                    ),
-                                  }}/>
-                              <p className={styles.Lupa}>
-                                  <Link style={{color: "#212121", textDecoration:"none"}} href="/Lupa" >
-                                      Lupa Kata Sandi?
-                              </Link>
-                              </p>
-                              <Button type='submit' variant="contained" disabled={props.isSubmitting} style={btnstyle}
-                                    fullWidth>{props.isSubmitting ? "Loading" : "Login"}</Button>
-                          </Form>
-                      )}
-                  </Formik>
-            </div>
-          </div>
-      </div>
-    )
+	const navigate = useNavigate();
+
+	// const validationSchema = Yup.object().shape({
+	// 	username: Yup.string()
+	// 		.required('Username wajib diisi')
+	// 		.matches(/^(?=.*[a-z])(?=.*[0-9])/, 'Username harus ada huruf dan angka'),
+	// 	password: Yup.string()
+	// 		.required('Password Belum diisi')
+	// 		.matches(
+	// 			/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/,
+	// 			'Kata sandi harus ada huruf besar, huruf kecil, dan angka'
+	// 		),
+	// });
+
+	return (
+		<div className={styles.container}>
+			<div className={styles.header}>
+				<img src="/image/logo-starMyDashboard.png" alt="logo" />
+			</div>
+			<div className={styles.content} style={{ borderRadius: '16px' }}>
+				<img src="/image/Mask.png" alt="/" className={styles.image} />
+				<div className={styles.tampilan}>
+					<div className={styles.tampilanHeader}>
+						<span className={styles.title}>Selamat Datang di MyDashboard</span>
+						<span className={styles.desc}>Silahkan login untuk melanjutkan</span>
+					</div>
+					<div className={styles.emailForm}>
+						<span className={styles.label}>Email</span>
+						<div className={styles.inputContainer}>
+							<FontAwesomeIcon icon={faUser} className={styles.icon} />
+							<input
+								className={styles.input}
+								name="email"
+								placeholder="Email"
+								type="text"
+								value={email}
+								onChange={(e) => setEmail(e.target.value)}
+							/>
+						</div>
+					</div>
+					<div className={styles.passwordForm}>
+						<span className={styles.label}>Kata Sandi</span>
+						<div className={styles.inputContainer}>
+							<FontAwesomeIcon icon={faLock} className={styles.icon} />
+							<input
+								className={styles.input}
+								name="password"
+								placeholder="Kata Sandi"
+								type={showPassword ? 'text' : 'password'}
+								value={password}
+								onChange={(e) => setPassword(e.target.value)}
+							/>
+							<FontAwesomeIcon
+								icon={showPassword ? faEyeSlash : faEye}
+								className={styles.eyeIcon}
+								onClick={() => setShowPassword(!showPassword)}
+							/>
+						</div>
+					</div>
+					<Link href="/forgot-password" className={styles.forgotPassword}>
+						<span>Lupa Kata Sandi?</span>
+					</Link>
+					<Button
+						type="Primary"
+						className={styles.button}
+						onClick={() => {
+							setLoading(true);
+							login({ email, password })
+								.then((res) => {
+									document.cookie = `token=${res.data.data.token}`;
+									window.location.href = '/dashboard';
+								})
+								.catch((err) => {
+									toast.error(err.response.data.message, {
+										position: toast.POSITION.TOP_RIGHT,
+									});
+									setEmail('');
+									setPassword('');
+								})
+								.finally(() => {
+									setLoading(false);
+								});
+						}}>
+						<span>{loading ? <FontAwesomeIcon icon={faSpinner} spin /> : 'Login'}</span>
+					</Button>
+				</div>
+			</div>
+		</div>
+	);
 }
-

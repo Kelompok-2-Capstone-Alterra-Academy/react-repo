@@ -8,14 +8,20 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { logout } from '../../clients';
 import { useClickOutside } from '../../hooks';
 import styles from '../Sidebar/Sidebar.module.css';
-import { COURSE_LIST } from './constants';
 
 const Sidebar = () => {
 	const [isCourseListOpen, setIsCourseListOpen] = useState(false);
 	const [isLearningListOpen, setIsLearningListOpen] = useState(false);
+
+	const courseList = useSelector((state) => state.course.course);
+
+	const navigate = useNavigate();
 
 	const courseListRef = useClickOutside(() => {
 		setIsCourseListOpen(false);
@@ -42,7 +48,10 @@ const Sidebar = () => {
 						<FontAwesomeIcon icon={faCommentDots} className={styles.icon} />
 						<span className={styles.description}>Chat</span>
 					</Link>
-					<Link style={{ textDecoration: 'none' }} to="/learning/modul" className={styles.listItem}>
+					<Link
+						style={{ textDecoration: 'none' }}
+						to="/manage-customer"
+						className={styles.listItem}>
 						<FontAwesomeIcon icon={faUsers} className={styles.icon} />
 						<span className={styles.description}>Pelanggan</span>
 					</Link>
@@ -78,23 +87,45 @@ const Sidebar = () => {
 						className={styles.listCourse}
 						onClick={() => setIsCourseListOpen(!isCourseListOpen)}
 						ref={courseListRef}>
-						<span>Kursus Saya</span>
+						<div className={styles.listCourseText}>
+							<span>Kursus Saya</span>
+							<span className={styles.courseListLength}>{courseList.length}</span>
+						</div>
 						<KeyboardArrowDownIcon style={{ color: '#212121' }} />
 						{isCourseListOpen && (
 							<div className={styles.courseListContainer}>
-								{COURSE_LIST.map((course) => (
-									<Link
-										key={course.id}
-										style={{ textDecoration: 'none' }}
-										to={`/course/${course.id}`}
-										className={styles.courseListItem}>
-										<span className={styles.courseListItemTitle}>{course.name}</span>
-									</Link>
-								))}
+								<div className={styles.courseListOptionContainer}>
+									{courseList.map((course) => (
+										<Link
+											key={course.ID}
+											style={{ textDecoration: 'none' }}
+											to={`/course/${course.ID}`}
+											className={styles.courseListItem}>
+											<span className={styles.courseListItemTitle}>{course.course_name}</span>
+										</Link>
+									))}
+								</div>
 							</div>
 						)}
 					</Link>
-					<Link style={{ textDecoration: 'none' }} className={styles.logoutItem}>
+					<Link
+						style={{ textDecoration: 'none' }}
+						className={styles.logoutItem}
+						onClick={() => {
+							logout()
+								.then((res) => {
+									document.cookie = 'token=;';
+									toast.success(res.message, {
+										position: toast.POSITION.TOP_RIGHT,
+									});
+									navigate('/login');
+								})
+								.catch((err) => {
+									toast.error(err.response.data.message, {
+										position: toast.POSITION.TOP_RIGHT,
+									});
+								});
+						}}>
 						<FontAwesomeIcon icon={faPowerOff} className={styles.icon} />
 						<span className={styles.description}>Keluar</span>
 					</Link>

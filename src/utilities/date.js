@@ -8,6 +8,10 @@ export function dateToTimestamp(dateString) {
 
 export function convertToDate(date, time) {
 	const momentObj = moment(date);
-	const formattedDate = momentObj.format('DD MMMM YYYY');
-	return time + ' | ' + formattedDate;
+	const formattedDate = momentObj.format('YYYY-MM-DD');
+	return formattedDate + 'T' + time + ':00Z';
+}
+
+export function displayDate(dateTime) {
+	return moment.utc(dateTime).format('D MMMM YYYY - HH:mm');
 }

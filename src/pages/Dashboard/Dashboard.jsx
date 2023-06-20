@@ -6,10 +6,13 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from '@mui/material/Modal';
 import { useEffect, useState } from 'react';
+import { LoopCircleLoading } from 'react-loadingg';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, CardKursus, Profile } from '../../components';
+import { toast } from 'react-toastify';
+import { getClass, getCourse, getMajor, postCourse } from '../../clients';
+import { Button, CardKursus } from '../../components';
 import { useClickOutside } from '../../hooks';
-import { addCourse } from '../../redux/actions/courseActions';
+import { addCourse, setCourse } from '../../redux/actions/courseActions';
 import styles from './Dashboard.module.css';
 
 export default function Dashboard() {
@@ -17,15 +20,20 @@ export default function Dashboard() {
 	const [isShowThumbnailSelect, setIsShowThumbnailSelect] = useState(false);
 	const [validation, setValidation] = useState(false);
 
-	const [courseName, setCourseName] = useState('');
+	const [loadingFetch, setLoadingFetch] = useState(true);
+	const [loadingFetchMajor, setLoadingFetchMajor] = useState(true);
+	const [loadingFetchClass, setLoadingFetchClass] = useState(true);
+
+	const [majorList, setMajorList] = useState([]);
+	const [classList, setClassList] = useState([]);
+
 	const [courseSchedule, setCourseSchedule] = useState('');
+	const [courseName, setCourseName] = useState('');
 	const [courseThumbnail, setCourseThumbnail] = useState('apple');
 
 	const [courseListPage, setCourseListPage] = useState(0);
 
 	const courseData = useSelector((state) => state.course).course;
-
-	console.log(courseData);
 
 	const dispatch = useDispatch();
 
@@ -37,17 +45,76 @@ export default function Dashboard() {
 		setValidation(courseName && courseSchedule);
 	}, [courseName, courseSchedule]);
 
+	useEffect(() => {
+		setLoadingFetch(true);
+		setLoadingFetchMajor(true);
+		setLoadingFetchClass(true);
+
+		getCourse()
+			.then((res) => {
+				dispatch(setCourse(res.data.data));
+			})
+			.catch((err) => {
+				toast.error(err.response.data.message, {
+					position: toast.POSITION.TOP_RIGHT,
+				});
+			})
+			.finally(() => {
+				setLoadingFetch(false);
+			});
+
+		getMajor()
+			.then((res) => {
+				setMajorList(res.data.data);
+			})
+			.catch((err) => {
+				toast.error(err.response.data.message, {
+					position: toast.POSITION.TOP_RIGHT,
+				});
+			})
+			.finally(() => {
+				setLoadingFetchMajor(false);
+			});
+
+		getClass()
+			.then((res) => {
+				setClassList(res.data.data);
+			})
+			.catch((err) => {
+				toast.error(err.response.data.message, {
+					position: toast.POSITION.TOP_RIGHT,
+				});
+			})
+			.finally(() => {
+				setLoadingFetchClass(false);
+			});
+	}, []);
+
+	if (loadingFetch || loadingFetchMajor || loadingFetchClass) {
+		return <LoopCircleLoading size="large" color="#4161ff" />;
+	}
+
 	return (
 		<>
 			<div className={styles.container}>
 				<div className={styles.content}>
 					<div className={styles.headerContainer}>
-						<span className={styles.welcome}>
-							Selamat Datang <span className="font-bold">Jennie !</span>
-						</span>
-						<div className="my-4 w-full">
-							<img src="/image/home-banner.png" alt="" />
+						<div className="mb-4">
+							<img src="/image/home-banner.png" alt="" className={styles.bannerImage} />
 						</div>
+						{/* <Header
+							breadCrumbData={{
+								name: 'Dashboard',
+								links: [{ link: '/dashboard', title: 'Dashboard' }],
+							}}
+							profileData={{
+								name: 'Aldi Taher',
+								pic: 'https://avatars.githubusercontent.com/u/55269572?v=4',
+								email: 'look_at_the_star@gmail.com',
+								role: 'Instructor',
+							}}
+							className={styles.profile}
+						/> */}
 						<div className="flex justify-end gap-4">
 							<button
 								className="bg-blue-600 hover:bg-blue-500 text-white text-xs rounded inline-flex items-center"
@@ -75,23 +142,18 @@ export default function Dashboard() {
 									<div
 										className={styles.kursusCardCreate}
 										onClick={() => setIsShowCreateCourseModal(true)}>
-										<img className="self-center mb-2" src="/icon/add-course.svg" alt="" />
+										<img src="/icon/add-course.svg" alt="" />
 										<span className="text-xs">Tambah Kursus</span>
 									</div>
 									<div className={styles.kursusCard}>
 										{courseData.slice(courseListPage * 3, courseListPage * 3 + 3).map((item) => {
 											return (
 												<CardKursus
-													key={item.id}
-													data={{
-														title: item.name,
-														image: `/thumbnail/${item.thumbnail}.png`,
-														status: item.status,
-														malePercentage: item.malePercentage,
-														femalePercentage: item.femalePercentage,
-														totalStudent: item.totalStudent,
-														totalSection: item.totalSection,
-														liveSession: item.schedule,
+													key={item.ID}
+													data={item}
+													category={{
+														class: classList,
+														major: majorList,
 													}}
 												/>
 											);
@@ -208,122 +270,15 @@ export default function Dashboard() {
 						</div>
 					)}
 				</div>
-				<div className={styles.infoContentContainer}>
-					<div className={styles.infoContent}>
-						<Profile
-							data={{
-								name: 'Aldi Taher',
-								pic: 'https://avatars.githubusercontent.com/u/55269572?v=4',
-								email: 'look_at_the_star@gmail.com',
-								role: 'Instructor',
-							}}
-							className={styles.profile}
-						/>
-						<div className="mt-6">
-							<p className="font-bold">Acara Mendatang</p>
-						</div>
-						<div className="h-20 mt-3 bg-gradient-to-r from-[#4161FF] to-[#2196F3] w-70  rounded-md">
-							<div className="flex px-4 py-2 items-center gap-6 justify-start">
-								<div className="rounded-md bg-white w-14 flex items-center text-center justify-center h-16">
-									<div>
-										<p>Sen</p>
-										<p>10</p>
-									</div>
-								</div>
-								<div>
-									<p className="text-xs font-semibold text-white">Live Session Kelas A</p>
-									<p className="text-xs mt-2 text-white">9.30 - 11.00 WIB</p>
-								</div>
-							</div>
-						</div>
-						<div className="h-20 mt-3 bg-gradient-to-r from-[#4161FF] to-[#2196F3] w-70  rounded-md">
-							<div className="flex px-4 py-2 items-center gap-6 justify-start">
-								<div className="rounded-md bg-white w-14 flex items-center text-center justify-center h-16">
-									<div>
-										<p>Sen</p>
-										<p>10</p>
-									</div>
-								</div>
-								<div>
-									<p className="text-xs font-semibold text-white">Live Session Kelas A</p>
-									<p className="text-xs mt-2 text-white">9.30 - 11.00 WIB</p>
-								</div>
-							</div>
-						</div>
-
-						<div className="mt-4">
-							<p className="font-bold">Tugas Belum dinilai</p>
-						</div>
-						<div className="h-20 mt-2 bg-[#2196F3] w-70 rounded-md">
-							<div className="flex content-center p-2 justify-center">
-								<img src="/image/papan-ujian.svg" alt="" />
-								<div>
-									<p className="text-[10px] text-white">Deadline 20 April 2023</p>
-									<p className="text-xs font-bold text-white">Latihan 1 - Trigonometri</p>
-									<p className="text-[10px] mt-1 text-white">Agnes</p>
-									<p className="text-[10px]  text-white">Matematika</p>
-								</div>
-							</div>
-						</div>
-						<div className="h-20 mt-2 bg-[#2196F3] w-70 rounded-md">
-							<div className="flex content-center py-2 justify-center">
-								<img src="/image/papan-ujian.svg" alt="" />
-								<div>
-									<p className="text-[10px] text-white">Deadline 20 April 2023</p>
-									<p className="text-xs font-bold text-white">Latihan 1 - Trigonometri</p>
-									<p className="text-[10px] mt-1 text-white">Agnes</p>
-									<p className="text-[10px]  text-white">Matematika</p>
-								</div>
-							</div>
-						</div>
-
-						<div className="mt-4">
-							<p className="font-bold">Customer Baru</p>
-						</div>
-						<div className="h-20 mt-3 bg-white w-70 drop-shadow-lg rounded-md items-center">
-							<div className="flex px-4 py-3 items-center gap-6 justify-between">
-								<div className="flex items-center">
-									<div className="rounded-full bg-green-200 w-12 h-12 flex items-center text-center justify-center">
-										<img
-											src="/image/ava.jpg"
-											className="w-12 h-12 object-cover rounded-full"
-											alt=""
-										/>
-									</div>
-									<div className="ml-2">
-										<p className="text-xs font-semibold ">Bunga Rose</p>
-										<p className="text-xs mt-2">Kimia</p>
-									</div>
-								</div>
-								<div>
-									<img src="/image/icon-whatsapp.png" width={20} alt="" />
-								</div>
-							</div>
-						</div>
-						<div className="h-20 mt-3 bg-white w-70 drop-shadow-lg rounded-md items-center">
-							<div className="flex px-4 py-3 items-center gap-6 justify-between">
-								<div className="flex items-center">
-									<div className="rounded-full bg-green-200 w-12 h-12 flex items-center text-center justify-center">
-										<img
-											src="/image/ava.jpg"
-											className="w-12 h-12 object-cover rounded-full"
-											alt=""
-										/>
-									</div>
-									<div className="ml-2">
-										<p className="text-xs font-semibold ">Bunga Rose</p>
-										<p className="text-xs mt-2">Kimia</p>
-									</div>
-								</div>
-								<div>
-									<img src="/image/icon-whatsapp.png" width={20} alt="" />
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
 			</div>
-			<Modal open={isShowCreateCourseModal} onClose={() => setIsShowCreateCourseModal(false)}>
+			<Modal
+				open={isShowCreateCourseModal}
+				onClose={() => {
+					setCourseName('');
+					setCourseSchedule('');
+					setCourseThumbnail('apple');
+					setIsShowCreateCourseModal(false);
+				}}>
 				<div className={styles.createCourseModalContainer}>
 					<div className={styles.createCourseModalHeader}>
 						<span className={styles.createCourseModalHeaderTitle}>Publish Kursus</span>
@@ -411,6 +366,9 @@ export default function Dashboard() {
 								type="Secondary"
 								className={styles.modalButton}
 								onClick={() => {
+									setCourseName('');
+									setCourseSchedule('');
+									setCourseThumbnail('apple');
 									setIsShowCreateCourseModal(false);
 								}}>
 								Batal
@@ -419,19 +377,22 @@ export default function Dashboard() {
 								type={validation ? 'Primary' : 'Disabled'}
 								className={styles.modalButton}
 								onClick={() => {
-									const maleTotal = Math.ceil(Math.random() * 1000);
-									const femaleTotal = Math.ceil(Math.random() * 1000);
-									dispatch(
-										addCourse({
-											name: courseName,
-											schedule: courseSchedule,
-											thumbnail: courseThumbnail,
-											malePercentage: (maleTotal / (maleTotal + femaleTotal)) * 100,
-											femalePercentage: (femaleTotal / (maleTotal + femaleTotal)) * 100,
-											totalStudent: maleTotal + femaleTotal,
-											totalSection: Math.floor(Math.random() * 10),
+									postCourse({
+										course_name: courseName,
+										live_session_week: courseSchedule,
+										thumbnail: courseThumbnail,
+									})
+										.then((res) => {
+											dispatch(addCourse(res.data.data));
 										})
-									);
+										.catch((err) => {
+											toast.error(err.response.data.message, {
+												position: toast.POSITION.TOP_RIGHT,
+											});
+										});
+									setCourseName('');
+									setCourseSchedule('');
+									setCourseThumbnail('apple');
 									setIsShowCreateCourseModal(false);
 								}}>
 								Buat Kursus
