@@ -1,8 +1,9 @@
 import {
-	faBookOpen,
 	faCommentDots,
+	faFolderOpen,
 	faHomeUser,
 	faPowerOff,
+	faQuestionCircle,
 	faUsers,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -17,7 +18,6 @@ import styles from '../Sidebar/Sidebar.module.css';
 
 const Sidebar = () => {
 	const [isCourseListOpen, setIsCourseListOpen] = useState(false);
-	const [isLearningListOpen, setIsLearningListOpen] = useState(false);
 
 	const courseList = useSelector((state) => state.course.course);
 
@@ -25,10 +25,6 @@ const Sidebar = () => {
 
 	const courseListRef = useClickOutside(() => {
 		setIsCourseListOpen(false);
-	});
-
-	const learningListRef = useClickOutside(() => {
-		setIsLearningListOpen(false);
 	});
 
 	return (
@@ -55,32 +51,13 @@ const Sidebar = () => {
 						<FontAwesomeIcon icon={faUsers} className={styles.icon} />
 						<span className={styles.description}>Pelanggan</span>
 					</Link>
-					<Link
-						style={{ textDecoration: 'none', display: 'flex', justifyContent: 'space-between' }}
-						className={styles.listLearning}
-						onClick={() => setIsLearningListOpen(!isLearningListOpen)}
-						ref={learningListRef}>
-						<div>
-							<FontAwesomeIcon icon={faBookOpen} className={styles.icon} />
-							<span className={styles.description}>Pembelajaran</span>
-						</div>
-						<KeyboardArrowDownIcon style={{ color: 'white' }} />
-						{isLearningListOpen && (
-							<div className={styles.learningListContainer}>
-								<Link
-									style={{ textDecoration: 'none' }}
-									to={`/modul/2`}
-									className={styles.learningListItem}>
-									<span className={styles.learningListItemTitle}>Kelola Modul</span>
-								</Link>
-								<Link
-									style={{ textDecoration: 'none' }}
-									to={`/quiz`}
-									className={styles.learningListItem}>
-									<span className={styles.learningListItemTitle}>Kelola Quiz</span>
-								</Link>
-							</div>
-						)}
+					<Link style={{ textDecoration: 'none' }} to="/quiz" className={styles.listItem}>
+						<FontAwesomeIcon icon={faQuestionCircle} className={styles.icon} />
+						<span className={styles.description}>Quiz</span>
+					</Link>
+					<Link style={{ textDecoration: 'none' }} to="/modul" className={styles.listItem}>
+						<FontAwesomeIcon icon={faFolderOpen} className={styles.icon} />
+						<span className={styles.description}>Manage Module</span>
 					</Link>
 					<Link
 						style={{ textDecoration: 'none' }}

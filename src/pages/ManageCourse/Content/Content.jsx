@@ -306,7 +306,6 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 				onPrimaryButtonClick={() => {
 					putModule({
 						data: {
-							ID: content.ID,
 							module_name: contentType + '-' + contentName,
 						},
 						id: content.ID,
@@ -318,6 +317,7 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 							dispatch(
 								updateContent({
 									...res.data.data,
+									ID: content.ID,
 								})
 							);
 						})
@@ -337,9 +337,7 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 				onSubmit={(file) => {
 					putModule({
 						data: {
-							ID: content.ID,
 							attachment_id: file.ID,
-							attachment: file,
 						},
 						id: content.ID,
 					})
@@ -350,6 +348,7 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 							dispatch(
 								updateContent({
 									...res.data.data,
+									ID: content.ID,
 								})
 							);
 						})
@@ -368,9 +367,7 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 				onSubmit={(file) => {
 					putModule({
 						data: {
-							ID: content.ID,
 							attachment_id: file.ID,
-							attachment: file,
 						},
 						id: content.ID,
 					})
@@ -381,6 +378,7 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 							dispatch(
 								updateContent({
 									...res.data.data,
+									ID: content.ID,
 								})
 							);
 						})
@@ -416,7 +414,6 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 						onClick={() => {
 							putModule({
 								data: {
-									ID: content.ID,
 									description: contentDescription,
 								},
 								id: content.ID,
@@ -428,6 +425,7 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 									dispatch(
 										updateContent({
 											...res.data.data,
+											ID: content.ID,
 										})
 									);
 								})

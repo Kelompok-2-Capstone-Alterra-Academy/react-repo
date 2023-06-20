@@ -21,7 +21,7 @@ import {
 } from '@mui/material';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/system';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { BiSortAZ, BiSortZA } from 'react-icons/bi';
 import { TbSortAscending2, TbSortDescending2 } from 'react-icons/tb';
 import { ConfirmationModal, Header, OutlineTag, ResponseModal, Tag } from '../../components';
@@ -100,7 +100,7 @@ export default function ManageCustomer() {
 		},
 	}));
 
-	const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
+	const StyledToggleButton = styled(ToggleButton)(() => ({
 		'&.MuiToggleButton-root': {
 			outline: '1px solid gray',
 			borderRadius: '15px',
