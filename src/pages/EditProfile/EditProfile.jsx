@@ -75,10 +75,10 @@ export default function EditProfile() {
 					],
 				}}
 				profileData={{
-					name: 'Admin',
-					role: 'Admin',
-					pic: 'https://i.pravatar.cc/150?img=21',
-					email: 'testing@gmail.com',
+					name: `${name}`,
+					role: `${role}`,
+					pic: `${currentUser.profile}`,
+					email: `${email}`,
 				}}
 			/>
 			<div className="mb-10">
