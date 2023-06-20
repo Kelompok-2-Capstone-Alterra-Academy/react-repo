@@ -1,113 +1,134 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowUpFromBracket, faFileLines } from '@fortawesome/free-solid-svg-icons';
+import { useEffect, useState } from 'react';
 import styles from '../ModalUploadFile/ModalUploadFile.module.css';
-import Box from '@mui/material/Box';
 import { Button } from '../../../components';
-import LinearProgress from '@mui/material/LinearProgress';
-import { useState } from 'react';
+import { toast } from 'react-toastify';
+import { postAttachment } from '../../../clients';
+import { addAttachment } from '../../../redux/actions/attachmentActions';
+import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { faCheckCircle, faRotateRight, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const ModalUploadFile = () => {
-	const [file, setFile] = useState(null);
+const ModalUploadFile = ({ closeFunction }) => {
+	const [link, setLink] = useState('');
+	const [attachment, setAttachment] = useState('');
 
-	function uploadFile(e) {
-		let file = e.target.files[0];
+	const { id } = useParams();
+	const dispatch = useDispatch();
 
-		setFile(file);
-	}
+	const [formValidation, setFormValidation] = useState(false);
+	const [isCheckingGForm, setIsCheckingGForm] = useState(false);
+	const [checkingGFormLoading, setCheckingGFormLoading] = useState(false);
+	const [isValidGForm, setIsValidGForm] = useState(false);
+
+	useEffect(() => {
+		if (link !== '' && isValidGForm) {
+			setFormValidation(true);
+		} else {
+			setFormValidation(false);
+		}
+	}, [link, isValidGForm]);
+
+	const checkGFormExistence = (url) => {
+		const regex =
+			/\.(doc|docx|pdf|txt|ppt)$/i;
+		const isValidURL = regex.test(url);
+		return isValidURL;
+	};
+
+	const handleClickCheckingGForm = () => {
+		setCheckingGFormLoading(true);
+
+		setTimeout(() => {
+			setCheckingGFormLoading(false);
+			setIsCheckingGForm(true);
+			setIsValidGForm(checkGFormExistence(link));
+		}, 1000);
+	};
+	console.log(link)
 	return (
 		<div className={styles.container}>
-			<span className={styles.headerTitle}>Unggah Berkas Modul</span>
-			<span className={styles.headerText}>Silahkan Unggah Berkas Modul Anda</span>
-			{file === null ? (
-				<div className={styles.content}>
-					<div className={styles.rounded}>
-						<FontAwesomeIcon className={styles.icon} icon={faArrowUpFromBracket} />
-					</div>
-					<span className={styles.textInformation}>Seret dan lepas berkas anda disini</span>
-					<label htmlFor="inputTag">
-						<span className={styles.inputFile}>Pilih Berkas</span>
+			<span className={styles.headerTitle}>Masukan Link File</span>
+			<div className={styles.content}>
+				<form className={styles.form}>
+					<input
+						required
+						className={styles.formInput}
+						type="text"
+						placeholder="Nama Attachment"
+						value={attachment}
+						onChange={(e) => setAttachment(e.target.value)}
+					/>
+					<div className={styles.gFormInput}>
 						<input
-							id="inputTag"
-							type="file"
-							onChange={(e) => uploadFile(e)}
-							className={styles.input}
+							required
+							className={styles.formInput}
+							type="text"
+							placeholder="Link File"
+							value={link}
+							onChange={(e) => {
+								setLink(e.target.value);
+								setIsValidGForm(false);
+								setIsCheckingGForm(false);
+							}}
 						/>
-					</label>
-					<span className={styles.textProvision}>Anda bisa unggah .PDF .DOC .XML .MP3 .MP4</span>
-				</div>
-			) : (
-				<div className={styles.progress}>
-					<span className={styles.title}>Sedang diunggah</span>
-					<Box sx={{ width: '100%', height: '100%' }}>
-						<Box
-							sx={{
-								display: 'flex',
-								alignItems: 'center',
-								border: '2px solid #f5f5f5',
-								marginBottom: '20px',
-							}}>
-							<FontAwesomeIcon
-								icon={faFileLines}
-								style={{
-									marginLeft: 15,
-									color: '#2196F3',
-									fontSize: 20,
-								}}
-							/>
-							<Box sx={{ width: '100%', m: 3 }}>
-								<div className={styles.textInfo}>
-									<span className={styles.nameInfo}>Perkalian.doc</span>
-									<span className={styles.sizeInfo}>23 kb/ 23 kb (3 menit lagi)</span>
-									<span className={styles.removeFile}>Batal</span>
-								</div>
-								<LinearProgress
-									variant="determinate"
-									style={{ height: '7px', borderRadius: 5, color: 'black' }}
-									value="50"
+						<div className={styles.checkingIconContainer}>
+							{!isCheckingGForm && !checkingGFormLoading && (
+								<FontAwesomeIcon
+									icon={faRotateRight}
+									className={styles.checkingIcon}
+									onClick={handleClickCheckingGForm}
 								/>
-							</Box>
-						</Box>
-					</Box>
-					<Box sx={{ width: '100%', height: '100%' }}>
-						<Box sx={{ display: 'flex', alignItems: 'center', border: '2px solid #f5f5f5' }}>
-							<FontAwesomeIcon
-								icon={faFileLines}
-								style={{
-									marginLeft: 15,
-									color: '#2196F3',
-									fontSize: 20,
-								}}
-							/>
-							<Box sx={{ width: '100%', m: 3 }}>
-								<div className={styles.textInfo}>
-									<span className={styles.nameInfo}>Perkalian.doc</span>
-									<span className={styles.sizeInfo}>23 kb/ 23 kb (3 menit lagi)</span>
-									<span className={styles.removeFile}>Batal</span>
-								</div>
-								<LinearProgress
-									variant="determinate"
-									style={{ height: '7px', borderRadius: 5, color: 'black' }}
-									value="50"
-								/>
-							</Box>
-						</Box>
-					</Box>
-					<div className={styles.actions}>
-						<label htmlFor="inputTag">
-							<span className={styles.inputAddFile}>Tambah Berkas</span>
-							<input id="inputTag" type="file" className={styles.input} />
-						</label>
-						<div className={styles.actionFile}>
-							<Button className={styles.button} type="Secondary">
-								Batal
-							</Button>
-							<Button className={styles.button} type="Primary">
-								Simpan
-							</Button>
+							)}
+							{!isCheckingGForm && checkingGFormLoading && (
+								<FontAwesomeIcon icon={faRotateRight} className={styles.checkingIcon} spin />
+							)}
+
+							{!isValidGForm && isCheckingGForm && (
+								<FontAwesomeIcon icon={faXmarkCircle} className={styles.checkingErrorIcon} />
+							)}
+							{isValidGForm && isCheckingGForm && (
+								<FontAwesomeIcon icon={faCheckCircle} className={styles.checkingSuccessIcon} />
+							)}
 						</div>
 					</div>
-				</div>
-			)}
+				</form>
+			</div>
+			<div className={styles.footer}>
+				<Button
+					type="Danger"
+					onClick={() => {
+						setLink('');
+						closeFunction();
+					}}>
+					Batal
+				</Button>
+				<Button
+					onClick={() => {
+						if (link === "" && attachment === "") {
+							toast.error('Field Tidak Boleh Kosong', {
+								position: toast.POSITION.TOP_RIGHT
+							});
+						} else {
+							postAttachment({
+								attachment_name: attachment,
+								attachment_source: link,
+								folder_id: id
+							})
+								.then((res) => {
+									dispatch(addAttachment(res.data.data));
+								})
+								.catch((err) => {
+									toast.error(err.response.data.message, {
+										position: toast.POSITION.TOP_RIGHT,
+									});
+								});
+							setLink('');
+						}
+						// window.location.reload();
+					}}
+					type={formValidation ? 'Primary' : 'Disabled'}>Simpan</Button>
+			</div>
 		</div>
 	);
 };

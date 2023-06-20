@@ -157,7 +157,7 @@ const CardFile = ({ attachment }) => {
 				confirmationText="Apakah Anda yakin ingin menghapus berkas ini?"
 			/>
 			<Modal open={showFormModalDetail} onClose={() => setShowFormModalDetail(false)}>
-				<ModalDetail />
+				<ModalDetail attachment={attachment} />
 			</Modal>
 			<Snackbar
 				autoHideDuration={5000}

@@ -118,7 +118,11 @@ const HeaderDropdown = () => {
 				/>
 			</Modal>
 			<Modal open={showFormModalFile} onClose={() => setShowFormModalFile(false)}>
-				<ModalUploadFile />
+				<ModalUploadFile
+					closeFunction={() => {
+						setShowFormModalFile(false);
+					}}
+				/>
 			</Modal>
 		</>
 	);
