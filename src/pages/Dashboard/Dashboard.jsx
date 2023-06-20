@@ -383,6 +383,9 @@ export default function Dashboard() {
 										thumbnail: courseThumbnail,
 									})
 										.then((res) => {
+											toast.success(res.message, {
+												position: toast.POSITION.TOP_RIGHT,
+											});
 											dispatch(addCourse(res.data.data));
 										})
 										.catch((err) => {

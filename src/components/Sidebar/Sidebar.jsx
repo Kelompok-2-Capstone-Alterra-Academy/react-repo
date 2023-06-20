@@ -114,10 +114,10 @@ const Sidebar = () => {
 						onClick={() => {
 							logout()
 								.then((res) => {
-									document.cookie = 'token=;';
 									toast.success(res.message, {
 										position: toast.POSITION.TOP_RIGHT,
 									});
+									document.cookie = 'token=;';
 									navigate('/login');
 								})
 								.catch((err) => {

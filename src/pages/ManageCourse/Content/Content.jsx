@@ -12,6 +12,7 @@ import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import { useDispatch, useSelector } from 'react-redux';
 import Timekeeper from 'react-timekeeper';
+import { toast } from 'react-toastify';
 import { delModule, postTask, putModule, putTask } from '../../../clients';
 import { Button, ConfirmationModal } from '../../../components';
 import { useClickOutside } from '../../../hooks/useClickOutside';
@@ -70,6 +71,9 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 				id: content.tasks[0].ID,
 			})
 				.then((res) => {
+					toast.success(res.message, {
+						position: toast.POSITION.TOP_RIGHT,
+					});
 					dispatch(
 						updateContent({
 							...content,
@@ -82,7 +86,9 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 					);
 				})
 				.catch((err) => {
-					console.log(err);
+					toast.error(err.response.data.message, {
+						position: toast.POSITION.TOP_RIGHT,
+					});
 				});
 		} else {
 			postTask({
@@ -90,6 +96,9 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 				module_id: `${content.ID}`,
 			})
 				.then((res) => {
+					toast.success(res.message, {
+						position: toast.POSITION.TOP_RIGHT,
+					});
 					dispatch(
 						updateContent({
 							...content,
@@ -102,7 +111,9 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 					);
 				})
 				.catch((err) => {
-					console.log(err);
+					toast.error(err.response.data.message, {
+						position: toast.POSITION.TOP_RIGHT,
+					});
 				});
 		}
 	};
@@ -269,11 +280,16 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 				secondaryButtonName="Batal"
 				onPrimaryButtonClick={() => {
 					delModule(content.ID)
-						.then(() => {
+						.then((res) => {
+							toast.success(res.message, {
+								position: toast.POSITION.TOP_RIGHT,
+							});
 							dispatch(deleteContent(content.ID));
 						})
 						.catch((err) => {
-							console.log(err);
+							toast.error(err.response.data.message, {
+								position: toast.POSITION.TOP_RIGHT,
+							});
 						});
 					onReset();
 					setShowDeleteModal(false);
@@ -296,6 +312,9 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 						id: content.ID,
 					})
 						.then((res) => {
+							toast.success(res.message, {
+								position: toast.POSITION.TOP_RIGHT,
+							});
 							dispatch(
 								updateContent({
 									...res.data.data,
@@ -303,7 +322,9 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 							);
 						})
 						.catch((err) => {
-							console.log(err);
+							toast.error(err.response.data.message, {
+								position: toast.POSITION.TOP_RIGHT,
+							});
 						});
 					setShowSaveModal(false);
 				}}
@@ -323,6 +344,9 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 						id: content.ID,
 					})
 						.then((res) => {
+							toast.success(res.message, {
+								position: toast.POSITION.TOP_RIGHT,
+							});
 							dispatch(
 								updateContent({
 									...res.data.data,
@@ -330,7 +354,9 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 							);
 						})
 						.catch((err) => {
-							console.log(err);
+							toast.error(err.response.data.message, {
+								position: toast.POSITION.TOP_RIGHT,
+							});
 						});
 					setIsShowAddMediaModal(false);
 				}}
@@ -349,6 +375,9 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 						id: content.ID,
 					})
 						.then((res) => {
+							toast.success(res.message, {
+								position: toast.POSITION.TOP_RIGHT,
+							});
 							dispatch(
 								updateContent({
 									...res.data.data,
@@ -356,7 +385,9 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 							);
 						})
 						.catch((err) => {
-							console.log(err);
+							toast.error(err.response.data.message, {
+								position: toast.POSITION.TOP_RIGHT,
+							});
 						});
 					setIsShowAddLinkModal(false);
 				}}
@@ -391,6 +422,9 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 								id: content.ID,
 							})
 								.then((res) => {
+									toast.success(res.message, {
+										position: toast.POSITION.TOP_RIGHT,
+									});
 									dispatch(
 										updateContent({
 											...res.data.data,
@@ -398,7 +432,9 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 									);
 								})
 								.catch((err) => {
-									console.log(err);
+									toast.error(err.response.data.message, {
+										position: toast.POSITION.TOP_RIGHT,
+									});
 								});
 							setIsShowAddTextModal(false);
 						}}

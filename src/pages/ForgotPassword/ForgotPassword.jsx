@@ -1,7 +1,7 @@
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Form, Formik } from 'formik';
 import { Link } from '@material-ui/core';
+import { Form, Formik } from 'formik';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -39,6 +39,9 @@ export default function Login() {
 			pass: '12345678',
 		})
 			.then((res) => {
+				toast.success(res.message, {
+					position: toast.POSITION.TOP_RIGHT,
+				});
 				console.log(res);
 				const token = res.data.token;
 				document.cookie = `token=${token}; path=/;`;

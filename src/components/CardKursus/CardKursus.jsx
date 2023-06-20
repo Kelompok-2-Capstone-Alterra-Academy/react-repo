@@ -11,6 +11,7 @@ import Modal from '@mui/material/Modal';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { delCourse, putCourse } from '../../clients';
 import { Button, ConfirmationModal, OutlineTag, Select } from '../../components';
 import { useClickOutside } from '../../hooks';
@@ -134,7 +135,10 @@ export default function CardKursus({ data, category }) {
 											ID: data.ID,
 											status: 'draft',
 										},
-								  }).then(() => {
+								  }).then((res) => {
+										toast.success(res.message, {
+											position: toast.POSITION.TOP_RIGHT,
+										});
 										dispatch(
 											updateCourse({
 												ID: data.ID,
@@ -331,7 +335,10 @@ export default function CardKursus({ data, category }) {
 											thumbnail: courseThumbnail,
 											status: 'publish',
 										},
-									}).then(() => {
+									}).then((res) => {
+										toast.success(res.message, {
+											position: toast.POSITION.TOP_RIGHT,
+										});
 										dispatch(
 											updateCourse({
 												ID: data.ID,
@@ -359,7 +366,10 @@ export default function CardKursus({ data, category }) {
 				confirmationText={`Apakah kamu yakin ingin menghapus ${data.course_name}?`}
 				primaryButtonName="Hapus Kursus"
 				onPrimaryButtonClick={() => {
-					delCourse(data.ID).then(() => {
+					delCourse(data.ID).then((res) => {
+						toast.success(res.message, {
+							position: toast.POSITION.TOP_RIGHT,
+						});
 						dispatch(deleteCourse(data.ID));
 					});
 					setIsShowDeleteModal(false);

@@ -84,6 +84,9 @@ export default function Login() {
 							setLoading(true);
 							login({ email, password })
 								.then((res) => {
+									toast.success(res.message, {
+										position: toast.POSITION.TOP_RIGHT,
+									});
 									document.cookie = `token=${res.data.data.token}`;
 									window.location.href = '/dashboard';
 								})

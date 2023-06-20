@@ -13,6 +13,7 @@ import { useEffect, useState } from 'react';
 import { LoopCircleLoading } from 'react-loadingg';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import {
 	delSection,
 	getCourse,
@@ -101,7 +102,9 @@ export default function ManageCourse() {
 				setCourseName(name);
 			})
 			.catch((err) => {
-				console.log(err);
+				toast.error(err.response.data.message, {
+					position: toast.POSITION.TOP_RIGHT,
+				});
 			})
 			.finally(() => {
 				setLoadingFetchCourse(false);
@@ -122,7 +125,9 @@ export default function ManageCourse() {
 				);
 			})
 			.catch((err) => {
-				console.log(err);
+				toast.error(err.response.data.message, {
+					position: toast.POSITION.TOP_RIGHT,
+				});
 			})
 			.finally(() => {
 				setLoadingFetchSection(false);
@@ -133,7 +138,9 @@ export default function ManageCourse() {
 				dispatch(setContent(res.data.data));
 			})
 			.catch((err) => {
-				console.log(err);
+				toast.error(err.response.data.message, {
+					position: toast.POSITION.TOP_RIGHT,
+				});
 			})
 			.finally(() => {
 				setLoadingFetchContent(false);
@@ -144,7 +151,9 @@ export default function ManageCourse() {
 				setFolderList(res.data.data.folders);
 			})
 			.catch((err) => {
-				console.log(err);
+				toast.error(err.response.data.message, {
+					position: toast.POSITION.TOP_RIGHT,
+				});
 			})
 			.finally(() => {
 				setLoadingFetchFolders(false);
@@ -155,7 +164,9 @@ export default function ManageCourse() {
 				setQuizList(res.data.data);
 			})
 			.catch((err) => {
-				console.log(err);
+				toast.error(err.response.data.message, {
+					position: toast.POSITION.TOP_RIGHT,
+				});
 			})
 			.finally(() => {
 				setLoadingFetchQuiz(false);
@@ -169,10 +180,15 @@ export default function ManageCourse() {
 			section_id: selectedSection.ID,
 		})
 			.then((res) => {
+				toast.success(res.message, {
+					position: toast.POSITION.TOP_RIGHT,
+				});
 				dispatch(addContent(res.data.data));
 			})
 			.catch((err) => {
-				console.log(err);
+				toast.error(err.response.data.message, {
+					position: toast.POSITION.TOP_RIGHT,
+				});
 			});
 		setIsSelectContent(false);
 	};
@@ -339,6 +355,9 @@ export default function ManageCourse() {
 										id: selectedSection.ID,
 									})
 										.then((res) => {
+											toast.success(res.message, {
+												position: toast.POSITION.TOP_RIGHT,
+											});
 											dispatch(
 												updateSection({
 													...res.data.data,
@@ -351,7 +370,9 @@ export default function ManageCourse() {
 											});
 										})
 										.catch((err) => {
-											console.log(err);
+											toast.error(err.response.data.message, {
+												position: toast.POSITION.TOP_RIGHT,
+											});
 										})
 										.finally(() => {
 											setShowSaveModal(false);
@@ -370,11 +391,16 @@ export default function ManageCourse() {
 								primaryButtonName={'Hapus'}
 								onPrimaryButtonClick={() => {
 									delSection(selectedSection.ID)
-										.then(() => {
+										.then((res) => {
+											toast.success(res.message, {
+												position: toast.POSITION.TOP_RIGHT,
+											});
 											dispatch(deleteSection(selectedSection.ID));
 										})
 										.catch((err) => {
-											console.log(err);
+											toast.error(err.response.data.message, {
+												position: toast.POSITION.TOP_RIGHT,
+											});
 										})
 										.finally(() => {
 											setSelectedSection({});

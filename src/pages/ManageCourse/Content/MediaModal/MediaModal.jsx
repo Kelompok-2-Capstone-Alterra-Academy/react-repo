@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from '@mui/material/Modal';
 import { useEffect, useState } from 'react';
 import { LoopCircleLoading } from 'react-loadingg';
+import { toast } from 'react-toastify';
 import { getAttachment } from '../../../../clients';
 import styles from './MediaModal.module.css';
 
@@ -38,7 +39,9 @@ export default function MediaModal({ show, onClose, onSubmit, data }) {
 					setDisplayedAttachmentList(res.data.data);
 				})
 				.catch((err) => {
-					console.log(err);
+					toast.error(err.response.data.message, {
+						position: toast.POSITION.TOP_RIGHT,
+					});
 				})
 				.finally(() => {
 					setLoadingAttachment(false);
