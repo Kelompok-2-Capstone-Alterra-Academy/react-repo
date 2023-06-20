@@ -26,6 +26,7 @@ import { BiSortAZ, BiSortZA } from 'react-icons/bi';
 import { TbSortAscending2, TbSortDescending2 } from 'react-icons/tb';
 import { ConfirmationModal, Header, OutlineTag, ResponseModal, Tag } from '../../components';
 import styles from '../ManageCustomer/ManageCustomer.module.css';
+import { getStudentByCourse, delStudentCourse } from '../../clients';
 
 export default function ManageCustomer() {
 	const [selectedOption, setSelectedOption] = useState('');
@@ -448,7 +449,6 @@ export default function ManageCustomer() {
 											</div>
 										</TableCell>
 										<TableCell>
-											{row.sectionProgress === 12 ? (
 												<div className="flex space-x-5 items-center">
 													<Button
 														sx={{
@@ -480,36 +480,6 @@ export default function ManageCustomer() {
 														Hapus Siswa
 													</Button>
 												</div>
-											) : (
-												<div className="flex space-x-5 items-center">
-													<Button
-														sx={{
-															width: '100%',
-															bgcolor: '#2196F3',
-															borderRadius: '8px',
-															boxShadow: 'none',
-															fontWeight: 600,
-															textTransform: 'capitalize',
-														}}
-														variant="contained"
-														onClick={handleOpenQuizForm}>
-														Berikan Quiz
-													</Button>
-													<Button
-														sx={{
-															width: '100%',
-															color: '#2196F3',
-															borderRadius: '8px',
-															fontWeight: 600,
-															textTransform: 'capitalize',
-														}}
-														variant="outlined"
-														href={'https://wa.me/+62' + row.telp.replace(/-/g, '')}
-														target="_blank">
-														Hubungi
-													</Button>
-												</div>
-											)}
 										</TableCell>
 									</TableRow>
 								))}
