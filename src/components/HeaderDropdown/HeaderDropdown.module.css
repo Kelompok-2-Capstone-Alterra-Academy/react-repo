@@ -10,13 +10,9 @@
 }
 
 .headerTitle {
-	color: #616161;
-	font-weight: 500;
-	font-size: 24px;
-}
-
-.headerTitle > b {
 	color: #212121;
+	font-weight: 400;
+	font-size: 24px;
 }
 
 .headerButton {

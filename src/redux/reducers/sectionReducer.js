@@ -10,6 +10,8 @@ const defaultAction = {
 
 const sectionReducer = (state = initialState, action = defaultAction) => {
 	const { type, payload } = action;
+	let selectedContent;
+	let newContent;
 
 	switch (type) {
 		case 'SET_SECTION':
@@ -49,9 +51,15 @@ const sectionReducer = (state = initialState, action = defaultAction) => {
 			};
 
 		case 'UPDATE_CONTENT':
+			selectedContent = state.content.find((cont) => cont.ID == payload.ID);
+			newContent = {
+				...selectedContent,
+				...payload,
+			};
+
 			return {
 				...state,
-				content: state.content.map((cont) => (cont.ID == payload.ID ? payload : cont)),
+				content: state.content.map((cont) => (cont.ID == payload.ID ? newContent : cont)),
 			};
 
 		case 'DELETE_CONTENT':

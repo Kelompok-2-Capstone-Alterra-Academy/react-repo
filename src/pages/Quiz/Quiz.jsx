@@ -206,9 +206,17 @@ export default function Quiz() {
 					setShowPublishModal(false);
 				}}
 				onSecondaryButtonClick={() => setShowPublishModal(false)}
-				title="Terbitkan Kuis?"
-				image={'/image/quiz-publish.png'}
-				confirmationText="Apakah Anda yakin ingin menerbitkan kuis ini?"
+				title={selectedPublishQuiz?.status == 'draft' ? 'Terbitkan Kuis?' : 'Tarik Kembali Kuis?'}
+				image={
+					selectedPublishQuiz?.status == 'draft'
+						? '/image/quiz-created.png'
+						: '/image/quiz-publish.png'
+				}
+				confirmationText={
+					selectedPublishQuiz?.status == 'draft'
+						? 'Apakah Anda yakin ingin menerbitkan kuis ini?'
+						: 'Apakah Anda yakin ingin menarik kembali kuis ini?'
+				}
 			/>
 		</div>
 	);

@@ -1,16 +1,16 @@
+import { faFile, faFolderOpen, faLink, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faFolderOpen, faFile, faLink } from '@fortawesome/free-solid-svg-icons';
-import { Button } from '../../components';
+import Divider from '@mui/material/Divider';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
-import styles from '../HeaderDropdown/HeaderDropdown.module.css';
-import Divider from '@mui/material/Divider';
 import Modal from '@mui/material/Modal';
+import PopupState, { bindMenu, bindTrigger } from 'material-ui-popup-state';
 import { useState } from 'react';
-import ModalUploadFile from './ModalUploadFile/ModalUploadFile';
+import { Button } from '../../components';
+import styles from '../HeaderDropdown/HeaderDropdown.module.css';
 import ModalFolder from './ModalFolder/ModalFolder';
 import ModalLink from './ModalLink/ModalLink';
+import ModalUploadFile from './ModalUploadFile/ModalUploadFile';
 
 const HeaderDropdown = ({ folderData }) => {
 	const [showFormModalFolder, setShowFormModalFolder] = useState(false);
@@ -23,9 +23,7 @@ const HeaderDropdown = ({ folderData }) => {
 				{(popupState) => (
 					<>
 						<div className={styles.header}>
-							<span className={styles.headerTitle}>
-								<b>15</b> File, <b>{folderData.folders?.length}</b> Folder
-							</span>
+							<span className={styles.headerTitle}>{folderData.folders?.length} Folder</span>
 							<Button
 								className={styles.headerButton}
 								type="Primary"

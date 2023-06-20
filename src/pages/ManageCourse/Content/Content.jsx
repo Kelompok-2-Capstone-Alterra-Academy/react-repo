@@ -316,7 +316,7 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 							});
 							dispatch(
 								updateContent({
-									...res.data.data,
+									module_name: contentType + '-' + contentName,
 									ID: content.ID,
 								})
 							);
@@ -347,7 +347,8 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 							});
 							dispatch(
 								updateContent({
-									...res.data.data,
+									attachment_id: file.ID,
+									attachment: file,
 									ID: content.ID,
 								})
 							);
@@ -377,7 +378,8 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 							});
 							dispatch(
 								updateContent({
-									...res.data.data,
+									attachment_id: file.ID,
+									attachment: file,
 									ID: content.ID,
 								})
 							);
@@ -424,7 +426,7 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 									});
 									dispatch(
 										updateContent({
-											...res.data.data,
+											description: contentDescription,
 											ID: content.ID,
 										})
 									);
