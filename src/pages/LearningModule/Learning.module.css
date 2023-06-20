@@ -20,5 +20,16 @@
 }
 
 .content{
-	display: inline-flex;
+	/* display: inline-flex; */
+	display: flex;
+	flex-direction: row;
+}
+
+.contentCard{
+	position: relative;
+	flex-grow: 1;
+	/* margin-left: 20%;
+	padding: 1em;
+	width: 100%;
+	min-height: 100vh; */
 }

@@ -1,5 +1,6 @@
 import { useState } from 'react';
-
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -10,16 +11,24 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThLarge, faDownload, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faThLarge, faDownload, faPen, faTrash, faTv } from '@fortawesome/free-solid-svg-icons';
 import { ConfirmationModal } from '../ConfirmationModal';
 import Modal from '@mui/material/Modal';
 import ModalDetail from './ModalDetail/ModalDetail';
 import ModalEditFile from './ModalEditFile/ModalEditFile';
 
-const CardFile = () => {
+const CardFile = ({ attachment }) => {
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
 	const [showFormModalBerkas, setShowFormModalBerkas] = useState(false);
 	const [showFormModalDetail, setShowFormModalDetail] = useState(false);
+	const [open, setOpen] = useState(false)
+
+	const handleClose = (reason) => {
+		if (reason === 'clickaway') {
+			return;
+		}
+		setOpen(false);
+	};
 
 	return (
 		<>
@@ -27,7 +36,7 @@ const CardFile = () => {
 				elevation={0}
 				sx={{
 					maxWidth: 200,
-					minHeight: 170,
+					height: '100%',
 					borderRadius: 2.5,
 					marginBottom: '10px',
 					border: '2px solid #f5f5f5',
@@ -78,7 +87,7 @@ const CardFile = () => {
 											Ganti Nama Berkas
 										</Typography>
 									</MenuItem>
-									<MenuItem style={{ marginTop: 12, marginBottom: 12 }} onClick={popupState.close}>
+									<MenuItem style={{ marginTop: 12, marginBottom: 12 }} onClick={() => setOpen(true)} >
 										<Typography sx={{ fontSize: '14px' }} color="#2196F3">
 											<FontAwesomeIcon style={{ marginRight: '20px' }} icon={faDownload} />
 											Unduh Berkas
@@ -118,11 +127,14 @@ const CardFile = () => {
 					}}
 				/>
 				<hr style={{ width: 135, alignItems: 'center', marginLeft: 30 }} />
-				<CardContent>
-					<Typography style={{ fontSize: 14 }} gutterBottom variant="h6" component="div">
-						Matematika Dasar
-					</Typography>
-					<Typography variant="body2" color="text.secondary">
+				<CardContent style={{ paddingBottom: 8 }}>
+					<div style={{ display: 'flex', alignItems: 'center' }}>
+						<FontAwesomeIcon style={{ marginRight: '20px', color: '#2196F3', fontSize: 25 }} icon={faTv} />
+						<Typography style={{ fontSize: 14 }} gutterBottom variant="h6" component="div">
+							{attachment.attachment_name}
+						</Typography>
+					</div>
+					<Typography style={{ fontWeight: 500, fontSize: 10, color: '#9E9E9E', marginTop: 3 }} variant="body2">
 						Lizards are a widesp
 					</Typography>
 				</CardContent>
@@ -145,8 +157,19 @@ const CardFile = () => {
 				confirmationText="Apakah Anda yakin ingin menghapus berkas ini?"
 			/>
 			<Modal open={showFormModalDetail} onClose={() => setShowFormModalDetail(false)}>
-				<ModalDetail />
+				<ModalDetail attachment={attachment} />
 			</Modal>
+			<Snackbar
+				autoHideDuration={5000}
+				open={open}
+				onClose={handleClose}
+				anchorOrigin={{
+					vertical: 'bottom',
+					horizontal: 'right',
+				}}
+			>
+				<Alert severity="info" variant="filled" icon={false} onClose={handleClose}>Berkas di Unduh</Alert>
+			</Snackbar>
 		</>
 	);
 };

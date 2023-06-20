@@ -69,7 +69,7 @@ const Sidebar = () => {
 							<div className={styles.learningListContainer}>
 								<Link
 									style={{ textDecoration: 'none' }}
-									to={`/modul`}
+									to={`/modul/2`}
 									className={styles.learningListItem}>
 									<span className={styles.learningListItemTitle}>Kelola Modul</span>
 								</Link>

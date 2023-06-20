@@ -45,6 +45,48 @@
 	color: #9e9e9e;
 }
 
+.gFormInput {
+	position: relative;
+}
+
+.gFormInput > input {
+	padding-right: calc(1.5em + 20px);
+}
+
+.checkingIconContainer {
+	position: absolute;
+	top: 0;
+	right: 1em;
+	height: 100%;
+	display: flex;
+	align-items: center;
+}
+
+.checkingErrorIcon,
+.checkingSuccessIcon,
+.checkingIcon {
+	width: 20px;
+	height: 20px;
+}
+
+.checkingIcon {
+	cursor: pointer;
+	transition: all 0.3s ease-in-out;
+}
+
+.checkingIcon:hover {
+	transform: scale(1.1);
+}
+
+.checkingSuccessIcon {
+	color: #079841;
+}
+
+.checkingErrorIcon {
+	color: #ff0000;
+}
+
+
 .footer {
 	width: 100%;
 	display: flex;
