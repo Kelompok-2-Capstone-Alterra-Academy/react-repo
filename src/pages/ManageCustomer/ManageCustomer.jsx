@@ -51,11 +51,9 @@ export default function ManageCustomer() {
 		setLoadingFetch(true);
 		getCustomer()
 			.then((res) => {
-				// console.log(res)
 				dispatch(setCustomer(res.data.data));
 			})
 			.catch((err) => {
-				// console.log(err)
 				toast.error(err.response.data.message, {
 					position: toast.POSITION.TOP_RIGHT,
 				});
@@ -151,12 +149,6 @@ export default function ManageCustomer() {
 						{ link: '/dashboard', title: 'Dashboard' },
 						{ link: '/manage-customer', title: 'Manage Customer' },
 					],
-				}}
-				profileData={{
-					name: 'Admin',
-					role: 'Admin',
-					pic: 'https://i.pravatar.cc/150?img=21',
-					email: 'testing@gmail.com',
 				}}
 			/>
 			<div className={styles.mainContent}>

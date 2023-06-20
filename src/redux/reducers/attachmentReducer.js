@@ -26,7 +26,6 @@ const attachmentReducer = (state = initialState, action = defaultAction) => {
 			};
 
 		case 'UPDATE_ATTACHMENT':
-			console.log('payload', payload);
 			selectedAttachment = state.attachment.find((attachment) => attachment.ID === payload.ID);
 			newAttachment = {
 				...selectedAttachment,

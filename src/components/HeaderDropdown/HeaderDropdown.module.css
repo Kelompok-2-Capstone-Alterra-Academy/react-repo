@@ -24,3 +24,13 @@
 .headerButtonIcon {
 	margin-right: 0.5em;
 }
+
+.buttonContainer {
+	position: relative;
+}
+
+.actionSelect {
+	width: 150%;
+	right: 0;
+	top: 100%;
+}

@@ -32,7 +32,6 @@ export default function MediaModal({ show, onClose, onSubmit, data }) {
 	useEffect(() => {
 		if (selectedFolderId) {
 			setLoadingAttachment(true);
-			console.log(selectedFolderId);
 			getAttachment(selectedFolderId)
 				.then((res) => {
 					setAttachmentList(res.data.data);

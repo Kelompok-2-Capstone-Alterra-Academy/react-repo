@@ -1,41 +1,42 @@
-import React, { useState, useEffect } from 'react';
-import { Header, MyTextField } from '../../components';
-import jwt from "jwt-decode"
 import axios from 'axios';
+import jwt from 'jwt-decode';
+import React, { useEffect, useState } from 'react';
+import { Header, MyTextField } from '../../components';
 
 export default function EditProfile() {
 	const [name, setName] = useState('');
 	const [kelas, setKelas] = useState('');
-	const [role, setRole] = useState('')
+	const [role, setRole] = useState('');
 	const [email, setEmail] = useState('');
 	const [phone_number, setPhone_Number] = useState('');
 	const [contact, setContact] = useState('');
-	const [status, setStatus] = useState('')
+	const [status, setStatus] = useState('');
 	const [gender, setGender] = useState('');
 	const [selectedImage, setSelectedImage] = useState(null);
-	const [currentUser, setCurrentUser] = useState({})
+	const [currentUser, setCurrentUser] = useState({});
 
 	// get current user
-	const cookieToken = document.cookie.split("=")[1]
-	const decodeToken = jwt(cookieToken)
+	const cookieToken = document.cookie.split('=')[1];
+	const decodeToken = jwt(cookieToken);
 
 	const getCurrentUser = async () => {
-		const response = await axios.get(`http://3.26.234.145:8081/mentors/users/${decodeToken.id}`, { headers: { "Authorization": `Bearer ${cookieToken}` } })
-		setCurrentUser(response.data.data)
-		setName(response.data.data.name)
-		setKelas(response.data.data.class)
-		setRole(response.data.data.role)
-		setEmail(response.data.data.email)
-		setContact(response.data.data.contact)
-		setPhone_Number(response.data.data.phone_number)
-		setStatus(response.data.data.status)
-		setGender(response.data.data.gender)
-	}
+		const response = await axios.get(`http://3.26.234.145:8081/mentors/users/${decodeToken.id}`, {
+			headers: { Authorization: `Bearer ${cookieToken}` },
+		});
+		setCurrentUser(response.data.data);
+		setName(response.data.data.name);
+		setKelas(response.data.data.class);
+		setRole(response.data.data.role);
+		setEmail(response.data.data.email);
+		setContact(response.data.data.contact);
+		setPhone_Number(response.data.data.phone_number);
+		setStatus(response.data.data.status);
+		setGender(response.data.data.gender);
+	};
 
 	useEffect(() => {
-		getCurrentUser()
-	}, [])
-
+		getCurrentUser();
+	}, []);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -51,13 +52,21 @@ export default function EditProfile() {
 		};
 
 		try {
-			const response = await axios.put(`http://3.26.234.145:8081/mentors/user/profile/${decodeToken.id}`, updatedUser, { headers: { "Authorization": `Bearer ${cookieToken}`, "Content-Type": "multipart/form-data" } });
+			const response = await axios.put(
+				`http://3.26.234.145:8081/mentors/user/profile/${decodeToken.id}`,
+				updatedUser,
+				{
+					headers: {
+						Authorization: `Bearer ${cookieToken}`,
+						'Content-Type': 'multipart/form-data',
+					},
+				}
+			);
 			console.log('User profile updated:', response.data);
 		} catch (error) {
 			console.log('Error updating user profile:', error);
 		}
-
-	}
+	};
 
 	const handleImageUpload = (event) => {
 		const file = event.target.files[0];
@@ -74,12 +83,6 @@ export default function EditProfile() {
 						{ link: '/edit-profile', title: 'Edit Profile' },
 					],
 				}}
-				profileData={{
-					name: 'Admin',
-					role: 'Admin',
-					pic: 'https://i.pravatar.cc/150?img=21',
-					email: 'testing@gmail.com',
-				}}
 			/>
 			<div className="mb-10">
 				<form onSubmit={handleSubmit}>
@@ -95,7 +98,6 @@ export default function EditProfile() {
 							<div className="">
 								<button className="rounded-sm bg-blue-500 px-8 py-2 text-xs text-white">
 									<input type="file" onChange={handleImageUpload} />
-
 								</button>
 							</div>
 						</div>
@@ -135,14 +137,14 @@ export default function EditProfile() {
 							</div>
 							<div className=" items-center gap-4 mb-6">
 								<label htmlFor="email">Gender</label>
-								<div className='flex gap-5'>
+								<div className="flex gap-5">
 									<div>
 										<input
 											id="male"
 											type="radio"
 											value="male"
 											name="gender"
-											checked={gender === "male"}
+											checked={gender === 'male'}
 											onChange={(e) => setGender(e.target.value)}
 										/>
 										<label htmlFor="male" className="ml-2 text-sm font-medium text-gray-800">
@@ -155,7 +157,7 @@ export default function EditProfile() {
 											type="radio"
 											value="female"
 											name="gender"
-											checked={gender === "female"}
+											checked={gender === 'female'}
 											onChange={(e) => setGender(e.target.value)}
 										/>
 										<label htmlFor="female" className="ml-2 text-sm font-medium text-gray-800">
@@ -165,13 +167,12 @@ export default function EditProfile() {
 								</div>
 							</div>
 
-							<div className='mb-6'>
+							<div className="mb-6">
 								<button className="bg-blue-500 hover:bg-blue-700 text-white py-1 px-4 border w-full border-blue-700 rounded">
 									Simpan Perubahan
 								</button>
 							</div>
 						</div>
-
 					</div>
 				</form>
 			</div>

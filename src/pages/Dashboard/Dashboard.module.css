@@ -3,12 +3,8 @@
 	flex-direction: row;
 }
 
-.content {
-	padding: 1em;
-}
-
 .headerContainer {
-	margin-bottom: 3em;
+	margin-bottom: 1em;
 }
 
 .bannerImage {

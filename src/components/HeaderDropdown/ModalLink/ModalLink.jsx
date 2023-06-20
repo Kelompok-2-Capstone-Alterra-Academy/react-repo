@@ -1,51 +1,50 @@
-import { useEffect, useState } from 'react';
-import styles from '../ModalLink/ModalLink.module.css';
-import { Button } from '../../../components';
-import { toast } from 'react-toastify';
-import { postAttachment } from '../../../clients';
-import { addAttachment } from '../../../redux/actions/attachmentActions';
-import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
 import { faCheckCircle, faRotateRight, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
+import { postAttachment } from '../../../clients';
+import { Button } from '../../../components';
+import { addAttachment } from '../../../redux/actions/attachmentActions';
+import styles from '../ModalLink/ModalLink.module.css';
 
-const ModalLink = ({ closeFunction }) => {
+const ModalLink = ({ closeFunction, folderId }) => {
 	const [link, setLink] = useState('');
 	const [attachment, setAttachment] = useState('');
+	const [description, setDescription] = useState('');
 
-	const { id } = useParams();
 	const dispatch = useDispatch();
 
 	const [formValidation, setFormValidation] = useState(false);
-	const [isCheckingGForm, setIsCheckingGForm] = useState(false);
-	const [checkingGFormLoading, setCheckingGFormLoading] = useState(false);
-	const [isValidGForm, setIsValidGForm] = useState(false);
+	const [isCheckingVideo, setIsCheckingVideo] = useState(false);
+	const [checkingVideoLoading, setCheckingVideoLoading] = useState(false);
+	const [isValidVideo, setIsValidVideo] = useState(false);
 
 	useEffect(() => {
-		if (link !== '' && isValidGForm) {
+		if (attachment && link != '' && isValidVideo) {
 			setFormValidation(true);
 		} else {
 			setFormValidation(false);
 		}
-	}, [link, isValidGForm]);
+	}, [attachment, link, isValidVideo]);
 
-	const checkGFormExistence = (url) => {
+	const checkVideoExistence = (url) => {
 		const regex =
 			/^(?:https?:\/\/)?(?:www\.)?youtube\.com\/(?:watch\?(?=.*v=([\w-]+))(?:\S+)?|([\w-]+))/;
 		const isValidURL = regex.test(url);
 		return isValidURL;
 	};
 
-	const handleClickCheckingGForm = () => {
-		setCheckingGFormLoading(true);
+	const handleClickCheckingVideo = () => {
+		setCheckingVideoLoading(true);
 
 		setTimeout(() => {
-			setCheckingGFormLoading(false);
-			setIsCheckingGForm(true);
-			setIsValidGForm(checkGFormExistence(link));
+			setCheckingVideoLoading(false);
+			setIsCheckingVideo(true);
+			setIsValidVideo(checkVideoExistence(link));
 		}, 1000);
 	};
-	console.log(link)
+
 	return (
 		<div className={styles.container}>
 			<span className={styles.headerTitle}>Masukan Link Video</span>
@@ -59,6 +58,12 @@ const ModalLink = ({ closeFunction }) => {
 						value={attachment}
 						onChange={(e) => setAttachment(e.target.value)}
 					/>
+					<textarea
+						className={styles.formInput}
+						placeholder="Deskripsi File"
+						value={description}
+						onChange={(e) => setDescription(e.target.value)}
+					/>
 					<div className={styles.gFormInput}>
 						<input
 							required
@@ -68,26 +73,26 @@ const ModalLink = ({ closeFunction }) => {
 							value={link}
 							onChange={(e) => {
 								setLink(e.target.value);
-								setIsValidGForm(false);
-								setIsCheckingGForm(false);
+								setIsValidVideo(false);
+								setIsCheckingVideo(false);
 							}}
 						/>
 						<div className={styles.checkingIconContainer}>
-							{!isCheckingGForm && !checkingGFormLoading && (
+							{!isCheckingVideo && !checkingVideoLoading && (
 								<FontAwesomeIcon
 									icon={faRotateRight}
 									className={styles.checkingIcon}
-									onClick={handleClickCheckingGForm}
+									onClick={handleClickCheckingVideo}
 								/>
 							)}
-							{!isCheckingGForm && checkingGFormLoading && (
+							{!isCheckingVideo && checkingVideoLoading && (
 								<FontAwesomeIcon icon={faRotateRight} className={styles.checkingIcon} spin />
 							)}
 
-							{!isValidGForm && isCheckingGForm && (
+							{!isValidVideo && isCheckingVideo && (
 								<FontAwesomeIcon icon={faXmarkCircle} className={styles.checkingErrorIcon} />
 							)}
-							{isValidGForm && isCheckingGForm && (
+							{isValidVideo && isCheckingVideo && (
 								<FontAwesomeIcon icon={faCheckCircle} className={styles.checkingSuccessIcon} />
 							)}
 						</div>
@@ -96,38 +101,54 @@ const ModalLink = ({ closeFunction }) => {
 			</div>
 			<div className={styles.footer}>
 				<Button
-					type="Danger"
+					type="Secondary"
 					onClick={() => {
 						setLink('');
+						setAttachment('');
+						setDescription('');
+						setIsValidVideo(false);
 						closeFunction();
 					}}>
 					Batal
 				</Button>
 				<Button
 					onClick={() => {
-						if (link === "" && attachment === "") {
+						if (link === '' && attachment === '') {
 							toast.error('Field Tidak Boleh Kosong', {
-								position: toast.POSITION.TOP_RIGHT
+								position: toast.POSITION.TOP_RIGHT,
 							});
 						} else {
 							postAttachment({
 								attachment_name: attachment,
-								attachment_source: `https://www.youtube.com/embed/${link.substring(32)}`,
-								folder_id: id
+								attachment_source: link,
+								description: description,
+								folder_id: `${folderId}`,
+								type: 'video',
+								status: 'draft',
 							})
 								.then((res) => {
+									toast.success(res.data.message, {
+										position: toast.POSITION.TOP_RIGHT,
+									});
 									dispatch(addAttachment(res.data.data));
-									window.location.reload();
 								})
 								.catch((err) => {
 									toast.error(err.response.data.message, {
 										position: toast.POSITION.TOP_RIGHT,
 									});
+								})
+								.finally(() => {
+									setLink('');
+									setAttachment('');
+									setDescription('');
+									setIsValidVideo(false);
+									closeFunction();
 								});
-							setLink('');
 						}
 					}}
-					type={formValidation ? 'Primary' : 'Disabled'}>Simpan</Button>
+					type={formValidation ? 'Primary' : 'Disabled'}>
+					Simpan
+				</Button>
 			</div>
 		</div>
 	);

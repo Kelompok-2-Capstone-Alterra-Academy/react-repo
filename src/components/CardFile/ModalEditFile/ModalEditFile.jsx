@@ -27,7 +27,7 @@ const ModalEditFile = ({ closeFunction, attachment }) => {
 			</div>
 			<div className={styles.footer}>
 				<Button
-					type="Danger"
+					type="Secondary"
 					onClick={() => {
 						setFile('');
 						closeFunction();

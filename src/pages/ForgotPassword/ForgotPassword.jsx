@@ -42,7 +42,6 @@ export default function Login() {
 				toast.success(res.message, {
 					position: toast.POSITION.TOP_RIGHT,
 				});
-				console.log(res);
 				const token = res.data.token;
 				document.cookie = `token=${token}; path=/;`;
 				navigate('/dashboard');

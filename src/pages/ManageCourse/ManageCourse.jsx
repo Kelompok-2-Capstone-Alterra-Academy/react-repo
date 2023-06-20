@@ -262,12 +262,6 @@ export default function ManageCourse() {
 								},
 							],
 						}}
-						profileData={{
-							name: 'Admin',
-							role: 'Admin',
-							pic: 'https://i.pravatar.cc/150?img=68',
-							email: 'testing@gmail.com',
-						}}
 					/>
 					{Object.keys(selectedSection).length != 0 && (
 						<div className={styles.controllerContainer} key={selectedSection.id}>
