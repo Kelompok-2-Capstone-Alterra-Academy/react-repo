@@ -10,7 +10,7 @@ export function login(data) {
 
 export function logout() {
 	return axios({
-		method: 'get',
+		method: 'post',
 		url: `${AUTH_PREFIX}/logout`,
 	});
 }

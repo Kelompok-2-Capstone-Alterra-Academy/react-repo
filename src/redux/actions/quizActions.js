@@ -1,10 +1,15 @@
+export const setQuiz = (payload) => ({
+	type: 'SET_QUIZ',
+	payload,
+});
+
 export const addQuiz = (payload) => ({
 	type: 'ADD_QUIZ',
 	payload,
 });
 
-export const publishQuiz = (payload) => ({
-	type: 'PUBLISH_QUIZ',
+export const toggleStatusQuiz = (payload) => ({
+	type: 'TOGGLE_STATUS_QUIZ',
 	payload,
 });
 

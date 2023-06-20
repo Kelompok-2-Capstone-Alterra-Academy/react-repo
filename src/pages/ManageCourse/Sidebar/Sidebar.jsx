@@ -11,11 +11,19 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import { useDispatch, useSelector } from 'react-redux';
+import { postSection } from '../../../clients';
 import { addSection, updateSection } from '../../../redux/actions/sectionActions';
 import styles from './Sidebar.module.css';
 
-export default function Sidebar({ show, onSelectSection, onSelectContent, selectedContent }) {
-	const sectionList = useSelector((state) => state.section);
+export default function Sidebar({
+	show,
+	onSelectSection,
+	onSelectContent,
+	selectedContent,
+	courseId,
+}) {
+	const sectionList = useSelector((state) => state.section).section;
+	const contentList = useSelector((state) => state.section).content;
 	const dispatch = useDispatch();
 
 	return (
@@ -28,24 +36,28 @@ export default function Sidebar({ show, onSelectSection, onSelectContent, select
 				<FontAwesomeIcon icon={faHomeUser} className={styles.menuParticipantIcon} />
 				<span>Kembali ke Dashboard</span>
 			</div>
-			<div>
+			<div className={styles.sectionListContainer}>
 				<div className={styles.menuTitleContainer}>
-					<span className={styles.menuTitle}>Sesi Materi ({sectionList.section.length})</span>
+					<span className={styles.menuTitle}>Sesi Materi ({sectionList.length})</span>
 					<FontAwesomeIcon
 						icon={faPlus}
 						className={styles.menuAddIcon}
 						onClick={() => {
 							const newSection = {
-								title: '',
-								sectionTitle: '',
-								isDrillDown: true,
-								content: [],
+								section_name: '',
+								course_id: courseId,
 							};
-							dispatch(addSection(newSection));
+							postSection(newSection)
+								.then((res) => {
+									dispatch(addSection(res.data.data));
+								})
+								.catch((err) => {
+									console.log(err);
+								});
 						}}
 					/>
 				</div>
-				{sectionList.section.map((section) => {
+				{sectionList.map((section, index) => {
 					return (
 						<>
 							<div className={styles.menuCourseContainer} key={section.id}>
@@ -62,11 +74,9 @@ export default function Sidebar({ show, onSelectSection, onSelectContent, select
 										onSelectContent({});
 									}}>
 									<div className={styles.menuCourseTitle}>
-										<span className={styles.menuCourseTitleSection}>
-											{section.sectionTitle ? section.sectionTitle : 'Untitled Section'}
-										</span>
+										<span className={styles.menuCourseTitleSection}>{`Section-${index + 1}`}</span>
 										<span className={styles.menuCourseTitleCourse}>
-											{section.title ? section.title : 'Untitled Course'}
+											{section.section_name ? section.section_name : 'Untitled'}
 										</span>
 									</div>
 									<div className={styles.menuCourseArrowContainer}>
@@ -79,43 +89,44 @@ export default function Sidebar({ show, onSelectSection, onSelectContent, select
 							</div>
 							{section.isDrillDown && (
 								<div className={styles.modulContainer}>
-									{section.content.map((content) => {
-										return (
-											<div
-												key={content.id}
-												className={classNames(
-													styles.modulChild,
-													content.id == selectedContent.id &&
-														section.id == selectedContent.sectionId &&
-														styles.modulChildSelected
-												)}
-												onClick={() => {
-													onSelectSection(section);
-													onSelectContent(content);
-												}}>
-												<span className={styles.modulType}>{content.type}</span>
-												<div className={styles.modulContent}>
-													<FontAwesomeIcon
-														icon={
-															content.type === 'video'
-																? faVideo
-																: content.type === 'materi'
-																? faFileAlt
-																: content.type === 'tugas'
-																? faTasks
-																: content.type === 'quiz'
-																? faQuestionCircle
-																: faVideo
-														}
-														className={styles.modulTypeIcon}
-													/>
-													<span className={styles.modulTitle}>
-														{content.title ? content.title : 'Untitled Content'}
-													</span>
+									{contentList
+										.filter((content) => content.section_id == section.ID)
+										.map((content) => {
+											const contentType = content.module_name.split('-')[0];
+											const contentName = content.module_name.split('-').slice(1).join('-');
+											return (
+												<div
+													key={content.id}
+													className={classNames(
+														styles.modulChild,
+														content.id == selectedContent.id &&
+															section.id == selectedContent.sectionId &&
+															styles.modulChildSelected
+													)}
+													onClick={() => {
+														onSelectSection(section);
+														onSelectContent(content);
+													}}>
+													<span className={styles.modulType}>{contentType}</span>
+													<div className={styles.modulContent}>
+														<FontAwesomeIcon
+															icon={
+																{
+																	video: faVideo,
+																	materi: faFileAlt,
+																	tugas: faTasks,
+																	quiz: faQuestionCircle,
+																}[contentType]
+															}
+															className={styles.modulTypeIcon}
+														/>
+														<span className={styles.modulTitle}>
+															{contentName || 'Untitled Content'}
+														</span>
+													</div>
 												</div>
-											</div>
-										);
-									})}
+											);
+										})}
 								</div>
 							)}
 						</>

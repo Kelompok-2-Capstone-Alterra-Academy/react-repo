@@ -1,4 +1,10 @@
-import { faEdit, faTrash, faXmark } from '@fortawesome/free-solid-svg-icons';
+import {
+	faCalendarAlt,
+	faCircleInfo,
+	faEdit,
+	faTrash,
+	faXmark,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from '@mui/material/Modal';
 import { useEffect, useState } from 'react';
@@ -6,19 +12,19 @@ import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import { useDispatch, useSelector } from 'react-redux';
 import Timekeeper from 'react-timekeeper';
+import { delModule, postTask, putModule, putTask } from '../../../clients';
 import { Button, ConfirmationModal } from '../../../components';
 import { useClickOutside } from '../../../hooks/useClickOutside';
 import { deleteContent, updateContent } from '../../../redux/actions/sectionActions';
-import { convertToDate, dateToTimestamp } from '../../../utilities/date';
+import { convertToDate, dateToTimestamp, displayDate } from '../../../utilities/date';
 import styles from './Content.module.css';
 import ContentCard from './ContentCard/ContentCard';
 import LinkModal from './LinkModal/LinkModal';
 import MediaModal from './MediaModal/MediaModal';
-import { COURSE_FOLDER, QUIZ_LINK } from './constans';
 
-export default function Content({ data, sectionId, onResetContent }) {
+export default function Content({ selectedContent, onReset, folderList, quizList }) {
 	const [contentName, setContentName] = useState('');
-	const [deadline, setDeadline] = useState('');
+	const [contentType, setContentType] = useState('');
 	const [contentDescription, setContentDescription] = useState('');
 
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -27,24 +33,24 @@ export default function Content({ data, sectionId, onResetContent }) {
 	const [isShowAddTextModal, setIsShowAddTextModal] = useState(false);
 	const [isShowAddMediaModal, setIsShowAddMediaModal] = useState(false);
 	const [isShowAddLinkModal, setIsShowAddLinkModal] = useState(false);
+	const [showSaveModal, setShowSaveModal] = useState(false);
 
 	const [selectedDeadlineDay, setSelectedDeadlineDay] = useState(Date.now());
 	const [selectedDeadlineTime, setSelectedDeadlineTime] = useState('00:00');
 
-	const stateData = useSelector((state) => state.section);
-	const selectedSection = stateData.section.find((section) => section.id === sectionId);
-	const selectedContent = selectedSection.content.find((content) => content.id === data.id);
+	const content = useSelector((state) => state.section.content).find(
+		(content) => content.ID === selectedContent.ID
+	);
 
 	const dispatch = useDispatch();
 
-	const placeholder = {
+	const placeholderValue = {
 		video: 'Masukkan nama video disini',
 		tugas: 'Masukkan nama tugas disini',
 		quiz: 'Masukkan nama quiz disini',
 		materi: 'Masukkan nama materi disini',
 		default: 'Masukkan nama video disini',
-	};
-	const placeholderValue = placeholder[selectedContent.type];
+	}[contentType || 'default'];
 
 	const selectDeadlineRef = useClickOutside(() => {
 		setIsSelectDeadline(false);
@@ -54,74 +60,112 @@ export default function Content({ data, sectionId, onResetContent }) {
 		setSelectedDeadlineDay(dateToTimestamp(day));
 	};
 
-	useEffect(() => {
-		dispatch(
-			updateContent({
-				sectionId: sectionId,
-				content: {
-					id: selectedContent.id,
-					title: contentName,
+	const handleSubmitDeadline = (deadline) => {
+		if (content.tasks != null && content.tasks.length != 0) {
+			putTask({
+				data: {
+					...content.tasks[0],
+					due_date: deadline,
 				},
+				id: content.tasks[0].ID,
 			})
-		);
-	}, [contentName]);
-
-	useEffect(() => {
-		console.log(deadline);
-		if (selectedContent.type === 'tugas') {
-			dispatch(
-				updateContent({
-					sectionId: sectionId,
-					content: {
-						id: selectedContent.id,
-						deadline: deadline,
-					},
+				.then((res) => {
+					dispatch(
+						updateContent({
+							...content,
+							tasks: [
+								{
+									...res.data.data,
+								},
+							],
+						})
+					);
 				})
-			);
+				.catch((err) => {
+					console.log(err);
+				});
+		} else {
+			postTask({
+				due_date: deadline,
+				module_id: `${content.ID}`,
+			})
+				.then((res) => {
+					dispatch(
+						updateContent({
+							...content,
+							tasks: [
+								{
+									...res.data.data,
+								},
+							],
+						})
+					);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
 		}
-	}, [deadline]);
+	};
 
 	useEffect(() => {
-		setContentName(selectedContent.title);
-		setDeadline(selectedContent.deadline);
-		setContentDescription(selectedContent.desc);
-	}, [selectedContent]);
+		setContentName(content.module_name.split('-').slice(1).join('-'));
+		setContentType(content.module_name.split('-')[0]);
+		setContentDescription(content.description);
+	}, [content]);
 
 	return (
-		<div className={styles.container} key={selectedContent.id}>
+		<div className={styles.container} key={content.ID}>
 			<div className={styles.headerContainer}>
 				<div className={styles.contentTitleContainer}>
-					{isEditingContentName ? (
-						<form
-							onSubmit={() => {
-								setIsEditingContentName(false);
-							}}>
-							<input
-								type="text"
-								className={styles.contentTitleInput}
-								value={contentName}
-								onChange={(e) => setContentName(e.target.value)}
-								autoFocus
-								maxLength={50}
-								placeholder={placeholderValue}
-								onBlur={() => setIsEditingContentName(false)}
-							/>
-						</form>
-					) : (
-						<div>
-							<span
-								className={
-									contentName === '' ? styles.contentTitlePlaceholder : styles.contentTitle
-								}>
-								{contentName === '' ? placeholderValue : contentName}
-							</span>
-							<FontAwesomeIcon
-								icon={faEdit}
-								className={styles.contentTitleEditIcon}
-								onClick={() => setIsEditingContentName(true)}
-							/>
+					<div className={styles.titleFormContainer}>
+						{isEditingContentName ? (
+							<form
+								onSubmit={() => {
+									setIsEditingContentName(false);
+								}}>
+								<input
+									type="text"
+									className={styles.contentTitleInput}
+									value={contentName}
+									onChange={(e) => setContentName(e.target.value)}
+									autoFocus
+									maxLength={50}
+									placeholder={placeholderValue}
+									onBlur={() => setIsEditingContentName(false)}
+								/>
+							</form>
+						) : (
+							<div>
+								<span
+									className={
+										contentName === '' ? styles.contentTitlePlaceholder : styles.contentTitle
+									}>
+									{contentName === '' ? placeholderValue : contentName}
+								</span>
+								<FontAwesomeIcon
+									icon={faEdit}
+									className={styles.contentTitleEditIcon}
+									onClick={() => setIsEditingContentName(true)}
+								/>
+							</div>
+						)}
+					</div>
+					{contentType == 'tugas' && (
+						<div className={styles.dueDateContainer}>
+							<FontAwesomeIcon icon={faCalendarAlt} className={styles.deadlineIcon} />
+							{content.tasks != null && content.tasks.length != 0 ? (
+								<span className={styles.noDeadline}>{displayDate(content.tasks[0].due_date)}</span>
+							) : (
+								<span className={styles.noDeadline}>Belum ditentukan</span>
+							)}
 						</div>
 					)}
+					<div className={styles.contentDescription}>
+						<FontAwesomeIcon icon={faCircleInfo} className={styles.toolTip} />
+						<span className={styles.contentDescriptionText}>
+							{content.description || 'Tidak ada deskripsi'}
+						</span>
+					</div>
 				</div>
 				<div className={styles.contentButton}>
 					<Button
@@ -138,11 +182,9 @@ export default function Content({ data, sectionId, onResetContent }) {
 						onClick={() => {
 							setIsShowAddTextModal(true);
 						}}>
-						<span>
-							<span>{selectedContent.desc != '' ? 'Edit Deskripsi' : 'Tambahkan Deskripsi'}</span>
-						</span>
+						<FontAwesomeIcon icon={faCircleInfo} />
 					</Button>
-					{selectedContent.type === 'tugas' && (
+					{contentType == 'tugas' && (
 						<div ref={selectDeadlineRef} className={styles.contentDeadlineWrapper}>
 							<Button
 								type="Secondary"
@@ -150,7 +192,7 @@ export default function Content({ data, sectionId, onResetContent }) {
 								onClick={() => {
 									setIsSelectDeadline(!isSelectDeadline);
 								}}>
-								<span>{deadline ? 'Edit Deadline' : 'Tambahkan Deadline'}</span>
+								<FontAwesomeIcon icon={faCalendarAlt} />
 							</Button>
 							{isSelectDeadline && (
 								<div className={styles.datePickerWrapper}>
@@ -186,7 +228,9 @@ export default function Content({ data, sectionId, onResetContent }) {
 												type="Primary"
 												className={styles.dateButton}
 												onClick={() => {
-													setDeadline(convertToDate(selectedDeadlineDay, selectedDeadlineTime));
+													handleSubmitDeadline(
+														convertToDate(selectedDeadlineDay, selectedDeadlineTime)
+													);
 													setIsSelectDeadline(!isSelectDeadline);
 												}}>
 												<span>Jadwalkan</span>
@@ -198,78 +242,122 @@ export default function Content({ data, sectionId, onResetContent }) {
 						</div>
 					)}
 					<Button
-						type="Primary"
+						type="Secondary"
 						className={styles.button}
 						onClick={() =>
-							selectedContent.type === 'quiz'
-								? setIsShowAddLinkModal(true)
-								: setIsShowAddMediaModal(true)
+							contentType === 'quiz' ? setIsShowAddLinkModal(true) : setIsShowAddMediaModal(true)
 						}>
-						<span>
-							{selectedContent.name ? 'Ubah ' : 'Tambahkan'} {selectedContent.type}
-						</span>
+						<span>Tambahkan {contentType.charAt(0).toUpperCase() + contentType.slice(1)}</span>
+					</Button>
+					<Button
+						type="Primary"
+						className={styles.button}
+						onClick={() => {
+							setShowSaveModal(true);
+						}}>
+						Simpan
 					</Button>
 				</div>
 			</div>
-			<div className={styles.contentAndDescriptionContainer}>
-				<ContentCard data={selectedContent} />
-				{selectedContent.desc && (
-					<div className={styles.contentDescription}>
-						<span className={styles.contentDescriptionText}>{selectedContent.desc}</span>
-					</div>
-				)}
-			</div>
+			<ContentCard data={content} />
 			<ConfirmationModal
 				show={showDeleteModal}
 				title="Hapus Konten"
 				image="/image/section-delete.png"
-				confirmationText={`Apakah anda yakin ingin menghapus ${selectedContent.type} ${selectedContent.title}?`}
+				confirmationText={`Apakah anda yakin ingin menghapus ${contentType} ${contentName}?`}
 				primaryButtonName="Hapus"
 				secondaryButtonName="Batal"
 				onPrimaryButtonClick={() => {
-					dispatch(
-						deleteContent({
-							sectionId: sectionId,
-							contentId: selectedContent.id,
+					delModule(content.ID)
+						.then(() => {
+							dispatch(deleteContent(content.ID));
 						})
-					);
-					onResetContent();
+						.catch((err) => {
+							console.log(err);
+						});
+					onReset();
 					setShowDeleteModal(false);
 				}}
 				onSecondaryButtonClick={() => setShowDeleteModal(false)}
 			/>
+			<ConfirmationModal
+				show={showSaveModal}
+				title="Simpan Konten"
+				image="/image/course-save.png"
+				confirmationText={`Apakah anda yakin ingin menyimpan ${contentType} ${contentName}?`}
+				primaryButtonName="Simpan"
+				secondaryButtonName="Batal"
+				onPrimaryButtonClick={() => {
+					putModule({
+						data: {
+							ID: content.ID,
+							module_name: contentType + '-' + contentName,
+						},
+						id: content.ID,
+					})
+						.then((res) => {
+							dispatch(
+								updateContent({
+									...res.data.data,
+								})
+							);
+						})
+						.catch((err) => {
+							console.log(err);
+						});
+					setShowSaveModal(false);
+				}}
+				onSecondaryButtonClick={() => setShowSaveModal(false)}
+			/>
 			<MediaModal
 				show={isShowAddMediaModal}
-				type={selectedContent.type}
 				onClose={() => setIsShowAddMediaModal(false)}
-				data={COURSE_FOLDER}
-				onSubmit={(media) => {
-					dispatch(
-						updateContent({
-							sectionId: sectionId,
-							content: {
-								...media,
-								id: selectedContent.id,
-							},
+				data={folderList}
+				onSubmit={(file) => {
+					putModule({
+						data: {
+							ID: content.ID,
+							attachment_id: file.ID,
+							attachment: file,
+						},
+						id: content.ID,
+					})
+						.then((res) => {
+							dispatch(
+								updateContent({
+									...res.data.data,
+								})
+							);
 						})
-					);
+						.catch((err) => {
+							console.log(err);
+						});
 					setIsShowAddMediaModal(false);
 				}}
 			/>
 			<LinkModal
 				show={isShowAddLinkModal}
 				onClose={() => setIsShowAddLinkModal(false)}
-				data={QUIZ_LINK}
-				onSubmit={(link) => {
-					dispatch(
-						updateContent({
-							sectionId: sectionId,
-							content: {
-								...link,
-								id: selectedContent.id,
-							},
+				data={quizList}
+				onSubmit={(file) => {
+					putModule({
+						data: {
+							ID: content.ID,
+							attachment_id: file.ID,
+							attachment: file,
+						},
+						id: content.ID,
+					})
+						.then((res) => {
+							dispatch(
+								updateContent({
+									...res.data.data,
+								})
+							);
 						})
-					);
+						.catch((err) => {
+							console.log(err);
+						});
 					setIsShowAddLinkModal(false);
 				}}
 			/>
@@ -277,7 +365,7 @@ export default function Content({ data, sectionId, onResetContent }) {
 				<div className={styles.addTextModalContainer}>
 					<div className={styles.addTextModalHeader}>
 						<div className={styles.addTextModalTitle}>
-							<span>{selectedContent.desc != '' ? 'Edit Deskripsi' : 'Tambah Deskripsi'}</span>
+							<span>{content.description != '' ? 'Edit Deskripsi' : 'Tambah Deskripsi'}</span>
 							<FontAwesomeIcon
 								icon={faXmark}
 								className={styles.addTextModalCloseIcon}
@@ -295,15 +383,23 @@ export default function Content({ data, sectionId, onResetContent }) {
 					<Button
 						type="Primary"
 						onClick={() => {
-							dispatch(
-								updateContent({
-									sectionId: sectionId,
-									content: {
-										id: selectedContent.id,
-										desc: contentDescription,
-									},
+							putModule({
+								data: {
+									ID: content.ID,
+									description: contentDescription,
+								},
+								id: content.ID,
+							})
+								.then((res) => {
+									dispatch(
+										updateContent({
+											...res.data.data,
+										})
+									);
 								})
-							);
+								.catch((err) => {
+									console.log(err);
+								});
 							setIsShowAddTextModal(false);
 						}}
 						className={styles.addTextModalButton}>

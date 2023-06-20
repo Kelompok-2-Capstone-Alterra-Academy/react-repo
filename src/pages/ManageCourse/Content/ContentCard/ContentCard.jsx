@@ -1,38 +1,43 @@
-import {
-	faCalendarAlt,
-	faEye,
-	faUpRightFromSquare,
-	faXmark,
-} from '@fortawesome/free-solid-svg-icons';
+import { faUpRightFromSquare, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from '@mui/material/Modal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './ContentCard.module.css';
 
 export default function Quiz({ data }) {
 	const [showVideoModal, setShowVideoModal] = useState(false);
 	const [showFileModal, setShowFileModal] = useState(false);
 
-	if (!data.name) return null;
+	const [contentType, setContentType] = useState('');
 
-	if (data.type === 'quiz') {
+	useEffect(() => {
+		setContentType(data.module_name.split('-')[0]);
+	}, [data]);
+
+	if (!data.attachment_id) return null;
+
+	if (contentType == 'quiz') {
 		return (
-			<a className={styles.contentContainer} href={data.link} target="_blank" rel="noreferrer">
+			<a
+				className={styles.contentContainer}
+				href={data.attachment.attachment_source}
+				target="_blank"
+				rel="noreferrer">
 				<div className={styles.contentTitleContainer}>
-					<span className={styles.dataName}>Lihat {data.name}</span>
+					<span className={styles.dataName}>{data.attachment.attachment_name}</span>
 					<FontAwesomeIcon icon={faUpRightFromSquare} className={styles.previewIcon} />
 				</div>
 			</a>
 		);
 	}
 
-	if (data.type === 'video') {
+	if (contentType == 'video') {
 		return (
 			<>
 				<div className={styles.contentContainer} onClick={() => setShowVideoModal(true)}>
 					<div className={styles.contentTitleContainer}>
-						<FontAwesomeIcon icon={faEye} className={styles.previewIconLeft} />
-						<span className={styles.dataName}>Lihat {data.name}</span>
+						<span className={styles.dataName}>{data.attachment.attachment_name}</span>
+						<FontAwesomeIcon icon={faUpRightFromSquare} className={styles.previewIcon} />
 					</div>
 				</div>
 				<Modal open={showVideoModal} onClose={() => setShowVideoModal(false)}>
@@ -40,28 +45,24 @@ export default function Quiz({ data }) {
 						<div className={styles.closeIcon}>
 							<FontAwesomeIcon icon={faXmark} onClick={() => setShowVideoModal(false)} />
 						</div>
-						<iframe title={data.name} width="100%" height="100%" src={data.src}></iframe>
+						<iframe
+							title={data.attachment.attachment_name}
+							width="100%"
+							height="100%"
+							src={data.attachment.attachment_source}></iframe>
 					</div>
 				</Modal>
 			</>
 		);
 	}
 
-	if (data.type === 'tugas') {
+	if (contentType == 'tugas' || contentType == 'materi') {
 		return (
 			<>
 				<div className={styles.contentContainer} onClick={() => setShowFileModal(true)}>
 					<div className={styles.contentTitleContainer}>
-						<FontAwesomeIcon icon={faEye} className={styles.previewIconLeft} />
-						<span className={styles.dataName}>Lihat {data.name}</span>
-					</div>
-					<div className={data.deadline ? styles.deadlineContainer : styles.noDeadlineContainer}>
-						<FontAwesomeIcon icon={faCalendarAlt} className={styles.deadlineIcon} />
-						{data.deadline ? (
-							<span className={styles.noDeadline}>{data.deadline}</span>
-						) : (
-							<span className={styles.noDeadline}>Tidak ada deadline</span>
-						)}
+						<span className={styles.dataName}>{data.attachment.attachment_name}</span>
+						<FontAwesomeIcon icon={faUpRightFromSquare} className={styles.previewIcon} />
 					</div>
 				</div>
 				<Modal open={showFileModal} onClose={() => setShowFileModal(false)}>
@@ -69,32 +70,13 @@ export default function Quiz({ data }) {
 						<div className={styles.closeIcon}>
 							<FontAwesomeIcon icon={faXmark} onClick={() => setShowFileModal(false)} />
 						</div>
-						<iframe title={data.name} width="100%" height="100%" src={data.src}></iframe>
+						<iframe
+							title={data.attachment.attachment_name}
+							width="100%"
+							height="100%"
+							src={data.attachment.attachment_source}></iframe>
 					</div>
 				</Modal>
-			</>
-		);
-	}
-
-	if (data.type === 'materi') {
-		return (
-			<>
-				<>
-					<div className={styles.contentContainer} onClick={() => setShowFileModal(true)}>
-						<div className={styles.contentTitleContainer}>
-							<FontAwesomeIcon icon={faEye} className={styles.previewIconLeft} />
-							<span className={styles.dataName}>Lihat {data.name}</span>
-						</div>
-					</div>
-					<Modal open={showFileModal} onClose={() => setShowFileModal(false)}>
-						<div className={styles.fileModal}>
-							<div className={styles.closeIcon}>
-								<FontAwesomeIcon icon={faXmark} onClick={() => setShowFileModal(false)} />
-							</div>
-							<iframe title={data.name} width="100%" height="100%" src={data.src}></iframe>
-						</div>
-					</Modal>
-				</>
 			</>
 		);
 	}

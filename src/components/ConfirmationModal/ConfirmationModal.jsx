@@ -18,7 +18,7 @@ export default function ConfirmationModal({
 				<span className={styles.headerTitle}>{title}</span>
 				<div className={styles.content}>
 					<img src={image} alt="image-title" className={styles.image} />
-					<span>{confirmationText}</span>
+					<span className={styles.confirmationText}>{confirmationText}</span>
 				</div>
 				<div className={styles.footer}>
 					<Button type="Secondary" onClick={onSecondaryButtonClick}>

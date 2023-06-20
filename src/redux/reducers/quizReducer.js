@@ -1,5 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
-
 const initialState = {
 	quiz: [],
 };
@@ -11,37 +9,37 @@ const defaultAction = {
 
 const sectionReducer = (state = initialState, action = defaultAction) => {
 	const { type, payload } = action;
-	let newQuiz;
-	let selectedQuiz;
 
 	switch (type) {
-		case 'ADD_QUIZ':
-			newQuiz = {
-				id: uuidv4(),
-				name: payload.name,
-				link: payload.link,
-				status: 'Draf',
-			};
+		case 'SET_QUIZ':
 			return {
 				...state,
-				quiz: [...state.quiz, newQuiz],
+				quiz: payload,
 			};
 
-		case 'PUBLISH_QUIZ':
-			selectedQuiz = state.quiz.find((quiz) => quiz.id === payload);
-			newQuiz = {
-				...selectedQuiz,
-				status: 'Terbit',
-			};
+		case 'ADD_QUIZ':
 			return {
 				...state,
-				quiz: state.quiz.map((quiz) => (quiz.id === payload ? newQuiz : quiz)),
+				quiz: [...state.quiz, payload],
+			};
+
+		case 'TOGGLE_STATUS_QUIZ':
+			return {
+				...state,
+				quiz: state.quiz.map((quiz) =>
+					quiz.ID === payload
+						? {
+								...quiz,
+								status: quiz.status == 'draft' ? 'terbit' : 'draft',
+						  }
+						: quiz
+				),
 			};
 
 		case 'DELETE_QUIZ':
 			return {
 				...state,
-				quiz: state.quiz.filter((quiz) => quiz.id !== payload),
+				quiz: state.quiz.filter((quiz) => quiz.ID !== payload),
 			};
 
 		default:

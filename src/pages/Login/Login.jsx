@@ -85,7 +85,7 @@ export default function Login() {
 							login({ email, password })
 								.then((res) => {
 									document.cookie = `token=${res.data.data.token}`;
-									navigate('/dashboard');
+									window.location.href = '/dashboard';
 								})
 								.catch((err) => {
 									toast.error(err.response.data.message, {

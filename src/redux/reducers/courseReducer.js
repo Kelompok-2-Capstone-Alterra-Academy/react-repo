@@ -26,7 +26,6 @@ const sectionReducer = (state = initialState, action = defaultAction) => {
 			};
 
 		case 'UPDATE_COURSE':
-			console.log('payload', payload);
 			selectedCourse = state.course.find((course) => course.ID === payload.ID);
 			newCourse = {
 				...selectedCourse,

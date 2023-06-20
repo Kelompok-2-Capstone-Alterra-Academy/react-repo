@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 import { LoopCircleLoading } from 'react-loadingg';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { getCourse, postCourse } from '../../clients';
+import { getClass, getCourse, getMajor, postCourse } from '../../clients';
 import { Button, CardKursus } from '../../components';
 import { useClickOutside } from '../../hooks';
 import { addCourse, setCourse } from '../../redux/actions/courseActions';
@@ -19,10 +19,16 @@ export default function Dashboard() {
 	const [isShowCreateCourseModal, setIsShowCreateCourseModal] = useState(false);
 	const [isShowThumbnailSelect, setIsShowThumbnailSelect] = useState(false);
 	const [validation, setValidation] = useState(false);
-	const [loadingFetch, setLoadingFetch] = useState(false);
 
-	const [courseName, setCourseName] = useState('');
+	const [loadingFetch, setLoadingFetch] = useState(true);
+	const [loadingFetchMajor, setLoadingFetchMajor] = useState(true);
+	const [loadingFetchClass, setLoadingFetchClass] = useState(true);
+
+	const [majorList, setMajorList] = useState([]);
+	const [classList, setClassList] = useState([]);
+
 	const [courseSchedule, setCourseSchedule] = useState('');
+	const [courseName, setCourseName] = useState('');
 	const [courseThumbnail, setCourseThumbnail] = useState('apple');
 
 	const [courseListPage, setCourseListPage] = useState(0);
@@ -41,6 +47,9 @@ export default function Dashboard() {
 
 	useEffect(() => {
 		setLoadingFetch(true);
+		setLoadingFetchMajor(true);
+		setLoadingFetchClass(true);
+
 		getCourse()
 			.then((res) => {
 				dispatch(setCourse(res.data.data));
@@ -53,9 +62,35 @@ export default function Dashboard() {
 			.finally(() => {
 				setLoadingFetch(false);
 			});
+
+		getMajor()
+			.then((res) => {
+				setMajorList(res.data.data);
+			})
+			.catch((err) => {
+				toast.error(err.response.data.message, {
+					position: toast.POSITION.TOP_RIGHT,
+				});
+			})
+			.finally(() => {
+				setLoadingFetchMajor(false);
+			});
+
+		getClass()
+			.then((res) => {
+				setClassList(res.data.data);
+			})
+			.catch((err) => {
+				toast.error(err.response.data.message, {
+					position: toast.POSITION.TOP_RIGHT,
+				});
+			})
+			.finally(() => {
+				setLoadingFetchClass(false);
+			});
 	}, []);
 
-	if (loadingFetch) {
+	if (loadingFetch || loadingFetchMajor || loadingFetchClass) {
 		return <LoopCircleLoading size="large" color="#4161ff" />;
 	}
 
@@ -112,7 +147,16 @@ export default function Dashboard() {
 									</div>
 									<div className={styles.kursusCard}>
 										{courseData.slice(courseListPage * 3, courseListPage * 3 + 3).map((item) => {
-											return <CardKursus key={item.ID} data={item} />;
+											return (
+												<CardKursus
+													key={item.ID}
+													data={item}
+													category={{
+														class: classList,
+														major: majorList,
+													}}
+												/>
+											);
 										})}
 										<div className={styles.arrowContainer}>
 											<FontAwesomeIcon
