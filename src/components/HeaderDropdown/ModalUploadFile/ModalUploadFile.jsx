@@ -117,6 +117,7 @@ const ModalUploadFile = ({ closeFunction }) => {
 							})
 								.then((res) => {
 									dispatch(addAttachment(res.data.data));
+									window.location.reload();
 								})
 								.catch((err) => {
 									toast.error(err.response.data.message, {

@@ -46,6 +46,7 @@ const ModalFolder = ({ closeFunction }) => {
                             })
                                 .then((res) => {
                                     dispatch(addFolder(res.data.data));
+                                    window.location.reload();
                                 })
                                 .catch((err) => {
                                     toast.error(err.response.data.message, {

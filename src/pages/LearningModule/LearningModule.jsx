@@ -71,7 +71,7 @@ function LearningModule() {
 				}}
 			/>
 			<div className={styles.mainContent}>
-				<HeaderDropdown />
+				<HeaderDropdown folderData={folderData} />
 				<div className={styles.content}>
 					<SidebarContent folderData={folderData} />
 					<div className={styles.contentCard}>

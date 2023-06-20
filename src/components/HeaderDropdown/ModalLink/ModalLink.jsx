@@ -117,6 +117,7 @@ const ModalLink = ({ closeFunction }) => {
 							})
 								.then((res) => {
 									dispatch(addAttachment(res.data.data));
+									window.location.reload();
 								})
 								.catch((err) => {
 									toast.error(err.response.data.message, {
@@ -125,7 +126,6 @@ const ModalLink = ({ closeFunction }) => {
 								});
 							setLink('');
 						}
-						// window.location.reload();
 					}}
 					type={formValidation ? 'Primary' : 'Disabled'}>Simpan</Button>
 			</div>
