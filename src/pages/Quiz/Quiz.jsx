@@ -29,7 +29,6 @@ export default function Quiz() {
 	useEffect(() => {
 		getQuiz()
 			.then((res) => {
-				console.log(res.data.data);
 				dispatch(setQuiz(res.data.data));
 			})
 			.catch((err) => {
@@ -56,12 +55,6 @@ export default function Quiz() {
 						{ link: '/', title: 'Pembelajaran' },
 						{ link: '/', title: 'Kuis' },
 					],
-				}}
-				profileData={{
-					name: 'Admin',
-					role: 'Admin',
-					pic: 'https://i.pravatar.cc/150?img=21',
-					email: 'testing@gmail.com',
 				}}
 			/>
 			<div className={styles.header}>
@@ -157,7 +150,6 @@ export default function Quiz() {
 				primaryButtonName="Hapus"
 				secondaryButtonName="Batal"
 				onPrimaryButtonClick={() => {
-					console.log(selectedDeleteQuiz);
 					delAttachment(selectedDeleteQuiz.ID)
 						.then((res) => {
 							toast.success(res.message, {

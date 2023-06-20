@@ -7,13 +7,24 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
+import jwt from 'jwt-decode';
 import { useEffect, useState } from 'react';
+import { LoopCircleLoading } from 'react-loadingg';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { getUser } from '../../clients';
 import { useClickOutside } from '../../hooks';
 import { truncateString } from '../../utilities/string';
 import styles from './Profile.module.css';
 
-export default function Profile({ data, className }) {
+export default function Profile({ className }) {
+	const [data, setData] = useState({});
+
+	const [loadingFetch, setLoadingFetch] = useState(true);
+
+	const cookieToken = document.cookie.split('=')[1];
+	const decodeToken = jwt(cookieToken);
+
 	const [isMenuOpen, setMenuOpen] = useState(false);
 	const menuItems = [
 		{ icon: faGear, title: 'Edit Profile', link: '/edit-profile' },
@@ -33,6 +44,24 @@ export default function Profile({ data, className }) {
 		}
 	}, [isMenuOpen]);
 
+	useEffect(() => {
+		setLoadingFetch(true);
+		getUser(decodeToken.id)
+			.then((res) => {
+				setData(res.data.data);
+			})
+			.catch((err) => {
+				toast.error(err.response.data.message, {
+					position: toast.POSITION.TOP_RIGHT,
+				});
+			})
+			.finally(() => {
+				setLoadingFetch(false);
+			});
+	}, []);
+
+	console.log(data);
+
 	return (
 		<div
 			className={classNames(styles.container, className)}
@@ -40,54 +69,59 @@ export default function Profile({ data, className }) {
 			onClick={() => {
 				setMenuOpen(!isMenuOpen);
 			}}>
-			<div className={styles.profileContainer}>
-				<img src={data.pic} alt="Avatar" className={styles.avatar} />
-				<div className={styles.nameContainer}>
-					<span className={styles.name}>{truncateString(data.name, 10)}</span>
-					<span className={styles.role}>Instructors</span>
-				</div>
-			</div>
-			<FontAwesomeIcon
-				icon={isMenuOpen ? faChevronUp : faChevronDown}
-				className={styles.arrowIcon}
-			/>
-
-			<div
-				className={
-					isMenuOpen
-						? styles.menuContainer
-						: isFirstRender
-						? styles.firstRender
-						: styles.closedMenuContainer
-				}>
-				<div className={styles.profileContainer}>
-					<img src={data.pic} alt="Avatar" className={styles.avatar} />
-					<div className={styles.nameContainer}>
-						<span className={styles.name}>{data.name}</span>
-						<span className={styles.email}>{data.email}</span>
+			{loadingFetch ? (
+				<LoopCircleLoading size="large" color="#4161ff" />
+			) : (
+				<>
+					<div className={styles.profileContainer}>
+						<img src={data.profile} alt="Avatar" className={styles.avatar} />
+						<div className={styles.nameContainer}>
+							<span className={styles.name}>{truncateString(data.name, 20)}</span>
+							<span className={styles.role}>{data.role}</span>
+						</div>
 					</div>
-				</div>
-				<div className={styles.menuItemContainer}>
-					{menuItems.map((item, index) => (
-						<div
-							key={index}
-							className={styles.menuItem}
-							onClick={() => {
-								navigate(item.link);
-							}}>
-							<div>
-								<FontAwesomeIcon icon={item.icon} className={styles.menuIcon} />
-								<span className={styles.menuTitle}>{item.title}</span>
+					<FontAwesomeIcon
+						icon={isMenuOpen ? faChevronUp : faChevronDown}
+						className={styles.arrowIcon}
+					/>
+					<div
+						className={
+							isMenuOpen
+								? styles.menuContainer
+								: isFirstRender
+								? styles.firstRender
+								: styles.closedMenuContainer
+						}>
+						<div className={styles.profileContainer}>
+							<img src={data.profile} alt="Avatar" className={styles.avatar} />
+							<div className={styles.nameContainer}>
+								<span className={styles.name}>{data.name}</span>
+								<span className={styles.email}>{data.email}</span>
 							</div>
 						</div>
-					))}
-				</div>
-				<div className={styles.logoutContainer}>
-					<div>
-						<span className={styles.logoutTitle}>Logout</span>
+						<div className={styles.menuItemContainer}>
+							{menuItems.map((item, index) => (
+								<div
+									key={index}
+									className={styles.menuItem}
+									onClick={() => {
+										navigate(item.link);
+									}}>
+									<div>
+										<FontAwesomeIcon icon={item.icon} className={styles.menuIcon} />
+										<span className={styles.menuTitle}>{item.title}</span>
+									</div>
+								</div>
+							))}
+						</div>
+						<div className={styles.logoutContainer}>
+							<div>
+								<span className={styles.logoutTitle}>Logout</span>
+							</div>
+						</div>
 					</div>
-				</div>
-			</div>
+				</>
+			)}
 		</div>
 	);
 }

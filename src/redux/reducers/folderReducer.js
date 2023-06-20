@@ -26,7 +26,6 @@ const folderReducer = (state = initialState, action = defaultAction) => {
 			};
 
 		case 'UPDATE_FOLDER':
-			console.log('payload', payload);
 			selectedFolder = state.folder.find((folder) => folder.ID === payload.ID);
 			newFolder = {
 				...selectedFolder,

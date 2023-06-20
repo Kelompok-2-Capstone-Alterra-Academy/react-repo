@@ -1,26 +1,26 @@
-import React, { useState } from "react";
+import { faEye, faEyeSlash, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  Typography,
   Button,
-  Link
+  Link,
+  Typography
 } from "@material-ui/core";
-import Stepper from '@mui/material/Stepper';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
+import Stepper from '@mui/material/Stepper';
+import React, { useState } from "react";
 import {
-  useForm,
   Controller,
   FormProvider,
+  useForm,
   useFormContext,
 } from "react-hook-form";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash, faSpinner } from '@fortawesome/free-solid-svg-icons';
-import styles from './Register.module.css'
 import { useNavigate } from "react-router-dom";
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { useClickOutside } from '../../hooks';
-import { register } from '../../clients';
 import { toast } from 'react-toastify';
+import { register } from '../../clients';
+import { useClickOutside } from '../../hooks';
+import styles from './Register.module.css';
 
     function getSteps() {
         return [
@@ -364,7 +364,6 @@ const Register = () => {
         if (isValid) {
           setLoading(true);
           onSubmit(data).catch(error => {
-            console.log('Error when submitting:', error);
             window.location.reload();  // Refresh the page when there's an error
           });
         } else {

@@ -22,7 +22,7 @@ function LearningModule() {
 		setLoadingFetch(true);
 		getFolder()
 			.then((res) => {
-				dispatch(setFolder(res.data.data));
+				dispatch(setFolder(res.data.data.folders));
 			})
 			.catch((err) => {
 				toast.error(err.response.data.message, {
@@ -60,15 +60,9 @@ function LearningModule() {
 						{ link: '/', title: 'Modul' },
 					],
 				}}
-				profileData={{
-					name: 'Admin',
-					role: 'Admin',
-					pic: 'https://i.pravatar.cc/150?img=21',
-					email: 'testing@gmail.com',
-				}}
 			/>
 			<div className={styles.mainContent}>
-				<HeaderDropdown folderData={folderData} />
+				<HeaderDropdown folderData={folderData} selectedId={selectedId} />
 				<div className={styles.content}>
 					<div className={styles.sidebar}>
 						<SidebarContent
@@ -81,7 +75,7 @@ function LearningModule() {
 					</div>
 					<div className={styles.contentCard}>
 						{loadingFetch ? (
-							<LoopCircleLoading size="large" color="#4161ff" />
+							<LoopCircleLoading size="large" color="#2196f3" />
 						) : (
 							selectedId && (
 								<>

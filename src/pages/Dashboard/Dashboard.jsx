@@ -10,7 +10,7 @@ import { LoopCircleLoading } from 'react-loadingg';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { getClass, getCourse, getMajor, postCourse } from '../../clients';
-import { Button, CardKursus } from '../../components';
+import { Button, CardKursus, Header } from '../../components';
 import { useClickOutside } from '../../hooks';
 import { addCourse, setCourse } from '../../redux/actions/courseActions';
 import styles from './Dashboard.module.css';
@@ -98,27 +98,19 @@ export default function Dashboard() {
 		<>
 			<div className={styles.container}>
 				<div className={styles.content}>
+					<Header
+						breadCrumbData={{
+							name: 'Kuis',
+							links: [
+								{ link: '/dashboard', title: 'Dashboard' },
+								{ link: '/', title: 'Pembelajaran' },
+								{ link: '/', title: 'Kuis' },
+							],
+						}}
+					/>
 					<div className={styles.headerContainer}>
 						<div className="mb-4">
 							<img src="/image/home-banner.png" alt="" className={styles.bannerImage} />
-						</div>
-						<div className="flex justify-end gap-4">
-							<button
-								className="bg-blue-600 hover:bg-blue-500 text-white text-xs rounded inline-flex items-center"
-								onClick={() => {
-									window.location.href = '/modul/2';
-								}}>
-								<img src="/icon/icon-unggah.svg" className="mr-2" alt="" />
-								<span>Kelola Modul</span>
-							</button>
-							<button
-								className="bg-[#22BDFF] hover:bg-blue-600 text-white text-xs rounded inline-flex items-center"
-								onClick={() => {
-									window.location.href = '/quiz';
-								}}>
-								<img src="/icon/icon-plus.svg" className="mr-2" alt="" />
-								<span>Tambah Quiz</span>
-							</button>
 						</div>
 					</div>
 					{courseData.length != 0 ? (

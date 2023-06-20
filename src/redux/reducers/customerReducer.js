@@ -26,7 +26,6 @@ const customerReducer = (state = initialState, action = defaultAction) => {
 			};
 
 		case 'UPDATE_CUSTOMER':
-			console.log('payload', payload);
 			selectedCustomer = state.customer.find((customer) => customer.ID === payload.ID);
 			newCustomer = {
 				...selectedCustomer,

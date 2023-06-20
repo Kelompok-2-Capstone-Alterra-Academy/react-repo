@@ -16,11 +16,11 @@ const token = getCookieValue('token');
 const axios = AxiosInstances.create({
 	baseURL: 'http://3.26.234.145:8081/',
 	headers: {
-		'Content-Type': 'application/json',
 		Authorization: `Bearer ${token}`,
 	},
 });
 
+export const USER_PREFIX = 'mentors/users';
 export const AUTH_PREFIX = 'mentors';
 export const COURSE_PREFIX = 'mentors/courses';
 export const DASHBOARD_PREFIX = 'mentors/dashboard';

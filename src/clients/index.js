@@ -11,3 +11,4 @@ export * from './major';
 export * from './module';
 export * from './section';
 export * from './task';
+export * from './user';
