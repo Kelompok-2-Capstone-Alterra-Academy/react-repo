@@ -1,8 +1,7 @@
 import { Box } from '@material-ui/core';
-import { Close, FilterList, MailOutline, Search, WhatsApp } from '@mui/icons-material';
+import { FilterList, MailOutline, Search, WhatsApp } from '@mui/icons-material';
 import {
 	Backdrop,
-	Checkbox,
 	Fade,
 	FormControl,
 	IconButton,
@@ -21,10 +20,16 @@ import {
 } from '@mui/material';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/system';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BiSortAZ, BiSortZA } from 'react-icons/bi';
 import { TbSortAscending2, TbSortDescending2 } from 'react-icons/tb';
-import { ConfirmationModal, Header, OutlineTag, ResponseModal, Tag } from '../../components';
+import { LoopCircleLoading } from 'react-loadingg';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { getCourse, getCustomer } from '../../clients';
+import { ConfirmationModal, Header, OutlineTag, Tag } from '../../components';
+import { setCourse } from '../../redux/actions/courseActions';
+import { setCustomer } from '../../redux/actions/customerAction';
 import styles from '../ManageCustomer/ManageCustomer.module.css';
 
 export default function ManageCustomer() {
@@ -33,10 +38,52 @@ export default function ManageCustomer() {
 	const [sortByTime, setSortByTime] = useState('');
 	const [sortBySiswa, setSortBySiswa] = useState('');
 	const [open, setOpen] = useState(false);
-	const [openQuizForm, setOpenQuizForm] = useState(false);
-	const [openSuccessModal, setShowSuccessModal] = useState(false);
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
-	const [selectedQuiz, setSelectedQuiz] = useState([]);
+
+	const [loadingFetch, setLoadingFetch] = useState(false);
+
+	const customers = useSelector((state) => state.customer).customer;
+	const courseData = useSelector((state) => state.course).course;
+
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		setLoadingFetch(true);
+		getCustomer()
+			.then((res) => {
+				// console.log(res)
+				dispatch(setCustomer(res.data.data));
+			})
+			.catch((err) => {
+				// console.log(err)
+				toast.error(err.response.data.message, {
+					position: toast.POSITION.TOP_RIGHT,
+				});
+			})
+			.finally(() => {
+				setLoadingFetch(false);
+			});
+	}, []);
+
+	useEffect(() => {
+		setLoadingFetch(true);
+		getCourse()
+			.then((res) => {
+				dispatch(setCourse(res.data.data));
+			})
+			.catch((err) => {
+				toast.error(err.response.data.message, {
+					position: toast.POSITION.TOP_RIGHT,
+				});
+			})
+			.finally(() => {
+				setLoadingFetch(false);
+			});
+	}, []);
+
+	if (loadingFetch) {
+		return <LoopCircleLoading size="large" color="#4161ff" />;
+	}
 
 	const handleChange = (event) => {
 		setSelectedOption(event.target.value);
@@ -56,28 +103,6 @@ export default function ManageCustomer() {
 
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
-
-	const handleOpenQuizForm = () => {
-		setSelectedQuiz([]);
-		setOpenQuizForm(true);
-	};
-	const handleCloseQuizForm = () => setOpenQuizForm(false);
-
-	const handleQuizToggle = (quiz) => {
-		const newSelectedQuiz = [...selectedQuiz];
-		const index = newSelectedQuiz.indexOf(quiz);
-
-		if (index === -1) {
-			newSelectedQuiz.push(quiz);
-		} else {
-			newSelectedQuiz.splice(index, 1);
-		}
-
-		setSelectedQuiz(newSelectedQuiz);
-	};
-
-	const handleOpenSuccessModal = () => setShowSuccessModal(true);
-	const handleCloseSuccessModal = () => setShowSuccessModal(false);
 
 	const handleOpenDeleteModal = () => setShowDeleteModal(true);
 	const handleCloseDeleteModal = () => setShowDeleteModal(false);
@@ -117,96 +142,6 @@ export default function ManageCustomer() {
 		},
 	}));
 
-	// dummy table data siswa
-	const dummyImage =
-		'http://www.listercarterhomes.com/wp-content/uploads/2013/11/dummy-image-square.jpg';
-	function createDataSiswa(photo, nama, kelas, isActive, email, telp, tglMasuk, sectionProgress) {
-		return {
-			photo,
-			nama,
-			kelas,
-			isActive,
-			email,
-			telp,
-			tglMasuk,
-			sectionProgress,
-		};
-	}
-	const rows = [
-		createDataSiswa(
-			dummyImage,
-			'Peter Parker',
-			'SMA',
-			true,
-			'parker123@gmail.com',
-			'0821-2345-6789',
-			'20 April 2023',
-			8
-		),
-		createDataSiswa(
-			dummyImage,
-			'Peter Parker',
-			'SMA',
-			true,
-			'parker123@gmail.com',
-			'0821-2345-6789',
-			'20 April 2023',
-			8
-		),
-		createDataSiswa(
-			dummyImage,
-			'Peter Parker',
-			'SMA',
-			true,
-			'parker123@gmail.com',
-			'0821-2345-6789',
-			'20 April 2023',
-			8
-		),
-		createDataSiswa(
-			dummyImage,
-			'Peter Parker',
-			'SMA',
-			true,
-			'parker123@gmail.com',
-			'0821-2345-6789',
-			'20 April 2023',
-			8
-		),
-		createDataSiswa(
-			dummyImage,
-			'Peter Johan',
-			'SMA',
-			false,
-			'johan123@gmail.com',
-			'0821-2345-6789',
-			'20 April 2023',
-			12
-		),
-		createDataSiswa(
-			dummyImage,
-			'Peter Johan',
-			'SMA',
-			false,
-			'johan123@gmail.com',
-			'0821-2345-6789',
-			'20 April 2023',
-			12
-		),
-	];
-
-	function createDataQuiz(nama, kelas, mapel, jurusan) {
-		return { nama, kelas, mapel, jurusan };
-	}
-	const rowsQuiz = [
-		createDataQuiz('Aljabar Linier', 12, 'Matematika', 'IPS'),
-		createDataQuiz('Molekul Atom', 12, 'Kimia', 'IPA'),
-		createDataQuiz('Sistem Saraf', 12, 'Biologi', 'IPS'),
-		createDataQuiz('Geometri', 11, 'Matematika', 'IPS'),
-		createDataQuiz('Grammar', 12, 'Bahasa Inggris', 'IPS'),
-		createDataQuiz('Struktur Pasar', 10, 'Ekonomi', 'IPS'),
-	];
-
 	return (
 		<div className={styles.container}>
 			<Header
@@ -228,7 +163,7 @@ export default function ManageCustomer() {
 				<div className="flex justify-between my-10">
 					<div className="flex space-x-2">
 						<Typography variant="h4" sx={{ fontWeight: '600' }}>
-							183
+							{customers ? customers.length : 0}
 						</Typography>
 						<Typography variant="h4" sx={{ fontWeight: '600', color: 'gray' }}>
 							Total Siswa
@@ -253,36 +188,19 @@ export default function ManageCustomer() {
 										color: '#2196F3',
 									},
 								}}>
-								<MenuItem
-									value={'Matematika'}
-									sx={{
-										width: '100%',
-										':hover': { bgcolor: '#F0FAFF', color: '#2196F3' },
-									}}>
-									<Typography textAlign={'center'} sx={{ width: '100%' }}>
-										Matematika
-									</Typography>
-								</MenuItem>
-								<MenuItem
-									value={'Fisika'}
-									sx={{
-										width: '100%',
-										':hover': { bgcolor: '#F0FAFF', color: '#2196F3' },
-									}}>
-									<Typography textAlign={'center'} sx={{ width: '100%' }}>
-										Fisika
-									</Typography>
-								</MenuItem>
-								<MenuItem
-									value={'Kimia Dasar'}
-									sx={{
-										width: '100%',
-										':hover': { bgcolor: '#F0FAFF', color: '#2196F3' },
-									}}>
-									<Typography textAlign={'center'} sx={{ width: '100%' }}>
-										Kimia Dasar
-									</Typography>
-								</MenuItem>
+								{courseData.map((course, i) => (
+									<MenuItem
+										key={i}
+										value={course.course_name}
+										sx={{
+											width: '100%',
+											':hover': { bgcolor: '#F0FAFF', color: '#2196F3' },
+										}}>
+										<Typography textAlign={'center'} sx={{ width: '100%' }}>
+											{course.course_name}
+										</Typography>
+									</MenuItem>
+								))}
 							</Select>
 						</FormControl>
 
@@ -401,239 +319,114 @@ export default function ManageCustomer() {
 									<TableCell>Nama Siswa</TableCell>
 									<TableCell>Kontak</TableCell>
 									<TableCell>Tanggal Masuk</TableCell>
-									<TableCell>Section Progress</TableCell>
+									<TableCell>Section </TableCell>
+									<TableCell>Progress</TableCell>
 									<TableCell>Tindakan</TableCell>
 								</TableRow>
 							</TableHead>
-							<TableBody>
-								{rows.map((row, i) => (
-									<TableRow
-										key={row.nama + i}
-										sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-										<TableCell component="th" scope="row">
-											<div className="flex items-center space-x-3">
-												<img src={row.photo} alt="" className="rounded-full w-16" />
-												<div>
-													<Typography fontWeight={600}>{row.nama}</Typography>
-													<div className="flex items-center space-x-3 mt-1">
-														<Typography fontSize={14}>{row.kelas}</Typography>
-														<Tag type={row.isActive ? 'Green' : 'Red'}>
-															{row.isActive ? 'Aktif' : 'Tidak Aktif'}
-														</Tag>
+							{customers != 0 ? (
+								<TableBody>
+									{customers.map((row, i) => (
+										<TableRow
+											key={row.name + i}
+											sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+											<TableCell component="th" scope="row">
+												<div className="flex items-center space-x-3">
+													<img src={row.profile} alt="" className="rounded-full w-16" />
+													<div>
+														<Typography fontWeight={600}>{row.name}</Typography>
+														<div className="flex items-center space-x-3 mt-1">
+															<Typography fontSize={14}>{row.class}</Typography>
+															<Tag type={row.status === 'active' ? 'Green' : 'Red'}>
+																{row.status === 'active' ? 'Aktif' : 'Tidak Aktif'}
+															</Tag>
+														</div>
 													</div>
 												</div>
-											</div>
-										</TableCell>
-										<TableCell>
-											<div className="flex items-center space-x-3 mb-2.5">
-												<MailOutline sx={{ fontSize: '12pt', color: '#616161' }} />
-												<Typography fontSize={14} fontWeight={500}>
-													{row.email}
-												</Typography>
-											</div>
-											<div className="flex items-center space-x-3">
-												<WhatsApp sx={{ fontSize: '12pt', color: '#616161' }} />
-												<Typography fontSize={14} fontWeight={500}>
-													{row.telp}
-												</Typography>
-											</div>
-										</TableCell>
-										<TableCell>{row.tglMasuk}</TableCell>
-										<TableCell>
-											<div className="flex items-center space-x-5">
-												<Typography>{row.sectionProgress}/12</Typography>
-												<OutlineTag type={row.sectionProgress === 12 ? 'Green' : 'Yellow'}>
-													{row.sectionProgress === 12 ? 'Lulus Kursus' : 2 + ' Tugas perlu dinilai'}
-												</OutlineTag>
-											</div>
-										</TableCell>
-										<TableCell>
-											<div className="flex space-x-5 items-center">
-												<Button
-													sx={{
-														width: '100%',
-														color: '#2196F3',
-														borderRadius: '8px',
-														fontWeight: 600,
-														textTransform: 'capitalize',
-													}}
-													variant="outlined"
-													href={'https://wa.me/+62' + row.telp.replace(/-/g, '')}
-													target="_blank">
-													Hubungi
-												</Button>
-												<Button
-													sx={{
-														width: '100%',
-														borderRadius: '8px',
-														fontWeight: 600,
-														textTransform: 'capitalize',
-														':hover': {
-															bgcolor: '#d32f2f',
-															color: 'white',
-														},
-													}}
-													variant="outlined"
-													color={'error'}
-													onClick={handleOpenDeleteModal}>
-													Hapus Siswa
-												</Button>
-											</div>
+											</TableCell>
+											<TableCell>
+												<div className="flex items-center space-x-3 mb-2.5">
+													<MailOutline sx={{ fontSize: '12pt', color: '#616161' }} />
+													<Typography fontSize={14} fontWeight={500}>
+														{row.email}
+													</Typography>
+												</div>
+												<div className="flex items-center space-x-3">
+													<WhatsApp sx={{ fontSize: '12pt', color: '#616161' }} />
+													<Typography fontSize={14} fontWeight={500}>
+														{row.phone_number}
+													</Typography>
+												</div>
+											</TableCell>
+											<TableCell>
+												{row.CreatedAt
+													? new Date(row.CreatedAt).toLocaleDateString(undefined, {
+															year: 'numeric',
+															month: 'long',
+															day: 'numeric',
+													  })
+													: '-'}
+											</TableCell>
+											<TableCell>
+												<div className="flex items-center space-x-5">
+													<Typography>{row.sectionProgress ? row.sectionProgress : '-'}</Typography>
+												</div>
+											</TableCell>
+											<TableCell>
+												<div className="flex items-center space-x-5">
+													<OutlineTag type={row.sectionProgress === 12 ? 'Green' : 'Yellow'}>
+														{row.sectionProgress === 12 ? 'Lulus Kursus' : ' - '}
+													</OutlineTag>
+												</div>
+											</TableCell>
+											<TableCell>
+												<div className="flex space-x-5 items-center">
+													<Button
+														sx={{
+															width: '100%',
+															color: '#2196F3',
+															borderRadius: '8px',
+															fontWeight: 600,
+															textTransform: 'capitalize',
+														}}
+														variant="outlined"
+														href={'https://wa.me/+62' + row.phone_number.replace(/-/g, '')}
+														target="_blank">
+														Hubungi
+													</Button>
+													<Button
+														sx={{
+															width: '100%',
+															borderRadius: '8px',
+															fontWeight: 600,
+															textTransform: 'capitalize',
+															':hover': {
+																bgcolor: '#d32f2f',
+																color: 'white',
+															},
+														}}
+														variant="outlined"
+														color={'error'}
+														onClick={handleOpenDeleteModal}>
+														Hapus Siswa
+													</Button>
+												</div>
+											</TableCell>
+										</TableRow>
+									))}
+								</TableBody>
+							) : (
+								<TableBody>
+									<TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+										<TableCell colSpan={5} sx={{ textAlign: 'center' }}>
+											Belum ada data!
 										</TableCell>
 									</TableRow>
-								))}
-							</TableBody>
+								</TableBody>
+							)}
 						</Table>
 					</TableContainer>
 				</div>
-				<Modal
-					open={openQuizForm}
-					onClose={handleCloseQuizForm}
-					closeAfterTransition
-					slots={{ backdrop: Backdrop }}
-					slotProps={{
-						backdrop: {
-							timeout: 500,
-						},
-					}}>
-					<Fade in={openQuizForm}>
-						<Box className="absolute right-1/2 top-[50px] translate-x-1/2 bg-white rounded-lg p-7">
-							<Typography
-								id="transition-modal-title"
-								variant="h5"
-								component="h2"
-								textAlign={'center'}
-								fontWeight={600}>
-								Tugaskan Quiz
-							</Typography>
-							<Button
-								sx={{
-									position: 'absolute',
-									top: 7,
-									right: 2,
-									color: '#212121',
-								}}
-								onClick={handleCloseQuizForm}>
-								<Close />
-							</Button>
-							<div>
-								<div className="flex items-center justify-between my-7">
-									<div className="flex space-x-2">
-										<Typography fontSize={14}>Pilih Kuis yang akan diberikan</Typography>
-									</div>
-									<div className="relative flex items-center">
-										<Search
-											sx={{
-												position: 'absolute',
-												left: '12px',
-												color: 'gray',
-											}}
-										/>
-										<input
-											type="text"
-											className="w-48 rounded-lg bg-white pl-11 pr-2 py-2.5 text-xs border"
-											placeholder="Cari Kuis"
-										/>
-									</div>
-								</div>
-								<TableContainer>
-									<Table sx={{ minWidth: 650 }} aria-label="simple table">
-										<TableHead>
-											<TableRow>
-												<TableCell>
-													<Typography fontWeight={500} fontSize={14} color={'#616161'}>
-														Nama Kuis
-													</Typography>
-												</TableCell>
-												<TableCell>
-													<Typography fontWeight={500} fontSize={14} color={'#616161'}>
-														Kelas
-													</Typography>
-												</TableCell>
-												<TableCell>
-													<Typography fontWeight={500} fontSize={14} color={'#616161'}>
-														Mata Pelajaran
-													</Typography>
-												</TableCell>
-												<TableCell>
-													<Typography fontWeight={500} fontSize={14} color={'#616161'}>
-														Jurusan
-													</Typography>
-												</TableCell>
-												<TableCell></TableCell>
-											</TableRow>
-										</TableHead>
-										<TableBody>
-											{rowsQuiz.map((row, i) => (
-												<TableRow
-													key={row.nama + i}
-													sx={{
-														'&:last-child td, &:last-child th': { border: 0 },
-													}}>
-													<TableCell component="th" scope="row">
-														<Typography fontWeight={600} fontSize={14}>
-															{row.nama}
-														</Typography>
-													</TableCell>
-													<TableCell>
-														<Typography fontWeight={600} fontSize={14}>
-															{row.kelas}
-														</Typography>
-													</TableCell>
-													<TableCell>
-														<Typography fontWeight={600} fontSize={14}>
-															{row.mapel}
-														</Typography>
-													</TableCell>
-													<TableCell>
-														<Typography fontWeight={600} fontSize={14}>
-															{row.jurusan}
-														</Typography>
-													</TableCell>
-													<TableCell>
-														<Checkbox
-															sx={{ '& .MuiSvgIcon-root': { fontSize: 28 } }}
-															checked={selectedQuiz.includes(row.nama)} // Tambahkan properti checked
-															onChange={() => handleQuizToggle(row.nama)} // Tambahkan properti onChange
-														/>
-													</TableCell>
-												</TableRow>
-											))}
-										</TableBody>
-									</Table>
-								</TableContainer>
-								<Button
-									sx={{
-										width: '100%',
-										bgcolor: '#2196F3',
-										borderRadius: '8px',
-										boxShadow: 'none',
-										fontWeight: 600,
-										textTransform: 'capitalize',
-										mt: '10px',
-									}}
-									variant="contained"
-									onClick={(e) => {
-										handleCloseQuizForm(e), handleOpenSuccessModal(e);
-									}}
-									disabled={selectedQuiz.length === 0} // Tambahkan properti disabled
-								>
-									Berikan Quiz
-								</Button>
-							</div>
-						</Box>
-					</Fade>
-				</Modal>
-				<ResponseModal
-					type={'Primary'}
-					buttonVariant={'Outlined'}
-					title={'Kuis Diberikan!'}
-					message={'Kuis berhasil ditugaskan kepada siswa'}
-					image={'image/customer-quizGiven.png'}
-					buttonText={'Tutup'}
-					show={openSuccessModal}
-					buttonClick={handleCloseSuccessModal}
-				/>
 				<ConfirmationModal
 					show={showDeleteModal}
 					primaryButtonName="Batal"

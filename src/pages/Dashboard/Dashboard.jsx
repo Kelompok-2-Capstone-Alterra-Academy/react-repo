@@ -135,12 +135,12 @@ export default function Dashboard() {
 								<FontAwesomeIcon
 									icon={faArrowAltCircleRight}
 									className={
-										courseListPage >= courseData.length / 3 - 1
+										courseListPage >= courseData.length / 7 - 1
 											? styles.arrowDisabled
 											: styles.arrowRight
 									}
 									onClick={
-										courseListPage >= courseData.length / 3 - 1
+										courseListPage >= courseData.length / 7 - 1
 											? () => {}
 											: () => setCourseListPage(courseListPage + 1)
 									}
@@ -155,7 +155,7 @@ export default function Dashboard() {
 										<span className="text-lg">Tambah Kursus</span>
 									</div>
 								</div>
-								{courseData.slice(courseListPage * 3, courseListPage * 3 + 3).map((item) => {
+								{courseData.slice(courseListPage * 7, courseListPage * 7 + 3).map((item) => {
 									return (
 										<CardKursus
 											key={item.ID}
@@ -167,7 +167,7 @@ export default function Dashboard() {
 										/>
 									);
 								})}
-								{courseData.slice(courseListPage * 3 + 3, courseListPage * 3 + 6).map((item) => {
+								{courseData.slice(courseListPage * 7 + 3, courseListPage * 7 + 7).map((item) => {
 									return (
 										<CardKursus
 											key={item.ID}
