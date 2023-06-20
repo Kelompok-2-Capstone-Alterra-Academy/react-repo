@@ -11,6 +11,7 @@ export default function Quiz({ data }) {
 	const [contentType, setContentType] = useState('');
 
 	useEffect(() => {
+		console.log(data);
 		setContentType(data.module_name.split('-')[0]);
 	}, [data]);
 

@@ -1,0 +1,42 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	width: 100%;
+	padding: 0.5em;
+}
+
+.mainContent {
+	background-color: #ffffff;
+	flex-grow: 1;
+}
+
+.paragraph {
+	color: #212121;
+	font-weight: 400;
+	font-size: 24px;
+	margin-bottom: 1em;
+}
+
+.content {
+	display: flex;
+	flex-direction: row;
+	margin-top: 1em;
+}
+
+.sidebar {
+	width: 25%;
+	border-right: 1px solid #e0e0e0;
+}
+
+.contentCard {
+	width: 75%;
+	padding: 0 1em;
+}
+
+.fileCardContainer {
+	margin-top: 1em;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	grid-gap: 1em;
+}

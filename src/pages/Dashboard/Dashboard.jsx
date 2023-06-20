@@ -102,19 +102,6 @@ export default function Dashboard() {
 						<div className="mb-4">
 							<img src="/image/home-banner.png" alt="" className={styles.bannerImage} />
 						</div>
-						{/* <Header
-							breadCrumbData={{
-								name: 'Dashboard',
-								links: [{ link: '/dashboard', title: 'Dashboard' }],
-							}}
-							profileData={{
-								name: 'Aldi Taher',
-								pic: 'https://avatars.githubusercontent.com/u/55269572?v=4',
-								email: 'look_at_the_star@gmail.com',
-								role: 'Instructor',
-							}}
-							className={styles.profile}
-						/> */}
 						<div className="flex justify-end gap-4">
 							<button
 								className="bg-blue-600 hover:bg-blue-500 text-white text-xs rounded inline-flex items-center"
@@ -135,117 +122,65 @@ export default function Dashboard() {
 						</div>
 					</div>
 					{courseData.length != 0 ? (
-						<>
-							<div className={styles.kursusContainer}>
-								<span className={styles.cardTitle}>Kursus Saya</span>
-								<div className={styles.kursusCardContainer}>
-									<div
-										className={styles.kursusCardCreate}
-										onClick={() => setIsShowCreateCourseModal(true)}>
+						<div className={styles.kursusContainer}>
+							<span className={styles.cardTitle}>Kursus Saya</span>
+							<div className={styles.arrowContainer}>
+								<FontAwesomeIcon
+									icon={faArrowAltCircleLeft}
+									className={courseListPage == 0 ? styles.arrowDisabled : styles.arrowLeft}
+									onClick={
+										courseListPage == 0 ? () => {} : () => setCourseListPage(courseListPage - 1)
+									}
+								/>
+								<FontAwesomeIcon
+									icon={faArrowAltCircleRight}
+									className={
+										courseListPage >= courseData.length / 7 - 1
+											? styles.arrowDisabled
+											: styles.arrowRight
+									}
+									onClick={
+										courseListPage >= courseData.length / 7 - 1
+											? () => {}
+											: () => setCourseListPage(courseListPage + 1)
+									}
+								/>
+							</div>
+							<div className={styles.kursusCardContainer}>
+								<div
+									className={styles.kursusCardCreate}
+									onClick={() => setIsShowCreateCourseModal(true)}>
+									<div className={styles.kursusCardCreateAnimation}>
 										<img src="/icon/add-course.svg" alt="" />
-										<span className="text-xs">Tambah Kursus</span>
-									</div>
-									<div className={styles.kursusCard}>
-										{courseData.slice(courseListPage * 3, courseListPage * 3 + 3).map((item) => {
-											return (
-												<CardKursus
-													key={item.ID}
-													data={item}
-													category={{
-														class: classList,
-														major: majorList,
-													}}
-												/>
-											);
-										})}
-										<div className={styles.arrowContainer}>
-											<FontAwesomeIcon
-												icon={faArrowAltCircleLeft}
-												className={courseListPage == 0 ? styles.arrowDisabled : styles.arrowLeft}
-												onClick={
-													courseListPage == 0
-														? () => { }
-														: () => setCourseListPage(courseListPage - 1)
-												}
-											/>
-											<FontAwesomeIcon
-												icon={faArrowAltCircleRight}
-												className={
-													courseListPage >= courseData.length / 3 - 1
-														? styles.arrowDisabled
-														: styles.arrowRight
-												}
-												onClick={
-													courseListPage >= courseData.length / 3 - 1
-														? () => { }
-														: () => setCourseListPage(courseListPage + 1)
-												}
-											/>
-										</div>
+										<span className="text-lg">Tambah Kursus</span>
 									</div>
 								</div>
+								{courseData.slice(courseListPage * 7, courseListPage * 7 + 3).map((item) => {
+									return (
+										<CardKursus
+											key={item.ID}
+											data={item}
+											category={{
+												class: classList,
+												major: majorList,
+											}}
+										/>
+									);
+								})}
+								{courseData.slice(courseListPage * 7 + 3, courseListPage * 7 + 7).map((item) => {
+									return (
+										<CardKursus
+											key={item.ID}
+											data={item}
+											category={{
+												class: classList,
+												major: majorList,
+											}}
+										/>
+									);
+								})}
 							</div>
-							<div className={styles.statisticContainer}>
-								<span className={styles.cardTitle}>Statistik</span>
-								<div className={styles.statisticCardContainer}>
-									<div className="h-20 bg-[#E1EFE1] rounded-md">
-										<div className="flex p-1 items-center gap-6 justify-center">
-											<img src="/image/stats-attendance.png" alt="" />
-											<div>
-												<p className="text-xs font-semibold text-[#388E3C]">Total siswa baru</p>
-												<p className="text-xl font-semibold">120 Siswa</p>
-											</div>
-										</div>
-									</div>
-									<div className="h-20 bg-[#FFE0B2] rounded-md">
-										<div className="flex p-1 items-center gap-6 justify-center">
-											<img src="/image/stats-task.png" alt="" />
-											<div>
-												<p className="text-xs font-semibold text-[#E65100]">Tugas perlu dinilai</p>
-												<p className="text-xl font-semibold">13 Tugas</p>
-											</div>
-										</div>
-									</div>
-									<div className="h-20 bg-[#F0FAFF] rounded-md">
-										<div className="flex p-1 items-center gap-6 justify-center">
-											<img src="/image/stats-time.png" alt="" />
-											<div>
-												<p className="text-xs font-semibold text-[#1976D2]">Akses rata-rata</p>
-												<p className="text-xl font-semibold">40 Menit</p>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							{/* <div className="px-6 mt-6">
-						<p className="font-bold">Analisis Siswa</p>
-					</div>
-					<div className="px-6 mt-4">
-						<table className="table w-full border-gray-300 text-center">
-							<thead>
-								<tr>
-									<th className="text-gray-600 font-semibold">No.</th>
-									<th className="text-gray-600 font-semibold">Nama Siswa</th>
-									<th className="text-gray-600 font-semibold">Waktu Pengumpulan</th>
-									<th className="text-gray-600 font-semibold">Status</th>
-									<th className="text-gray-600 font-semibold">Tindakan</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>1</td>
-									<td>Joel</td>
-									<td>25 April 2023 23.47</td>
-									<td className="justify-center flex">
-										<Tag className={styles.tag} type="Green">
-											<span>Sudah dinilai</span>
-										</Tag>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div> */}
-						</>
+						</div>
 					) : (
 						<div className={styles.emptyCourseContainer}>
 							<div className={styles.emptyCourseTextContainer}>

@@ -1,47 +1,18 @@
-.sidebar {
-	height: 100%;
-	width: 35%;
-	padding: 3em 1.5em 1em 0em;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	margin-right: 1.5em;
-	border-right: 2px solid #f5f5f5;
-	/* position: fixed;
-	height: 100vh;
-	display: flex;
-	width: 20%;
-	padding: 1em 1.5em;
-	transition: width 0.3s ease, padding 0.3s ease; */
-}
-.header {
-	font-weight: 600;
-	font-size: 24px;
-	color: #000000;
-	margin-bottom: 1em;
-}
-
-.descriptionHeader {
-	font-style: italic;
-	font-weight: 700;
-	font-size: 20px;
-	text-align: center;
-	color: #ffffff;
+.container {
+	padding: 0em 0.5em;
 }
 
 .description {
 	font-style: normal;
 	font-weight: 400;
-	font-size: 16px;
-	line-height: 16px;
+	font-size: 14px;
 	text-align: center;
 }
 
 .descriptionActive {
 	font-style: normal;
 	font-weight: 400;
-	font-size: 16px;
-	line-height: 16px;
+	font-size: 14px;
 	text-align: center;
 	color: #ffffff;
 }
@@ -49,6 +20,7 @@
 .icon {
 	margin-right: 15px;
 	color: #2196f3;
+	transition: 0.2s all ease-in-out;
 }
 
 .listItem,
@@ -56,9 +28,9 @@
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	padding: 1em;
+	padding: 1.5em;
 	border-radius: 8px;
-	width: 100%; 
+	width: 100%;
 	box-sizing: border-box;
 	margin-bottom: 1em;
 	transition: 0.2s all ease-in-out;
@@ -83,7 +55,7 @@
 }
 
 .listItem:hover,
-.icon:hover {
+.listItem:hover .icon {
 	background-color: #2196f3;
 	color: #ffffff;
 }
@@ -98,8 +70,8 @@
 	}
  } */
 
- @media screen and (min-width: 1536px) {
+@media screen and (min-width: 1536px) {
 	.sidebar {
 		width: 25%;
 	}
- }
+}

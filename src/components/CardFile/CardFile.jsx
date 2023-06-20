@@ -1,19 +1,26 @@
-import { useState } from 'react';
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import imgVideo from '../../../public/image/icon-videoPlayer.png';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
+import {
+	faDownload,
+	faEdit,
+	faEllipsisH,
+	faFileAlt,
+	faListAlt,
+	faQuestion,
+	faTrashAlt,
+	faVideoCamera,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThLarge, faDownload, faPen, faTrash, faTv } from '@fortawesome/free-solid-svg-icons';
-import { ConfirmationModal } from '../ConfirmationModal';
+import Alert from '@mui/material/Alert';
 import Modal from '@mui/material/Modal';
+import Snackbar from '@mui/material/Snackbar';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
+import { delAttachment } from '../../clients';
+import { useClickOutside } from '../../hooks';
+import { deleteAttachment } from '../../redux/actions/attachmentActions';
+import { ConfirmationModal } from '../ConfirmationModal';
+import Select from '../Select/Select';
+import styles from './CardFile.module.css';
 import ModalDetail from './ModalDetail/ModalDetail';
 import ModalEditFile from './ModalEditFile/ModalEditFile';
 
@@ -21,7 +28,10 @@ const CardFile = ({ attachment }) => {
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
 	const [showFormModalBerkas, setShowFormModalBerkas] = useState(false);
 	const [showFormModalDetail, setShowFormModalDetail] = useState(false);
-	const [open, setOpen] = useState(false)
+	const [isShowMoreSelect, setIsShowMoreSelect] = useState(false);
+	const [open, setOpen] = useState(false);
+
+	const dispatch = useDispatch();
 
 	const handleClose = (reason) => {
 		if (reason === 'clickaway') {
@@ -30,127 +40,123 @@ const CardFile = ({ attachment }) => {
 		setOpen(false);
 	};
 
+	const ref = useClickOutside(() => {
+		setIsShowMoreSelect(false);
+	});
+
+	const renderOption = (id) => {
+		const icon = [faEdit, faDownload, faListAlt, faTrashAlt];
+		const option = ['Ganti Nama Berkas', 'Unduh Berkas', 'Lihat Detail', 'Hapus Berkas'];
+
+		return (
+			<>
+				<FontAwesomeIcon icon={icon[id - 1]} className={styles.optionItemIcon} />
+				<span>{option[id - 1]}</span>
+			</>
+		);
+	};
+
 	return (
 		<>
-			<Card
-				elevation={0}
-				sx={{
-					maxWidth: 200,
-					height: '100%',
-					borderRadius: 2.5,
-					marginBottom: '10px',
-					border: '2px solid #f5f5f5',
-				}}>
-				<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-					<PopupState variant="popover" popupId="demo-popup-menu">
-						{(popupState) => (
-							<>
-								<MoreHorizIcon
-									variant="contained"
-									{...bindTrigger(popupState)}
-									style={{ paddingRight: 20, color: '#E0E0E0', fontSize: 50 }}
-								/>
-								<Menu
-									PaperProps={{
-										style: {
-											transform: 'translateX(-83%) translateY(-6%)',
-										},
-										elevation: 0,
-										sx: {
-											bgcolor: '#F0FAFF',
-											overflow: 'visible',
-											ml: '0px',
-											borderRadius: '8px',
-											'&:before': {
-												content: '""',
-												display: 'block',
-												position: 'absolute',
-												top: 0,
-												right: 14,
-												width: 10,
-												height: 10,
-												bgcolor: '#F0FAFF',
-												transform: 'translateY(-50%) rotate(45deg)',
-												zIndex: 0,
-											},
-										},
-									}}
-									{...bindMenu(popupState)}>
-									<MenuItem
-										style={{ marginTop: 12, marginBottom: 12 }}
-										onClick={() => {
-											popupState.close;
-											setShowFormModalBerkas(true);
-										}}>
-										<Typography sx={{ fontSize: '14px' }} color="#2196F3">
-											<FontAwesomeIcon style={{ marginRight: '20px' }} icon={faPen} />
-											Ganti Nama Berkas
-										</Typography>
-									</MenuItem>
-									<MenuItem style={{ marginTop: 12, marginBottom: 12 }} onClick={() => setOpen(true)} >
-										<Typography sx={{ fontSize: '14px' }} color="#2196F3">
-											<FontAwesomeIcon style={{ marginRight: '20px' }} icon={faDownload} />
-											Unduh Berkas
-										</Typography>
-									</MenuItem>
-									<MenuItem
-										style={{ marginTop: 12, marginBottom: 12 }}
-										onClick={() => setShowFormModalDetail(true)}>
-										<Typography sx={{ fontSize: '14px' }} color="#2196F3">
-											<FontAwesomeIcon style={{ marginRight: '20px' }} icon={faThLarge} />
-											Lihat Detail
-										</Typography>
-									</MenuItem>
-									<MenuItem
-										style={{ marginTop: 12, marginBottom: 12 }}
-										onClick={() => setShowDeleteModal(true)}>
-										<Typography sx={{ fontSize: '14px' }} color="#2196F3">
-											<FontAwesomeIcon style={{ marginRight: '20px' }} icon={faTrash} />
-											Hapus Berkas
-										</Typography>
-									</MenuItem>
-								</Menu>
-							</>
-						)}
-					</PopupState>
+			<div className={styles.card}>
+				<div className={styles.moreIcon}>
+					<FontAwesomeIcon
+						icon={faEllipsisH}
+						className={styles.icon}
+						onClick={() => {
+							setIsShowMoreSelect(!isShowMoreSelect);
+						}}
+						ref={ref}
+					/>
+					<Select
+						isShow={isShowMoreSelect}
+						className={styles.moreSelect}
+						options={{
+							title: 'Pilih Aksi',
+							data: [
+								{
+									id: 1,
+									option: renderOption(1),
+								},
+								{
+									id: 2,
+									option: renderOption(2),
+								},
+								{
+									id: 3,
+									option: renderOption(3),
+								},
+								{
+									id: 4,
+									option: renderOption(4),
+								},
+							],
+						}}
+						handleSelected={(id) => {
+							if (id === 1) {
+								setShowFormModalBerkas(true);
+							} else if (id === 2) {
+								setOpen(true);
+							} else if (id === 3) {
+								setShowFormModalDetail(true);
+							} else if (id === 4) {
+								setShowDeleteModal(true);
+							}
+						}}
+					/>
 				</div>
-				<CardMedia
-					component="img"
-					alt="img-folder"
-					height="124"
-					image={imgVideo}
-					style={{
-						display: 'block',
-						marginLeft: 'auto',
-						marginRight: 'auto',
-						width: 134,
-					}}
-				/>
-				<hr style={{ width: 135, alignItems: 'center', marginLeft: 30 }} />
-				<CardContent style={{ paddingBottom: 8 }}>
-					<div style={{ display: 'flex', alignItems: 'center' }}>
-						<FontAwesomeIcon style={{ marginRight: '20px', color: '#2196F3', fontSize: 25 }} icon={faTv} />
-						<Typography style={{ fontSize: 14 }} gutterBottom variant="h6" component="div">
-							{attachment.attachment_name}
-						</Typography>
-					</div>
-					<Typography style={{ fontWeight: 500, fontSize: 10, color: '#9E9E9E', marginTop: 3 }} variant="body2">
-						Lizards are a widesp
-					</Typography>
-				</CardContent>
-			</Card>
+				<div className={styles.content}>
+					<FontAwesomeIcon
+						icon={
+							{
+								video: faVideoCamera,
+								document: faFileAlt,
+								default: faQuestion,
+							}[attachment.type || 'default']
+						}
+						className={styles.typeIcon}
+					/>
+					<span className={styles.attachmentName}>
+						{attachment.attachment_name.length > 20
+							? attachment.attachment_name.substring(0, 20) + '...'
+							: attachment.attachment_name || `Untitled`}
+					</span>
+				</div>
+				<hr className={styles.divider} />
+				<div className={styles.footer}>
+					<span className={styles.description}>{attachment.description || '-'}</span>
+				</div>
+			</div>
 			<Modal open={showFormModalBerkas} onClose={() => setShowFormModalBerkas(false)}>
 				<ModalEditFile
 					closeFunction={() => {
 						setShowFormModalBerkas(false);
 					}}
+					attachment={attachment}
 				/>
 			</Modal>
 			<ConfirmationModal
 				show={showDeleteModal}
 				primaryButtonName="Hapus"
 				secondaryButtonName="Batal"
-				onPrimaryButtonClick={() => setShowDeleteModal(false)}
+				onPrimaryButtonClick={() =>
+					delAttachment(attachment.ID)
+						.then((res) => {
+							toast.success(res.data.message, {
+								position: toast.POSITION.TOP_RIGHT,
+							});
+							dispatch(deleteAttachment(attachment.ID));
+							setShowDeleteModal(false);
+						})
+						.catch((err) => {
+							toast.error(err.response.data.message, {
+								position: toast.POSITION.TOP_RIGHT,
+							});
+						})
+						.finally(() => {
+							setShowDeleteModal(false);
+						})
+				}
 				onSecondaryButtonClick={() => setShowDeleteModal(false)}
 				title="Hapus Berkas?"
 				image={'/image/quiz-delete.png'}
@@ -166,9 +172,10 @@ const CardFile = ({ attachment }) => {
 				anchorOrigin={{
 					vertical: 'bottom',
 					horizontal: 'right',
-				}}
-			>
-				<Alert severity="info" variant="filled" icon={false} onClose={handleClose}>Berkas di Unduh</Alert>
+				}}>
+				<Alert severity="info" variant="filled" icon={false} onClose={handleClose}>
+					Hehe... Untuk saat ini belum bisa diunduh ya...
+				</Alert>
 			</Snackbar>
 		</>
 	);

@@ -1,0 +1,63 @@
+.card {
+	border: 1px solid #e0e0e0;
+	padding: 1em;
+	border-radius: 8px;
+}
+
+.moreIcon {
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+}
+
+.icon {
+	color: #2196f3;
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+	transition: 0.2s all ease-in-out;
+}
+
+.icon:hover {
+	transform: scale(1.2);
+}
+
+.typeIcon {
+	margin-right: 0.5em;
+	width: 20px;
+	height: 20px;
+	color: #2196f3;
+}
+
+.content {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin-top: 1em;
+}
+
+.attachmentName {
+	color: #212121;
+	font-weight: 400;
+	font-size: 14px;
+	margin-left: 0.5em;
+}
+
+.divider {
+	margin: 1em 0;
+	border-bottom: 1px solid #e0e0e0;
+}
+
+.description {
+	font-style: normal;
+	font-weight: 400;
+	font-size: 12px;
+	text-align: center;
+}
+
+.moreSelect {
+	width: 150%;
+	right: 0;
+	top: calc(100% - 1em);
+}

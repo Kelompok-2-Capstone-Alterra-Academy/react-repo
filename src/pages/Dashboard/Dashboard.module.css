@@ -17,19 +17,17 @@
 
 .kursusContainer,
 .statisticContainer {
-	margin-bottom: 3em;
 	display: flex;
 	flex-direction: column;
 }
 
 .kursusCardContainer {
-	display: flex;
-	flex-direction: row;
-	justify-content: flex-start;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	grid-gap: 1em;
 }
 
 .kursusCardCreate {
-	width: 150px;
 	height: --webkit-fill-available;
 	background: #f0faff;
 	display: flex;
@@ -56,8 +54,7 @@
 }
 
 .arrowContainer {
-	position: absolute;
-	bottom: -2em;
+	margin-bottom: 1em;
 	width: 100%;
 	display: flex;
 	flex-direction: row;
@@ -307,6 +304,14 @@
 	100% {
 		transform: scale(1);
 	}
+}
+
+.kursusCardCreateAnimation {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	animation: beat 1.5s infinite;
 }
 
 .emptyCourseCreate:hover {
