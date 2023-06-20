@@ -15,7 +15,7 @@ export function getFolder() {
 	});
 }
 
-export function putFolder(data, id) {
+export function putFolder({ data, id }) {
 	return axios({
 		method: 'put',
 		url: `${FOLDER_PREFIX}/${id}`,

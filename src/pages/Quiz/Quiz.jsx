@@ -1,10 +1,13 @@
 import { faPlus, faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from '@mui/material/Modal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { LoopCircleLoading } from 'react-loadingg';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { delAttachment, getQuiz, putAttachment } from '../../clients';
 import { Button, ConfirmationModal, Header, OutlineTag } from '../../components';
-import { addQuiz, deleteQuiz, publishQuiz } from '../../redux/actions/quizActions';
+import { deleteQuiz, setQuiz, toggleStatusQuiz } from '../../redux/actions/quizActions';
 import { truncateString } from '../../utilities/string';
 import FormModal from './FormModal/FormModal';
 import styles from './Quiz.module.css';
@@ -14,12 +17,34 @@ export default function Quiz() {
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
 	const [showPublishModal, setShowPublishModal] = useState(false);
 
+	const [loading, setLoading] = useState(true);
+
 	const [selectedDeleteQuiz, setSelectedDeleteQuiz] = useState(null);
 	const [selectedPublishQuiz, setSelectedPublishQuiz] = useState(null);
 
-	const quizList = useSelector((state) => state.quiz).quiz;
+	const quizList = useSelector((state) => state.quiz.quiz);
 
 	const dispatch = useDispatch();
+
+	useEffect(() => {
+		getQuiz()
+			.then((res) => {
+				console.log(res.data.data);
+				dispatch(setQuiz(res.data.data));
+			})
+			.catch((err) => {
+				toast.error(err.response.data.message, {
+					position: toast.POSITION.TOP_RIGHT,
+				});
+			})
+			.finally(() => {
+				setLoading(false);
+			});
+	}, []);
+
+	if (loading) {
+		return <LoopCircleLoading size="large" color="#4161ff" />;
+	}
 
 	return (
 		<div className={styles.container}>
@@ -73,44 +98,41 @@ export default function Quiz() {
 						</thead>
 						<tbody className={styles.tableBody}>
 							{quizList.map((item) => (
-								<tr key={item.id}>
+								<tr key={item.ID}>
 									<td>
-										<span>{truncateString(item.name, 40)}</span>
+										<span>{truncateString(item.attachment_name, 40)}</span>
 									</td>
 									<td span>
-										<a href={item.link} target="_blank" rel="noreferrer" className={styles.preview}>
+										<a
+											href={item.attachment_source}
+											target="_blank"
+											rel="noreferrer"
+											className={styles.preview}>
 											<span>Lihat Preview</span>
 											<FontAwesomeIcon icon={faUpRightFromSquare} className={styles.previewIcon} />
 										</a>
 									</td>
 									<td>
 										<OutlineTag
-											type={item.status == 'Draf' ? 'Yellow' : 'Green'}
+											type={item.status == 'draft' ? 'Yellow' : 'Green'}
 											className={styles.tag}>
 											{item.status}
 										</OutlineTag>
 									</td>
-									<td
-										className={
-											item.status == 'Draf'
-												? styles.actionButtonContainer
-												: styles.actionOneButtonContainer
-										}>
-										{item.status == 'Draf' && (
-											<Button
-												type="Primary"
-												onClick={() => {
-													setSelectedPublishQuiz(item.id);
-													setShowPublishModal(true);
-												}}
-												className={styles.actionButton}>
-												Terbitkan
-											</Button>
-										)}
+									<td className={styles.actionButtonContainer}>
 										<Button
-											type="Secondary"
+											type={item.status == 'draft' ? 'Primary' : 'Secondary'}
 											onClick={() => {
-												setSelectedDeleteQuiz(item.id);
+												setSelectedPublishQuiz(item);
+												setShowPublishModal(true);
+											}}
+											className={styles.actionButton}>
+											{item.status == 'draft' ? 'Terbitkan' : 'Tarik Kembali'}
+										</Button>
+										<Button
+											type="Danger"
+											onClick={() => {
+												setSelectedDeleteQuiz(item);
 												setShowDeleteModal(true);
 											}}
 											className={styles.actionButton}>
@@ -128,9 +150,6 @@ export default function Quiz() {
 					onClose={() => {
 						setShowFormModal(false);
 					}}
-					onSubmit={(data) => {
-						dispatch(addQuiz(data));
-					}}
 				/>
 			</Modal>
 			<ConfirmationModal
@@ -138,7 +157,20 @@ export default function Quiz() {
 				primaryButtonName="Hapus"
 				secondaryButtonName="Batal"
 				onPrimaryButtonClick={() => {
-					dispatch(deleteQuiz(selectedDeleteQuiz));
+					console.log(selectedDeleteQuiz);
+					delAttachment(selectedDeleteQuiz.ID)
+						.then((res) => {
+							toast.success(res.message, {
+								position: toast.POSITION.TOP_RIGHT,
+							});
+							dispatch(deleteQuiz(selectedDeleteQuiz.ID));
+						})
+						.catch((err) => {
+							toast.error(err.response.data.message, {
+								position: toast.POSITION.TOP_RIGHT,
+							});
+						});
+
 					setShowDeleteModal(false);
 				}}
 				onSecondaryButtonClick={() => setShowDeleteModal(false)}
@@ -152,7 +184,25 @@ export default function Quiz() {
 				primaryButtonName="Terbitkan"
 				secondaryButtonName="Batal"
 				onPrimaryButtonClick={() => {
-					dispatch(publishQuiz(selectedPublishQuiz));
+					putAttachment({
+						id: selectedPublishQuiz.ID,
+						data: {
+							ID: selectedPublishQuiz.ID,
+							status: selectedPublishQuiz.status == 'draft' ? 'terbit' : 'draft',
+						},
+					})
+						.then((res) => {
+							toast.success(res.message, {
+								position: toast.POSITION.TOP_RIGHT,
+							});
+							dispatch(toggleStatusQuiz(selectedPublishQuiz.ID));
+						})
+						.catch((err) => {
+							toast.error(err.response.data.message, {
+								position: toast.POSITION.TOP_RIGHT,
+							});
+						});
+
 					setShowPublishModal(false);
 				}}
 				onSecondaryButtonClick={() => setShowPublishModal(false)}

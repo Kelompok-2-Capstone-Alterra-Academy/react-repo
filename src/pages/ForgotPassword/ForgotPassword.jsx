@@ -1,5 +1,6 @@
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from '@material-ui/core';
 import { Form, Formik } from 'formik';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -33,12 +34,14 @@ export default function Login() {
 	});
 
 	const onSubmit = (values) => {
-		console.log(values);
 		login({
 			email: 'mentor.satu@gmail.com',
 			pass: '12345678',
 		})
 			.then((res) => {
+				toast.success(res.message, {
+					position: toast.POSITION.TOP_RIGHT,
+				});
 				console.log(res);
 				const token = res.data.token;
 				document.cookie = `token=${token}; path=/;`;
@@ -86,6 +89,9 @@ export default function Login() {
 										/>
 									</div>
 								</div>
+								<Link href="/login" className={styles.forgotPassword}>
+									<span>Kembali Login?</span>
+								</Link>
 								<Button type="Primary" className={styles.button}>
 									Ajukan Perubahan Kata Sandi
 								</Button>

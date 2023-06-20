@@ -8,14 +8,14 @@ export function postModule(data) {
 	});
 }
 
-export function getModuleById(id) {
+export function getModule() {
 	return axios({
 		method: 'get',
-		url: `${MODULE_PREFIX}/${id}`,
+		url: `${MODULE_PREFIX}`,
 	});
 }
 
-export function putModule(data, id) {
+export function putModule({ data, id }) {
 	return axios({
 		method: 'put',
 		url: `${MODULE_PREFIX}/${id}`,

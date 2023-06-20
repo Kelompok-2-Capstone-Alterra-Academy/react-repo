@@ -14,3 +14,25 @@ export function postAttachment(data) {
 		data: data,
 	});
 }
+
+export function putAttachment({ id, data }) {
+	return axios({
+		method: 'put',
+		url: `${ATTACHMENT_PREFIX}/${id}`,
+		data: data,
+	});
+}
+
+export function delAttachment(id) {
+	return axios({
+		method: 'delete',
+		url: `${ATTACHMENT_PREFIX}/${id}`,
+	});
+}
+
+export function getQuiz() {
+	return axios({
+		method: 'get',
+		url: `${ATTACHMENT_PREFIX}/quiz`,
+	});
+}

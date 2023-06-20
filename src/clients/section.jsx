@@ -15,7 +15,7 @@ export function getSection() {
 	});
 }
 
-export function putSection(data, id) {
+export function putSection({ data, id }) {
 	return axios({
 		method: 'put',
 		url: `${SECTION_PREFIX}/${id}`,

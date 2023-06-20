@@ -32,5 +32,7 @@ export const FOLDER_PREFIX = 'mentors/folders';
 export const SECTION_PREFIX = 'mentors/section';
 export const MODULE_PREFIX = 'mentors/module';
 export const TASK_PREFIX = 'mentors/task';
+export const CLASS_PREFIX = 'mentors/classes';
+export const MAJOR_PREFIX = 'mentors/majors';
 
 export default axios;

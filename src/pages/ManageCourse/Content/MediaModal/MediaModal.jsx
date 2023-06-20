@@ -2,31 +2,65 @@ import { faArrowLeft, faFolderOpen, faSearch, faXmark } from '@fortawesome/free-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from '@mui/material/Modal';
 import { useEffect, useState } from 'react';
-import { FILE } from '../constans';
+import { LoopCircleLoading } from 'react-loadingg';
+import { toast } from 'react-toastify';
+import { getAttachment } from '../../../../clients';
 import styles from './MediaModal.module.css';
 
-export default function MediaModal({ data, show, onClose, onSubmit, type }) {
-	const [folderList, setFolderList] = useState([]);
+export default function MediaModal({ show, onClose, onSubmit, data }) {
+	const [displayedFolderList, setDisplayedFolderList] = useState([]);
+	const [attachmentList, setAttachmentList] = useState([]);
+	const [displayedAttachmentList, setDisplayedAttachmentList] = useState([]);
+
 	const [searchedName, setSearchedName] = useState('');
-	const [selectedFolder, setSelectedFolder] = useState('');
+	const [selectedFolderId, setSelectedFolderId] = useState('');
+	const [selectedFolderName, setSelectedFolderName] = useState('');
+
+	const [loadingAttachment, setLoadingAttachment] = useState(false);
 
 	useEffect(() => {
-		if (data) {
-			setFolderList(data);
-		}
 		setSearchedName('');
-		setSelectedFolder('');
+		setSelectedFolderId('');
+		setSelectedFolderName('');
 	}, [show]);
 
 	useEffect(() => {
 		filterFolderList(searchedName);
+		filterAttachmentList(searchedName);
 	}, [searchedName, show]);
 
+	useEffect(() => {
+		if (selectedFolderId) {
+			setLoadingAttachment(true);
+			console.log(selectedFolderId);
+			getAttachment(selectedFolderId)
+				.then((res) => {
+					setAttachmentList(res.data.data);
+					setDisplayedAttachmentList(res.data.data);
+				})
+				.catch((err) => {
+					toast.error(err.response.data.message, {
+						position: toast.POSITION.TOP_RIGHT,
+					});
+				})
+				.finally(() => {
+					setLoadingAttachment(false);
+				});
+		}
+	}, [selectedFolderId]);
+
 	const filterFolderList = (searchedName) => {
-		const filteredList = data.filter((item) =>
-			item.name.toLowerCase().includes(searchedName.toLowerCase())
+		const filteredList = data.filter((folder) =>
+			folder.folder_name.toLowerCase().includes(searchedName.toLowerCase())
 		);
-		setFolderList(filteredList);
+		setDisplayedFolderList(filteredList);
+	};
+
+	const filterAttachmentList = (searchedName) => {
+		const filteredList = attachmentList.filter((file) =>
+			file.attachment_name.toLowerCase().includes(searchedName.toLowerCase())
+		);
+		setDisplayedAttachmentList(filteredList);
 	};
 
 	return (
@@ -37,10 +71,12 @@ export default function MediaModal({ data, show, onClose, onSubmit, type }) {
 						<div>
 							<FontAwesomeIcon
 								icon={faArrowLeft}
-								className={selectedFolder ? styles.modalBackIcon : styles.modalBackIconDisabled}
+								className={selectedFolderId ? styles.modalBackIcon : styles.modalBackIconDisabled}
 								onClick={() => {
-									if (selectedFolder) {
-										setSelectedFolder('');
+									if (selectedFolderId) {
+										setSelectedFolderName('');
+										setSelectedFolderId('');
+										setSearchedName('');
 									}
 								}}
 							/>
@@ -52,78 +88,91 @@ export default function MediaModal({ data, show, onClose, onSubmit, type }) {
 						<FontAwesomeIcon icon={faSearch} className={styles.modalSearchIcon} />
 						<input
 							type="text"
-							placeholder="Cari nama folder"
+							placeholder={selectedFolderId ? 'Cari nama file' : 'Cari nama folder'}
 							onChange={(e) => {
 								setSearchedName(e.target.value);
 							}}
+							value={searchedName}
 						/>
 					</div>
 					<div className={styles.modalBreadcrumb}>
 						<span
 							className={styles.headerGrey}
 							onClick={() => {
-								setSelectedFolder('');
+								setSelectedFolderId('');
+								setSelectedFolderName('');
+								setSearchedName('');
 							}}>
 							Modul /{' '}
 						</span>
 						<span
-							className={selectedFolder ? styles.headerGrey : styles.headerBlack}
+							className={selectedFolderName ? styles.headerGrey : styles.headerBlack}
 							onClick={() => {
-								setSelectedFolder('');
+								setSelectedFolderId('');
+								setSelectedFolderName('');
+								setSearchedName('');
 							}}>
 							Folder dan File
 						</span>
-						{selectedFolder && <span className={styles.headerBlack}> / {selectedFolder}</span>}
+						{selectedFolderName && (
+							<span className={styles.headerBlack}> / {selectedFolderName}</span>
+						)}
 					</div>
 				</div>
 				<div className={styles.modalContent}>
-					{selectedFolder ? (
-						<table className={styles.modalTable}>
-							<thead className={styles.modalTableHead}>
-								<tr>
-									<th>Pilih</th>
-									<th>Nama File</th>
-									<th>Ditambahkan Oleh</th>
-								</tr>
-							</thead>
-							<tbody className={styles.modalTableBody}>
-								{FILE[type == 'video' ? 'video' : 'file']?.map((file) => {
-									return (
-										<tr key={file.id} className={styles.modalTableBodyRow}>
-											<td>
-												<span
-													className={styles.modalTableSelect}
-													onClick={() => {
-														onSubmit({
-															src: file.src,
-															name: file.name,
-														});
-													}}>
-													Pilih
-												</span>
-											</td>
-											<td>{file.name}</td>
-											<td className={styles.authorContainer}>
-												<img src={file.ava} alt="author" className={styles.authorImage} />
-												{file.author}
-											</td>
-										</tr>
-									);
-								})}
-							</tbody>
-						</table>
+					{selectedFolderId ? (
+						loadingAttachment ? (
+							<LoopCircleLoading size="large" color="#2196f3" />
+						) : (
+							<table className={styles.modalTable}>
+								<thead className={styles.modalTableHead}>
+									<tr>
+										<th>Pilih</th>
+										<th>Nama File</th>
+										<th>Ditambahkan Oleh</th>
+									</tr>
+								</thead>
+								<tbody className={styles.modalTableBody}>
+									{displayedAttachmentList.map((file) => {
+										return (
+											<tr key={file.ID} className={styles.modalTableBodyRow}>
+												<td>
+													<span
+														className={styles.modalTableSelect}
+														onClick={() => {
+															onSubmit(file);
+														}}>
+														Pilih
+													</span>
+												</td>
+												<td>{file.attachment_name}</td>
+												<td className={styles.authorContainer}>
+													<img
+														src={`https://i.pravatar.cc/150?img=${file.ID}`}
+														alt="author"
+														className={styles.authorImage}
+													/>
+												</td>
+											</tr>
+										);
+									})}
+								</tbody>
+							</table>
+						)
 					) : (
 						<div className={styles.modalContentBody}>
-							{folderList.map((folder) => {
+							{displayedFolderList.map((folder) => {
 								return (
 									<div
 										className={styles.modalContentCard}
-										key={folder.id}
+										key={folder.ID}
 										onClick={() => {
-											setSelectedFolder(folder.name);
+											setSelectedFolderId(folder.ID);
+											setSelectedFolderName(folder.folder_name);
+											setSearchedName('');
 										}}>
 										<FontAwesomeIcon icon={faFolderOpen} className={styles.modalContentCardIcon} />
-										<span>{folder.name}</span>
+										<span>{folder.folder_name || '-'}</span>
 									</div>
 								);
 							})}

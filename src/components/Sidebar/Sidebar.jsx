@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { logout } from '../../clients';
 import { useClickOutside } from '../../hooks';
@@ -19,7 +19,9 @@ const Sidebar = () => {
 	const [isCourseListOpen, setIsCourseListOpen] = useState(false);
 	const [isLearningListOpen, setIsLearningListOpen] = useState(false);
 
-	const courseList = useSelector((state) => state.course).course;
+	const courseList = useSelector((state) => state.course.course);
+
+	const navigate = useNavigate();
 
 	const courseListRef = useClickOutside(() => {
 		setIsCourseListOpen(false);
@@ -112,7 +114,11 @@ const Sidebar = () => {
 						onClick={() => {
 							logout()
 								.then((res) => {
-									console.log(res);
+									toast.success(res.message, {
+										position: toast.POSITION.TOP_RIGHT,
+									});
+									document.cookie = 'token=;';
+									navigate('/login');
 								})
 								.catch((err) => {
 									toast.error(err.response.data.message, {

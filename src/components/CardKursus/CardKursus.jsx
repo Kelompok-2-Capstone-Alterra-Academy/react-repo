@@ -10,13 +10,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from '@mui/material/Modal';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { delCourse, putCourse } from '../../clients';
 import { Button, ConfirmationModal, OutlineTag, Select } from '../../components';
 import { useClickOutside } from '../../hooks';
 import { deleteCourse, updateCourse } from '../../redux/actions/courseActions';
 import styles from './CardKursus.module.css';
 
-export default function CardKursus({ data }) {
+export default function CardKursus({ data, category }) {
 	const [isShowPublishModal, setIsShowPublishModal] = useState(false);
 	const [isShowClassSelect, setIsShowClassSelect] = useState(false);
 	const [isShowMajorSelect, setIsShowMajorSelect] = useState(false);
@@ -31,6 +33,7 @@ export default function CardKursus({ data }) {
 	const [courseThumbnail, setCourseThumbnail] = useState(data.thumbnail);
 
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	const classRef = useClickOutside(() => {
 		setIsShowClassSelect(false);
@@ -50,13 +53,17 @@ export default function CardKursus({ data }) {
 
 	return (
 		<>
-			<div className={styles.container}>
+			<div
+				className={styles.container}
+				onClick={() => {
+					navigate(`/course/${data.ID}`);
+				}}>
 				<div className={styles.cardNavigation}>
 					<OutlineTag type={data.status === 'publish' ? 'Green' : 'Yellow'}>
 						{
 							{
-								publish: 'Terbit',
-								draft: 'Draf',
+								publish: 'Publish',
+								draft: 'Draft',
 							}[data.status]
 						}
 					</OutlineTag>
@@ -102,13 +109,14 @@ export default function CardKursus({ data }) {
 					</div>
 				</div>
 				<div className={styles.cardFooter}>
-					<span className="text-[10px] font-bold">{data.live_session_week || '-'}</span>
+					<span className="text-[12px]">{data.live_session_week || '-'}</span>
 				</div>
 				<div className={styles.cardButton}>
 					<Button
 						type="Secondary"
 						className={styles.deleteIconContainer}
-						onClick={() => {
+						onClick={(e) => {
+							e.stopPropagation();
 							setIsShowDeleteModal(true);
 						}}>
 						<FontAwesomeIcon icon={faTrash} className={styles.deleteIcon} />
@@ -117,28 +125,28 @@ export default function CardKursus({ data }) {
 					<Button
 						type="Primary"
 						className={styles.uploadIconContainer}
-						onClick={
+						onClick={(e) => {
+							e.stopPropagation();
 							data.status === 'draft'
-								? () => {
-										setIsShowPublishModal(true);
-								  }
-								: () => {
-										putCourse({
-											id: data.ID,
-											data: {
+								? setIsShowPublishModal(true)
+								: putCourse({
+										id: data.ID,
+										data: {
+											ID: data.ID,
+											status: 'draft',
+										},
+								  }).then((res) => {
+										toast.success(res.message, {
+											position: toast.POSITION.TOP_RIGHT,
+										});
+										dispatch(
+											updateCourse({
 												ID: data.ID,
 												status: 'draft',
-											},
-										}).then(() => {
-											dispatch(
-												updateCourse({
-													ID: data.ID,
-													status: 'draft',
-												})
-											);
-										});
-								  }
-						}>
+											})
+										);
+								  });
+						}}>
 						<FontAwesomeIcon
 							icon={data.status === 'draft' ? faPaperPlane : faPaperclip}
 							className={styles.uploadIcon}
@@ -198,7 +206,9 @@ export default function CardKursus({ data }) {
 										}}
 										ref={classRef}>
 										<span className={courseClass ? styles.classSelected : styles.classNotSelected}>
-											{courseClass ? courseClass : 'Pilih Kelas'}
+											{courseClass
+												? category.class.find((item) => item.ID === courseClass).class_name
+												: 'Pilih Kelas'}
 										</span>
 										<FontAwesomeIcon icon={faChevronDown} className={styles.arrowIcon} />
 										<Select
@@ -206,11 +216,10 @@ export default function CardKursus({ data }) {
 											className={styles.classSelect}
 											options={{
 												title: 'Kelas',
-												data: [
-													{ id: 1, option: 'Kelas 10' },
-													{ id: 2, option: 'Kelas 11' },
-													{ id: 3, option: 'Kelas 12' },
-												],
+												data: category.class.map((item) => ({
+													id: item.ID,
+													option: item.class_name,
+												})),
 											}}
 											handleSelected={(id) => {
 												setCourseClass(id);
@@ -225,7 +234,9 @@ export default function CardKursus({ data }) {
 										}}
 										ref={majorRef}>
 										<span className={courseMajor ? styles.majorSelected : styles.majorNotSelected}>
-											{courseMajor ? courseMajor : 'Pilih Jurusan'}
+											{courseMajor
+												? category.major.find((item) => item.ID === courseMajor).major_name
+												: 'Pilih Jurusan'}
 										</span>
 										<FontAwesomeIcon icon={faChevronDown} className={styles.arrowIcon} />
 										<Select
@@ -233,18 +244,10 @@ export default function CardKursus({ data }) {
 											className={styles.majorSelect}
 											options={{
 												title: 'Jurusan',
-												data: [
-													{ id: 1, option: 'IPA' },
-													{ id: 2, option: 'IPS' },
-													{ id: 3, option: 'Teknik Komputer Jaringan' },
-													{ id: 4, option: 'Rekayasa Perangkat Lunak' },
-													{ id: 5, option: 'Multimedia' },
-													{ id: 6, option: 'Akuntansi' },
-													{ id: 7, option: 'Administrasi Perkantoran' },
-													{ id: 8, option: 'Pemasaran' },
-													{ id: 9, option: 'Perhotelan' },
-													{ id: 10, option: 'Tata Boga' },
-												],
+												data: category.major.map((item) => ({
+													id: item.ID,
+													option: item.major_name,
+												})),
 											}}
 											handleSelected={(id) => {
 												setCourseMajor(id);
@@ -332,7 +335,10 @@ export default function CardKursus({ data }) {
 											thumbnail: courseThumbnail,
 											status: 'publish',
 										},
-									}).then(() => {
+									}).then((res) => {
+										toast.success(res.message, {
+											position: toast.POSITION.TOP_RIGHT,
+										});
 										dispatch(
 											updateCourse({
 												ID: data.ID,
@@ -360,7 +366,10 @@ export default function CardKursus({ data }) {
 				confirmationText={`Apakah kamu yakin ingin menghapus ${data.course_name}?`}
 				primaryButtonName="Hapus Kursus"
 				onPrimaryButtonClick={() => {
-					delCourse(data.ID).then(() => {
+					delCourse(data.ID).then((res) => {
+						toast.success(res.message, {
+							position: toast.POSITION.TOP_RIGHT,
+						});
 						dispatch(deleteCourse(data.ID));
 					});
 					setIsShowDeleteModal(false);

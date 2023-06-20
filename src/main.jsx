@@ -20,6 +20,7 @@ import {
 	ManageCourse,
 	ManageCustomer,
 	Quiz,
+	Register,
 } from './pages';
 import { store } from './redux/store';
 
@@ -47,7 +48,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 						/>
 						<Route path="/login" element={<Login />} />
 						<Route path="/forgot-password" element={<ForgotPassword />} />
-						<Route path="/register" element={<Dashboard />} />
+						<Route path="/register" element={<Register />} />
 						<Route
 							path="/edit-profile"
 							element={

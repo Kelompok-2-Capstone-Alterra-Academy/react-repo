@@ -15,7 +15,7 @@ export function getTaskById(id) {
 	});
 }
 
-export function putTask(data, id) {
+export function putTask({ data, id }) {
 	return axios({
 		method: 'put',
 		url: `${TASK_PREFIX}/${id}`,
