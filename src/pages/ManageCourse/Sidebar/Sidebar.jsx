@@ -11,6 +11,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import { postSection } from '../../../clients';
 import { addSection, updateSection } from '../../../redux/actions/sectionActions';
 import styles from './Sidebar.module.css';
@@ -49,10 +50,15 @@ export default function Sidebar({
 							};
 							postSection(newSection)
 								.then((res) => {
+									toast.success(res.message, {
+										position: toast.POSITION.TOP_RIGHT,
+									});
 									dispatch(addSection(res.data.data));
 								})
 								.catch((err) => {
-									console.log(err);
+									toast.error(err.response.data.message, {
+										position: toast.POSITION.TOP_RIGHT,
+									});
 								});
 						}}
 					/>

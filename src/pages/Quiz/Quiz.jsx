@@ -4,6 +4,7 @@ import Modal from '@mui/material/Modal';
 import { useEffect, useState } from 'react';
 import { LoopCircleLoading } from 'react-loadingg';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import { delAttachment, getQuiz, putAttachment } from '../../clients';
 import { Button, ConfirmationModal, Header, OutlineTag } from '../../components';
 import { deleteQuiz, setQuiz, toggleStatusQuiz } from '../../redux/actions/quizActions';
@@ -32,7 +33,9 @@ export default function Quiz() {
 				dispatch(setQuiz(res.data.data));
 			})
 			.catch((err) => {
-				console.log(err);
+				toast.error(err.response.data.message, {
+					position: toast.POSITION.TOP_RIGHT,
+				});
 			})
 			.finally(() => {
 				setLoading(false);
@@ -156,11 +159,16 @@ export default function Quiz() {
 				onPrimaryButtonClick={() => {
 					console.log(selectedDeleteQuiz);
 					delAttachment(selectedDeleteQuiz.ID)
-						.then(() => {
+						.then((res) => {
+							toast.success(res.message, {
+								position: toast.POSITION.TOP_RIGHT,
+							});
 							dispatch(deleteQuiz(selectedDeleteQuiz.ID));
 						})
 						.catch((err) => {
-							console.log(err);
+							toast.error(err.response.data.message, {
+								position: toast.POSITION.TOP_RIGHT,
+							});
 						});
 
 					setShowDeleteModal(false);
@@ -183,11 +191,16 @@ export default function Quiz() {
 							status: selectedPublishQuiz.status == 'draft' ? 'terbit' : 'draft',
 						},
 					})
-						.then(() => {
+						.then((res) => {
+							toast.success(res.message, {
+								position: toast.POSITION.TOP_RIGHT,
+							});
 							dispatch(toggleStatusQuiz(selectedPublishQuiz.ID));
 						})
 						.catch((err) => {
-							console.log(err);
+							toast.error(err.response.data.message, {
+								position: toast.POSITION.TOP_RIGHT,
+							});
 						});
 
 					setShowPublishModal(false);

@@ -2,6 +2,7 @@ import { faCheckCircle, faRotateRight, faXmarkCircle } from '@fortawesome/free-s
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 import { postAttachment } from '../../../clients';
 import { Button } from '../../../components';
 import { addQuiz } from '../../../redux/actions/quizActions';
@@ -132,11 +133,16 @@ export default function FormModal({ onClose }) {
 									status: 'draft',
 								})
 									.then((res) => {
+										toast.success(res.message, {
+											position: toast.POSITION.TOP_RIGHT,
+										});
 										dispatch(addQuiz(res.data.data.attachment));
 										setIsSuccessCreateQuiz(true);
 									})
 									.catch((err) => {
-										console.log(err);
+										toast.error(err.response.data.message, {
+											position: toast.POSITION.TOP_RIGHT,
+										});
 									});
 							}}>
 							Buat
