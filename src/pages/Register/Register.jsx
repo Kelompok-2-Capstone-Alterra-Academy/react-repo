@@ -14,11 +14,13 @@ import {
   useFormContext,
 } from "react-hook-form";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faEyeSlash, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import styles from './Register.module.css'
 import { useNavigate } from "react-router-dom";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useClickOutside } from '../../hooks';
+import { register } from '../../clients';
+import { toast } from 'react-toastify';
 
     function getSteps() {
         return [
@@ -28,9 +30,14 @@ import { useClickOutside } from '../../hooks';
     }
     
     const BasicForm = () => {
+      const [username, setUsername] = useState('');
+      const [email, setEmail] = useState('');
+      const [telpon, setTelpon] = useState('');
+      const [password, setPassword] = useState('');
+
       const [showPassword, setShowPassword] = useState(false);
       const [showPasswordAgain, setShowPasswordAgain] = useState(false);
-      const {control, watch, formState: { errors } } = useFormContext();const password = watch('password');
+      const {control, watch, formState: { errors } } = useFormContext();const passwords = watch('password');
 
       return (
         <> 
@@ -49,6 +56,8 @@ import { useClickOutside } from '../../hooks';
                       required
                       label="Username"
                       placeholder="Username"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
                       {...field}
                     />
                   )}
@@ -70,6 +79,8 @@ import { useClickOutside } from '../../hooks';
                         id="email"
                         placeholder="contoh@gmail.com"
                         type="Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         {...field}
                       />
                     )}
@@ -82,6 +93,7 @@ import { useClickOutside } from '../../hooks';
                   <Controller
                     control={control}
                     name="telpon"
+                    rules={{ minLength: 11 }}
                     render={({ field }) => (
                       <label>No Telpon</label>,
                       <input
@@ -90,13 +102,22 @@ import { useClickOutside } from '../../hooks';
                         id="telpon"
                         placeholder="08XXXXXXXXXX"
                         type="number"
+                        value={telpon}
+                        onChange={(e) => setTelpon(e.target.value)}
                         {...field}
                       />
                     )}
                   />
                 </div>
+                {errors.telpon && (<span className={`${styles.error} ${styles.visible}`}> Nomor telepon harus 11 digit</span>
+          )}
+          {!errors.telpon && (
+            <span className={styles.error} style={{ visibility: 'hidden', opacity: 0 }}>
+              &nbsp;
+            </span>
+          )}
              </div>
-             <div className={styles.passwordForm}>
+             <div className={styles.passwordForm} style={{marginTop:"-1.5rem"}}>
               <label className={styles.label}>Kata Sandi</label>
                 <div className={styles.inputContainer}>
                 <Controller
@@ -108,6 +129,7 @@ import { useClickOutside } from '../../hooks';
                       required
                       id="password"
                       type={showPassword ? 'text' : 'password'}
+                      value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="Terdiri dari huruf dan angka" 
                       {...field}
@@ -130,13 +152,16 @@ import { useClickOutside } from '../../hooks';
                   name="ulangPassword"
                   rules={{
                     required: 'Ulang kata sandi diperlukan',
-                    validate: value => value === password || 'Kata sandi tidak cocok'
+                    validate: value => value === passwords || 'Kata sandi tidak cocok',
+                    minLength: {
+                      value: 8,
+                      message: 'Kata sandi minimal 8 karakter',
+                    },
                   }}
                   render={({ field }) => (
                     <input
                       className={styles.input}
                       required
-                      id="UlangPassword"
                       type={showPasswordAgain ? 'text' : 'password'}
                       onChange={(e) => setShowPasswordAgain(e.target.value)}
                       placeholder="Masukan kata sandi yang sama"
@@ -166,15 +191,19 @@ import { useClickOutside } from '../../hooks';
     };
 
     const DataDiri = () => {
+      const [namaLengkap, setNmaLengkap] = useState('');
+      const [tanggalLahir, setTanggalLahir] = useState('');
+      const [bidangKeahlian, setBidangKeahlian] = useState('');
+
       const { control, setValue  } = useFormContext();
       const [isLearningListOpen, setIsLearningListOpen] = useState(false);
-      const [selectedLearning, setSelectedLearning] = useState('');
+
       const learningListRef = useClickOutside(() => {
         setIsLearningListOpen(false);
       });
       const handleLearningItemClick = (learning) => {
         setValue('bidangKeahlian', learning);
-        setSelectedLearning(learning);
+        setBidangKeahlian(learning);
         setIsLearningListOpen(false);
       };
 
@@ -192,6 +221,8 @@ import { useClickOutside } from '../../hooks';
                     required
                     id="namaLengkap"
                     placeholder="Masukkan Nama Lengkap"
+                    value={namaLengkap}
+                    onChange={(e) => setNmaLengkap(e.target.value)}
                     {...field}
                   />
                 )}
@@ -212,6 +243,8 @@ import { useClickOutside } from '../../hooks';
                     type="date"
                     placeholder="dd/mm/yyyy"
                     style={{color:"#9E9E9E", cursor:"pointer"}}
+                    value={tanggalLahir}
+                    onChange={(e) => setTanggalLahir(e.target.value)}
                     {...field}
                   />
                 )}
@@ -232,7 +265,8 @@ import { useClickOutside } from '../../hooks';
                     required
                     className={styles.input}
                     placeholder="Keahlian yang dimiliki"
-                    value={selectedLearning}
+                    value={bidangKeahlian}
+                    onChange={(e) => setBidangKeahlian(e.target.value)}
                     style={{background:"white", cursor:"pointer"}}
                     {...field}
                   />
@@ -300,28 +334,68 @@ const Register = () => {
       email: "",
       telpon: "",
       password: "",
-      ulangPassword: "",
       namaLengkap: "",
       tanggalLahir: "",
       bidangKeahlian: "",
     },
   });
 
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
   const [skippedSteps, setSkippedSteps] = useState([]);
+  const [step1Valid, setStep1Valid] = useState(false);
+
   const steps = getSteps();
 
   const handleNext = (data) => {
-    console.log(data);
-    if (activeStep === steps.length - 1) {
-      navigate("/login");
+    if (activeStep === 0) {
+      methods.trigger().then((isValid) => {
+        if (isValid) {
+          setActiveStep(activeStep + 1);
+          setSkippedSteps((prevSkippedSteps) => [...prevSkippedSteps, activeStep]);
+          setStep1Valid(true); // Set status validasi step 1 menjadi true
+        } else {
+          setStep1Valid(false); // Set status validasi step 1 menjadi false
+        }
+      });
+    } else if (activeStep === 1) {
+      methods.trigger().then((isValid) => {
+        if (isValid) {
+          setLoading(true);
+          onSubmit(data).catch(error => {
+            console.log('Error when submitting:', error);
+            window.location.reload();  // Refresh the page when there's an error
+          });
+        } else {
+          setActiveStep(0); // Kembali ke Step 1 jika terjadi error
+        }
+      });
     } else {
       setActiveStep(activeStep + 1);
-      setSkippedSteps(
-        skippedSteps.filter((skipItem) => skipItem !== activeStep)
-      );
+      setSkippedSteps((prevSkippedSteps) => [...prevSkippedSteps, activeStep]);
     }
+  };
+  
+
+
+  const onSubmit = (data) => {
+    setLoading(true);
+    register(data)
+      .then((res) => {
+        document.cookie = `token=${res.data.data.token}`;
+        navigate("/login");
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        methods.reset();
+        window.location.reload(); // Reloads the page
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   // const onSubmit = (e) => {
@@ -362,29 +436,29 @@ const Register = () => {
                 ) : (
                   <>
                   <div>
-          <FormProvider {...methods}>
-              <form onSubmit={methods.handleSubmit(handleNext)}>
-                {getStepContent(activeStep)}
-                <Button
-                  style={{color:"white", backgroundColor:"#2196F3", width:"100%"}}
-                  variant="contained"
-                  type="submit"
-                >
-                  {activeStep === steps.length - 1 ? "Tambahkan Akun" : "Lanjut"}
-                </Button>
-              </form>
-            </FormProvider>
-            <div className={styles.TextLogin}>
-              <p className={styles.deskripsi}>Sudah Punya Akun?</p>
-              <Link href="/login" style={{color:"black", textDecoration:"none", fontWeight:"bold"}}>
-                <span>Masuk</span>
-              </Link>
-            </div>
-          </div>
+                  <FormProvider {...methods}>
+                    <form onSubmit={methods.handleSubmit(handleNext)}>
+                      {getStepContent(activeStep)}
+                          <Button
+                            style={{color:"white", backgroundColor:"#2196F3", width:"100%"}}
+                            variant="contained"
+                            type="submit"
+                          >
+                            <span>{loading ? <FontAwesomeIcon icon={faSpinner} spin /> : activeStep === steps.length - 1 ? "Tambahkan Akun" : "Lanjut"}</span>
+                          </Button>
+                        </form>
+                    </FormProvider>
+                      <div className={styles.TextLogin}>
+                        <p className={styles.deskripsi}>Sudah Punya Akun?</p>
+                        <Link href="/login" style={{color:"black", textDecoration:"none", fontWeight:"bold"}}>
+                          <span>Masuk</span>
+                        </Link>
+                      </div>
+                  </div>
                   </>
                 )}
-            </div>
           </div>
+        </div>
       </div>
     </div>
   );
