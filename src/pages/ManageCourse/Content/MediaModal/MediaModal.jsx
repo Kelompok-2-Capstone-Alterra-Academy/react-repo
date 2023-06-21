@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import { getAttachment } from '../../../../clients';
 import styles from './MediaModal.module.css';
 
-export default function MediaModal({ show, onClose, onSubmit, data }) {
+export default function MediaModal({ show, onClose, onSubmit, data, type }) {
 	const [displayedFolderList, setDisplayedFolderList] = useState([]);
 	const [attachmentList, setAttachmentList] = useState([]);
 	const [displayedAttachmentList, setDisplayedAttachmentList] = useState([]);
@@ -16,12 +16,18 @@ export default function MediaModal({ show, onClose, onSubmit, data }) {
 	const [selectedFolderId, setSelectedFolderId] = useState('');
 	const [selectedFolderName, setSelectedFolderName] = useState('');
 
+	const [isForVideo, setIsForVideo] = useState(false);
 	const [loadingAttachment, setLoadingAttachment] = useState(false);
 
 	useEffect(() => {
 		setSearchedName('');
 		setSelectedFolderId('');
 		setSelectedFolderName('');
+		if (type == 'video') {
+			setIsForVideo(true);
+		} else {
+			setIsForVideo(false);
+		}
 	}, [show]);
 
 	useEffect(() => {
@@ -133,27 +139,55 @@ export default function MediaModal({ show, onClose, onSubmit, data }) {
 								</thead>
 								<tbody className={styles.modalTableBody}>
 									{displayedAttachmentList.map((file) => {
-										return (
-											<tr key={file.ID} className={styles.modalTableBodyRow}>
-												<td>
-													<span
-														className={styles.modalTableSelect}
-														onClick={() => {
-															onSubmit(file);
-														}}>
-														Pilih
-													</span>
-												</td>
-												<td>{file.attachment_name}</td>
-												<td className={styles.authorContainer}>
-													<img
-														src={`https://i.pravatar.cc/150?img=${file.ID}`}
-														alt="author"
-														className={styles.authorImage}
-													/>
-												</td>
-											</tr>
-										);
+										if (isForVideo) {
+											if (file.type == 'video') {
+												return (
+													<tr key={file.ID} className={styles.modalTableBodyRow}>
+														<td>
+															<span
+																className={styles.modalTableSelect}
+																onClick={() => {
+																	onSubmit(file);
+																}}>
+																Pilih
+															</span>
+														</td>
+														<td>{file.attachment_name}</td>
+														<td className={styles.authorContainer}>
+															<img
+																src={`https://i.pravatar.cc/150?img=${file.ID}`}
+																alt="author"
+																className={styles.authorImage}
+															/>
+														</td>
+													</tr>
+												);
+											}
+										} else {
+											if (file.type != 'video') {
+												return (
+													<tr key={file.ID} className={styles.modalTableBodyRow}>
+														<td>
+															<span
+																className={styles.modalTableSelect}
+																onClick={() => {
+																	onSubmit(file);
+																}}>
+																Pilih
+															</span>
+														</td>
+														<td>{file.attachment_name}</td>
+														<td className={styles.authorContainer}>
+															<img
+																src={`https://i.pravatar.cc/150?img=${file.ID}`}
+																alt="author"
+																className={styles.authorImage}
+															/>
+														</td>
+													</tr>
+												);
+											}
+										}
 									})}
 								</tbody>
 							</table>

@@ -9,32 +9,12 @@ const defaultAction = {
 
 const customerReducer = (state = initialState, action = defaultAction) => {
 	const { type, payload } = action;
-	let newCustomer;
-	let selectedCustomer;
 
 	switch (type) {
 		case 'SET_CUSTOMER':
 			return {
 				...state,
 				customer: payload,
-			};
-
-		case 'ADD_CUSTOMER':
-			return {
-				...state,
-				customer: [...state.customer, payload],
-			};
-
-		case 'UPDATE_CUSTOMER':
-			console.log('payload', payload);
-			selectedCustomer = state.customer.find((customer) => customer.ID === payload.ID);
-			newCustomer = {
-				...selectedCustomer,
-				...payload,
-			};
-			return {
-				...state,
-				customer: state.customer.map((customer) => (customer.ID === payload.ID ? newCustomer : customer)),
 			};
 
 		case 'DELETE_CUSTOMER':

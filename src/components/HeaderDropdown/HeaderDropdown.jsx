@@ -1,4 +1,10 @@
-import { faFileAlt, faFolderOpen, faPlus, faVideoCamera } from '@fortawesome/free-solid-svg-icons';
+import {
+	faFileAlt,
+	faFolderOpen,
+	faPlus,
+	faTvAlt,
+	faVideoCamera,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from '@mui/material/Modal';
 import { useState } from 'react';
@@ -8,11 +14,13 @@ import styles from '../HeaderDropdown/HeaderDropdown.module.css';
 import ModalFolder from './ModalFolder/ModalFolder';
 import ModalLink from './ModalLink/ModalLink';
 import ModalUploadFile from './ModalUploadFile/ModalUploadFile';
+import ModalUploadSlide from './ModalUploadSlide/ModalUploadSlide';
 
 const HeaderDropdown = ({ folderData, selectedId }) => {
 	const [showFormModalFolder, setShowFormModalFolder] = useState(false);
 	const [showFormModalLink, setShowFormModalLink] = useState(false);
 	const [showFormModalFile, setShowFormModalFile] = useState(false);
+	const [showFormModalSlide, setShowFormModalSlide] = useState(false);
 	const [isShowActionSelect, setIsShowActionSelect] = useState(false);
 
 	const ref = useClickOutside(() => {
@@ -20,8 +28,8 @@ const HeaderDropdown = ({ folderData, selectedId }) => {
 	});
 
 	const renderOption = (id) => {
-		const icon = [faFolderOpen, faFileAlt, faVideoCamera];
-		const option = ['Tambah Folder', 'Upload Document', 'Upload Video'];
+		const icon = [faFolderOpen, faFileAlt, faTvAlt, faVideoCamera];
+		const option = ['Tambah Folder', 'Upload Document', 'Upload PPT', 'Upload Video'];
 
 		return (
 			<>
@@ -45,6 +53,10 @@ const HeaderDropdown = ({ folderData, selectedId }) => {
 				{
 					id: 3,
 					option: renderOption(3),
+				},
+				{
+					id: 4,
+					option: renderOption(4),
 				},
 			];
 		} else {
@@ -79,11 +91,13 @@ const HeaderDropdown = ({ folderData, selectedId }) => {
 							data: handleOption(selectedId),
 						}}
 						handleSelected={(id) => {
-							if (id === 1) {
+							if (id == 1) {
 								setShowFormModalFolder(true);
-							} else if (id === 2) {
+							} else if (id == 2) {
 								setShowFormModalFile(true);
-							} else if (id === 3) {
+							} else if (id == 3) {
+								setShowFormModalSlide(true);
+							} else if (id == 4) {
 								setShowFormModalLink(true);
 							}
 						}}
@@ -109,6 +123,14 @@ const HeaderDropdown = ({ folderData, selectedId }) => {
 				<ModalUploadFile
 					closeFunction={() => {
 						setShowFormModalFile(false);
+					}}
+					folderId={selectedId}
+				/>
+			</Modal>
+			<Modal open={showFormModalSlide} onClose={() => setShowFormModalSlide(false)}>
+				<ModalUploadSlide
+					closeFunction={() => {
+						setShowFormModalSlide(false);
 					}}
 					folderId={selectedId}
 				/>

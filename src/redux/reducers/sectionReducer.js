@@ -56,6 +56,7 @@ const sectionReducer = (state = initialState, action = defaultAction) => {
 				...selectedContent,
 				...payload,
 			};
+			console.log(newContent);
 
 			return {
 				...state,

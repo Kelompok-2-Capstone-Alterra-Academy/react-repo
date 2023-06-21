@@ -337,7 +337,7 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 				onSubmit={(file) => {
 					putModule({
 						data: {
-							attachment_id: file.ID,
+							attachment_id: `${file.ID}`,
 						},
 						id: content.ID,
 					})
@@ -347,7 +347,7 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 							});
 							dispatch(
 								updateContent({
-									attachment_id: file.ID,
+									attachment_id: `${file.ID}`,
 									attachment: file,
 									ID: content.ID,
 								})
@@ -360,6 +360,7 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 						});
 					setIsShowAddMediaModal(false);
 				}}
+				type={contentType}
 			/>
 			<LinkModal
 				show={isShowAddLinkModal}
@@ -368,7 +369,7 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 				onSubmit={(file) => {
 					putModule({
 						data: {
-							attachment_id: file.ID,
+							attachment_id: `${file.ID}`,
 						},
 						id: content.ID,
 					})
@@ -378,7 +379,7 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 							});
 							dispatch(
 								updateContent({
-									attachment_id: file.ID,
+									attachment_id: `${file.ID}`,
 									attachment: file,
 									ID: content.ID,
 								})

@@ -68,3 +68,99 @@
 	background-color: rgb(70, 230, 22);
 	color: white;
 }
+
+.selectWrapper {
+	font-size: 12px;
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	width: fit-content;
+	border: 2px solid #e0e0e0;
+	color: #212121;
+	padding: 1em;
+	border-radius: 8px;
+	cursor: pointer;
+	width: 250px;
+	margin-right: 1em;
+}
+
+.filterIconWrapper {
+	font-size: 14px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	width: fit-content;
+	border: 2px solid #e0e0e0;
+	color: #212121;
+	padding: 1em;
+	border-radius: 8px;
+	cursor: pointer;
+	margin-right: 1em;
+	transition: all 0.3s ease-in-out;
+}
+
+.filterIconWrapper:hover {
+	background: #e0e0e0;
+}
+
+.arrowIcon {
+	width: 16px;
+	height: 16px;
+	margin-left: 1em;
+}
+
+.select {
+	width: 120%;
+}
+
+.headerContainer {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin: 1em 0;
+	border-radius: 8px;
+	padding: 1em;
+	color: white;
+	border: 1px solid #e0e0e0;
+}
+
+.totalTitle {
+	font-size: 24px;
+	font-weight: 500;
+	color: #212121;
+}
+
+.filterWrapper {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-end;
+	margin-left: auto;
+}
+
+.container {
+	height: 100%;
+}
+
+.contentContainer {
+	height: 100%;
+	position: relative;
+}
+
+.button {
+	width: 100%;
+}
+
+.aLink,
+.aLink:hover {
+	color: white;
+}
+
+.buttonContainer {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-gap: 0.5em;
+}

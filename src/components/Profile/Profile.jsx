@@ -72,7 +72,7 @@ export default function Profile({ className }) {
 				setMenuOpen(!isMenuOpen);
 			}}>
 			{loadingFetch ? (
-				<LoopCircleLoading size="large" color="#4161ff" />
+				<LoopCircleLoading size="small" color="#2196f3" />
 			) : (
 				<>
 					<div className={styles.profileContainer}>

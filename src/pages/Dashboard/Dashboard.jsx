@@ -102,12 +102,8 @@ export default function Dashboard() {
 				<div className={styles.content}>
 					<Header
 						breadCrumbData={{
-							name: 'Kuis',
-							links: [
-								{ link: '/dashboard', title: 'Dashboard' },
-								{ link: '/', title: 'Pembelajaran' },
-								{ link: '/', title: 'Kuis' },
-							],
+							name: 'Selamat Datang',
+							links: [{ link: '/dashboard', title: 'Dashboard' }],
 						}}
 					/>
 					<div className={styles.headerContainer}>
@@ -313,6 +309,7 @@ export default function Dashboard() {
 										thumbnail: courseThumbnail,
 									})
 										.then((res) => {
+											console.log(res.data.data);
 											toast.success(res.data.message, {
 												position: toast.POSITION.TOP_RIGHT,
 											});

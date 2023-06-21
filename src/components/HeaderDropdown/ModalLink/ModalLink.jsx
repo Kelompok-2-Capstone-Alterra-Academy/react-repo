@@ -47,54 +47,63 @@ const ModalLink = ({ closeFunction, folderId }) => {
 
 	return (
 		<div className={styles.container}>
-			<span className={styles.headerTitle}>Masukan Link Video</span>
+			<span className={styles.headerTitle}>Form Upload Video</span>
 			<div className={styles.content}>
 				<form className={styles.form}>
-					<input
-						required
-						className={styles.formInput}
-						type="text"
-						placeholder="Nama Attachment"
-						value={attachment}
-						onChange={(e) => setAttachment(e.target.value)}
-					/>
-					<textarea
-						className={styles.formInput}
-						placeholder="Deskripsi File"
-						value={description}
-						onChange={(e) => setDescription(e.target.value)}
-					/>
-					<div className={styles.gFormInput}>
+					<div className={styles.formGroup}>
+						<span className={styles.label}>Nama Video</span>
 						<input
 							required
-							className={styles.formInput}
+							className={styles.input}
 							type="text"
-							placeholder="Link Video"
-							value={link}
-							onChange={(e) => {
-								setLink(e.target.value);
-								setIsValidVideo(false);
-								setIsCheckingVideo(false);
-							}}
+							placeholder="Masukkan Nama Video"
+							value={attachment}
+							onChange={(e) => setAttachment(e.target.value)}
 						/>
-						<div className={styles.checkingIconContainer}>
-							{!isCheckingVideo && !checkingVideoLoading && (
-								<FontAwesomeIcon
-									icon={faRotateRight}
-									className={styles.checkingIcon}
-									onClick={handleClickCheckingVideo}
-								/>
-							)}
-							{!isCheckingVideo && checkingVideoLoading && (
-								<FontAwesomeIcon icon={faRotateRight} className={styles.checkingIcon} spin />
-							)}
+					</div>
+					<div className={styles.formGroup}>
+						<span className={styles.label}>Deskripsi Video</span>
+						<textarea
+							className={styles.input}
+							placeholder="Masukkan Deskripsi Video"
+							value={description}
+							onChange={(e) => setDescription(e.target.value)}
+						/>
+					</div>
+					<div className={styles.formGroup}>
+						<span className={styles.label}>Link Video</span>
+						<div className={styles.inputCheckingContainer}>
+							<input
+								required
+								className={styles.inputChecking}
+								type="text"
+								placeholder="Masukkan Link Video"
+								value={link}
+								onChange={(e) => {
+									setLink(e.target.value);
+									setIsValidVideo(false);
+									setIsCheckingVideo(false);
+								}}
+							/>
+							<div className={styles.checkingIconContainer}>
+								{!isCheckingVideo && !checkingVideoLoading && (
+									<FontAwesomeIcon
+										icon={faRotateRight}
+										className={styles.checkingIcon}
+										onClick={handleClickCheckingVideo}
+									/>
+								)}
+								{!isCheckingVideo && checkingVideoLoading && (
+									<FontAwesomeIcon icon={faRotateRight} className={styles.checkingIcon} spin />
+								)}
 
-							{!isValidVideo && isCheckingVideo && (
-								<FontAwesomeIcon icon={faXmarkCircle} className={styles.checkingErrorIcon} />
-							)}
-							{isValidVideo && isCheckingVideo && (
-								<FontAwesomeIcon icon={faCheckCircle} className={styles.checkingSuccessIcon} />
-							)}
+								{!isValidVideo && isCheckingVideo && (
+									<FontAwesomeIcon icon={faXmarkCircle} className={styles.checkingErrorIcon} />
+								)}
+								{isValidVideo && isCheckingVideo && (
+									<FontAwesomeIcon icon={faCheckCircle} className={styles.checkingSuccessIcon} />
+								)}
+							</div>
 						</div>
 					</div>
 				</form>
@@ -124,13 +133,12 @@ const ModalLink = ({ closeFunction, folderId }) => {
 								description: description,
 								folder_id: `${folderId}`,
 								type: 'video',
-								status: 'draft',
 							})
 								.then((res) => {
 									toast.success(res.data.message, {
 										position: toast.POSITION.TOP_RIGHT,
 									});
-									dispatch(addAttachment(res.data.data));
+									dispatch(addAttachment(res.data.data.attachment));
 								})
 								.catch((err) => {
 									toast.error(err.response.data.message, {

@@ -6,6 +6,7 @@ import {
 	faListAlt,
 	faQuestion,
 	faTrashAlt,
+	faTv,
 	faVideoCamera,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -111,6 +112,7 @@ const CardFile = ({ attachment }) => {
 							{
 								video: faVideoCamera,
 								document: faFileAlt,
+								ppt: faTv,
 								default: faQuestion,
 							}[attachment.type || 'default']
 						}
@@ -141,8 +143,8 @@ const CardFile = ({ attachment }) => {
 				secondaryButtonName="Batal"
 				onPrimaryButtonClick={() =>
 					delAttachment(attachment.ID)
-						.then((res) => {
-							toast.success(res.data.message, {
+						.then(() => {
+							toast.success(`Successfully delete ${attachment.attachment_name}`, {
 								position: toast.POSITION.TOP_RIGHT,
 							});
 							dispatch(deleteAttachment(attachment.ID));
