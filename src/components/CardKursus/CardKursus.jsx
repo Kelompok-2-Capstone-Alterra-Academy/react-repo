@@ -1,10 +1,8 @@
 import {
 	faChevronDown,
-	faMars,
 	faPaperPlane,
 	faPaperclip,
 	faTrash,
-	faVenus,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from '@mui/material/Modal';
@@ -74,38 +72,20 @@ export default function CardKursus({ data, category }) {
 						src={`/thumbnail/${data.thumbnail}.png`}
 						alt="thumbnail"
 					/>
-					<div className={styles.cardHeaderTitle}>
-						<span className={styles.cardHeaderTitleText}>
-							{data.course_name.length > 20
-								? data.course_name.slice(0, 20) + '...'
-								: data.course_name}
-						</span>
-						<div className={styles.cardHeaderGenderTag1}>
-							<FontAwesomeIcon icon={faMars} className={styles.maleIcon} />
-							<span className={styles.cardHeaderGenderTag1}>Laki Laki</span>
-						</div>
-						<div className={styles.genderLine}>
-							<div className={styles.maleLine} style={{ width: '50%' }}></div>
-							<div
-								className={styles.femaleLine}
-								style={{
-									width: '50%',
-								}}></div>
-						</div>
-						<div className={styles.cardHeaderGenderTag2}>
-							<span className={styles.cardHeaderGenderTag2}>Perempuan</span>
-							<FontAwesomeIcon icon={faVenus} className={styles.femaleIcon} />
-						</div>
-					</div>
+					<span className={styles.cardHeaderTitleText}>
+						{data.course_name.length > 20
+							? data.course_name.slice(0, 30) + '...'
+							: data.course_name}
+					</span>
 				</div>
 				<div className={styles.cardBody}>
 					<div className={styles.cardBodyItem1}>
 						<span className="text-[10px] text-gray-600">Jumlah Siswa</span>
-						<span className="text-[24px] font-bold">100</span>
+						<span className="text-[24px] font-bold">{data.num_students || 0}</span>
 					</div>
 					<div className={styles.cardBodyItem2}>
 						<span className="text-[10px] text-gray-600">Jumlah Section</span>
-						<span className="text-[24px] font-bold">10</span>
+						<span className="text-[24px] font-bold">{data.section?.length || 0}</span>
 					</div>
 				</div>
 				<div className={styles.cardFooter}>
@@ -136,7 +116,7 @@ export default function CardKursus({ data, category }) {
 											status: 'draft',
 										},
 								  }).then((res) => {
-										toast.success(res.message, {
+										toast.success(res.data.message, {
 											position: toast.POSITION.TOP_RIGHT,
 										});
 										dispatch(
@@ -336,7 +316,7 @@ export default function CardKursus({ data, category }) {
 											status: 'publish',
 										},
 									}).then((res) => {
-										toast.success(res.message, {
+										toast.success(res.data.message, {
 											position: toast.POSITION.TOP_RIGHT,
 										});
 										dispatch(
@@ -367,7 +347,7 @@ export default function CardKursus({ data, category }) {
 				primaryButtonName="Hapus Kursus"
 				onPrimaryButtonClick={() => {
 					delCourse(data.ID).then((res) => {
-						toast.success(res.message, {
+						toast.success(res.data.message, {
 							position: toast.POSITION.TOP_RIGHT,
 						});
 						dispatch(deleteCourse(data.ID));

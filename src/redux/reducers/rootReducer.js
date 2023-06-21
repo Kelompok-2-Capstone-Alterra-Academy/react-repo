@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
+import attachmentReducer from './attachmentReducer';
 import courseReducer from './courseReducer';
+import customerReducer from './customerReducer';
+import folderReducer from './folderReducer';
 import quizReducer from './quizReducer';
 import sectionReducer from './sectionReducer';
-import folderReducer from './folderReducer';
-import attachmentReducer from './attachmentReducer';
-import customerReducer from './customerReducer';
-
+import userReducer from './userReducer';
 
 export const rootReducer = combineReducers({
 	section: sectionReducer,
@@ -13,6 +13,6 @@ export const rootReducer = combineReducers({
 	quiz: quizReducer,
 	folder: folderReducer,
 	attachment: attachmentReducer,
-	customer: customerReducer
-
+	customer: customerReducer,
+	user: userReducer,
 });

@@ -71,7 +71,7 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 				id: content.tasks[0].ID,
 			})
 				.then((res) => {
-					toast.success(res.message, {
+					toast.success(res.data.message, {
 						position: toast.POSITION.TOP_RIGHT,
 					});
 					dispatch(
@@ -96,7 +96,7 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 				module_id: `${content.ID}`,
 			})
 				.then((res) => {
-					toast.success(res.message, {
+					toast.success(res.data.message, {
 						position: toast.POSITION.TOP_RIGHT,
 					});
 					dispatch(
@@ -281,7 +281,7 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 				onPrimaryButtonClick={() => {
 					delModule(content.ID)
 						.then((res) => {
-							toast.success(res.message, {
+							toast.success(res.data.message, {
 								position: toast.POSITION.TOP_RIGHT,
 							});
 							dispatch(deleteContent(content.ID));
@@ -311,7 +311,7 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 						id: content.ID,
 					})
 						.then((res) => {
-							toast.success(res.message, {
+							toast.success(res.data.message, {
 								position: toast.POSITION.TOP_RIGHT,
 							});
 							dispatch(
@@ -337,17 +337,17 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 				onSubmit={(file) => {
 					putModule({
 						data: {
-							attachment_id: file.ID,
+							attachment_id: `${file.ID}`,
 						},
 						id: content.ID,
 					})
 						.then((res) => {
-							toast.success(res.message, {
+							toast.success(res.data.message, {
 								position: toast.POSITION.TOP_RIGHT,
 							});
 							dispatch(
 								updateContent({
-									attachment_id: file.ID,
+									attachment_id: `${file.ID}`,
 									attachment: file,
 									ID: content.ID,
 								})
@@ -360,6 +360,7 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 						});
 					setIsShowAddMediaModal(false);
 				}}
+				type={contentType}
 			/>
 			<LinkModal
 				show={isShowAddLinkModal}
@@ -368,17 +369,17 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 				onSubmit={(file) => {
 					putModule({
 						data: {
-							attachment_id: file.ID,
+							attachment_id: `${file.ID}`,
 						},
 						id: content.ID,
 					})
 						.then((res) => {
-							toast.success(res.message, {
+							toast.success(res.data.message, {
 								position: toast.POSITION.TOP_RIGHT,
 							});
 							dispatch(
 								updateContent({
-									attachment_id: file.ID,
+									attachment_id: `${file.ID}`,
 									attachment: file,
 									ID: content.ID,
 								})
@@ -421,7 +422,7 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 								id: content.ID,
 							})
 								.then((res) => {
-									toast.success(res.message, {
+									toast.success(res.data.message, {
 										position: toast.POSITION.TOP_RIGHT,
 									});
 									dispatch(

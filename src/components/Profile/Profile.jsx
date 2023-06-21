@@ -10,20 +10,24 @@ import classNames from 'classnames/bind';
 import jwt from 'jwt-decode';
 import { useEffect, useState } from 'react';
 import { LoopCircleLoading } from 'react-loadingg';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { getUser } from '../../clients';
 import { useClickOutside } from '../../hooks';
+import { setUser } from '../../redux/actions/userActions';
 import { truncateString } from '../../utilities/string';
 import styles from './Profile.module.css';
 
 export default function Profile({ className }) {
-	const [data, setData] = useState({});
+	const data = useSelector((state) => state.user);
 
 	const [loadingFetch, setLoadingFetch] = useState(true);
 
 	const cookieToken = document.cookie.split('=')[1];
 	const decodeToken = jwt(cookieToken);
+
+	const dispatch = useDispatch();
 
 	const [isMenuOpen, setMenuOpen] = useState(false);
 	const menuItems = [
@@ -48,7 +52,7 @@ export default function Profile({ className }) {
 		setLoadingFetch(true);
 		getUser(decodeToken.id)
 			.then((res) => {
-				setData(res.data.data);
+				dispatch(setUser(res.data.data));
 			})
 			.catch((err) => {
 				toast.error(err.response.data.message, {
@@ -60,8 +64,6 @@ export default function Profile({ className }) {
 			});
 	}, []);
 
-	console.log(data);
-
 	return (
 		<div
 			className={classNames(styles.container, className)}
@@ -70,7 +72,7 @@ export default function Profile({ className }) {
 				setMenuOpen(!isMenuOpen);
 			}}>
 			{loadingFetch ? (
-				<LoopCircleLoading size="large" color="#4161ff" />
+				<LoopCircleLoading size="small" color="#2196f3" />
 			) : (
 				<>
 					<div className={styles.profileContainer}>

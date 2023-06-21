@@ -11,16 +11,19 @@ const ModalFolder = ({ closeFunction }) => {
 	const dispatch = useDispatch();
 	return (
 		<div className={styles.container}>
-			<span className={styles.headerTitle}>Folder Baru</span>
+			<span className={styles.headerTitle}>Form Tambah Folder</span>
 			<div className={styles.content}>
-				<input
-					required
-					className={styles.formInput}
-					type="text"
-					placeholder="Nama Folder Baru"
-					value={folder}
-					onChange={(e) => setFolder(e.target.value)}
-				/>
+				<div className={styles.formGroup}>
+					<span className={styles.label}>Nama Folder</span>
+					<input
+						required
+						className={styles.input}
+						type="text"
+						placeholder="Masukkan Nama Folder"
+						value={folder}
+						onChange={(e) => setFolder(e.target.value)}
+					/>
+				</div>
 			</div>
 			<div className={styles.footer}>
 				<Button

@@ -133,7 +133,7 @@ export default function FormModal({ onClose }) {
 									status: 'draft',
 								})
 									.then((res) => {
-										toast.success(res.message, {
+										toast.success(res.data.message, {
 											position: toast.POSITION.TOP_RIGHT,
 										});
 										dispatch(addQuiz(res.data.data.attachment));

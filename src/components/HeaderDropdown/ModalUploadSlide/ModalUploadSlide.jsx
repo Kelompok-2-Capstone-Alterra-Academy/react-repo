@@ -3,12 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
+import { Button } from '../..';
 import { postAttachment } from '../../../clients';
-import { Button } from '../../../components';
 import { addAttachment } from '../../../redux/actions/attachmentActions';
-import styles from '../ModalUploadFile/ModalUploadFile.module.css';
+import styles from '../ModalUploadSlide/ModalUploadSlide.module.css';
 
-const ModalUploadFile = ({ closeFunction, folderId }) => {
+const ModalUploadSlide = ({ closeFunction, folderId }) => {
 	const [link, setLink] = useState('');
 	const [attachment, setAttachment] = useState('');
 	const [description, setDescription] = useState('');
@@ -16,89 +16,89 @@ const ModalUploadFile = ({ closeFunction, folderId }) => {
 	const dispatch = useDispatch();
 
 	const [formValidation, setFormValidation] = useState(false);
-	const [isCheckingFile, setIsCheckingFile] = useState(false);
-	const [checkingFileLoading, setCheckingFileLoading] = useState(false);
-	const [isValidFile, setIsValidFile] = useState(false);
+	const [isCheckingSlide, setIsCheckingSlide] = useState(false);
+	const [checkingSlideLoading, setCheckingSlideLoading] = useState(false);
+	const [isValidSlide, setIsValidSlide] = useState(false);
 
 	useEffect(() => {
-		if (link !== '' && isValidFile) {
+		if (link !== '' && isValidSlide) {
 			setFormValidation(true);
 		} else {
 			setFormValidation(false);
 		}
-	}, [link, isValidFile]);
+	}, [link, isValidSlide]);
 
-	const checkFileExistence = (url) => {
-		const regex = /https?:\/\/(?:docs)\.google\.com\/(?:document)\/d\/([a-zA-Z0-9-_]+)/i;
+	const checkSlideExistence = (url) => {
+		const regex = /https?:\/\/(?:docs)\.google\.com\/(?:presentation)\/d\/([a-zA-Z0-9-_]+)/i;
 		const isValidURL = regex.test(url);
 		return isValidURL;
 	};
 
-	const handleClickCheckingFile = () => {
-		setCheckingFileLoading(true);
+	const handleClickCheckingSlide = () => {
+		setCheckingSlideLoading(true);
 
 		setTimeout(() => {
-			setCheckingFileLoading(false);
-			setIsCheckingFile(true);
-			setIsValidFile(checkFileExistence(link));
+			setCheckingSlideLoading(false);
+			setIsCheckingSlide(true);
+			setIsValidSlide(checkSlideExistence(link));
 		}, 1000);
 	};
 
 	return (
 		<div className={styles.container}>
-			<span className={styles.headerTitle}>Form Upload Document</span>
+			<span className={styles.headerTitle}>Form Upload PPT</span>
 			<div className={styles.content}>
 				<div className={styles.formGroup}>
-					<span className={styles.label}>Nama Document</span>
+					<span className={styles.label}>Nama PPT</span>
 					<input
 						required
 						className={styles.input}
 						type="text"
-						placeholder="Masukkan Nama Document"
+						placeholder="Masukkan Nama PPT"
 						value={attachment}
 						onChange={(e) => setAttachment(e.target.value)}
 					/>
 				</div>
 				<div className={styles.formGroup}>
-					<span className={styles.label}>Deskripsi Document</span>
+					<span className={styles.label}>Deskripsi PPT</span>
 					<textarea
 						className={styles.input}
-						placeholder="Masukkan Deskripsi Document"
+						placeholder="Masukkan Deskripsi PPT"
 						value={description}
 						onChange={(e) => setDescription(e.target.value)}
 					/>
 				</div>
 				<div className={styles.formGroup}>
-					<span className={styles.label}>Link Document</span>
+					<span className={styles.label}>Link PPT</span>
 					<div className={styles.inputCheckingContainer}>
 						<input
 							required
 							className={styles.inputChecking}
 							type="text"
-							placeholder="Masukkan Link Document"
+							placeholder="Masukkan Link PPT"
 							value={link}
 							onChange={(e) => {
 								setLink(e.target.value);
-								setIsValidFile(false);
-								setIsCheckingFile(false);
+								setIsValidSlide(false);
+								setIsCheckingSlide(false);
 							}}
 						/>
 						<div className={styles.checkingIconContainer}>
-							{!isCheckingFile && !checkingFileLoading && (
+							{!isCheckingSlide && !checkingSlideLoading && (
 								<FontAwesomeIcon
 									icon={faRotateRight}
 									className={styles.checkingIcon}
-									onClick={handleClickCheckingFile}
+									onClick={handleClickCheckingSlide}
 								/>
 							)}
-							{!isCheckingFile && checkingFileLoading && (
+							{!isCheckingSlide && checkingSlideLoading && (
 								<FontAwesomeIcon icon={faRotateRight} className={styles.checkingIcon} spin />
 							)}
 
-							{!isValidFile && isCheckingFile && (
+							{!isValidSlide && isCheckingSlide && (
 								<FontAwesomeIcon icon={faXmarkCircle} className={styles.checkingErrorIcon} />
 							)}
-							{isValidFile && isCheckingFile && (
+							{isValidSlide && isCheckingSlide && (
 								<FontAwesomeIcon icon={faCheckCircle} className={styles.checkingSuccessIcon} />
 							)}
 						</div>
@@ -112,7 +112,7 @@ const ModalUploadFile = ({ closeFunction, folderId }) => {
 						setLink('');
 						setAttachment('');
 						setDescription('');
-						setIsValidFile(false);
+						setIsValidSlide(false);
 						closeFunction();
 					}}>
 					Batal
@@ -129,7 +129,7 @@ const ModalUploadFile = ({ closeFunction, folderId }) => {
 								attachment_source: link,
 								description: description,
 								folder_id: `${folderId}`,
-								type: 'document',
+								type: 'ppt',
 							})
 								.then((res) => {
 									toast.success(res.data.message, {
@@ -146,7 +146,7 @@ const ModalUploadFile = ({ closeFunction, folderId }) => {
 									setLink('');
 									setAttachment('');
 									setDescription('');
-									setIsValidFile(false);
+									setIsValidSlide(false);
 									closeFunction();
 								});
 						}
@@ -159,4 +159,4 @@ const ModalUploadFile = ({ closeFunction, folderId }) => {
 	);
 };
 
-export default ModalUploadFile;
+export default ModalUploadSlide;

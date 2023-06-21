@@ -20,7 +20,7 @@ const axios = AxiosInstances.create({
 	},
 });
 
-export const USER_PREFIX = 'mentors/users';
+export const USER_PREFIX = 'mentors/user';
 export const AUTH_PREFIX = 'mentors';
 export const COURSE_PREFIX = 'mentors/courses';
 export const DASHBOARD_PREFIX = 'mentors/dashboard';
