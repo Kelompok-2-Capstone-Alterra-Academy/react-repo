@@ -2,6 +2,7 @@ import {
 	faArrowAltCircleLeft,
 	faArrowAltCircleRight,
 	faChevronDown,
+	faSpinner,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from '@mui/material/Modal';
@@ -19,6 +20,7 @@ export default function Dashboard() {
 	const [isShowCreateCourseModal, setIsShowCreateCourseModal] = useState(false);
 	const [isShowThumbnailSelect, setIsShowThumbnailSelect] = useState(false);
 	const [validation, setValidation] = useState(false);
+	const [loadingCreateCourse, setLoadingCreateCourse] = useState(false);
 
 	const [loadingFetch, setLoadingFetch] = useState(true);
 	const [loadingFetchMajor, setLoadingFetchMajor] = useState(true);
@@ -304,13 +306,14 @@ export default function Dashboard() {
 								type={validation ? 'Primary' : 'Disabled'}
 								className={styles.modalButton}
 								onClick={() => {
+									setLoadingCreateCourse(true);
 									postCourse({
 										course_name: courseName,
 										live_session_week: courseSchedule,
 										thumbnail: courseThumbnail,
 									})
 										.then((res) => {
-											toast.success(res.message, {
+											toast.success(res.data.message, {
 												position: toast.POSITION.TOP_RIGHT,
 											});
 											dispatch(addCourse(res.data.data));
@@ -319,13 +322,18 @@ export default function Dashboard() {
 											toast.error(err.response.data.message, {
 												position: toast.POSITION.TOP_RIGHT,
 											});
+										})
+										.finally(() => {
+											setLoadingCreateCourse(false);
+											setCourseName('');
+											setCourseSchedule('');
+											setCourseThumbnail('apple');
+											setIsShowCreateCourseModal(false);
 										});
-									setCourseName('');
-									setCourseSchedule('');
-									setCourseThumbnail('apple');
-									setIsShowCreateCourseModal(false);
 								}}>
-								Buat Kursus
+								<span>
+									{loadingCreateCourse ? <FontAwesomeIcon icon={faSpinner} spin /> : 'Buat Kursus'}
+								</span>
 							</Button>
 						</div>
 					</div>

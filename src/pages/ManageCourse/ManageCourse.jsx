@@ -180,7 +180,7 @@ export default function ManageCourse() {
 			section_id: selectedSection.ID,
 		})
 			.then((res) => {
-				toast.success(res.message, {
+				toast.success(res.data.message, {
 					position: toast.POSITION.TOP_RIGHT,
 				});
 				dispatch(addContent(res.data.data));
@@ -349,7 +349,7 @@ export default function ManageCourse() {
 										id: selectedSection.ID,
 									})
 										.then((res) => {
-											toast.success(res.message, {
+											toast.success(res.data.message, {
 												position: toast.POSITION.TOP_RIGHT,
 											});
 											dispatch(
@@ -386,7 +386,7 @@ export default function ManageCourse() {
 								onPrimaryButtonClick={() => {
 									delSection(selectedSection.ID)
 										.then((res) => {
-											toast.success(res.message, {
+											toast.success(res.data.message, {
 												position: toast.POSITION.TOP_RIGHT,
 											});
 											dispatch(deleteSection(selectedSection.ID));

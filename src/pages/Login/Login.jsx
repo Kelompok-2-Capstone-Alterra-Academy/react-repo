@@ -84,7 +84,7 @@ export default function Login() {
 							setLoading(true);
 							login({ email, password })
 								.then((res) => {
-									toast.success(res.message, {
+									toast.success(res.data.message, {
 										position: toast.POSITION.TOP_RIGHT,
 									});
 									document.cookie = `token=${res.data.data.token}`;

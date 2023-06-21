@@ -39,7 +39,7 @@ export default function Login() {
 			pass: '12345678',
 		})
 			.then((res) => {
-				toast.success(res.message, {
+				toast.success(res.data.message, {
 					position: toast.POSITION.TOP_RIGHT,
 				});
 				const token = res.data.token;

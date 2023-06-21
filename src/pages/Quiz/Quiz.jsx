@@ -152,7 +152,7 @@ export default function Quiz() {
 				onPrimaryButtonClick={() => {
 					delAttachment(selectedDeleteQuiz.ID)
 						.then((res) => {
-							toast.success(res.message, {
+							toast.success(res.data.message, {
 								position: toast.POSITION.TOP_RIGHT,
 							});
 							dispatch(deleteQuiz(selectedDeleteQuiz.ID));
@@ -184,7 +184,7 @@ export default function Quiz() {
 						},
 					})
 						.then((res) => {
-							toast.success(res.message, {
+							toast.success(res.data.message, {
 								position: toast.POSITION.TOP_RIGHT,
 							});
 							dispatch(toggleStatusQuiz(selectedPublishQuiz.ID));
