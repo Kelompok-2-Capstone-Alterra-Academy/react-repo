@@ -1,77 +1,87 @@
-import axios from 'axios';
-import jwt from 'jwt-decode';
-import React, { useEffect, useState } from 'react';
-import { Header, MyTextField } from '../../components';
+import { faMars, faSpinner, faVenus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { putUser } from '../../clients';
+import { Button, Header } from '../../components';
+import { setUser } from '../../redux/actions/userActions';
+import styles from './EditProfile.module.css';
 
 export default function EditProfile() {
 	const [name, setName] = useState('');
-	const [kelas, setKelas] = useState('');
 	const [role, setRole] = useState('');
 	const [email, setEmail] = useState('');
-	const [phone_number, setPhone_Number] = useState('');
-	const [contact, setContact] = useState('');
-	const [status, setStatus] = useState('');
+	const [phoneNumber, setPhoneNumber] = useState('');
 	const [gender, setGender] = useState('');
 	const [selectedImage, setSelectedImage] = useState(null);
-	const [currentUser, setCurrentUser] = useState({});
 
-	// get current user
-	const cookieToken = document.cookie.split('=')[1];
-	const decodeToken = jwt(cookieToken);
+	const [loadingEdit, setLoadingEdit] = useState(false);
 
-	const getCurrentUser = async () => {
-		const response = await axios.get(`http://3.26.234.145:8081/mentors/users/${decodeToken.id}`, {
-			headers: { Authorization: `Bearer ${cookieToken}` },
-		});
-		setCurrentUser(response.data.data);
-		setName(response.data.data.name);
-		setKelas(response.data.data.class);
-		setRole(response.data.data.role);
-		setEmail(response.data.data.email);
-		setContact(response.data.data.contact);
-		setPhone_Number(response.data.data.phone_number);
-		setStatus(response.data.data.status);
-		setGender(response.data.data.gender);
-	};
+	const currentUser = useSelector((state) => state.user);
 
-	useEffect(() => {
-		getCurrentUser();
-	}, []);
+	const dispatch = useDispatch();
 
 	const handleSubmit = async (e) => {
+		setLoadingEdit(true);
 		e.preventDefault();
-		const updatedUser = {
-			name,
-			class: kelas,
-			role,
-			email,
-			contact,
-			status,
-			gender,
-			profile: selectedImage,
-		};
-
-		try {
-			const response = await axios.put(
-				`http://3.26.234.145:8081/mentors/user/profile/${decodeToken.id}`,
-				updatedUser,
-				{
-					headers: {
-						Authorization: `Bearer ${cookieToken}`,
-						'Content-Type': 'multipart/form-data',
-					},
-				}
-			);
-			console.log('User profile updated:', response.data);
-		} catch (error) {
-			console.log('Error updating user profile:', error);
-		}
+		putUser({
+			id: currentUser.ID,
+			data: {
+				name: name,
+				role: role,
+				email: email,
+				phone_number: phoneNumber,
+				gender,
+				profile: selectedImage,
+			},
+		})
+			.then((res) => {
+				toast.success(res.data.message, {
+					position: toast.POSITION.TOP_RIGHT,
+				});
+				dispatch(
+					setUser({
+						ID: currentUser.ID,
+						name: name,
+						role: role,
+						email: email,
+						phone_number: phoneNumber,
+						gender: gender,
+						profile: selectedImage,
+					})
+				);
+			})
+			.catch((err) => {
+				toast.error(err.response.data.message, {
+					position: toast.POSITION.TOP_RIGHT,
+				});
+			})
+			.finally(() => {
+				setLoadingEdit(false);
+			});
 	};
 
 	const handleImageUpload = (event) => {
 		const file = event.target.files[0];
-		setSelectedImage(file);
+		const reader = new FileReader();
+
+		reader.onload = () => {
+			const base64Image = reader.result;
+			setSelectedImage(base64Image);
+		};
+
+		reader.readAsDataURL(file);
 	};
+
+	useEffect(() => {
+		setName(currentUser?.name);
+		setRole(currentUser?.role);
+		setEmail(currentUser?.email);
+		setPhoneNumber(currentUser?.phone_number);
+		setGender(currentUser?.gender);
+		setSelectedImage(currentUser?.profile);
+	}, [currentUser]);
 
 	return (
 		<>
@@ -89,88 +99,86 @@ export default function EditProfile() {
 					<div className="w-100 border rounded-2xl px-6">
 						<div className="flex items-center justify-between mt-10">
 							<div className="flex items-center">
-								<img src={currentUser?.profile} alt="" width={100} />
+								<img src={currentUser?.profile} alt="Profile" className={styles.profileImage} />
 								<div className="ml-3">
-									<p className="font-bold text-xl">Jennie BP</p>
-									<p className="text-gray-700">jennieblpk20@email.com</p>
+									<p className="font-bold text-xl">{currentUser?.name}</p>
+									<p className="text-gray-800">{currentUser?.email}</p>
 								</div>
 							</div>
-							<div className="">
-								<button className="rounded-sm bg-blue-500 px-8 py-2 text-xs text-white">
-									<input type="file" onChange={handleImageUpload} />
-								</button>
-							</div>
+							<Button type="Primary" className={styles.buttonUpload}>
+								<input type="file" onChange={handleImageUpload} className={styles.inputFile} />
+								<span>Ganti Foto Profile</span>
+							</Button>
 						</div>
 
-						<div className="grid grid-cols-2 gap-4 mt-20">
-							<div>
-								<label htmlFor="name">Nama Lengkap</label>
-								<MyTextField value={name} onChange={(e) => setName(e.target.value)} />
-							</div>
-							<div>
-								<label htmlFor="ttl">Role</label>
-
-								<MyTextField value={role} onChange={(e) => setRole(e.target.value)} />
-							</div>
-							<div>
-								<label htmlFor="kelas">Kelas</label>
-								<MyTextField value={kelas} onChange={(e) => setKelas(e.target.value)} />
-							</div>
-							<div>
-								<label htmlFor="contact">Contact</label>
-								<MyTextField value={phone_number} onChange={(e) => setContact(e.target.value)} />
-							</div>
-							<div>
-								<label htmlFor="email">Email</label>
+						<div className="grid grid-cols-2 gap-8 mt-10">
+							<div className={styles.formGroup}>
+								<span className={styles.label}>Nama lengkap</span>
 								<input
-									className="shadow-sm appearance-none bg-[#F5F5F5] border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-									placeholder="Enter your email here"
-									type="email"
-									value={email}
-									onChange={(e) => setEmail(e.target.value)}
+									type="text"
+									className={styles.input}
+									placeholder="Masukkan Nama Lengkap"
+									onChange={(e) => {
+										setName(e.target.value);
+									}}
+									value={name}
 								/>
 							</div>
-							<div>
-								<label htmlFor="email">Status</label>
-
-								<MyTextField value={status} onChange={(e) => setStatus(e.target.value)} />
+							<div className={styles.formGroup}>
+								<span className={styles.label}>Role</span>
+								<input type="text" className={styles.disabledInput} disabled value={role} />
 							</div>
-							<div className=" items-center gap-4 mb-6">
-								<label htmlFor="email">Gender</label>
-								<div className="flex gap-5">
-									<div>
-										<input
-											id="male"
-											type="radio"
-											value="male"
-											name="gender"
-											checked={gender === 'male'}
-											onChange={(e) => setGender(e.target.value)}
-										/>
-										<label htmlFor="male" className="ml-2 text-sm font-medium text-gray-800">
-											Male
-										</label>
+							<div className={styles.formGroup}>
+								<span className={styles.label}>Email</span>
+								<input
+									type="text"
+									className={styles.input}
+									placeholder="Masukkan Email"
+									onChange={(e) => {
+										setEmail(e.target.value);
+									}}
+									value={email}
+								/>
+							</div>
+							<div className={styles.formGroup}>
+								<span className={styles.label}>Nomor Kontak</span>
+								<input
+									type="text"
+									className={styles.input}
+									placeholder="Masukkan Nomor Kontak"
+									onChange={(e) => {
+										setPhoneNumber(e.target.value);
+									}}
+									value={phoneNumber}
+								/>
+							</div>
+							<div className={styles.formGroup}>
+								<span className={styles.label}>Gender</span>
+								<div className={styles.genderGroup}>
+									<div
+										className={gender == 'male' ? styles.radioGroupActive : styles.radioGroup}
+										onClick={() => {
+											setGender('male');
+										}}>
+										<FontAwesomeIcon icon={faMars} className={styles.icon} />
+										<span className={styles.genderText}>Laki-Laki</span>
 									</div>
-									<div>
-										<input
-											id="female"
-											type="radio"
-											value="female"
-											name="gender"
-											checked={gender === 'female'}
-											onChange={(e) => setGender(e.target.value)}
-										/>
-										<label htmlFor="female" className="ml-2 text-sm font-medium text-gray-800">
-											Female
-										</label>
+									<div
+										className={gender == 'female' ? styles.radioGroupActive : styles.radioGroup}
+										onClick={() => {
+											setGender('female');
+										}}>
+										<FontAwesomeIcon icon={faVenus} className={styles.icon} />
+										<span className={styles.genderText}>Perempuan</span>
 									</div>
 								</div>
 							</div>
-
-							<div className="mb-6">
-								<button className="bg-blue-500 hover:bg-blue-700 text-white py-1 px-4 border w-full border-blue-700 rounded">
-									Simpan Perubahan
-								</button>
+							<div className={styles.buttonGroup}>
+								<Button type="Primary" onClick={handleSubmit} className={styles.button}>
+									<span>
+										{loadingEdit ? <FontAwesomeIcon icon={faSpinner} spin /> : 'Simpan Perubahan'}
+									</span>
+								</Button>
 							</div>
 						</div>
 					</div>
