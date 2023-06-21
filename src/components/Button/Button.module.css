@@ -4,6 +4,11 @@
 	font-size: 1em;
 	border-radius: 5px;
 	padding: 0.5em 1.5em;
+	transition: all 0.2s ease-in-out;
+	outline: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .button:disabled {
@@ -29,4 +34,28 @@
 	background-color: white;
 	border: 2px solid #2196f3;
 	color: #2196f3;
+}
+
+.primary:hover {
+	background-color: #1976d2;
+	border: 2px solid #1976d2;
+	color: white;
+}
+
+.secondary:hover {
+	background-color: #e3f2fd;
+	border: 2px solid #1976d2;
+	color: #1976d2;
+}
+
+.danger:hover {
+	background-color: #f44336;
+	border: 2px solid #f44336;
+	color: white;
+}
+
+.button:focus,
+.button:active,
+.button:hover {
+	outline: none;
 }

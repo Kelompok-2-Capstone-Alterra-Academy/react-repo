@@ -1,0 +1,404 @@
+.container {
+	position: relative;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	padding: 4em 1.5em 1.5em 1.5em;
+	border-radius: 8px;
+	background-color: #fff;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	border: 1px solid #eaeaea;
+	cursor: pointer;
+	transition: all 0.5s ease-in-out;
+}
+
+.container:hover {
+	transform: scale(1.05);
+}
+
+.cardNavigation {
+	position: absolute;
+	top: 0;
+	padding: 1em;
+	width: 100%;
+	margin-bottom: 1em;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.uploadIconContainer,
+.deleteIconContainer {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	padding: 0.5em;
+}
+
+.uploadIconContainer span,
+.deleteIconContainer span {
+	font-size: 14px;
+	font-weight: 400;
+}
+
+.uploadIcon {
+	width: 16px;
+	height: 16px;
+	margin-right: 0.5em;
+}
+
+.cardButton {
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-gap: 0.5em;
+	margin-top: 1em;
+}
+
+.deleteIcon {
+	width: 16px;
+	height: 16px;
+	margin-right: 0.5em;
+}
+
+.deleteIcon:hover {
+	transform: scale(1.1);
+}
+
+.cardHeader {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-start;
+	margin-bottom: 0.5em;
+}
+
+.cardHeaderImage {
+	width: 40%;
+	margin-right: 0.5em;
+}
+
+.cardHeaderTitle {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.cardHeaderTitleText {
+	text-align: center;
+	font-size: 16px;
+	font-weight: 500;
+	color: #212121;
+	margin-bottom: 0.5em;
+}
+
+.cardHeaderGenderTagContainer {
+	width: 100%;
+	margin-top: 1em;
+	padding: 0 0.25em;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.cardHeaderGenderTag1,
+.cardHeaderGenderTag2 {
+	font-size: 10px;
+	font-weight: 600;
+	margin: 0;
+}
+
+.maleIcon {
+	width: 10px;
+	height: 10px;
+	margin-right: 0.25em;
+}
+
+.femaleIcon {
+	width: 10px;
+	height: 10px;
+	margin-left: 0.25em;
+}
+
+.cardHeaderGenderTag1 {
+	color: #22bdff;
+	align-self: flex-start;
+}
+
+.cardHeaderGenderTag2 {
+	color: #4161ff;
+	align-self: flex-end;
+}
+
+.genderLine {
+	width: 100%;
+	height: 6px;
+	border-radius: 8px;
+}
+
+.maleLine {
+	height: 100%;
+	background-color: #22bdff;
+	float: left;
+	border-radius: 8px 0 0 8px;
+}
+
+.femaleLine {
+	height: 100%;
+	background-color: #4161ff;
+	float: left;
+	border-radius: 0 8px 8px 0;
+}
+
+.cardBody {
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-gap: 1em;
+}
+
+.cardBodyItem1,
+.cardBodyItem2 {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.cardFooter {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 1em;
+}
+
+.cardBorderColor {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 5px;
+	border-radius: 0 0 8px 8px;
+	background: linear-gradient(180deg, #2196f3 19.19%, #4161ff 100%);
+}
+
+.publishModalContainer {
+	width: 40%;
+	height: fit-content;
+	position: absolute;
+	top: 45%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: white;
+	border-radius: 20px;
+	padding: 2em 3em;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.publishModalHeader {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 1em;
+}
+
+.publishModalHeaderTitle {
+	font-size: 24px;
+	font-weight: 600;
+	color: #000000;
+}
+
+.publishModalLabel {
+	font-size: 16px;
+	font-weight: 600;
+	color: #000000;
+	margin-bottom: 1em;
+}
+
+.publishForm {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.priceForm,
+.descriptionForm {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 1em;
+}
+
+.categoryForm,
+.thumbnailForm {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.categorySelectContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: space-between;
+	height: 100%;
+}
+
+.categoryAndThumbnailForm {
+	width: 100%;
+	display: grid;
+	grid-template-columns: 4fr 2fr;
+	grid-gap: 1em;
+	margin-bottom: 2em;
+}
+
+.priceInput,
+.descriptionInput {
+	border-radius: 8px;
+	padding: 0.75em 1em;
+	background: #ffffff;
+	box-shadow: 0px 0px 10px 0px #0000001a;
+	border: none;
+	outline: none;
+}
+
+.priceInput {
+	text-align: end;
+	font-size: 24px;
+	font-weight: 400;
+}
+
+.priceInput::placeholder {
+	font-size: 24px;
+	font-weight: 400;
+	color: #9e9e9e;
+}
+
+.descriptionInput {
+	font-size: 14px;
+	font-weight: 400;
+}
+
+.descriptionInput::placeholder {
+	font-size: 14px;
+	font-weight: 400;
+	color: #9e9e9e;
+}
+
+.classSelectContainer,
+.majorSelectContainer,
+.thumbnailSelectContainer {
+	position: relative;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	background: #ffffff;
+	box-shadow: 0px 0px 10px 0px #0000001a;
+	border-radius: 8px;
+	padding: 1em;
+	cursor: pointer;
+}
+
+.classSelectContainer {
+	margin-bottom: 1em;
+}
+
+.thumbnailSelectContainer {
+	height: 100%;
+}
+
+.classSelect,
+.majorSelect {
+	width: 70%;
+	right: calc(-70% - 0.5em);
+	top: calc(-70% + 1.5em);
+}
+
+.thumbnailSelect {
+	position: absolute;
+	height: fit-content;
+	width: 250%;
+	left: calc(100% + 0.5em);
+	bottom: 0px;
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	padding: 1em;
+	background: #ffffff;
+	box-shadow: 0 3px 11px #0000001a, 0 3px 6px #00000026;
+	border-radius: 8px;
+	z-index: 2;
+}
+
+.thumbnailSelect {
+	visibility: hidden;
+	animation: slideRight 0.3s ease-in-out forwards;
+}
+
+@keyframes slideRight {
+	0% {
+		opacity: 0;
+		transform: translateX(-10px);
+	}
+	100% {
+		opacity: 1;
+		transform: translateX(0);
+		visibility: visible;
+	}
+}
+
+.thumbnailSelectedImage {
+	width: 80px;
+	height: 80px;
+}
+
+.thumbnailSelectOption {
+	padding: 0.5em;
+	border-radius: 8px;
+	cursor: pointer;
+	transition: all 0.3s ease-in-out;
+}
+
+.thumbnailSelectOption:hover {
+	transform: scale(1.1);
+	background-color: #def4ff;
+}
+
+.modalButtonContainer {
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-gap: 1em;
+}
+
+.modalButton {
+	width: 100%;
+}
+
+.classSelected,
+.majorSelected {
+	font-size: 16px;
+	font-weight: 400;
+	color: #212121;
+}
+
+.classNotSelected,
+.majorNotSelected {
+	font-size: 16px;
+	font-weight: 400;
+	color: #9e9e9e;
+}

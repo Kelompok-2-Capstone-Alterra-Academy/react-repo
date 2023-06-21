@@ -1,0 +1,141 @@
+.container {
+	padding: 0em 0.5em;
+}
+
+.description {
+	font-style: normal;
+	font-weight: 400;
+	font-size: 14px;
+	text-align: left;
+}
+
+.descriptionActive {
+	font-style: normal;
+	font-weight: 400;
+	font-size: 14px;
+	text-align: left;
+	color: #ffffff;
+}
+
+.icon {
+	margin-right: 8px;
+	color: #2196f3;
+	transition: 0.2s all ease-in-out;
+}
+
+.iconDelete,
+.iconEdit {
+	color: #2196f3;
+	transition: 0.2s all ease-in-out;
+}
+
+.listItem,
+.listItemActive {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	padding: 1em;
+	border-radius: 8px;
+	width: 100%;
+	box-sizing: border-box;
+	margin-bottom: 1em;
+	transition: 0.2s all ease-in-out;
+}
+
+.iconEdit:hover,
+.iconDelete:hover,
+.iconEditActive:hover,
+.iconDeleteActive:hover {
+	transform: scale(1.2);
+}
+
+.listItemActive {
+	background-color: #2196f3;
+}
+
+.iconActive {
+	margin-right: 8px;
+	color: #ffffff;
+}
+
+.iconDeleteActive,
+.iconEditActive {
+	color: white;
+	transition: all 0.2s ease-in-out;
+}
+
+.iconEditActive,
+.iconEdit {
+	margin-right: 6px;
+	transition: all 0.2s ease-in-out;
+}
+
+.listItem,
+.listItemActive {
+	color: #212121;
+}
+
+.listItem:hover,
+.listItem:hover .icon,
+.listItem:hover .iconDelete,
+.listItem:hover .iconEdit {
+	background-color: #7fc0f4;
+	color: #ffffff;
+}
+
+@media screen and (min-width: 1536px) {
+	.sidebar {
+		width: 25%;
+	}
+}
+
+.modalContainer {
+	width: 40%;
+	height: fit-content;
+	position: absolute;
+	top: 45%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: white;
+	border-radius: 20px;
+	padding: 2em 3em;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.modalTitle {
+	font-size: 20px;
+	font-weight: 600;
+	margin-bottom: 1em;
+}
+
+.formInput {
+	width: 100%;
+	margin-bottom: 1em;
+	border: 1px solid #56585c;
+	padding: 1em;
+	border-radius: 15px;
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.formInput::placeholder {
+	font-size: 16px;
+	font-weight: 400;
+	color: #9e9e9e;
+}
+
+.footer {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+
+.footer button {
+	width: 48%;
+}

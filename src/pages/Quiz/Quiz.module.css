@@ -1,0 +1,171 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	width: 100%;
+}
+
+.header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	border: 1px solid #d9d9d9;
+	padding: 1em;
+	border-radius: 8px;
+}
+
+.headerTitle {
+	color: black;
+	font-weight: 400;
+	font-size: 20px;
+}
+
+.headerTitle > b {
+	color: #212121;
+}
+
+.headerButton {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+}
+
+.headerButtonIcon {
+	margin-right: 0.5em;
+}
+
+.content {
+	width: 100%;
+	margin-top: 2em;
+}
+
+.table {
+	width: 100%;
+	border-collapse: collapse;
+	table-layout: fixed;
+}
+
+.tableHeader {
+	text-align: left;
+	position: relative;
+}
+
+.tableHeader span {
+	color: #616161;
+	font-size: 14px;
+	font-weight: 500;
+}
+
+.tableBody {
+	text-align: left;
+}
+
+.tableBody td,
+.tableHeader th {
+	padding: 0.5em 0;
+}
+
+.tableBody td {
+	padding-bottom: 0.5em;
+}
+
+.tableBody span,
+.tableBody a {
+	color: #212121;
+	font-size: 14px;
+	font-weight: 500;
+}
+
+.table th:nth-child(1),
+.table td:nth-child(1) {
+	width: 25%;
+	word-break: break-all;
+}
+
+.table th:nth-child(4) {
+	width: 30%;
+}
+
+.table td:nth-child(4) {
+	width: 100%;
+}
+
+.table th:nth-child(2),
+.table td:nth-child(2) {
+	width: 20%;
+	padding: 0 1em;
+	word-break: break-all;
+}
+
+.table td:nth-child(3),
+.table th:nth-child(3) {
+	width: 15%;
+}
+
+.table a {
+	text-decoration: none;
+	color: black;
+	cursor: pointer;
+}
+
+.actionButtonContainer {
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-gap: 0.5em;
+}
+
+.actionOneButtonContainer {
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(1, 1fr);
+}
+
+.table td:nth-child(4) > button {
+	width: 100%;
+}
+
+.previewIcon {
+	margin-left: 1em;
+}
+
+.preview {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	width: fit-content;
+	padding: 0.5em;
+	background-color: #f5f5f5;
+	border-radius: 8px;
+	transition: all 0.2s ease-in-out;
+}
+
+.preview:hover {
+	background-color: #e0e0e0;
+}
+
+.tag {
+	height: 100%;
+	width: 80%;
+	font-size: 12px;
+	font-weight: 600;
+	display: flex;
+	justify-content: center;
+}
+
+.splitter {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 3px;
+	background-color: #d9d9d9;
+}
+
+.actionButton {
+	font-size: 14px;
+}

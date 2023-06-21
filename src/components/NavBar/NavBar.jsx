@@ -1,20 +1,16 @@
-import * as React from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
-import {
-	Button,
-	AppBar,
-	MenuItem,
-	Container,
-	Toolbar,
-	Box,
-	IconButton,
-	Menu,
-	Typography,
-} from '@mui/material';
+import { AppBar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar } from '@mui/material';
+import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-export default function NavBar() {
-	const pages = ['Beranda', 'Kursus', 'Tentang Kami', 'Customer Service'];
+const pages = ['Beranda', 'Komunitas', 'Tentang Kami', 'Customer Service'];
+const url = ['/', 'https://t.me/+starEdu', '/about-us', 'https://wa.me/+6288888888888'];
+
+export default function NavBar({ active }) {
 	const [anchorElNav, setAnchorElNav] = React.useState(null);
+	const [activePage, setActivePage] = React.useState(active);
+
+	const navigate = useNavigate();
 
 	const handleOpenNavMenu = (event) => {
 		setAnchorElNav(event.currentTarget);
@@ -24,12 +20,21 @@ export default function NavBar() {
 		setAnchorElNav(null);
 	};
 
+	const handlePageClick = (url) => {
+		if (url.startsWith('https://')) {
+			window.open(url, '_blank');
+		} else {
+			navigate(url);
+		}
+		handleCloseNavMenu();
+	};
+
 	return (
 		<AppBar position="static" sx={{ bgcolor: 'transparent', boxShadow: '0' }}>
 			<Container maxWidth="xl">
 				<Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
 					<Box>
-						<img src="/img/StarMyDashboard.png" alt="" width={210} />
+						<img src="/image/logo-starMyDashboard.png" alt="" width={210} />
 					</Box>
 					<Box>
 						<Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -43,8 +48,7 @@ export default function NavBar() {
 									bgcolor: '#dbedff',
 									borderRadius: '8px',
 									':hover': { color: '#fff', bgcolor: '#67bbff' },
-								}}
-							>
+								}}>
 								<MenuIcon />
 							</IconButton>
 							<Menu
@@ -64,13 +68,20 @@ export default function NavBar() {
 								sx={{
 									display: { xs: 'block', md: 'none' },
 									color: 'black',
-								}}
-							>
-								{pages.map((page) => (
-									<MenuItem key={page} onClick={handleCloseNavMenu}>
-										<Typography textAlign="center" sx={{ color: 'black' }}>
+								}}>
+								{pages.map((page, i) => (
+									<MenuItem
+										key={page}
+										onClick={() => handlePageClick(url[i])}
+										sx={{ ':hover': { bgcolor: 'transparent' } }}>
+										<Button
+											sx={{
+												color: activePage === page ? 'blue' : 'black',
+												bgcolor: activePage === page ? '#F0FAFF' : '#fff',
+												textAlign: 'center',
+											}}>
 											{page}
-										</Typography>
+										</Button>
 									</MenuItem>
 								))}
 								<MenuItem>
@@ -83,7 +94,7 @@ export default function NavBar() {
 											textTransform: 'capitalize',
 										}}
 										variant="contained"
-									>
+										href="/register">
 										Daftar
 									</Button>
 								</MenuItem>
@@ -97,32 +108,31 @@ export default function NavBar() {
 											textTransform: 'capitalize',
 										}}
 										variant="outlined"
-									>
+										href="/login">
 										Login
 									</Button>
 								</MenuItem>
 							</Menu>
 						</Box>
-
 						<Box
 							sx={{
 								flexGrow: 1,
 								display: { xs: 'none', md: 'flex' },
 								gap: { xs: '0', md: '40px' },
-							}}
-						>
-							{pages.map((page) => (
+							}}>
+							{pages.map((page, i) => (
 								<Button
 									key={page}
-									onClick={handleCloseNavMenu}
+									onClick={() => handlePageClick(url[i])}
 									sx={{
 										my: 2,
-										color: 'black',
+										color: '#212121',
+										borderBottom: activePage === page ? '2px solid #2196F3' : 'none',
 										textTransform: 'capitalize',
 										display: 'block',
+										borderRadius: '0',
 										':hover': { color: 'blue' },
-									}}
-								>
+									}}>
 									{page}
 								</Button>
 							))}
@@ -139,7 +149,7 @@ export default function NavBar() {
 								textTransform: 'capitalize',
 							}}
 							variant="outlined"
-						>
+							href="/login">
 							Login
 						</Button>
 						<Button
@@ -149,9 +159,12 @@ export default function NavBar() {
 								borderRadius: '8px',
 								fontWeight: 600,
 								textTransform: 'capitalize',
+								':hover': {
+									color: 'white',
+								},
 							}}
 							variant="contained"
-						>
+							href="/register">
 							Daftar
 						</Button>
 					</Box>

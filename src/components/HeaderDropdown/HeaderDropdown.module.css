@@ -1,0 +1,36 @@
+.header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	border: 2px solid #f5f5f5;
+	padding: 1em;
+	border-radius: 8px;
+}
+
+.headerTitle {
+	color: #212121;
+	font-weight: 400;
+	font-size: 24px;
+}
+
+.headerButton {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+}
+
+.headerButtonIcon {
+	margin-right: 0.5em;
+}
+
+.buttonContainer {
+	position: relative;
+}
+
+.actionSelect {
+	width: 150%;
+	right: 0;
+	top: 100%;
+}

@@ -1,38 +1,22 @@
-import axios, { DASHBOARD_PREFIX } from 'axios';
+import axios, { DASHBOARD_PREFIX } from './axios';
 
-export function getSomething() {
+export function statisctic() {
 	return axios({
 		method: 'get',
-		url: `${DASHBOARD_PREFIX}`,
+		url: `${DASHBOARD_PREFIX}/statistic`,
 	});
 }
 
-export function getSomethingByParam(params) {
+export function statiscticCourse() {
 	return axios({
 		method: 'get',
-		url: `${DASHBOARD_PREFIX}/${params}`,
+		url: `${DASHBOARD_PREFIX}/statistic-course`,
 	});
 }
 
-export function postSomething(data) {
+export function analysis() {
 	return axios({
-		method: 'post',
-		url: `${DASHBOARD_PREFIX}`,
-		data: data,
-	});
-}
-
-export function updateSomething(id, data) {
-	return axios({
-		method: 'put',
-		url: `${DASHBOARD_PREFIX}/${id}`,
-		data: data,
-	});
-}
-
-export function deleteSomething(id) {
-	return axios({
-		method: 'delete',
-		url: `${DASHBOARD_PREFIX}/${id}`,
+		method: 'get',
+		url: `${DASHBOARD_PREFIX}/analysis`,
 	});
 }

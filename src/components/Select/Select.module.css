@@ -1,0 +1,112 @@
+.container,
+.hideContainer,
+.firstRender {
+	position: absolute;
+	top: 100%;
+	right: 0;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	padding: 1em;
+	background: #ffffff;
+	box-shadow: 0 3px 11px #0000001a, 0 3px 6px #00000026;
+	border-radius: 8px;
+	margin-top: 1em;
+	color: black;
+	z-index: 2;
+}
+
+.container {
+	visibility: hidden;
+	animation: slideDown 0.3s ease-in-out forwards;
+}
+
+@keyframes slideDown {
+	0% {
+		opacity: 0;
+		transform: translateY(-10px);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+		visibility: visible;
+	}
+}
+
+.firstRender {
+	visibility: hidden;
+	animation: none !important;
+}
+
+.hideContainer {
+	visibility: visible;
+	animation: slideUp 0.3s ease-in-out forwards;
+}
+
+@keyframes slideUp {
+	0% {
+		opacity: 1;
+		transform: translateY(0);
+		visibility: visible;
+	}
+	100% {
+		opacity: 0;
+		transform: translateY(-10px);
+		visibility: hidden;
+	}
+}
+
+.selectTitle {
+	font-weight: 600;
+	font-size: 14px;
+}
+
+.option {
+	margin-top: 0.5em;
+	display: flex;
+	flex-direction: column;
+	font-weight: 400;
+	font-size: 14px;
+	width: 100%;
+	overflow: auto;
+	max-height: 200px;
+}
+
+.option::-webkit-scrollbar {
+	width: 6px;
+	background-color: transparent;
+}
+
+.option::-webkit-scrollbar-thumb {
+	background-color: #c0c0c0;
+	border-radius: 3px;
+}
+
+.option::-webkit-scrollbar-thumb:hover {
+	background-color: #a0a0a0;
+}
+
+.optionContainer {
+	padding: 1em 0.5em;
+	cursor: pointer;
+	transition: all 0.3s ease-in-out;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	& svg {
+		width: 20px;
+		height: 20px;
+		margin-right: 1em;
+		color: #1976d2;
+	}
+}
+
+.optionContainer:hover {
+	color: white !important;
+	background: #1976d2;
+	border-radius: 8px;
+	& svg {
+		color: white;
+	}
+}

@@ -1,0 +1,206 @@
+.sidebar {
+	position: fixed;
+	height: -webkit-fill-available;
+	flex: 0 0 auto;
+	width: 20%;
+	background: #f0faff;
+	padding: 1em 1.5em 1.5em 1.5em;
+	overflow-y: auto;
+	transition: width 0.3s ease, padding 0.3s ease;
+	overflow-y: scroll;
+}
+
+.hideSidebar {
+	padding: 1em 0;
+	width: 0;
+}
+
+.sidebar::-webkit-scrollbar {
+	width: 6px;
+	background-color: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+	background-color: #c0c0c0;
+	border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+	background-color: #a0a0a0;
+}
+
+.menuTitleContainer {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.menuTitle {
+	font-size: 14px;
+	font-weight: 600;
+	color: #212121;
+}
+
+.menuBox {
+	border-radius: 8px;
+	padding: 1em;
+	margin-bottom: 1em;
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+	flex-direction: row;
+}
+
+.menuParticipantIcon,
+.menuAddIcon {
+	width: 24px;
+	height: 24px;
+}
+
+.selectWrapper {
+	position: relative;
+}
+
+.contentSelection {
+	width: 600%;
+}
+
+.menuParticipantIcon {
+	margin-right: 1em;
+}
+
+.menuParticipantIcon {
+	color: #2196f3;
+}
+
+.menuAddIcon {
+	background: #2196f3;
+	border-radius: 8px;
+	padding: 4px;
+	color: white;
+	cursor: pointer;
+}
+
+.menuBox {
+	background: #ffffff;
+	box-shadow: 0 3px 11px #0000001a, 0 3px 6px #00000026;
+	transition: all 0.3s ease-in-out;
+}
+
+.menuBox:hover {
+	background: #bbdefb;
+}
+.menuCourseContainer {
+	display: flex;
+	flex-direction: column;
+	margin-top: 1em;
+}
+
+.menuCourse {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	border-radius: 8px;
+	padding: 1em 1.5em;
+	background: #2196f3;
+	color: white;
+	font-size: 14px;
+	cursor: pointer;
+}
+
+.menuCourseTitle {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	word-break: break-all;
+}
+
+.menuCourseTitleSection {
+	font-weight: 400;
+	word-break: break-all;
+}
+
+.menuCourseTitleCourse {
+	font-weight: 600;
+	word-break: break-all;
+}
+
+.menuCourseArrowContainer {
+	display: flex;
+	align-items: center;
+	margin-left: 0.5em;
+}
+
+.menuArrowIcon {
+	width: 14px;
+	height: 14px;
+	cursor: pointer;
+}
+
+.modulContainer {
+	margin-top: 0.5em;
+	background: #ffffff;
+	box-shadow: 0 3px 11px #0000001a, 0 3px 6px #00000026;
+	width: 100%;
+	border-radius: 8px;
+	padding: 0.5em;
+}
+
+.modulChild {
+	width: 100%;
+	border-radius: 8px;
+	padding: 0.5em 1em;
+	background: white;
+	margin-bottom: 0.5em;
+	opacity: 0;
+	visibility: hidden;
+	animation: slideDown 0.3s ease-in-out forwards;
+	transition: all 0.3s ease-in-out;
+	cursor: pointer;
+}
+
+.modulChild:hover {
+	background: #bbdefb;
+}
+
+@keyframes slideDown {
+	0% {
+		opacity: 0;
+		transform: translateY(-10px);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+		visibility: visible;
+	}
+}
+
+.modulChildSelected {
+	background: #bbdefb;
+}
+
+.modulContent {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin-top: 0.5em;
+}
+
+.modulType {
+	font-size: 14px;
+	font-weight: 400;
+}
+
+.modulTypeIcon {
+	width: 24px;
+	height: 24px;
+	margin-right: 1em;
+	color: #2196f3;
+}
+
+.modulTitle {
+	font-size: 14px;
+	font-weight: 600;
+	word-break: break-all;
+}

@@ -4,19 +4,19 @@
 	flex-direction: row;
 	cursor: pointer;
 	position: relative;
+	box-shadow: 0 3px 11px #0000001a, 0 3px 6px #00000026;
+	padding: 0.5em 1em;
+	border-radius: 8px;
+	width: 350px;
+	background-color: white;
 }
 
 .profileContainer {
 	display: flex;
 	flex-direction: row;
-	align-items: space-around;
-	justify-content: center;
-}
-
-.gearIcon {
-	width: 20px;
-	height: 20px;
-	margin-right: 1.5em;
+	align-items: center;
+	justify-content: flex-start;
+	width: 100%;
 }
 
 .arrowIcon {
@@ -26,11 +26,11 @@
 }
 
 .avatar {
-	width: 4em;
-	height: 4em;
+	width: 3em;
+	height: 3em;
 	border-radius: 50%;
 	object-fit: cover;
-	margin-right: 20px;
+	margin-right: 1em;
 }
 
 .nameContainer {
@@ -44,6 +44,7 @@
 	font-size: 16px;
 	font-weight: 600;
 	margin-bottom: 5px;
+	width: fit-content;
 }
 
 .role {
@@ -59,21 +60,26 @@
 }
 
 .menuContainer,
-.closedMenuContainer {
+.closedMenuContainer,
+.firstRender {
 	position: absolute;
 	top: 100%;
 	right: 0;
-	width: 130%;
+	width: 100%;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	background-color: #fff;
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-	padding: 2em;
-	margin-top: 1.5em;
+	box-shadow: 0 3px 11px #0000001a, 0 3px 6px #00000026;
+	padding: 1em;
+	margin-top: 0.5em;
 	border-radius: 8px;
 	opacity: 0;
+	z-index: 1;
+}
+
+.menuContainer {
 	visibility: hidden;
 	animation: slideDown 0.3s ease-in-out forwards;
 }
@@ -87,6 +93,28 @@
 		opacity: 1;
 		transform: translateY(0);
 		visibility: visible;
+	}
+}
+
+.firstRender {
+	visibility: hidden;
+	animation: none !important;
+}
+
+.closedMenuContainer {
+	visibility: visible;
+	animation: slideUp 0.3s ease-in-out forwards;
+}
+
+@keyframes slideUp {
+	0% {
+		transform: translateY(-0);
+		opacity: 1;
+	}
+	100% {
+		transform: translateY(-10px);
+		opacity: 0;
+		visibility: hidden;
 	}
 }
 
@@ -117,20 +145,20 @@
 }
 
 .menuItem > div {
-	padding: 0.75em;
+	padding: 0.5em;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 }
 
 .menuIcon {
-	width: 20px;
-	height: 20px;
+	width: 16px;
+	height: 16px;
 	margin-left: 0.5em;
 }
 
 .menuTitle {
-	font-size: 16px;
+	font-size: 14px;
 	font-weight: 600;
 	margin-left: 1em;
 }
@@ -139,7 +167,7 @@
 	display: flex;
 	justify-content: center;
 	width: 100%;
-	margin-top: 4em;
+	margin-top: 2em;
 	border: 2px solid #2196f3;
 	border-radius: 8px;
 	color: #2196f3;
@@ -152,10 +180,10 @@
 }
 
 .logoutContainer > div {
-	padding: 0.75em;
+	padding: 0.5em;
 }
 
 .logoutTitle {
-	font-size: 16px;
-	font-weight: 600;
+	font-size: 14px;
+	font-weight: 400;
 }
