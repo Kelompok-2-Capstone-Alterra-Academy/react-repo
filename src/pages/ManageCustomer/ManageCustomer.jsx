@@ -611,7 +611,7 @@ export default function ManageCustomer() {
           onSecondaryButtonClick={handleDeleteCustomer}
           title="Hapus Siswa?"
           image={"/image/customer-delete.png"}
-          confirmationText="Apakah Anda yakin ingin siswa?"
+          confirmationText="Apakah Anda yakin untuk menghapus siswa?"
         />
       </div>
     </div>
