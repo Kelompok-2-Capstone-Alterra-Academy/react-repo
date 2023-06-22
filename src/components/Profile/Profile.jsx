@@ -127,23 +127,24 @@ export default function Profile({ className }) {
 								</div>
 							))}
 						</div>
-						<div className={styles.logoutContainer}>
-							<div
-								onClick={() => {
-									logout()
-										.then((res) => {
-											toast.success(res.data.message, {
-												position: toast.POSITION.TOP_RIGHT,
-											});
-											document.cookie = 'token=;';
-											navigate('/login');
-										})
-										.catch((err) => {
-											toast.error(err.response.data.message, {
-												position: toast.POSITION.TOP_RIGHT,
-											});
+						<div
+							className={styles.logoutContainer}
+							onClick={() => {
+								logout()
+									.then((res) => {
+										toast.success(res.data.message, {
+											position: toast.POSITION.TOP_RIGHT,
 										});
-								}}>
+										document.cookie = 'token=;';
+										navigate('/login');
+									})
+									.catch((err) => {
+										toast.error(err.response.data.message, {
+											position: toast.POSITION.TOP_RIGHT,
+										});
+									});
+							}}>
+							<div>
 								<span className={styles.logoutTitle}>Logout</span>
 							</div>
 						</div>
