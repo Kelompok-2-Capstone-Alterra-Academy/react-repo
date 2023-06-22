@@ -116,7 +116,7 @@ export default function CardKursus({ data, category }) {
 											status: 'draft',
 										},
 								  }).then((res) => {
-										toast.success(res.data.message, {
+										toast.success(`Successfully unpublish ${data.course_name}`, {
 											position: toast.POSITION.TOP_RIGHT,
 										});
 										dispatch(
@@ -316,7 +316,7 @@ export default function CardKursus({ data, category }) {
 											status: 'publish',
 										},
 									}).then((res) => {
-										toast.success(res.data.message, {
+										toast.success(`Successfully publish ${data.course_name}`, {
 											position: toast.POSITION.TOP_RIGHT,
 										});
 										dispatch(
@@ -347,7 +347,7 @@ export default function CardKursus({ data, category }) {
 				primaryButtonName="Hapus Kursus"
 				onPrimaryButtonClick={() => {
 					delCourse(data.ID).then((res) => {
-						toast.success(res.data.message, {
+						toast.success(`Successfully delete ${data.course_name}`, {
 							position: toast.POSITION.TOP_RIGHT,
 						});
 						dispatch(deleteCourse(data.ID));
