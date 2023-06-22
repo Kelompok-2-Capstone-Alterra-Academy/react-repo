@@ -137,12 +137,12 @@
 
 .modalContentBody {
 	width: 100%;
-	height: 100%;
 	overflow-y: auto;
 }
 
 .modalContentBody {
 	display: flex;
+	align-items: flex-start;
 	justify-content: center;
 	width: 100%;
 }
@@ -216,7 +216,6 @@
 	font-weight: 400;
 	color: #212121;
 	text-align: center;
-	height: 100%;
 	overflow-y: auto;
 }
 

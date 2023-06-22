@@ -6,11 +6,3 @@ export function getUser(id) {
 		url: `${USER_PREFIX}s/${id}`,
 	});
 }
-
-export function putUser({ id, data }) {
-	return axios({
-		method: 'put',
-		url: `${USER_PREFIX}/profile/${id}`,
-		data,
-	});
-}

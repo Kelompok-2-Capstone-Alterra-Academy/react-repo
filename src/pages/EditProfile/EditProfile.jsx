@@ -11,7 +11,6 @@ import styles from './EditProfile.module.css';
 
 export default function EditProfile() {
 	const [name, setName] = useState('');
-	const [role, setRole] = useState('');
 	const [email, setEmail] = useState('');
 	const [phoneNumber, setPhoneNumber] = useState('');
 	const [gender, setGender] = useState('');
@@ -34,7 +33,7 @@ export default function EditProfile() {
 			id: currentUser.ID,
 			data: {
 				name: name,
-				role: role,
+				role: 'mentors',
 				email: email,
 				phone_number: phoneNumber,
 				gender,
@@ -48,12 +47,12 @@ export default function EditProfile() {
 				dispatch(
 					setUser({
 						ID: currentUser.ID,
-						name: name,
-						role: role,
-						email: email,
-						phone_number: phoneNumber,
-						gender: gender,
-						profile: selectedImage,
+						name: res.data.data.name,
+						role: 'mentors',
+						email: res.data.data.email,
+						phone_number: res.data.data.phone_number,
+						gender: res.data.data.gender,
+						profile: res.data.data.profile,
 					})
 				);
 			})
@@ -68,22 +67,13 @@ export default function EditProfile() {
 	};
 
 	const handleImageUpload = (event) => {
-		console.log('hai');
 		const file = event.target.files[0];
-		const reader = new FileReader();
 		setImageName(file);
-
-		reader.onload = () => {
-			const base64Image = reader.result;
-			setSelectedImage(base64Image);
-		};
-
-		reader.readAsDataURL(file);
+		setSelectedImage(file);
 	};
 
 	useEffect(() => {
 		setName(currentUser?.name);
-		setRole(currentUser?.role);
 		setEmail(currentUser?.email);
 		setPhoneNumber(currentUser?.phone_number);
 		setGender(currentUser?.gender);
@@ -157,7 +147,12 @@ export default function EditProfile() {
 							</div>
 							<div className={styles.formGroup}>
 								<span className={styles.label}>Role</span>
-								<input type="text" className={styles.disabledInput} disabled value={role} />
+								<input
+									type="text"
+									className={styles.disabledInput}
+									disabled
+									value={currentUser?.role}
+								/>
 							</div>
 							<div className={styles.formGroup}>
 								<span className={styles.label}>Email</span>

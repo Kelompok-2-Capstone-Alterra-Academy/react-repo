@@ -33,6 +33,10 @@ export default function Quiz({ data }) {
 	}
 
 	if (contentType == 'video') {
+		const sourceId = data.attachment.attachment_source.match(/[?&]v=([^&#]*)/);
+		const embedUrl =
+			'https://www.youtube.com/embed/' + (sourceId && sourceId[1] ? sourceId[1] : null);
+
 		return (
 			<>
 				<div className={styles.contentContainer} onClick={() => setShowVideoModal(true)}>
@@ -50,7 +54,7 @@ export default function Quiz({ data }) {
 							title={data.attachment.attachment_name}
 							width="100%"
 							height="100%"
-							src={data.attachment.attachment_source}></iframe>
+							src={embedUrl}></iframe>
 					</div>
 				</Modal>
 			</>

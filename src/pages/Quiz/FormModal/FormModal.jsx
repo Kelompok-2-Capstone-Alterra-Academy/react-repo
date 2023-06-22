@@ -68,46 +68,55 @@ export default function FormModal({ onClose }) {
 				</>
 			) : (
 				<>
-					<span className={styles.headerTitle}>Membuat Kuis</span>
+					<span className={styles.headerTitle}>Form Membuat Quiz</span>
 					<div className={styles.content}>
 						<form className={styles.form}>
-							<input
-								className={styles.formInput}
-								type="text"
-								placeholder="Nama Kuis"
-								value={form.attachment_name}
-								onChange={(e) => setForm({ ...form, attachment_name: e.target.value })}
-							/>
-							<div className={styles.gFormInput}>
+							<div className={styles.formGroup}>
+								<span className={styles.label}>Nama Quiz</span>
 								<input
-									className={styles.formInput}
+									className={styles.input}
 									type="text"
-									placeholder="Link G-Form"
-									value={form.attachment_source}
-									onChange={(e) => {
-										setForm({ ...form, attachment_source: e.target.value });
-										setIsValidGForm(false);
-										setIsCheckingGForm(false);
-									}}
+									placeholder="Masukkan Nama Quiz"
+									value={form.attachment_name}
+									onChange={(e) => setForm({ ...form, attachment_name: e.target.value })}
 								/>
-								<div className={styles.checkingIconContainer}>
-									{!isCheckingGForm && !checkingGFormLoading && (
-										<FontAwesomeIcon
-											icon={faRotateRight}
-											className={styles.checkingIcon}
-											onClick={handleClickCheckingGForm}
-										/>
-									)}
-									{!isCheckingGForm && checkingGFormLoading && (
-										<FontAwesomeIcon icon={faRotateRight} className={styles.checkingIcon} spin />
-									)}
+							</div>
+							<div className={styles.formGroup}>
+								<span className={styles.label}>Link G-Form</span>
+								<div className={styles.inputCheckingContainer}>
+									<input
+										className={styles.inputChecking}
+										type="text"
+										placeholder="Masukkan Link G-Form"
+										value={form.attachment_source}
+										onChange={(e) => {
+											setForm({ ...form, attachment_source: e.target.value });
+											setIsValidGForm(false);
+											setIsCheckingGForm(false);
+										}}
+									/>
+									<div className={styles.checkingIconContainer}>
+										{!isCheckingGForm && !checkingGFormLoading && (
+											<FontAwesomeIcon
+												icon={faRotateRight}
+												className={styles.checkingIcon}
+												onClick={handleClickCheckingGForm}
+											/>
+										)}
+										{!isCheckingGForm && checkingGFormLoading && (
+											<FontAwesomeIcon icon={faRotateRight} className={styles.checkingIcon} spin />
+										)}
 
-									{!isValidGForm && isCheckingGForm && (
-										<FontAwesomeIcon icon={faXmarkCircle} className={styles.checkingErrorIcon} />
-									)}
-									{isValidGForm && isCheckingGForm && (
-										<FontAwesomeIcon icon={faCheckCircle} className={styles.checkingSuccessIcon} />
-									)}
+										{!isValidGForm && isCheckingGForm && (
+											<FontAwesomeIcon icon={faXmarkCircle} className={styles.checkingErrorIcon} />
+										)}
+										{isValidGForm && isCheckingGForm && (
+											<FontAwesomeIcon
+												icon={faCheckCircle}
+												className={styles.checkingSuccessIcon}
+											/>
+										)}
+									</div>
 								</div>
 							</div>
 						</form>

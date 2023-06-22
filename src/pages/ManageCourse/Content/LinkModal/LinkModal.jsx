@@ -19,7 +19,11 @@ export default function LinkModal({ data, show, onClose, onSubmit }) {
 
 	useEffect(() => {
 		if (data) {
-			setQuizLinkList(data);
+			setQuizLinkList(
+				data.map((item) => {
+					if (item.status != 'draft') return item;
+				})
+			);
 		}
 		setQuizLinkSearched('');
 		setQuizLinkShowPerPage(4);

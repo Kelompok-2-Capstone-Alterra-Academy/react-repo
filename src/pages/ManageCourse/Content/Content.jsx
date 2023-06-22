@@ -306,6 +306,7 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 				onPrimaryButtonClick={() => {
 					putModule({
 						data: {
+							...content,
 							module_name: contentType + '-' + contentName,
 						},
 						id: content.ID,
@@ -337,6 +338,7 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 				onSubmit={(file) => {
 					putModule({
 						data: {
+							...content,
 							attachment_id: `${file.ID}`,
 						},
 						id: content.ID,
@@ -369,6 +371,7 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 				onSubmit={(file) => {
 					putModule({
 						data: {
+							...content,
 							attachment_id: `${file.ID}`,
 						},
 						id: content.ID,
@@ -417,6 +420,7 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 						onClick={() => {
 							putModule({
 								data: {
+									...content,
 									description: contentDescription,
 								},
 								id: content.ID,

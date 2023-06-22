@@ -6,6 +6,7 @@ export * from './class';
 export * from './course';
 export * from './customer';
 export * from './dashboard';
+export * from './editProfile';
 export * from './folder';
 export * from './major';
 export * from './module';

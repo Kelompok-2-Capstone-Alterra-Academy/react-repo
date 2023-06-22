@@ -13,7 +13,7 @@ import { LoopCircleLoading } from 'react-loadingg';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { getUser } from '../../clients';
+import { getUser, logout } from '../../clients';
 import { useClickOutside } from '../../hooks';
 import { setUser } from '../../redux/actions/userActions';
 import { truncateString } from '../../utilities/string';
@@ -128,7 +128,22 @@ export default function Profile({ className }) {
 							))}
 						</div>
 						<div className={styles.logoutContainer}>
-							<div>
+							<div
+								onClick={() => {
+									logout()
+										.then((res) => {
+											toast.success(res.data.message, {
+												position: toast.POSITION.TOP_RIGHT,
+											});
+											document.cookie = 'token=;';
+											navigate('/login');
+										})
+										.catch((err) => {
+											toast.error(err.response.data.message, {
+												position: toast.POSITION.TOP_RIGHT,
+											});
+										});
+								}}>
 								<span className={styles.logoutTitle}>Logout</span>
 							</div>
 						</div>
