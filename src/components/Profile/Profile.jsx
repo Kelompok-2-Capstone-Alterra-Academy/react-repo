@@ -29,6 +29,9 @@ export default function Profile({ className }) {
 
 	const dispatch = useDispatch();
 
+	const defaultImage =
+		'http://www.listercarterhomes.com/wp-content/uploads/2013/11/dummy-image-square.jpg';
+
 	const [isMenuOpen, setMenuOpen] = useState(false);
 	const menuItems = [
 		{ icon: faGear, title: 'Edit Profile', link: '/edit-profile' },
@@ -76,7 +79,11 @@ export default function Profile({ className }) {
 			) : (
 				<>
 					<div className={styles.profileContainer}>
-						<img src={data.profile} alt="Avatar" className={styles.avatar} />
+						<img
+							src={data.profile == 'noimage.png' ? defaultImage : data.profile || defaultImage}
+							alt="Avatar"
+							className={styles.avatar}
+						/>
 						<div className={styles.nameContainer}>
 							<span className={styles.name}>{truncateString(data.name, 20)}</span>
 							<span className={styles.role}>{data.role}</span>
@@ -95,7 +102,11 @@ export default function Profile({ className }) {
 								: styles.closedMenuContainer
 						}>
 						<div className={styles.profileContainer}>
-							<img src={data.profile} alt="Avatar" className={styles.avatar} />
+							<img
+								src={data.profile == 'noimage.png' ? defaultImage : data.profile || defaultImage}
+								alt="Avatar"
+								className={styles.avatar}
+							/>
 							<div className={styles.nameContainer}>
 								<span className={styles.name}>{data.name}</span>
 								<span className={styles.email}>{data.email}</span>
