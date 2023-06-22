@@ -1,92 +1,106 @@
 .container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: row;
+	width: 100vw;
+	height: 100vh;
 }
 
 .header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 3em;
-    width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 3em;
+	width: 100%;
 }
 
 .content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: row;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: row;
 }
 
 .tampilan {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    flex-direction: column;
-    width: 100%;
-    padding: 2em;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px 0px #0000001a;
-    margin-left: 2em;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-direction: column;
+	width: 40%;
+	padding: 2em;
+	background-color: #ffffff;
+	border-radius: 8px;
+	box-shadow: 0px 0px 10px 0px #0000001a;
+	margin-left: 2em;
+	height: 550px;
 }
 
 .tampilanHeader {
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
-    margin-bottom: 2em;
-    width: 100%;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	width: 100%;
 }
 
-.title {
-    font-size: 24px;
-    font-weight: 600;
-    color: #212121;
-}
-
-.desc {
-    margin-top: 16px;
-    font-size: 16px;
-    font-weight: 400;
-    color: #616161;
-}
-
-.imageContainer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-}
-
-.image {
-    height: 100%;
-    width: 100%;
-    margin-bottom: -2em;
-}
-
-.imageText {
-    font-size: 24px;
-    font-weight: 500;
-    color: #000000;
-    text-align: center;
-}
-
-.label {
-    font-size: 14px;
-    font-weight: 500;
-    color: #212121;
-    margin-bottom: 0.5em;
-    font-weight: bold;
+.formContainer {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	width: 100%;
 }
 
 .form {
-    width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	width: 100%;
+}
+
+.title {
+	font-size: 24px;
+	font-weight: 600;
+	color: #212121;
+}
+
+.desc {
+	font-size: 16px;
+	font-weight: 400;
+	color: #616161;
+}
+
+.imageContainer {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	width: 40%;
+}
+
+.image {
+	height: 100%;
+	width: 100%;
+	margin-bottom: -2em;
+}
+
+.imageText {
+	font-size: 24px;
+	font-weight: 500;
+	color: #000000;
+	text-align: center;
+}
+
+.label {
+	font-size: 14px;
+	font-weight: 500;
+	color: black;
+	margin-bottom: 0.5em;
+}
+
+.form {
+	width: 100%;
 }
 
 .usernameForm,
@@ -97,134 +111,135 @@
 .namaLengkapForm,
 .tanggalForm,
 .bidangForm {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    flex-direction: column;
-    margin-bottom: 1em;
-    width: 100%;
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-start;
+	flex-direction: column;
+	margin-bottom: 1em;
+	width: 100%;
 }
 
 .inputContainer {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    flex-direction: row;
-    width: 100%;
-    box-shadow: 0px 0px 10px 0px #0000001a;
-    padding: 1em;
-    border-radius: 8px;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	flex-direction: row;
+	width: 100%;
+	box-shadow: 0px 0px 10px 0px #0000001a;
+	padding: 1em;
+	border-radius: 8px;
 }
 
 .Steperr {
-    justify-content: center;
-    margin-top: 25px;
+	justify-content: center;
+	margin: 1em 0;
 }
 
 .icon {
-    width: 20px;
-    height: 20px;
-    margin-right: 1em;
-    color: #616161;
+	width: 20px;
+	height: 20px;
+	margin-right: 1em;
+	color: #616161;
 }
 
 .forgotPassword {
-    font-size: 14px;
-    font-weight: 400;
-    color: #616161 !important;
-    margin-top: 1em;
-    margin-bottom: 1em;
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    transition: all 0.3s ease-in-out;
-    text-decoration: none !important;
+	font-size: 14px;
+	font-weight: 400;
+	color: #616161 !important;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+	transition: all 0.3s ease-in-out;
+	text-decoration: none !important;
 }
 
 .forgotPassword:hover {
-    color: #2196f3 !important;
-    text-decoration: none !important;
+	color: #2196f3 !important;
+	text-decoration: none !important;
 }
 
 .eyeIcon {
-    width: 20px;
-    height: 20px;
-    color: #616161;
-    cursor: pointer;
+	width: 20px;
+	height: 20px;
+	color: #616161;
+	cursor: pointer;
 }
 
 .input {
-    outline: none;
-    border: none;
-    width: 100%;
+	outline: none;
+	border: none;
+	width: 100%;
+	font-size: 14px;
 }
 
 .button {
-    width: 100%;
-    margin-top: 2em;
+	width: 100%;
+	margin-top: 2em;
 }
 
 .TextLogin {
-    font-family: 'Poppins';
-    font-style: normal;
-    margin-top: 16px;
-    display: flex;
-    justify-content: center;
+	font-family: 'Poppins';
+	font-style: normal;
+	margin-top: 16px;
+	display: flex;
+	justify-content: center;
 }
 
 .deskripsi {
-    margin-right: 7px;
+	margin-right: 7px;
 }
 
 .error {
-    color: red;
-    visibility: visible;
-    opacity: 1;
+	color: red;
+	visibility: visible;
+	opacity: 1;
 }
 
 .visible {
-    visibility: visible;
+	visibility: visible;
 }
 
 .MuiIconButton-root {
-    padding: 4px;
+	padding: 4px;
 }
 
 .MuiSvgIcon-root {
-    width: 18px;
-    height: 18px;
-    color: #666;
+	width: 18px;
+	height: 18px;
+	color: #666;
 }
 
 .learningListContainer {
-    gap: 4px;
-    position: absolute;
-    background-color: #ffffff;
-    border-radius: 8px;
-    display: flex;
-    width: 301px;
-    height: 270px;
-    top: 580px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 1em;
-    z-index: 2;
-    animation: slideDown 0.3s ease-in-out;
-    box-shadow: 0 3px 11px #0000001a, 0 3px 6px #00000026;
+	gap: 4px;
+	position: absolute;
+	background-color: #ffffff;
+	border-radius: 8px;
+	display: flex;
+	width: 301px;
+	height: 270px;
+	top: 580px;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+	padding: 1em;
+	z-index: 2;
+	animation: slideDown 0.3s ease-in-out;
+	box-shadow: 0 3px 11px #0000001a, 0 3px 6px #00000026;
 }
 
 .courseListItem,
 .learningListItem {
-    padding: 0.5em;
-    width: 100%;
-    color: black;
-    border-radius: 8px;
-    transition: 0.2s all ease-in-out;
+	padding: 0.5em;
+	width: 100%;
+	color: black;
+	border-radius: 8px;
+	transition: 0.2s all ease-in-out;
 }
 
 .courseListItem:hover,
 .learningListItem:hover {
-    background-color: #1976D2;
-    color: white;
+	background-color: #1976d2;
+	color: white;
 }

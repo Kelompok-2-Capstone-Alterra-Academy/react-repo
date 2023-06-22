@@ -11,6 +11,30 @@
 	justify-content: flex-end;
 }
 
+.uploadText {
+	font-size: 14px;
+	font-weight: 400;
+}
+
+.uploadContainer {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: row;
+}
+
+.deletePhotoIcon {
+	cursor: pointer;
+	width: 20px;
+	height: 20px;
+	margin-right: 0.5em;
+	transition: all 0.3s ease-in-out;
+}
+
+.deletePhotoIcon:hover {
+	transform: scale(1.1);
+}
+
 .label {
 	font-size: 16px;
 	font-weight: 600;

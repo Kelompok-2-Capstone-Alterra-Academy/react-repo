@@ -1,4 +1,4 @@
-import { faMars, faSpinner, faVenus } from '@fortawesome/free-solid-svg-icons';
+import { faMars, faSpinner, faVenus, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { putUser } from '../../clients';
 import { Button, Header } from '../../components';
 import { setUser } from '../../redux/actions/userActions';
+import { truncateString } from '../../utilities/string';
 import styles from './EditProfile.module.css';
 
 export default function EditProfile() {
@@ -15,12 +16,16 @@ export default function EditProfile() {
 	const [phoneNumber, setPhoneNumber] = useState('');
 	const [gender, setGender] = useState('');
 	const [selectedImage, setSelectedImage] = useState(null);
+	const [imageName, setImageName] = useState({});
 
 	const [loadingEdit, setLoadingEdit] = useState(false);
 
 	const currentUser = useSelector((state) => state.user);
 
 	const dispatch = useDispatch();
+
+	const defaultImage =
+		'http://www.listercarterhomes.com/wp-content/uploads/2013/11/dummy-image-square.jpg';
 
 	const handleSubmit = async (e) => {
 		setLoadingEdit(true);
@@ -63,8 +68,10 @@ export default function EditProfile() {
 	};
 
 	const handleImageUpload = (event) => {
+		console.log('hai');
 		const file = event.target.files[0];
 		const reader = new FileReader();
+		setImageName(file);
 
 		reader.onload = () => {
 			const base64Image = reader.result;
@@ -99,16 +106,40 @@ export default function EditProfile() {
 					<div className="w-100 border rounded-2xl px-6">
 						<div className="flex items-center justify-between mt-10">
 							<div className="flex items-center">
-								<img src={currentUser?.profile} alt="Profile" className={styles.profileImage} />
+								<img
+									src={
+										currentUser?.profile == 'noimage.png'
+											? defaultImage
+											: currentUser?.profile || defaultImage
+									}
+									alt="Profile"
+									className={styles.profileImage}
+								/>
 								<div className="ml-3">
 									<p className="font-bold text-xl">{currentUser?.name}</p>
 									<p className="text-gray-800">{currentUser?.email}</p>
 								</div>
 							</div>
-							<Button type="Primary" className={styles.buttonUpload}>
-								<input type="file" onChange={handleImageUpload} className={styles.inputFile} />
-								<span>Ganti Foto Profile</span>
-							</Button>
+							<div className={styles.uploadContainer}>
+								{imageName?.name != null && (
+									<FontAwesomeIcon
+										icon={faXmarkCircle}
+										className={styles.deletePhotoIcon}
+										onClick={() => {
+											setSelectedImage(currentUser?.profile);
+											setImageName({});
+										}}
+									/>
+								)}
+								<Button type="Primary" className={styles.buttonUpload}>
+									<input type="file" onChange={handleImageUpload} className={styles.inputFile} />
+									<span className={styles.uploadText}>
+										{imageName?.name == null
+											? 'Upload Foto Profil'
+											: truncateString(imageName.name, 30)}
+									</span>
+								</Button>
+							</div>
 						</div>
 
 						<div className="grid grid-cols-2 gap-8 mt-10">
