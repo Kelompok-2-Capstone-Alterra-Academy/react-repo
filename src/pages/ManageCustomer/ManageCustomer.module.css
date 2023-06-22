@@ -77,13 +77,12 @@
 	align-items: center;
 	justify-content: space-between;
 	width: fit-content;
-	border: 2px solid #e0e0e0;
+	border: 2px solid #2196f3;
 	color: #212121;
 	padding: 1em;
 	border-radius: 8px;
 	cursor: pointer;
-	width: 250px;
-	margin-right: 1em;
+	width: 100%;
 }
 
 .filterIconWrapper {
@@ -92,18 +91,28 @@
 	flex-direction: row;
 	align-items: center;
 	justify-content: center;
-	width: fit-content;
-	border: 2px solid #e0e0e0;
+	width: 100%;
+	border: 2px solid #2196f3;
 	color: #212121;
 	padding: 1em;
 	border-radius: 8px;
 	cursor: pointer;
-	margin-right: 1em;
 	transition: all 0.3s ease-in-out;
 }
 
 .filterIconWrapper:hover {
-	background: #e0e0e0;
+	background: #2196f3;
+}
+
+.filterIconWrapper:hover .filterIcon {
+	color: white;
+}
+
+.filterIcon {
+	width: 16px;
+	height: 16px;
+	color: #212121;
+	transition: all 0.3s ease-in-out;
 }
 
 .arrowIcon {
@@ -113,13 +122,14 @@
 }
 
 .select {
-	width: 120%;
+	width: 150%;
 }
 
 .headerContainer {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	justify-content: space-between;
 	margin: 1em 0;
 	border-radius: 8px;
 	padding: 1em;
@@ -134,11 +144,11 @@
 }
 
 .filterWrapper {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: flex-end;
+	display: grid;
+	grid-template-columns: 4fr 1fr 5fr;
+	grid-gap: 0.5em;
 	margin-left: auto;
+	width: fit-content;
 }
 
 .container {
@@ -163,4 +173,66 @@
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	grid-gap: 0.5em;
+}
+
+.searchWrapper {
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	width: fit-content;
+	padding: 1em;
+	border-radius: 8px;
+	cursor: pointer;
+	width: 100%;
+	border: 2px solid #2196f3;
+	color: black;
+}
+
+.searchIcon {
+	width: 16px;
+	height: 16px;
+	margin-right: 0.5em;
+}
+
+.searchInput {
+	font-size: 12px;
+	font-weight: 500;
+	border: none;
+	outline: none;
+	width: 100%;
+}
+
+.modalContainer {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: white;
+	border-radius: 20px;
+	padding: 2em 3em;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	outline: none;
+}
+
+.modalTitle {
+	width: 100%;
+	font-size: 20px;
+	font-weight: 600;
+	margin-bottom: 1em;
+	text-align: center;
+}
+
+.buttonFilter {
+	width: 100%;
+}
+
+.buttonSaveFilter {
+	width: 80%;
+	margin-top: 1em;
+	align-self: center;
 }

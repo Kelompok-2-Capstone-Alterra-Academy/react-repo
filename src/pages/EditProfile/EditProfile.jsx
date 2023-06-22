@@ -26,44 +26,87 @@ export default function EditProfile() {
 	const defaultImage =
 		'http://www.listercarterhomes.com/wp-content/uploads/2013/11/dummy-image-square.jpg';
 
-	const handleSubmit = async (e) => {
-		setLoadingEdit(true);
-		e.preventDefault();
-		putUser({
-			id: currentUser.ID,
-			data: {
-				name: name,
-				role: 'mentors',
-				email: email,
-				phone_number: phoneNumber,
-				gender,
-				profile: selectedImage,
-			},
-		})
-			.then((res) => {
-				toast.success(res.data.message, {
-					position: toast.POSITION.TOP_RIGHT,
-				});
-				dispatch(
-					setUser({
-						ID: currentUser.ID,
-						name: res.data.data.name,
-						role: 'mentors',
-						email: res.data.data.email,
-						phone_number: res.data.data.phone_number,
-						gender: res.data.data.gender,
-						profile: res.data.data.profile,
-					})
-				);
-			})
-			.catch((err) => {
-				toast.error(err.response.data.message, {
-					position: toast.POSITION.TOP_RIGHT,
-				});
-			})
-			.finally(() => {
-				setLoadingEdit(false);
+	const checkForm = () => {
+		let flag = true;
+		if (name == '') {
+			toast.error('Nama tidak boleh kosong', {
+				position: toast.POSITION.TOP_RIGHT,
 			});
+			flag = false;
+		}
+		if (email == '') {
+			toast.error('Email tidak boleh kosong', {
+				position: toast.POSITION.TOP_RIGHT,
+			});
+			flag = false;
+		}
+		if (phoneNumber == '') {
+			toast.error('Nomor kontak tidak boleh kosong', {
+				position: toast.POSITION.TOP_RIGHT,
+			});
+			flag = false;
+		}
+		if (!/^(?![-\s])[\w\s-]+$/.test(name)) {
+			toast.error('Harap masukkan nama yang valid', {
+				position: toast.POSITION.TOP_RIGHT,
+			});
+			flag = false;
+		}
+		if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+			toast.error('Harap masukkan email yang valid', {
+				position: toast.POSITION.TOP_RIGHT,
+			});
+			flag = false;
+		}
+		if (!/^\d{10,13}$/.test(phoneNumber)) {
+			toast.error('Harap masukkan nomor kontak yang valid', {
+				position: toast.POSITION.TOP_RIGHT,
+			});
+			flag = false;
+		}
+		return flag;
+	};
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		if (checkForm()) {
+			setLoadingEdit(true);
+			putUser({
+				id: currentUser.ID,
+				data: {
+					name: name,
+					role: 'mentors',
+					email: email,
+					phone_number: phoneNumber,
+					gender,
+					profile: selectedImage,
+				},
+			})
+				.then((res) => {
+					toast.success(res.data.message, {
+						position: toast.POSITION.TOP_RIGHT,
+					});
+					dispatch(
+						setUser({
+							ID: currentUser.ID,
+							name: res.data.data.name,
+							role: 'mentors',
+							email: res.data.data.email,
+							phone_number: res.data.data.phone_number,
+							gender: res.data.data.gender,
+							profile: res.data.data.profile,
+						})
+					);
+				})
+				.catch((err) => {
+					toast.error(err.response.data.message, {
+						position: toast.POSITION.TOP_RIGHT,
+					});
+				})
+				.finally(() => {
+					setLoadingEdit(false);
+				});
+		}
 	};
 
 	const handleImageUpload = (event) => {
