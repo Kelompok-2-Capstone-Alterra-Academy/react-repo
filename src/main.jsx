@@ -30,6 +30,12 @@ const theme = createTheme({
 	},
 });
 
+const theme = createTheme({
+	typography: {
+		fontFamily: 'Poppins, Arial',
+	},
+});
+
 ReactDOM.createRoot(document.getElementById('root')).render(
 	<React.StrictMode>
 		<Provider store={store}>

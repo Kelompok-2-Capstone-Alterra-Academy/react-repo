@@ -1,12 +1,9 @@
 import {
-	faChevronDown,
-	faChevronUp,
 	faGear,
 	faMoneyBill,
-	faPhone,
+	faPhone
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import classNames from 'classnames/bind';
 import jwt from 'jwt-decode';
 import { useEffect, useState } from 'react';
 import { LoopCircleLoading } from 'react-loadingg';
@@ -16,7 +13,6 @@ import { toast } from 'react-toastify';
 import { getUser } from '../../clients';
 import { useClickOutside } from '../../hooks';
 import { setUser } from '../../redux/actions/userActions';
-import { truncateString } from '../../utilities/string';
 import styles from './Profile.module.css';
 
 export default function Profile({ className }) {
@@ -69,8 +65,7 @@ export default function Profile({ className }) {
 
 	return (
 		<div
-			className={classNames(styles.container, className)}
-			ref={containerRef}
+			className={styles.container}
 			onClick={() => {
 				setMenuOpen(!isMenuOpen);
 			}}>
@@ -85,8 +80,8 @@ export default function Profile({ className }) {
 							className={styles.avatar}
 						/>
 						<div className={styles.nameContainer}>
-							<span className={styles.name}>{truncateString(data.name, 20)}</span>
-							<span className={styles.role}>{data.role}</span>
+							<span className={styles.name}>{name}</span>
+							<span className={styles.email}>{email}</span>
 						</div>
 					</div>
 					<FontAwesomeIcon
@@ -125,15 +120,15 @@ export default function Profile({ className }) {
 										<span className={styles.menuTitle}>{item.title}</span>
 									</div>
 								</div>
-							))}
-						</div>
-						<div className={styles.logoutContainer}>
-							<div>
-								<span className={styles.logoutTitle}>Logout</span>
 							</div>
+						))}
+					</div>
+					<div className={styles.logoutContainer}>
+						<div>
+							<span className={styles.logoutTitle}>Logout</span>
 						</div>
 					</div>
-				</>
+				</div>
 			)}
 		</div>
 	);

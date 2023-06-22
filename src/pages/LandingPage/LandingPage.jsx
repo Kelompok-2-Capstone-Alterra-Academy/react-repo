@@ -18,8 +18,8 @@ export default function LandingPage() {
 		'/image/landing-mentors/mentor-2.png',
 		'/image/landing-mentors/mentor-3.png',
 		'/image/landing-mentors/mentor-4.png',
-		'/image/landing-mentors/mentor-5.png'
-	  ];
+		'/image/landing-mentors/mentor-5.png',
+	];
 
 	return (
 		<div>
@@ -62,11 +62,10 @@ export default function LandingPage() {
 									transition: 'all ease-in 300',
 									':hover': {
 										background: 'linear-gradient(180deg, #1f87db 19.19%, #3854e0 100%)',
-										color: 'white'
+										color: 'white',
 									},
 								}}
-								href="/register"
-								>
+								href="/register">
 								Gabung Sekarang
 							</Button>
 							<Box mt={3.5} sx={{ display: 'flex', alignItems: 'center' }}>
@@ -251,8 +250,7 @@ export default function LandingPage() {
 											color: 'white',
 										},
 									}}
-									href="/register"
-									>
+									href="/register">
 									Gabung Sekarang
 								</Button>
 							</Box>
@@ -318,9 +316,9 @@ export default function LandingPage() {
 											px: '10px',
 											overflowWrap: 'break-word',
 										}}>
-										“Sejak bergabung dengan platform ini saya merasa lebih mudah dalam mengajar dan
+										{`"Sejak bergabung dengan platform ini saya merasa lebih mudah dalam mengajar dan
 										saya mendapatkan akses ke lebih banyak siswa serta mendapatkan dukungan
-										teknologi yang sangat membantu."
+										teknologi yang sangat membantu."`}
 									</Typography>
 									<Typography
 										sx={{
@@ -391,10 +389,10 @@ export default function LandingPage() {
 											px: '10px',
 											overflowWrap: 'break-word',
 										}}>
-										"Saya sangat senang bergabung dengan platform kursus online ini. Saya dapat
+										{`"Saya sangat senang bergabung dengan platform kursus online ini. Saya dapat
 										menjangkau lebih banyak siswa dan meningkatkan pendapatan saya sebagai mentor.
 										Selain itu, dukungan teknologi yang diberikan sangat membantu dalam memudahkan
-										pengajaran online."
+										pengajaran online."`}
 									</Typography>
 									<Typography
 										sx={{
@@ -596,8 +594,7 @@ export default function LandingPage() {
 								transition: 'all ease-in 300',
 								':hover': { background: '#F0FAFF' },
 							}}
-							href="/register"
-							>
+							href="/register">
 							Gabung Sekarang
 						</Button>
 					</Box>

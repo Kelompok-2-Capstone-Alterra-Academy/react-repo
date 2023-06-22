@@ -94,7 +94,7 @@ export default function NavBar({ active }) {
 											textTransform: 'capitalize',
 										}}
 										variant="contained"
-										href='/register'>
+										href="/register">
 										Daftar
 									</Button>
 								</MenuItem>
@@ -161,12 +161,11 @@ export default function NavBar({ active }) {
 								textTransform: 'capitalize',
 								':hover': {
 									color: 'white',
-								}
+								},
 							}}
 							variant="contained"
-							href="/register"
-							>
-								Daftar
+							href="/register">
+							Daftar
 						</Button>
 					</Box>
 				</Toolbar>

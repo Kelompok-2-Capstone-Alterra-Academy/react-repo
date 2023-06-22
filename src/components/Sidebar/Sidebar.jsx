@@ -1,53 +1,4 @@
-import {
-	faCommentDots,
-	faFolderOpen,
-	faHomeUser,
-	faPowerOff,
-	faQuestionCircle,
-	faUsers,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { useEffect, useState } from 'react';
-import { LoopCircleLoading } from 'react-loadingg';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { getCourse, logout } from '../../clients';
-import { useClickOutside } from '../../hooks';
-import { setCourse } from '../../redux/actions/courseActions';
-import styles from '../Sidebar/Sidebar.module.css';
-
-const Sidebar = () => {
-	const [isCourseListOpen, setIsCourseListOpen] = useState(false);
-	const [loading, setLoading] = useState(true);
-
-	const courseList = useSelector((state) => state.course.course);
-
-	const dispatch = useDispatch();
-
-	const navigate = useNavigate();
-
-	const courseListRef = useClickOutside(() => {
-		setIsCourseListOpen(false);
-	});
-
-	useEffect(() => {
-		setLoading(true);
-		getCourse()
-			.then((res) => {
-				dispatch(setCourse(res.data.data));
-			})
-			.catch((err) => {
-				toast.error(err.response.data.message, {
-					position: toast.POSITION.TOP_RIGHT,
-				});
-			})
-			.finally(() => {
-				setLoading(false);
-			});
-	}, []);
-
+export default function Sidebar() {
 	return (
 		<div className={styles.sidebar}>
 			{loading ? (
@@ -141,6 +92,4 @@ const Sidebar = () => {
 			)}
 		</div>
 	);
-};
-
-export default Sidebar;
+}
