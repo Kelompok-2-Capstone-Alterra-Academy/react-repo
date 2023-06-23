@@ -1,5 +1,5 @@
 .container {
-	width: 30%;
+	width: 50%;
 	height: fit-content;
 	position: absolute;
 	top: 50%;
@@ -22,10 +22,9 @@
 
 .content {
 	width: 100%;
-	margin-bottom: 1em;
 }
 
-.formInput{
+.formInput {
 	width: 100%;
 	margin-bottom: 1em;
 	border: 1px solid #56585c;
@@ -55,3 +54,42 @@
 	width: 48%;
 }
 
+.formGroup {
+	position: relative;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	margin-bottom: 1.5em;
+}
+
+.label {
+	font-size: 16px;
+	font-weight: 600;
+	color: #000000;
+	margin-bottom: 0.5em;
+}
+
+.input {
+	border-radius: 8px;
+	padding: 0.75em 1em;
+	background: white;
+	box-shadow: 0 3px 11px #0000001a, 0 3px 6px #00000026;
+	outline: none;
+	margin-bottom: 0.25em;
+}
+
+.helpText {
+	font-size: 12px;
+	font-weight: 400;
+	color: #616161;
+	margin-top: 0.5em;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.helpTextIcon {
+	margin-right: 0.5em;
+}

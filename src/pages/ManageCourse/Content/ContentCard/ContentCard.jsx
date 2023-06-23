@@ -4,14 +4,13 @@ import Modal from '@mui/material/Modal';
 import { useEffect, useState } from 'react';
 import styles from './ContentCard.module.css';
 
-export default function Quiz({ data }) {
+export default function ContentCard({ data }) {
 	const [showVideoModal, setShowVideoModal] = useState(false);
 	const [showFileModal, setShowFileModal] = useState(false);
 
 	const [contentType, setContentType] = useState('');
 
 	useEffect(() => {
-		console.log(data);
 		setContentType(data.module_name.split('-')[0]);
 	}, [data]);
 

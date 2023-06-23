@@ -15,3 +15,7 @@ export function convertToDate(date, time) {
 export function displayDate(dateTime) {
 	return moment.utc(dateTime).format('D MMMM YYYY - HH:mm');
 }
+
+export function isAfter(dateTime, checker) {
+	return moment(dateTime).isAfter(checker);
+}

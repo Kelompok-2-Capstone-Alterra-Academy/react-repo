@@ -1,8 +1,14 @@
-import { faEye, faEyeSlash, faLock, faSpinner, faUser } from '@fortawesome/free-solid-svg-icons';
+import {
+	faEye,
+	faEyeSlash,
+	faInfoCircle,
+	faLock,
+	faSpinner,
+	faUser,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from '@material-ui/core';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { login } from '../../clients';
 import { Button } from '../../components';
@@ -11,23 +17,18 @@ import styles from './Login.module.css';
 export default function Login() {
 	const [showPassword, setShowPassword] = useState(false);
 	const [loading, setLoading] = useState(false);
+	const [validation, setValidation] = useState(false);
 
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
-	const navigate = useNavigate();
-
-	// const validationSchema = Yup.object().shape({
-	// 	username: Yup.string()
-	// 		.required('Username wajib diisi')
-	// 		.matches(/^(?=.*[a-z])(?=.*[0-9])/, 'Username harus ada huruf dan angka'),
-	// 	password: Yup.string()
-	// 		.required('Password Belum diisi')
-	// 		.matches(
-	// 			/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/,
-	// 			'Kata sandi harus ada huruf besar, huruf kecil, dan angka'
-	// 		),
-	// });
+	useEffect(() => {
+		if (email !== '' && password !== '') {
+			setValidation(true);
+		} else {
+			setValidation(false);
+		}
+	}, [email, password]);
 
 	return (
 		<div className={styles.container}>
@@ -54,6 +55,10 @@ export default function Login() {
 								onChange={(e) => setEmail(e.target.value)}
 							/>
 						</div>
+						<span className={styles.helpText}>
+							<FontAwesomeIcon icon={faInfoCircle} className={styles.helpTextIcon} />
+							Field ini harus diisi
+						</span>
 					</div>
 					<div className={styles.passwordForm}>
 						<span className={styles.label}>Kata Sandi</span>
@@ -73,12 +78,16 @@ export default function Login() {
 								onClick={() => setShowPassword(!showPassword)}
 							/>
 						</div>
+						<span className={styles.helpText}>
+							<FontAwesomeIcon icon={faInfoCircle} className={styles.helpTextIcon} />
+							Field ini harus diisi
+						</span>
 					</div>
 					<Link href="/forgot-password" className={styles.forgotPassword}>
 						<span>Lupa Kata Sandi?</span>
 					</Link>
 					<Button
-						type="Primary"
+						type={validation ? 'Primary' : 'Disabled'}
 						className={styles.button}
 						onClick={() => {
 							setLoading(true);

@@ -34,5 +34,6 @@ export const MODULE_PREFIX = 'mentors/module';
 export const TASK_PREFIX = 'mentors/task';
 export const CLASS_PREFIX = 'mentors/classes';
 export const MAJOR_PREFIX = 'mentors/majors';
+export const SUBMISSION_PREFIX = 'mentors/submission';
 
 export default axios;

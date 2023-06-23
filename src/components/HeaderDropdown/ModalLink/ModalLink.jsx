@@ -1,10 +1,15 @@
-import { faCheckCircle, faRotateRight, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
+import {
+	faCheckCircle,
+	faInfoCircle,
+	faRotateRight,
+	faXmarkCircle,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
+import { Button } from '../..';
 import { postAttachment } from '../../../clients';
-import { Button } from '../../../components';
 import { addAttachment } from '../../../redux/actions/attachmentActions';
 import styles from '../ModalLink/ModalLink.module.css';
 
@@ -105,6 +110,10 @@ const ModalLink = ({ closeFunction, folderId }) => {
 								)}
 							</div>
 						</div>
+						<span className={styles.helpText}>
+							<FontAwesomeIcon icon={faInfoCircle} className={styles.helpTextIcon} />
+							Contoh link youtube yang valid: https://www.youtube.com/watch?v=xxxxxxxxxxx
+						</span>
 					</div>
 				</form>
 			</div>

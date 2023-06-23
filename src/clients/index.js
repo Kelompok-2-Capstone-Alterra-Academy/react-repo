@@ -11,5 +11,6 @@ export * from './folder';
 export * from './major';
 export * from './module';
 export * from './section';
+export * from './submission';
 export * from './task';
 export * from './user';

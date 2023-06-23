@@ -1,4 +1,9 @@
-import { faCheckCircle, faRotateRight, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
+import {
+	faCheckCircle,
+	faInfoCircle,
+	faRotateRight,
+	faXmarkCircle,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -21,12 +26,12 @@ const ModalUploadFile = ({ closeFunction, folderId }) => {
 	const [isValidFile, setIsValidFile] = useState(false);
 
 	useEffect(() => {
-		if (link !== '' && isValidFile) {
+		if (attachment && link !== '' && isValidFile) {
 			setFormValidation(true);
 		} else {
 			setFormValidation(false);
 		}
-	}, [link, isValidFile]);
+	}, [link, isValidFile, attachment]);
 
 	const checkFileExistence = (url) => {
 		const regex = /https?:\/\/(?:docs)\.google\.com\/(?:document)\/d\/([a-zA-Z0-9-_]+)/i;
@@ -103,6 +108,10 @@ const ModalUploadFile = ({ closeFunction, folderId }) => {
 							)}
 						</div>
 					</div>
+					<span className={styles.helpText}>
+						<FontAwesomeIcon icon={faInfoCircle} className={styles.helpTextIcon} />
+						Contoh link google docs yang valid: https://docs.google.com/document/d/xxxxxx/edit
+					</span>
 				</div>
 			</div>
 			<div className={styles.footer}>

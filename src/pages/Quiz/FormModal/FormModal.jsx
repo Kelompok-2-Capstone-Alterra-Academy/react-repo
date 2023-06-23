@@ -1,4 +1,9 @@
-import { faCheckCircle, faRotateRight, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
+import {
+	faCheckCircle,
+	faInfoCircle,
+	faRotateRight,
+	faXmarkCircle,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -118,6 +123,10 @@ export default function FormModal({ onClose }) {
 										)}
 									</div>
 								</div>
+								<span className={styles.helpText}>
+									<FontAwesomeIcon icon={faInfoCircle} className={styles.helpTextIcon} />
+									Contoh link google form yang valid: https://docs.google.com/forms/d/e/xxxxxxxxx
+								</span>
 							</div>
 						</form>
 					</div>

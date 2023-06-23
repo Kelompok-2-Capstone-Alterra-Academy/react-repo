@@ -332,14 +332,14 @@ export default function ManageCourse() {
 									onClick={() => {
 										setShowSaveModal(true);
 									}}>
-									<span>Simpan</span>
+									<span>Rename</span>
 								</Button>
 							</div>
 							<ConfirmationModal
-								title="Simpan Section"
+								title="Rename Section"
 								image="/image/course-save.png"
 								confirmationText="Apakah kamu yakin untuk menyimpan section ini?"
-								primaryButtonName={'Simpan'}
+								primaryButtonName={'Rename'}
 								onPrimaryButtonClick={() => {
 									putSection({
 										data: {

@@ -1,14 +1,14 @@
 .tag {
 	width: fit-content;
-	border-radius: 5px;
+	border-radius: 20px;
 	padding: 0.3em 0.6em;
 	font-size: 12px;
 	font-weight: bold;
 }
 
 .green {
-	background-color: #e1efe1;
-	color: #4caf50;
+	background-color: #c8e6c9;
+	color: #388e3c;
 }
 
 .blue {
@@ -18,12 +18,12 @@
 
 .yellow {
 	background-color: #ffe0b2;
-	color: #ffa000;
+	color: #e65100;
 }
 
 .red {
 	background-color: #ffcdd2;
-	color: #f44336;
+	color: #d32f2f;
 }
 
 .grey {

@@ -1,16 +1,20 @@
 import {
 	faChevronDown,
+	faMars,
 	faPaperPlane,
 	faPaperclip,
 	faTrash,
+	faVenus,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from '@mui/material/Modal';
+import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
+import { LoopCircleLoading } from 'react-loadingg';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { delCourse, putCourse } from '../../clients';
+import { delCourse, getCustomerByIDCourse, putCourse } from '../../clients';
 import { Button, ConfirmationModal, OutlineTag, Select } from '../../components';
 import { useClickOutside } from '../../hooks';
 import { deleteCourse, updateCourse } from '../../redux/actions/courseActions';
@@ -24,11 +28,17 @@ export default function CardKursus({ data, category }) {
 	const [validation, setValidation] = useState(false);
 	const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
 
+	const [loadingFetching, setLoadingFetching] = useState(false);
+
 	const [coursePrice, setCoursePrice] = useState(data.price);
 	const [courseDescription, setCourseDescription] = useState(data.description);
 	const [courseClass, setCourseClass] = useState(data.class_id);
 	const [courseMajor, setCourseMajor] = useState(data.major_id);
 	const [courseThumbnail, setCourseThumbnail] = useState(data.thumbnail);
+
+	const [malePercentage, setMalePercentage] = useState(0);
+	const [femalePercentage, setFemalePercentage] = useState(0);
+	const [totalStudent, setTotalStudent] = useState(0);
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -49,6 +59,28 @@ export default function CardKursus({ data, category }) {
 		setValidation(coursePrice && courseDescription && courseClass && courseMajor);
 	}, [coursePrice, courseDescription, courseClass, courseMajor]);
 
+	useEffect(() => {
+		setLoadingFetching(true);
+		getCustomerByIDCourse(data.ID)
+			.then((res) => {
+				let maleTotal = 0;
+				res.data.data.forEach((item) => {
+					if (item.gender == 'Laki Laki') {
+						maleTotal++;
+					}
+				});
+				setMalePercentage(Math.round((maleTotal / res.data.data.length) * 100));
+				setFemalePercentage(100 - Math.round((maleTotal / res.data.data.length) * 100));
+				setTotalStudent(res.data.data.length);
+			})
+			.catch((err) => {
+				console.log(err);
+			})
+			.finally(() => {
+				setLoadingFetching(false);
+			});
+	}, []);
+
 	return (
 		<>
 			<div
@@ -56,92 +88,124 @@ export default function CardKursus({ data, category }) {
 				onClick={() => {
 					navigate(`/course/${data.ID}`);
 				}}>
-				<div className={styles.cardNavigation}>
-					<OutlineTag type={data.status === 'publish' ? 'Green' : 'Yellow'}>
-						{
-							{
-								publish: 'Publish',
-								draft: 'Draft',
-							}[data.status]
-						}
-					</OutlineTag>
-				</div>
-				<div className={styles.cardHeader}>
-					<img
-						className={styles.cardHeaderImage}
-						src={`/thumbnail/${data.thumbnail}.png`}
-						alt="thumbnail"
-					/>
-					<span className={styles.cardHeaderTitleText}>
-						{data.course_name.length > 20
-							? data.course_name.slice(0, 30) + '...'
-							: data.course_name}
-					</span>
-				</div>
-				<div className={styles.cardBody}>
-					<div className={styles.cardBodyItem1}>
-						<span className="text-[10px] text-gray-600">Jumlah Siswa</span>
-						<span className="text-[24px] font-bold">{data.num_students || 0}</span>
-					</div>
-					<div className={styles.cardBodyItem2}>
-						<span className="text-[10px] text-gray-600">Jumlah Section</span>
-						<span className="text-[24px] font-bold">{data.section?.length || 0}</span>
-					</div>
-				</div>
-				<div className={styles.cardFooter}>
-					<span className="text-[12px]">{data.live_session_week || '-'}</span>
-				</div>
-				<div className={styles.cardButton}>
-					<Button
-						type="Secondary"
-						className={styles.deleteIconContainer}
-						onClick={(e) => {
-							e.stopPropagation();
-							setIsShowDeleteModal(true);
-						}}>
-						<FontAwesomeIcon icon={faTrash} className={styles.deleteIcon} />
-						<span>Hapus</span>
-					</Button>
-					<Button
-						type="Primary"
-						className={styles.uploadIconContainer}
-						onClick={(e) => {
-							e.stopPropagation();
-							data.status === 'draft'
-								? setIsShowPublishModal(true)
-								: putCourse({
-										id: data.ID,
-										data: {
-											ID: data.ID,
-											status: 'draft',
-										},
-								  }).then((res) => {
-										toast.success(`Successfully unpublish ${data.course_name}`, {
-											position: toast.POSITION.TOP_RIGHT,
-										});
-										dispatch(
-											updateCourse({
-												ID: data.ID,
-												status: 'draft',
-											})
-										);
-								  });
-						}}>
-						<FontAwesomeIcon
-							icon={data.status === 'draft' ? faPaperPlane : faPaperclip}
-							className={styles.uploadIcon}
-						/>
-						<span>
-							{
+				{loadingFetching ? (
+					<LoopCircleLoading size="large" color="#4161ff" />
+				) : (
+					<>
+						<div className={styles.cardNavigation}>
+							<OutlineTag type={data.status === 'publish' ? 'Green' : 'Yellow'}>
 								{
-									publish: 'Unpublish',
-									draft: 'Publish',
-								}[data.status]
-							}
-						</span>
-					</Button>
-				</div>
-				<div className={styles.cardBorderColor}></div>
+									{
+										publish: 'Publish',
+										draft: 'Draft',
+									}[data.status]
+								}
+							</OutlineTag>
+						</div>
+						<div className={styles.cardHeader}>
+							<img
+								className={styles.cardHeaderImage}
+								src={`/thumbnail/${data.thumbnail}.png`}
+								alt="thumbnail"
+							/>
+							<div className={styles.cardHeaderTitle}>
+								<span className={styles.cardHeaderTitleText}>
+									{data.course_name.length > 15
+										? data.course_name.slice(0, 15) + '...'
+										: data.course_name}
+								</span>
+								<div className={styles.cardHeaderGenderTag1}>
+									<FontAwesomeIcon icon={faMars} className={styles.maleIcon} />
+									<span className={styles.cardHeaderGenderTag1}>Laki Laki</span>
+								</div>
+								<div className={styles.genderLine}>
+									<div
+										className={classNames(
+											malePercentage == 100 && styles.fullLine,
+											styles.maleLine
+										)}
+										style={{ width: malePercentage + '%' }}></div>
+									<div
+										className={classNames(
+											styles.femaleLine,
+											femalePercentage == 100 && styles.fullLine
+										)}
+										style={{
+											width: femalePercentage + '%',
+										}}></div>
+								</div>
+								<div className={styles.cardHeaderGenderTag2}>
+									<span className={styles.cardHeaderGenderTag2}>Perempuan</span>
+									<FontAwesomeIcon icon={faVenus} className={styles.femaleIcon} />
+								</div>
+							</div>
+						</div>
+						<div className={styles.cardBody}>
+							<div className={styles.cardBodyItem1}>
+								<span className="text-[10px] text-gray-600">Jumlah Siswa</span>
+								<span className="text-[24px] font-bold">{totalStudent || 0}</span>
+							</div>
+							<div className={styles.cardBodyItem2}>
+								<span className="text-[10px] text-gray-600">Jumlah Section</span>
+								<span className="text-[24px] font-bold">{data.section?.length || 0}</span>
+							</div>
+						</div>
+						<div className={styles.cardFooter}>
+							<span className="text-[12px]">{data.live_session_week || '-'}</span>
+						</div>
+						<div className={styles.cardButton}>
+							<Button
+								type="Secondary"
+								className={styles.deleteIconContainer}
+								onClick={(e) => {
+									e.stopPropagation();
+									setIsShowDeleteModal(true);
+								}}>
+								<FontAwesomeIcon icon={faTrash} className={styles.deleteIcon} />
+								<span>Hapus</span>
+							</Button>
+							<Button
+								type="Primary"
+								className={styles.uploadIconContainer}
+								onClick={(e) => {
+									e.stopPropagation();
+									data.status === 'draft'
+										? setIsShowPublishModal(true)
+										: putCourse({
+												id: data.ID,
+												data: {
+													ID: data.ID,
+													status: 'draft',
+												},
+										  }).then(() => {
+												toast.success(`${data.course_name} berhasil ditarik kembali`, {
+													position: toast.POSITION.TOP_RIGHT,
+												});
+												dispatch(
+													updateCourse({
+														ID: data.ID,
+														status: 'draft',
+													})
+												);
+										  });
+								}}>
+								<FontAwesomeIcon
+									icon={data.status === 'draft' ? faPaperPlane : faPaperclip}
+									className={styles.uploadIcon}
+								/>
+								<span>
+									{
+										{
+											publish: 'Unpublish',
+											draft: 'Publish',
+										}[data.status]
+									}
+								</span>
+							</Button>
+						</div>
+						<div className={styles.cardBorderColor}></div>
+					</>
+				)}
 			</div>
 			<Modal open={isShowPublishModal} onClose={() => setIsShowPublishModal(false)}>
 				<div className={styles.publishModalContainer}>
@@ -315,8 +379,8 @@ export default function CardKursus({ data, category }) {
 											thumbnail: courseThumbnail,
 											status: 'publish',
 										},
-									}).then((res) => {
-										toast.success(`Successfully publish ${data.course_name}`, {
+									}).then(() => {
+										toast.success(`${data.course_name} berhasil diterbitkan`, {
 											position: toast.POSITION.TOP_RIGHT,
 										});
 										dispatch(
@@ -346,8 +410,8 @@ export default function CardKursus({ data, category }) {
 				confirmationText={`Apakah kamu yakin ingin menghapus ${data.course_name}?`}
 				primaryButtonName="Hapus Kursus"
 				onPrimaryButtonClick={() => {
-					delCourse(data.ID).then((res) => {
-						toast.success(`Successfully delete ${data.course_name}`, {
+					delCourse(data.ID).then(() => {
+						toast.success(`${data.course_name} berhasil dihapus`, {
 							position: toast.POSITION.TOP_RIGHT,
 						});
 						dispatch(deleteCourse(data.ID));

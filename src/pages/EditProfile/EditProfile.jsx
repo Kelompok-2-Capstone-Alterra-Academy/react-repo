@@ -46,7 +46,7 @@ export default function EditProfile() {
 			});
 			flag = false;
 		}
-		if (!/^(?![-\s])[\w\s-]+$/.test(name)) {
+		if (!/^(?![-\s])[\w\s-]+(?<!-)$/.test(name)) {
 			toast.error('Harap masukkan nama yang valid', {
 				position: toast.POSITION.TOP_RIGHT,
 			});

@@ -109,6 +109,7 @@ const HeaderDropdown = ({ folderData, selectedId }) => {
 					closeFunction={() => {
 						setShowFormModalFolder(false);
 					}}
+					folderList={folderData}
 				/>
 			</Modal>
 			<Modal open={showFormModalLink} onClose={() => setShowFormModalLink(false)}>

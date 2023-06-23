@@ -1,4 +1,9 @@
-import { faCheckCircle, faRotateRight, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
+import {
+	faCheckCircle,
+	faInfoCircle,
+	faRotateRight,
+	faXmarkCircle,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -21,12 +26,12 @@ const ModalUploadSlide = ({ closeFunction, folderId }) => {
 	const [isValidSlide, setIsValidSlide] = useState(false);
 
 	useEffect(() => {
-		if (link !== '' && isValidSlide) {
+		if (attachment && link !== '' && isValidSlide) {
 			setFormValidation(true);
 		} else {
 			setFormValidation(false);
 		}
-	}, [link, isValidSlide]);
+	}, [link, isValidSlide, attachment]);
 
 	const checkSlideExistence = (url) => {
 		const regex = /https?:\/\/(?:docs)\.google\.com\/(?:presentation)\/d\/([a-zA-Z0-9-_]+)/i;
@@ -103,6 +108,10 @@ const ModalUploadSlide = ({ closeFunction, folderId }) => {
 							)}
 						</div>
 					</div>
+					<span className={styles.helpText}>
+						<FontAwesomeIcon icon={faInfoCircle} className={styles.helpTextIcon} />
+						Contoh link google slide yang valid: https://docs.google.com/presentation/d/xxxxxxx/edit
+					</span>
 				</div>
 			</div>
 			<div className={styles.footer}>

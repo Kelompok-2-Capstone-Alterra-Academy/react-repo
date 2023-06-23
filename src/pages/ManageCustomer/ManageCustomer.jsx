@@ -92,7 +92,6 @@ export default function ManageCustomer() {
 				.then((res) => {
 					dispatch(setCustomer(res.data.data));
 					setRowCustomer(res.data.data);
-					console.log(res, selectedCourse);
 				})
 				.catch((err) => {
 					toast.error(err.response.data.message, {
