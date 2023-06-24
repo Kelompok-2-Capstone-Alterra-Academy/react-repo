@@ -65,11 +65,16 @@ const ModalEditFile = ({ closeFunction, attachment }) => {
 								attachment_name: file,
 							},
 						})
-							.then((res) => {
+							.then(() => {
 								toast.success(`Successfully update ${file}`, {
 									position: toast.POSITION.TOP_RIGHT,
 								});
-								dispatch(updateAttachment(res.data.data));
+								dispatch(
+									updateAttachment({
+										ID: attachment.ID,
+										attachment_name: file,
+									})
+								);
 							})
 							.catch((err) => {
 								toast.error(err.response.data.message, {
