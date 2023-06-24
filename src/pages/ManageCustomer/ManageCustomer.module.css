@@ -236,3 +236,10 @@
 	margin-top: 1em;
 	align-self: center;
 }
+
+.tag {
+	text-align: center;
+	font-size: 12px;
+	font-weight: 500;
+	width: 100%;
+}

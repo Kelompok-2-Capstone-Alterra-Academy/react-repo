@@ -43,6 +43,7 @@ export default function Sidebar({
 						Sesi Materi ({sectionList.length})
 					</span>
 					<FontAwesomeIcon
+						id="addSectionIcon"
 						icon={faPlus}
 						className={styles.menuAddIcon}
 						onClick={() => {

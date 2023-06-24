@@ -169,7 +169,6 @@ export default function ManageCustomer() {
 		}
 
 		setRowCustomer(combinedCustomers);
-		setCustomer(combinedCustomers);
 	};
 
 	const handleOpen = () => {
@@ -198,6 +197,7 @@ export default function ManageCustomer() {
 				toast.error(err.response.data.message, {
 					position: toast.POSITION.TOP_RIGHT,
 				});
+				dispatch(deleteCustomer(selectedCustomer));
 			})
 			.finally(() => {
 				setSelectedCustomer({});
@@ -256,6 +256,10 @@ export default function ManageCustomer() {
 
 		setRowCustomer(filteredCustomers);
 	}
+
+	useEffect(() => {
+		setRowCustomer(customers);
+	}, [customers]);
 
 	if (loadingFetchCourse || !selectedCourse) {
 		return <LoopCircleLoading size="large" color="#4161ff" />;
@@ -327,8 +331,8 @@ export default function ManageCustomer() {
 									<TableCell>Nama Siswa</TableCell>
 									<TableCell>Kontak</TableCell>
 									<TableCell>Tanggal Masuk</TableCell>
+									<TableCell>Gender</TableCell>
 									<TableCell>Section </TableCell>
-									<TableCell>Progress</TableCell>
 									<TableCell>Tindakan</TableCell>
 								</TableRow>
 							</TableHead>
@@ -340,7 +344,9 @@ export default function ManageCustomer() {
 										<TableCell component="th" scope="row">
 											<div className="flex items-center space-x-3">
 												<img
-													src={row.profile ? row.profile : dummyImage}
+													src={
+														row.profile && row.profile != 'noimage.png' ? row.profile : dummyImage
+													}
 													alt=""
 													className="rounded-full w-16"
 												/>
@@ -380,7 +386,19 @@ export default function ManageCustomer() {
 										</TableCell>
 										<TableCell>
 											<div className="flex items-center space-x-5">
-												<Typography>{row.sectionProgress ? row.sectionProgress : '-'}</Typography>
+												{!row.gender ? (
+													<Tag type="Grey" className={styles.tag}>
+														-
+													</Tag>
+												) : row.gender == 'Laki Laki' ? (
+													<Tag type="Blue" className={styles.tag}>
+														Laki Laki
+													</Tag>
+												) : (
+													<Tag type="Red" className={styles.tag}>
+														Perempuan
+													</Tag>
+												)}
 											</div>
 										</TableCell>
 										<TableCell>

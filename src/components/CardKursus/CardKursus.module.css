@@ -164,6 +164,13 @@
 	border-radius: 0 8px 8px 0;
 }
 
+.emptyLine {
+	height: 100%;
+	background-color: #e0e0e0;
+	float: left;
+	border-radius: 8px;
+}
+
 .cardBody {
 	width: 100%;
 	display: grid;

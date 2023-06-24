@@ -114,30 +114,38 @@ export default function CardKursus({ data, category }) {
 										? data.course_name.slice(0, 15) + '...'
 										: data.course_name}
 								</span>
-								<div className={styles.cardHeaderGenderTag1}>
-									<FontAwesomeIcon icon={faMars} className={styles.maleIcon} />
-									<span className={styles.cardHeaderGenderTag1}>Laki Laki</span>
-								</div>
-								<div className={styles.genderLine}>
-									<div
-										className={classNames(
-											malePercentage == 100 && styles.fullLine,
-											styles.maleLine
-										)}
-										style={{ width: malePercentage + '%' }}></div>
-									<div
-										className={classNames(
-											styles.femaleLine,
-											femalePercentage == 100 && styles.fullLine
-										)}
-										style={{
-											width: femalePercentage + '%',
-										}}></div>
-								</div>
-								<div className={styles.cardHeaderGenderTag2}>
-									<span className={styles.cardHeaderGenderTag2}>Perempuan</span>
-									<FontAwesomeIcon icon={faVenus} className={styles.femaleIcon} />
-								</div>
+								{totalStudent > 0 ? (
+									<>
+										<div className={styles.cardHeaderGenderTag1}>
+											<FontAwesomeIcon icon={faMars} className={styles.maleIcon} />
+											<span className={styles.cardHeaderGenderTag1}>Laki Laki</span>
+										</div>
+										<div className={styles.genderLine}>
+											<div
+												className={classNames(
+													malePercentage == 100 && styles.fullLine,
+													styles.maleLine
+												)}
+												style={{ width: malePercentage + '%' }}></div>
+											<div
+												className={classNames(
+													styles.femaleLine,
+													femalePercentage == 100 && styles.fullLine
+												)}
+												style={{
+													width: femalePercentage + '%',
+												}}></div>
+										</div>
+										<div className={styles.cardHeaderGenderTag2}>
+											<span className={styles.cardHeaderGenderTag2}>Perempuan</span>
+											<FontAwesomeIcon icon={faVenus} className={styles.femaleIcon} />
+										</div>
+									</>
+								) : (
+									<div className={styles.genderLine}>
+										<div className={styles.emptyLine} style={{ width: '100%' }}></div>
+									</div>
+								)}
 							</div>
 						</div>
 						<div className={styles.cardBody}>
