@@ -59,6 +59,7 @@ const ModalLink = ({ closeFunction, folderId }) => {
 						<span className={styles.label}>Nama Video</span>
 						<input
 							required
+							id="videoNameInput"
 							className={styles.input}
 							type="text"
 							placeholder="Masukkan Nama Video"
@@ -70,6 +71,7 @@ const ModalLink = ({ closeFunction, folderId }) => {
 						<span className={styles.label}>Deskripsi Video</span>
 						<textarea
 							className={styles.input}
+							id="videoDescriptionInput"
 							placeholder="Masukkan Deskripsi Video"
 							value={description}
 							onChange={(e) => setDescription(e.target.value)}
@@ -80,6 +82,7 @@ const ModalLink = ({ closeFunction, folderId }) => {
 						<div className={styles.inputCheckingContainer}>
 							<input
 								required
+								id="videoLinkInput"
 								className={styles.inputChecking}
 								type="text"
 								placeholder="Masukkan Link Video"

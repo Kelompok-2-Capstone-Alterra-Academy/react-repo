@@ -57,6 +57,7 @@ const ModalUploadSlide = ({ closeFunction, folderId }) => {
 					<span className={styles.label}>Nama PPT</span>
 					<input
 						required
+						id="pptNameInput"
 						className={styles.input}
 						type="text"
 						placeholder="Masukkan Nama PPT"
@@ -67,6 +68,7 @@ const ModalUploadSlide = ({ closeFunction, folderId }) => {
 				<div className={styles.formGroup}>
 					<span className={styles.label}>Deskripsi PPT</span>
 					<textarea
+						id="pptDescriptionInput"
 						className={styles.input}
 						placeholder="Masukkan Deskripsi PPT"
 						value={description}
@@ -78,6 +80,7 @@ const ModalUploadSlide = ({ closeFunction, folderId }) => {
 					<div className={styles.inputCheckingContainer}>
 						<input
 							required
+							id="pptLinkInput"
 							className={styles.inputChecking}
 							type="text"
 							placeholder="Masukkan Link PPT"

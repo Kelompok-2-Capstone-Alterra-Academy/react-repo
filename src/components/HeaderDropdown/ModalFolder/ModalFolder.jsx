@@ -33,6 +33,7 @@ const ModalFolder = ({ closeFunction, folderList }) => {
 					<span className={styles.label}>Nama Folder</span>
 					<input
 						required
+						id="folderNameInput"
 						className={styles.input}
 						type="text"
 						placeholder="Masukkan Nama Folder"

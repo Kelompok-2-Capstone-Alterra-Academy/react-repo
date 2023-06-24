@@ -57,6 +57,7 @@ const ModalUploadFile = ({ closeFunction, folderId }) => {
 					<span className={styles.label}>Nama Document</span>
 					<input
 						required
+						id="documentNameInput"
 						className={styles.input}
 						type="text"
 						placeholder="Masukkan Nama Document"
@@ -68,6 +69,7 @@ const ModalUploadFile = ({ closeFunction, folderId }) => {
 					<span className={styles.label}>Deskripsi Document</span>
 					<textarea
 						className={styles.input}
+						id="documentDescriptionInput"
 						placeholder="Masukkan Deskripsi Document"
 						value={description}
 						onChange={(e) => setDescription(e.target.value)}
@@ -78,6 +80,7 @@ const ModalUploadFile = ({ closeFunction, folderId }) => {
 					<div className={styles.inputCheckingContainer}>
 						<input
 							required
+							id="documentLinkInput"
 							className={styles.inputChecking}
 							type="text"
 							placeholder="Masukkan Link Document"
