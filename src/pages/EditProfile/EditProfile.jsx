@@ -111,6 +111,13 @@ export default function EditProfile() {
 
 	const handleImageUpload = (event) => {
 		const file = event.target.files[0];
+		if (!file) return;
+		if (file.type !== 'image/png' && file.type !== 'image/jpg' && file.type !== 'image/jpeg') {
+			toast.error('Harap masukkan file gambar yang valid', {
+				position: toast.POSITION.TOP_RIGHT,
+			});
+			return;
+		}
 		setImageName(file);
 		setSelectedImage(file);
 	};
@@ -165,7 +172,12 @@ export default function EditProfile() {
 									/>
 								)}
 								<Button type="Primary" className={styles.buttonUpload}>
-									<input type="file" onChange={handleImageUpload} className={styles.inputFile} />
+									<input
+										type="file"
+										onChange={handleImageUpload}
+										className={styles.inputFile}
+										accept={'image/*'}
+									/>
 									<span className={styles.uploadText}>
 										{imageName?.name == null
 											? 'Upload Foto Profil'
