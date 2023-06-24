@@ -31,6 +31,7 @@ export default function Sidebar({
 		<div className={classNames(styles.sidebar, !show && styles.hideSidebar)} id="sidebar">
 			<div
 				className={styles.menuBox}
+				id="backToDashboard"
 				onClick={() => {
 					window.location.href = '/dashboard';
 				}}>
@@ -72,6 +73,7 @@ export default function Sidebar({
 							<div className={styles.menuCourseContainer} key={section.id}>
 								<div
 									className={styles.menuCourse}
+									id={`section-${index + 1}`}
 									onClick={() => {
 										dispatch(
 											updateSection({
@@ -106,6 +108,7 @@ export default function Sidebar({
 											return (
 												<div
 													key={content.id}
+													id={`content-${content.id}`}
 													className={classNames(
 														styles.modulChild,
 														content.id == selectedContent.id &&

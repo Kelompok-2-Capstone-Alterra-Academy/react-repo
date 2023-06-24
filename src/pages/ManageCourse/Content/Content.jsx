@@ -474,6 +474,7 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 										<div className={styles.paginationButtonContainer}>
 											<Button
 												type={offsetPage === 0 ? 'Disabled' : 'Secondary'}
+												id="previousPageButton"
 												className={styles.paginationButton}
 												onClick={() => {
 													setOffsetPage(offsetPage - limitPage);
@@ -494,6 +495,7 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 														: 'Secondary'
 												}
 												className={styles.paginationButton}
+												id="nextPageButton"
 												onClick={() => {
 													setOffsetPage(offsetPage + limitPage);
 												}}>
@@ -639,6 +641,7 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 							<span>{content.description != '' ? 'Edit Deskripsi' : 'Tambah Deskripsi'}</span>
 							<FontAwesomeIcon
 								icon={faXmark}
+								id="addTextModalCloseIcon"
 								className={styles.addTextModalCloseIcon}
 								onClick={() => setIsShowAddTextModal(false)}
 							/>
@@ -653,6 +656,7 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 					/>
 					<Button
 						type="Primary"
+						id="addDescSaveButton"
 						onClick={() => {
 							putModule({
 								data: {
@@ -711,6 +715,7 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 					</div>
 					<Button
 						type="Primary"
+						id="scoreSaveButton"
 						onClick={() => {
 							putSubmission({
 								data: {
