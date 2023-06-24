@@ -115,7 +115,7 @@
 	box-shadow: 0 3px 11px #0000001a, 0 3px 6px #00000026;
 }
 
-.formGroup {
+.deadlineFormGroup {
 	display: flex;
 	flex-direction: row;
 	align-items: flex-start;

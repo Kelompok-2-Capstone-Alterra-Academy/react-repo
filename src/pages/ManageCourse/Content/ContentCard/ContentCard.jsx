@@ -23,9 +23,15 @@ export default function ContentCard({ data }) {
 				href={data.attachment.attachment_source}
 				target="_blank"
 				rel="noreferrer">
-				<div className={styles.contentTitleContainer}>
-					<span className={styles.dataName}>{data.attachment.attachment_name}</span>
-					<FontAwesomeIcon icon={faUpRightFromSquare} className={styles.previewIcon} />
+				<div id="contentTitleContainer" className={styles.contentTitleContainer}>
+					<span id="dataName" className={styles.dataName}>
+						{data.attachment.attachment_name}
+					</span>
+					<FontAwesomeIcon
+						id="previewIcon"
+						icon={faUpRightFromSquare}
+						className={styles.previewIcon}
+					/>
 				</div>
 			</a>
 		);
@@ -38,18 +44,32 @@ export default function ContentCard({ data }) {
 
 		return (
 			<>
-				<div className={styles.contentContainer} onClick={() => setShowVideoModal(true)}>
-					<div className={styles.contentTitleContainer}>
-						<span className={styles.dataName}>{data.attachment.attachment_name}</span>
-						<FontAwesomeIcon icon={faUpRightFromSquare} className={styles.previewIcon} />
+				<div
+					id="contentContainer"
+					className={styles.contentContainer}
+					onClick={() => setShowVideoModal(true)}>
+					<div id="contentTitleContainer" className={styles.contentTitleContainer}>
+						<span id="dataName" className={styles.dataName}>
+							{data.attachment.attachment_name}
+						</span>
+						<FontAwesomeIcon
+							id="previewIcon"
+							icon={faUpRightFromSquare}
+							className={styles.previewIcon}
+						/>
 					</div>
 				</div>
 				<Modal open={showVideoModal} onClose={() => setShowVideoModal(false)}>
 					<div className={styles.videoModal}>
 						<div className={styles.closeIcon}>
-							<FontAwesomeIcon icon={faXmark} onClick={() => setShowVideoModal(false)} />
+							<FontAwesomeIcon
+								id="closeIcon"
+								icon={faXmark}
+								onClick={() => setShowVideoModal(false)}
+							/>
 						</div>
 						<iframe
+							id="videoFrame"
 							title={data.attachment.attachment_name}
 							width="100%"
 							height="100%"
@@ -63,18 +83,32 @@ export default function ContentCard({ data }) {
 	if (contentType == 'tugas' || contentType == 'materi') {
 		return (
 			<>
-				<div className={styles.contentContainer} onClick={() => setShowFileModal(true)}>
-					<div className={styles.contentTitleContainer}>
-						<span className={styles.dataName}>{data.attachment.attachment_name}</span>
-						<FontAwesomeIcon icon={faUpRightFromSquare} className={styles.previewIcon} />
+				<div
+					id="contentContainer"
+					className={styles.contentContainer}
+					onClick={() => setShowFileModal(true)}>
+					<div id="contentTitleContainer" className={styles.contentTitleContainer}>
+						<span id="dataName" className={styles.dataName}>
+							{data.attachment.attachment_name}
+						</span>
+						<FontAwesomeIcon
+							id="previewIcon"
+							icon={faUpRightFromSquare}
+							className={styles.previewIcon}
+						/>
 					</div>
 				</div>
 				<Modal open={showFileModal} onClose={() => setShowFileModal(false)}>
 					<div className={styles.fileModal}>
 						<div className={styles.closeIcon}>
-							<FontAwesomeIcon icon={faXmark} onClick={() => setShowFileModal(false)} />
+							<FontAwesomeIcon
+								id="closeIcon"
+								icon={faXmark}
+								onClick={() => setShowFileModal(false)}
+							/>
 						</div>
 						<iframe
+							id="fileFrame"
 							title={data.attachment.attachment_name}
 							width="100%"
 							height="100%"

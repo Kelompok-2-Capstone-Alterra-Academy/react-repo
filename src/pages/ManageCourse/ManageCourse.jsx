@@ -220,16 +220,18 @@ export default function ManageCourse() {
 	}
 
 	return (
-		<div className={styles.container}>
-			<div className={styles.barContainer}>
+		<div id="container" className={styles.container}>
+			<div id="barContainer" className={styles.barContainer}>
 				<FontAwesomeIcon
+					id="burgerIcon"
 					icon={faBars}
 					className={styles.burger}
 					onClick={() => setShowSidebar(!showSidebar)}
 				/>
 			</div>
-			<div className={styles.content}>
+			<div id="content" className={styles.content}>
 				<Sidebar
+					id="sidebar"
 					show={showSidebar}
 					onSelectContent={(content) => {
 						setSelectedContent(content);
@@ -243,8 +245,9 @@ export default function ManageCourse() {
 					}}
 					courseId={courseId}
 				/>
-				<div className={showSidebar ? styles.main : styles.mainWithoutSidebar}>
+				<div id="main" className={showSidebar ? styles.main : styles.mainWithoutSidebar}>
 					<Header
+						id="header"
 						breadCrumbData={{
 							name: courseName,
 							links: [
@@ -264,10 +267,14 @@ export default function ManageCourse() {
 						}}
 					/>
 					{Object.keys(selectedSection).length != 0 && (
-						<div className={styles.controllerContainer} key={selectedSection.id}>
-							<div className={styles.headerTitle}>
+						<div
+							id="controllerContainer"
+							className={styles.controllerContainer}
+							key={selectedSection.id}>
+							<div id="headerTitle" className={styles.headerTitle}>
 								{isEditingCourseName ? (
 									<input
+										id="headerTitleInput"
 										type="text"
 										className={styles.headerTitleInput}
 										value={sectionName}
@@ -280,6 +287,7 @@ export default function ManageCourse() {
 								) : (
 									<div>
 										<span
+											id="headerTitleCourse"
 											className={
 												sectionName == ''
 													? styles.headerTitleCoursePlaceholder
@@ -288,6 +296,7 @@ export default function ManageCourse() {
 											{sectionName || 'Masukkan nama kursus'}
 										</span>
 										<FontAwesomeIcon
+											id="headerTitleEditIcon"
 											icon={faEdit}
 											className={styles.headerTitleEditIcon}
 											onClick={() => setIsEditingCourseName(true)}
@@ -295,14 +304,16 @@ export default function ManageCourse() {
 									</div>
 								)}
 							</div>
-							<div className={styles.headerButton}>
+							<div id="headerButton" className={styles.headerButton}>
 								<Button
+									id="deleteButton"
 									type="Danger"
 									className={styles.button}
 									onClick={() => setShowDeleteModal(true)}>
 									<FontAwesomeIcon icon={faTrash} />
 								</Button>
 								<div
+									id="selectWrapper"
 									className={styles.selectWrapper}
 									onClick={() => setIsSelectContent(!isSelectContent)}
 									ref={containerRef}>
@@ -310,6 +321,7 @@ export default function ManageCourse() {
 										<FontAwesomeIcon icon={faPlus} />
 									</Button>
 									<Select
+										id="contentSelection"
 										isShow={isSelectContent}
 										className={styles.contentSelection}
 										options={{
@@ -327,6 +339,7 @@ export default function ManageCourse() {
 									/>
 								</div>
 								<Button
+									id="renameButton"
 									type="Primary"
 									className={styles.button}
 									onClick={() => {
@@ -336,6 +349,7 @@ export default function ManageCourse() {
 								</Button>
 							</div>
 							<ConfirmationModal
+								id="saveModal"
 								title="Rename Section"
 								image="/image/course-save.png"
 								confirmationText="Apakah kamu yakin untuk menyimpan section ini?"
@@ -379,6 +393,7 @@ export default function ManageCourse() {
 								show={showSaveModal}
 							/>
 							<ConfirmationModal
+								id="deleteModal"
 								title="Hapus Section"
 								image="/image/section-delete.png"
 								confirmationText="Apakah kamu yakin untuk menghapus section ini?"
@@ -412,6 +427,7 @@ export default function ManageCourse() {
 					)}
 					{Object.keys(selectedContent).length != 0 && (
 						<Content
+							id="selectedContent"
 							selectedContent={selectedContent}
 							onReset={() => setSelectedContent({})}
 							folderList={folderList}

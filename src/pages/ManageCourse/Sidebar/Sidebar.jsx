@@ -28,7 +28,7 @@ export default function Sidebar({
 	const dispatch = useDispatch();
 
 	return (
-		<div className={classNames(styles.sidebar, !show && styles.hideSidebar)}>
+		<div className={classNames(styles.sidebar, !show && styles.hideSidebar)} id="sidebar">
 			<div
 				className={styles.menuBox}
 				onClick={() => {
@@ -39,7 +39,9 @@ export default function Sidebar({
 			</div>
 			<div className={styles.sectionListContainer}>
 				<div className={styles.menuTitleContainer}>
-					<span className={styles.menuTitle}>Sesi Materi ({sectionList.length})</span>
+					<span className={styles.menuTitle} id="sectionTitle">
+						Sesi Materi ({sectionList.length})
+					</span>
 					<FontAwesomeIcon
 						icon={faPlus}
 						className={styles.menuAddIcon}

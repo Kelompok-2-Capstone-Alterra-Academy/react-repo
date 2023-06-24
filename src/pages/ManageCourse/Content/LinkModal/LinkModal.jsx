@@ -42,15 +42,25 @@ export default function LinkModal({ data, show, onClose, onSubmit }) {
 
 	return (
 		<Modal open={show} onClose={onClose}>
-			<div className={styles.modalContainer}>
-				<div className={styles.modalHeader}>
-					<div className={styles.modalTitle}>
+			<div id="modalContainer" className={styles.modalContainer}>
+				<div id="modalHeader" className={styles.modalHeader}>
+					<div id="modalTitle" className={styles.modalTitle}>
 						<span>Pilih Kuis</span>
-						<FontAwesomeIcon icon={faXmark} className={styles.modalCloseIcon} onClick={onClose} />
+						<FontAwesomeIcon
+							id="modalCloseIcon"
+							icon={faXmark}
+							className={styles.modalCloseIcon}
+							onClick={onClose}
+						/>
 					</div>
-					<div className={styles.modalSearch}>
-						<FontAwesomeIcon icon={faSearch} className={styles.modalSearchIcon} />
+					<div id="modalSearch" className={styles.modalSearch}>
+						<FontAwesomeIcon
+							id="modalSearchIcon"
+							icon={faSearch}
+							className={styles.modalSearchIcon}
+						/>
 						<input
+							id="modalSearchInput"
 							type="text"
 							placeholder="Cari nama link"
 							onChange={(e) => {
@@ -60,20 +70,23 @@ export default function LinkModal({ data, show, onClose, onSubmit }) {
 						/>
 					</div>
 				</div>
-				<div className={styles.modalContent}>
-					<div className={styles.modalContentHeader}>
+				<div id="modalContent" className={styles.modalContent}>
+					<div id="modalContentHeader" className={styles.modalContentHeader}>
 						<span>Tampilkan</span>
 						<div
+							id="modalContentSelectContainer"
 							className={styles.modalContentSelectContainer}
 							onClick={() => setIsSelectShowPerPage(!isSelectShowPerPage)}
 							ref={containerRef}>
 							{quizLinkShowPerPage}
 							<FontAwesomeIcon
+								id="modalContentSelectIcon"
 								icon={isSelectShowPerPage ? faChevronUp : faChevronDown}
 								className={styles.modalContentSelectIcon}
 							/>
 							{isSelectShowPerPage && (
 								<Select
+									id="modalContentSelect"
 									isShow={isSelectShowPerPage}
 									className={styles.modalContentSelect}
 									options={{
@@ -93,21 +106,22 @@ export default function LinkModal({ data, show, onClose, onSubmit }) {
 						</div>
 						<span>Per Page</span>
 					</div>
-					<div className={styles.modalContentBody}>
-						<table className={styles.modalTable}>
-							<thead className={styles.modalTableHead}>
+					<div id="modalContentBody" className={styles.modalContentBody}>
+						<table id="modalTable" className={styles.modalTable}>
+							<thead id="modalTableHead" className={styles.modalTableHead}>
 								<tr>
 									<th>Pilih</th>
 									<th>Nama Link</th>
 									<th>Preview Link</th>
 								</tr>
 							</thead>
-							<tbody className={styles.modalTableBody}>
+							<tbody id="modalTableBody" className={styles.modalTableBody}>
 								{quizLinkList?.map((link) => {
 									return (
 										<tr key={link.ID} className={styles.modalTableBodyRow}>
 											<td>
 												<span
+													id="modalTableSelect"
 													className={styles.modalTableSelect}
 													onClick={() => {
 														onSubmit(link);
@@ -118,6 +132,7 @@ export default function LinkModal({ data, show, onClose, onSubmit }) {
 											<td>{link.attachment_name}</td>
 											<td>
 												<a
+													id="modalTablePreview"
 													href={link.attachment_source}
 													target="_blank"
 													rel="noreferrer"

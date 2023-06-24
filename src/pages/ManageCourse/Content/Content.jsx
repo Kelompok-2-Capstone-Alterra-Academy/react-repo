@@ -148,17 +148,19 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 
 	return (
 		<>
-			<div className={styles.container} key={content.ID}>
-				<div className={styles.headerContainer}>
-					<div className={styles.contentTitleContainer}>
-						<div className={styles.titleFormContainer}>
+			<div id="container" className={styles.container}>
+				<div id="headerContainer" className={styles.headerContainer}>
+					<div id="contentTitleContainer" className={styles.contentTitleContainer}>
+						<div id="titleFormContainer" className={styles.titleFormContainer}>
 							{isEditingContentName ? (
 								<form
+									id="contentNameForm"
 									onSubmit={() => {
 										setIsEditingContentName(false);
 									}}>
 									<input
 										type="text"
+										id="contentTitleInput"
 										className={styles.contentTitleInput}
 										value={contentName}
 										onChange={(e) => setContentName(e.target.value)}
@@ -171,12 +173,14 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 							) : (
 								<div>
 									<span
+										id="contentTitle"
 										className={
 											contentName === '' ? styles.contentTitlePlaceholder : styles.contentTitle
 										}>
 										{contentName === '' ? placeholderValue : contentName}
 									</span>
 									<FontAwesomeIcon
+										id="contentTitleEditIcon"
 										icon={faEdit}
 										className={styles.contentTitleEditIcon}
 										onClick={() => setIsEditingContentName(true)}
@@ -185,26 +189,33 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 							)}
 						</div>
 						{contentType == 'tugas' && (
-							<div className={styles.dueDateContainer}>
-								<FontAwesomeIcon icon={faCalendarAlt} className={styles.deadlineIcon} />
+							<div id="dueDateContainer" className={styles.dueDateContainer}>
+								<FontAwesomeIcon
+									id="deadlineIcon"
+									icon={faCalendarAlt}
+									className={styles.deadlineIcon}
+								/>
 								{content.tasks != null && content.tasks.length != 0 ? (
-									<span className={styles.noDeadline}>
+									<span id="dueDate" className={styles.noDeadline}>
 										{displayDate(content.tasks[0].due_date)}
 									</span>
 								) : (
-									<span className={styles.noDeadline}>Belum ditentukan</span>
+									<span id="noDueDate" className={styles.noDeadline}>
+										Belum ditentukan
+									</span>
 								)}
 							</div>
 						)}
-						<div className={styles.contentDescription}>
-							<FontAwesomeIcon icon={faCircleInfo} className={styles.toolTip} />
-							<span className={styles.contentDescriptionText}>
+						<div id="contentDescription" className={styles.contentDescription}>
+							<FontAwesomeIcon id="toolTipIcon" icon={faCircleInfo} className={styles.toolTip} />
+							<span id="contentDescriptionText" className={styles.contentDescriptionText}>
 								{content.description || 'Tidak ada deskripsi'}
 							</span>
 						</div>
 					</div>
-					<div className={styles.contentButton}>
+					<div id="contentButton" className={styles.contentButton}>
 						<Button
+							id="deleteButton"
 							type="Danger"
 							className={styles.button}
 							onClick={() => {
@@ -213,6 +224,7 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 							<FontAwesomeIcon icon={faTrash} />
 						</Button>
 						<Button
+							id="addTextButton"
 							type="Secondary"
 							className={styles.button}
 							onClick={() => {
@@ -221,8 +233,12 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 							<FontAwesomeIcon icon={faCircleInfo} />
 						</Button>
 						{contentType == 'tugas' && (
-							<div ref={selectDeadlineRef} className={styles.contentDeadlineWrapper}>
+							<div
+								id="contentDeadlineWrapper"
+								ref={selectDeadlineRef}
+								className={styles.contentDeadlineWrapper}>
 								<Button
+									id="selectDeadlineButton"
 									type="Secondary"
 									className={styles.button}
 									onClick={() => {
@@ -231,10 +247,10 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 									<FontAwesomeIcon icon={faCalendarAlt} />
 								</Button>
 								{isSelectDeadline && (
-									<div className={styles.datePickerWrapper}>
-										<div className={styles.datePickerContainer}>
-											<div className={styles.formGroup}>
-												<div className={styles.datePicker}>
+									<div id="datePickerWrapper" className={styles.datePickerWrapper}>
+										<div id="datePickerContainer" className={styles.datePickerContainer}>
+											<div id="deadlineFormGroup" className={styles.deadlineFormGroup}>
+												<div id="datePicker" className={styles.datePicker}>
 													<DayPicker
 														mode="single"
 														className={styles.dayPicker}
@@ -242,7 +258,7 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 														onSelect={handleSelectDay}
 													/>
 												</div>
-												<div className={styles.timePicker}>
+												<div id="timePicker" className={styles.timePicker}>
 													<Timekeeper
 														onChange={(e) => {
 															setSelectedDeadlineTime(e.formatted24);
@@ -253,14 +269,16 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 													/>
 												</div>
 											</div>
-											<div className={styles.dateButtonContainer}>
+											<div id="dateButtonContainer" className={styles.dateButtonContainer}>
 												<Button
+													id="cancelDeadlineButton"
 													type="Danger"
 													className={styles.dateButton}
 													onClick={() => setIsSelectDeadline(!isSelectDeadline)}>
 													<span>Batal</span>
 												</Button>
 												<Button
+													id="scheduleDeadlineButton"
 													type="Primary"
 													className={styles.dateButton}
 													onClick={() => {
@@ -278,6 +296,7 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 							</div>
 						)}
 						<Button
+							id="addContentButton"
 							type="Secondary"
 							className={styles.button}
 							onClick={() =>
@@ -286,6 +305,7 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 							<span>Tambahkan {contentType.charAt(0).toUpperCase() + contentType.slice(1)}</span>
 						</Button>
 						<Button
+							id="saveButton"
 							type="Primary"
 							className={styles.button}
 							onClick={() => {
@@ -297,13 +317,16 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 				</div>
 				<ContentCard data={content} />
 				{contentType == 'tugas' && content.submission != null && content.submission.length != 0 && (
-					<div className={styles.tableContainer}>
-						<div className={styles.tableHeader}>
-							<div className={styles.tableTitleContainer}>
-								<span className={styles.tableTitle}>Tugas Terkumpul</span>
-								<div className={styles.showPerPageWrapper}>
+					<div id="tableContainer" className={styles.tableContainer}>
+						<div id="tableHeader" className={styles.tableHeader}>
+							<div id="tableTitleContainer" className={styles.tableTitleContainer}>
+								<span id="tableTitle" className={styles.tableTitle}>
+									Tugas Terkumpul
+								</span>
+								<div id="showPerPageWrapper" className={styles.showPerPageWrapper}>
 									<span>Tampilkan</span>
 									<div
+										id="selectShowPerPageContainer"
 										className={styles.modalContentSelectContainer}
 										onClick={() => setIsSelectShowPerPage(!isSelectShowPerPage)}
 										ref={selectShowPerPageRef}>
@@ -334,9 +357,10 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 									<span>Per Page</span>
 								</div>
 							</div>
-							<div className={styles.searchWrapper}>
+							<div id="searchWrapper" className={styles.searchWrapper}>
 								<FontAwesomeIcon icon={faSearch} className={styles.searchIcon} />
 								<input
+									id="searchInput"
 									type="text"
 									className={styles.searchInput}
 									placeholder="Cari Nama Siswa"
@@ -345,20 +369,34 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 								/>
 							</div>
 						</div>
-						<div className={styles.tableBody}>
-							<table className={styles.table}>
+						<div id="tableBody" className={styles.tableBody}>
+							<table id="table" className={styles.table}>
 								<thead>
-									<tr className={styles.tableHead}>
-										<th className={styles.tableHeaderCellNo}>No</th>
-										<th className={styles.tableHeaderCellName}>Nama Siswa</th>
-										<th className={styles.tableHeaderCellDate}>Waktu Pengumpulan</th>
-										<th className={styles.tableHeaderCellFile}>File Jawaban</th>
-										<th className={styles.tableHeaderCellScore}>Nilai</th>
-										<th className={styles.tableHeaderCellStatus}>Status</th>
-										<th className={styles.tableHeaderCellAction}>Tindakan</th>
+									<tr id="tableHead" className={styles.tableHead}>
+										<th id="tableHeaderCellNo" className={styles.tableHeaderCellNo}>
+											No
+										</th>
+										<th id="tableHeaderCellName" className={styles.tableHeaderCellName}>
+											Nama Siswa
+										</th>
+										<th id="tableHeaderCellDate" className={styles.tableHeaderCellDate}>
+											Waktu Pengumpulan
+										</th>
+										<th id="tableHeaderCellFile" className={styles.tableHeaderCellFile}>
+											File Jawaban
+										</th>
+										<th id="tableHeaderCellScore" className={styles.tableHeaderCellScore}>
+											Nilai
+										</th>
+										<th id="tableHeaderCellStatus" className={styles.tableHeaderCellStatus}>
+											Status
+										</th>
+										<th id="tableHeaderCellAction" className={styles.tableHeaderCellAction}>
+											Tindakan
+										</th>
 									</tr>
 								</thead>
-								<tbody className={styles.tableBody}>
+								<tbody id="tableBody" className={styles.tableBody}>
 									{content.submission
 										.filter((submission) =>
 											submission.student.name.toLowerCase().includes(searchValue.toLowerCase())
@@ -367,14 +405,16 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 										.map((submission, index) => {
 											return (
 												<tr key={submission.ID}>
-													<td className={styles.tableBodyCellNo}>{index + 1}</td>
-													<td className={styles.tableBodyCellName}>
+													<td id="tableBodyCellNo" className={styles.tableBodyCellNo}>
+														{index + 1}
+													</td>
+													<td id="tableBodyCellName" className={styles.tableBodyCellName}>
 														{submission.student.name || 'Tidak Dikenal'}
 													</td>
-													<td className={styles.tableBodyCellDate}>
+													<td id="tableBodyCellDate" className={styles.tableBodyCellDate}>
 														{displayDate(submission.CreatedAt)}
 													</td>
-													<td className={styles.tableBodyCellFile}>
+													<td id="tableBodyCellFile" className={styles.tableBodyCellFile}>
 														{submission.submission_source != null ? (
 															<a
 																href={submission.submission_source}
@@ -390,34 +430,38 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 															<span>Tidak ada file</span>
 														)}
 													</td>
-													<td className={styles.tableBodyCellScore}>
-														{submission.score || '-'}/100
+													<td id="tableBodyCellScore" className={styles.tableBodyCellScore}>
+														{submission.score || '-'}
+														/100
 													</td>
-													<td className={styles.tableBodyCellStatus}>
+													<td id="tableBodyCellStatus" className={styles.tableBodyCellStatus}>
 														{isAfter(submission.CreatedAt, content.tasks[0]?.due_date) ? (
-															<Tag type="Red" className={styles.tag}>
+															<Tag id="tableTagLate" type="Red" className={styles.tag}>
 																Terlambat
 															</Tag>
 														) : submission.score != '' ? (
-															<Tag type="Green" className={styles.tag}>
+															<Tag id="tableTagEvaluated" type="Green" className={styles.tag}>
 																Sudah Dinilai
 															</Tag>
 														) : (
-															<Tag type="Yellow" className={styles.tag}>
+															<Tag id="tableTagNotEvaluated" type="Yellow" className={styles.tag}>
 																Belum Dinilai
 															</Tag>
 														)}
 													</td>
-													<td className={styles.tableBodyCellAction}>
-														<span
-															className={styles.tableButton}
-															onClick={() => {
-																setSelectedSubmission(submission);
-																setIsShowScoreModal(true);
-															}}>
-															<FontAwesomeIcon icon={faEdit} className={styles.tableActionIcon} />
-															Nilai
-														</span>
+													<td id="tableBodyCellAction" className={styles.tableBodyCellAction}>
+														<div id="actionButtonWrapper" className={styles.actionButtonWrapper}>
+															<span
+																className={styles.tableButton}
+																onClick={() => {
+																	setSelectedSubmission(submission);
+																	setIsShowScoreModal(true);
+																}}
+																id="tableButton">
+																<FontAwesomeIcon icon={faEdit} className={styles.tableActionIcon} />
+																Nilai
+															</span>
+														</div>
 													</td>
 												</tr>
 											);
