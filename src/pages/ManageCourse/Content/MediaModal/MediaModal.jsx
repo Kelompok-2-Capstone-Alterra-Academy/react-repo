@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { LoopCircleLoading } from 'react-loadingg';
 import { toast } from 'react-toastify';
 import { getAttachment } from '../../../../clients';
+import { truncateString } from '../../../../utilities/string';
 import styles from './MediaModal.module.css';
 
 export default function MediaModal({ show, onClose, onSubmit, data, type }) {
@@ -150,6 +151,7 @@ export default function MediaModal({ show, onClose, onSubmit, data, type }) {
 									<tr>
 										<th>Pilih</th>
 										<th>Nama File</th>
+										<th>Deskripsi</th>
 										<th>Ditambahkan Oleh</th>
 									</tr>
 								</thead>
@@ -157,6 +159,7 @@ export default function MediaModal({ show, onClose, onSubmit, data, type }) {
 									{displayedAttachmentList.map((file) => {
 										if (isForVideo) {
 											if (file.type === 'video') {
+												console.log(file.folder.mentor.profile);
 												return (
 													<tr key={file.ID} className={styles.modalTableBodyRow}>
 														<td>
@@ -170,9 +173,15 @@ export default function MediaModal({ show, onClose, onSubmit, data, type }) {
 															</span>
 														</td>
 														<td>{file.attachment_name}</td>
+														<td className={styles.bodyTableCellDesc}>
+															{truncateString(file.description, 100)}
+														</td>
 														<td className={styles.authorContainer}>
 															<img
-																src={`https://i.pravatar.cc/150?img=${file.ID}`}
+																src={
+																	file.folder.mentor.profile ||
+																	'http://www.listercarterhomes.com/wp-content/uploads/2013/11/dummy-image-square.jpg'
+																}
 																alt="author"
 																className={styles.authorImage}
 															/>
@@ -195,9 +204,15 @@ export default function MediaModal({ show, onClose, onSubmit, data, type }) {
 															</span>
 														</td>
 														<td>{file.attachment_name}</td>
+														<td className={styles.bodyTableCellDesc}>
+															{truncateString(file.description, 100)}
+														</td>
 														<td className={styles.authorContainer}>
 															<img
-																src={`https://i.pravatar.cc/150?img=${file.ID}`}
+																src={
+																	file.folder.mentor.profile ||
+																	'http://www.listercarterhomes.com/wp-content/uploads/2013/11/dummy-image-square.jpg'
+																}
 																alt="author"
 																className={styles.authorImage}
 															/>

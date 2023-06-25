@@ -19,6 +19,7 @@ import { toast } from 'react-toastify';
 import { delAttachment } from '../../clients';
 import { useClickOutside } from '../../hooks';
 import { deleteAttachment } from '../../redux/actions/attachmentActions';
+import { truncateString } from '../../utilities/string';
 import { ConfirmationModal } from '../ConfirmationModal';
 import Select from '../Select/Select';
 import styles from './CardFile.module.css';
@@ -126,7 +127,9 @@ const CardFile = ({ attachment }) => {
 				</div>
 				<hr className={styles.divider} />
 				<div className={styles.footer}>
-					<span className={styles.description}>{attachment.description || '-'}</span>
+					<span className={styles.description}>
+						{attachment.description ? truncateString(attachment.description, 100) : '-'}
+					</span>
 				</div>
 			</div>
 			<Modal open={showFormModalBerkas} onClose={() => setShowFormModalBerkas(false)}>

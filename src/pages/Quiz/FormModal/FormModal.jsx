@@ -16,6 +16,7 @@ import styles from './FormModal.module.css';
 export default function FormModal({ onClose }) {
 	const [form, setForm] = useState({
 		attachment_name: '',
+		description: '',
 		attachment_source: '',
 	});
 	const [formValidation, setFormValidation] = useState(false);
@@ -87,6 +88,15 @@ export default function FormModal({ onClose }) {
 								/>
 							</div>
 							<div className={styles.formGroup}>
+								<span className={styles.label}>Deskripsi Quiz</span>
+								<textarea
+									className={styles.input}
+									placeholder="Masukkan Deskripsi Quiz"
+									value={form.description}
+									onChange={(e) => setForm({ ...form, description: e.target.value })}
+								/>
+							</div>
+							<div className={styles.formGroup}>
 								<span className={styles.label}>Link G-Form</span>
 								<div className={styles.inputCheckingContainer}>
 									<input
@@ -136,6 +146,7 @@ export default function FormModal({ onClose }) {
 							onClick={() => {
 								setForm({
 									attachment_name: '',
+									description: '',
 									attachment_source: '',
 								});
 								onClose();
