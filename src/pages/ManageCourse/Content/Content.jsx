@@ -306,17 +306,15 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 						</Button>
 						<Button
 							id="saveButton"
-							type={
-								contentName === '' ||
-								contentName === content.module_name.split('-').slice(1).join('-')
-									? 'Disabled'
-									: 'Primary'
-							}
+							type="Primary"
 							className={styles.button}
 							onClick={() => {
 								setIsShowSaveModal(true);
 							}}>
-							Rename
+							{contentName === '' ||
+							contentName === content.module_name.split('-').slice(1).join('-')
+								? 'Simpan'
+								: 'Rename'}
 						</Button>
 					</div>
 				</div>
