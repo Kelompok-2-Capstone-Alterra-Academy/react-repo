@@ -113,7 +113,7 @@ const ModalUploadFile = ({ closeFunction, folderId }) => {
 					</div>
 					<span className={styles.helpText}>
 						<FontAwesomeIcon icon={faInfoCircle} className={styles.helpTextIcon} />
-						Contoh link google docs yang valid: https://docs.google.com/document/d/xxxxxx/edit
+						Contoh link google docs yang valid: https://docs.google.com/document/d/xxxxxx
 					</span>
 				</div>
 			</div>

@@ -113,7 +113,7 @@ const ModalUploadSlide = ({ closeFunction, folderId }) => {
 					</div>
 					<span className={styles.helpText}>
 						<FontAwesomeIcon icon={faInfoCircle} className={styles.helpTextIcon} />
-						Contoh link google slide yang valid: https://docs.google.com/presentation/d/xxxxxxx/edit
+						Contoh link google slide yang valid: https://docs.google.com/presentation/d/xxxxxxx
 					</span>
 				</div>
 			</div>
