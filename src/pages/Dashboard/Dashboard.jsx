@@ -309,7 +309,6 @@ export default function Dashboard() {
 										thumbnail: courseThumbnail,
 									})
 										.then((res) => {
-											console.log(res.data.data);
 											toast.success(res.data.message, {
 												position: toast.POSITION.TOP_RIGHT,
 											});

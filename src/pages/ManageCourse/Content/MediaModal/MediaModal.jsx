@@ -159,7 +159,6 @@ export default function MediaModal({ show, onClose, onSubmit, data, type }) {
 									{displayedAttachmentList.map((file) => {
 										if (isForVideo) {
 											if (file.type === 'video') {
-												console.log(file.folder.mentor.profile);
 												return (
 													<tr key={file.ID} className={styles.modalTableBodyRow}>
 														<td>

@@ -74,7 +74,9 @@ export default function CardKursus({ data, category }) {
 				setTotalStudent(res.data.data.length);
 			})
 			.catch((err) => {
-				console.log(err);
+				toast.error(err.response.data.message, {
+					position: toast.POSITION.TOP_RIGHT,
+				});
 			})
 			.finally(() => {
 				setLoadingFetching(false);

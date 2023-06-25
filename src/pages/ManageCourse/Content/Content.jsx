@@ -399,7 +399,7 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 								<tbody id="tableBody" className={styles.tableBody}>
 									{content.submission
 										.filter((submission) =>
-											submission.student.name.toLowerCase().includes(searchValue.toLowerCase())
+											submission.student?.name.toLowerCase().includes(searchValue.toLowerCase())
 										)
 										.slice(offsetPage, offsetPage + limitPage)
 										.map((submission, index) => {
