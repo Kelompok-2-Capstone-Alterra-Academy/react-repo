@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import { LoopCircleLoading } from 'react-loadingg';
 import { toast } from 'react-toastify';
-import { getClass, getStudent } from '../../clients';
+import { getChat, getStudent } from '../../clients';
 import { Select } from '../../components';
 import { useClickOutside } from '../../hooks';
 import styles from './Chat.module.css';
@@ -21,9 +21,8 @@ export default function Chat() {
 	const [selectedClass, setSelectedClass] = useState('');
 	const [searchValue, setSearchValue] = useState('');
 
-	const [classList, setClassList] = useState([]);
+	const [courseList, setCourseList] = useState([]);
 	const [studentData, setStudentData] = useState([]);
-	const [displayedData, setDisplayedData] = useState([]);
 
 	const containerRef = useClickOutside(() => {
 		setIsSelectOpen(false);
@@ -31,10 +30,10 @@ export default function Chat() {
 
 	useEffect(() => {
 		setLoadingFetchClass(true);
-		getClass()
+		getChat()
 			.then((res) => {
-				setClassList(res.data.data);
-				setSelectedClass(res.data.data[0].ID);
+				setCourseList(res.data.data.courses);
+				setSelectedClass(res.data.data.courses[0]?.ID);
 			})
 			.catch((err) => {
 				toast.error(err.response.data.message, {
@@ -52,7 +51,6 @@ export default function Chat() {
 		getStudent(selectedClass)
 			.then((res) => {
 				setStudentData(res.data.data.students);
-				setDisplayedData(res.data.data.students);
 			})
 			.catch((err) => {
 				toast.error(err.response.data.message, {
@@ -65,16 +63,11 @@ export default function Chat() {
 			});
 	}, [selectedClass]);
 
-	useEffect(() => {
-		const filteredData = studentData.filter((item) =>
-			item.name.toLowerCase().includes(searchValue.toLowerCase())
-		);
-		setDisplayedData(searchValue == '' ? studentData : filteredData);
-	}, [searchValue]);
-
 	if (loadingFetchClass) {
 		return <LoopCircleLoading size="large" color="#4161ff" />;
 	}
+
+	console.log('==========================================');
 
 	return (
 		<div className={styles.container}>
@@ -96,7 +89,7 @@ export default function Chat() {
 							className={styles.selectWrapper}
 							onClick={() => setIsSelectOpen(isSelectOpen ? false : true)}
 							ref={containerRef}>
-							<span>{classList.find((item) => item.ID == selectedClass).class_name}</span>
+							<span>{courseList.find((item) => item.ID == selectedClass).course_name}</span>
 							<FontAwesomeIcon
 								icon={isSelectOpen ? faChevronUp : faChevronDown}
 								className={styles.arrowIcon}
@@ -105,9 +98,9 @@ export default function Chat() {
 								isShow={isSelectOpen}
 								options={{
 									title: 'Pilih Kelas',
-									data: classList.map((item) => ({
+									data: courseList.map((item) => ({
 										id: item.ID,
-										option: item.class_name,
+										option: item.course_name,
 									})),
 								}}
 								handleSelected={(id) => {
@@ -121,7 +114,7 @@ export default function Chat() {
 				<div className={styles.content}>
 					{loadingFetchStudent ? (
 						<LoopCircleLoading size="large" color="#4161ff" />
-					) : displayedData.length == 0 ? (
+					) : studentData.length == 0 ? (
 						<div className={styles.emptyList}>
 							<div className={styles.item}>
 								<FontAwesomeIcon icon={faFolderOpen} className={styles.avatar} />
@@ -129,12 +122,31 @@ export default function Chat() {
 							</div>
 						</div>
 					) : (
-						displayedData.map((item) => (
-							<div className={styles.list} key={item.ID}>
-								<span className={styles.name}>{item.name}</span>
-								<img src={'/image/icon-whatsapp.png'} className={styles.icon} />
-							</div>
-						))
+						studentData
+							.filter((item) => item.name.toLowerCase().includes(searchValue.toLowerCase()))
+							.map((item, index) => {
+								return (
+									<a
+										className={styles.list}
+										key={index}
+										href={'https://wa.me/+62' + item.phone_number.slice(1).replace(/-/g, '')}
+										target="_blank"
+										rel="noreferrer">
+										<div className={styles.nameContainer}>
+											<img
+												src={
+													item.profile && item.profile != 'noimage.png'
+														? item.profile
+														: 'http://www.listercarterhomes.com/wp-content/uploads/2013/11/dummy-image-square.jpg'
+												}
+												className={styles.avatar}
+											/>
+											<span className={styles.name}>{item.name}</span>
+										</div>
+										<img src={'/image/icon-whatsapp.png'} className={styles.icon} />
+									</a>
+								);
+							})
 					)}
 				</div>
 			</div>
