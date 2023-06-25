@@ -340,16 +340,16 @@ export default function ManageCourse() {
 								</div>
 								<Button
 									id="renameButton"
-									type={
-										sectionName == '' || sectionName == selectedSection.section_name
-											? 'Disabled'
-											: 'Primary'
-									}
+									type="Primary"
 									className={styles.button}
 									onClick={() => {
 										setShowSaveModal(true);
 									}}>
-									<span>Rename</span>
+									<span>
+										{sectionName == '' || sectionName == selectedSection.section_name
+											? 'Simpan'
+											: 'Rename'}
+									</span>
 								</Button>
 							</div>
 							<ConfirmationModal
