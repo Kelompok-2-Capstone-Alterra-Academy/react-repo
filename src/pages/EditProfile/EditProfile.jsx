@@ -52,7 +52,7 @@ export default function EditProfile() {
 			});
 			flag = false;
 		}
-		if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+		if (!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(email)) {
 			toast.error('Harap masukkan email yang valid', {
 				position: toast.POSITION.TOP_RIGHT,
 			});
