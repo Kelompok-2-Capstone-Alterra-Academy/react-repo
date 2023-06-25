@@ -240,8 +240,8 @@ export default function ManageCourse() {
 						setSelectedSection(section);
 					}}
 					selectedContent={{
-						sectionId: selectedSection.id ?? '',
-						id: selectedContent.id ?? '',
+						sectionId: selectedSection.ID || '',
+						ID: selectedContent.ID || '',
 					}}
 					courseId={courseId}
 				/>

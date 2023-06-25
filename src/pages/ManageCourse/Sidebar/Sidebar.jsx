@@ -105,14 +105,20 @@ export default function Sidebar({
 										.map((content) => {
 											const contentType = content.module_name.split('-')[0];
 											const contentName = content.module_name.split('-').slice(1).join('-');
+											console.log(
+												content.ID,
+												selectedContent.ID,
+												section.ID,
+												selectedContent.sectionId
+											);
 											return (
 												<div
-													key={content.id}
-													id={`content-${content.id}`}
+													key={content.ID}
+													id={`content-${content.ID}`}
 													className={classNames(
 														styles.modulChild,
-														content.id == selectedContent.id &&
-															section.id == selectedContent.sectionId &&
+														content.ID == selectedContent.ID &&
+															section.ID == selectedContent.sectionId &&
 															styles.modulChildSelected
 													)}
 													onClick={() => {
