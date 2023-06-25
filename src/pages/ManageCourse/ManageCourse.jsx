@@ -340,7 +340,11 @@ export default function ManageCourse() {
 								</div>
 								<Button
 									id="renameButton"
-									type="Primary"
+									type={
+										sectionName == '' || sectionName == selectedSection.section_name
+											? 'Disabled'
+											: 'Primary'
+									}
 									className={styles.button}
 									onClick={() => {
 										setShowSaveModal(true);

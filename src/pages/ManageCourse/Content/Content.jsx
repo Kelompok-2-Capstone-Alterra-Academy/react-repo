@@ -306,7 +306,12 @@ export default function Content({ selectedContent, onReset, folderList, quizList
 						</Button>
 						<Button
 							id="saveButton"
-							type="Primary"
+							type={
+								contentName === '' ||
+								contentName === content.module_name.split('-').slice(1).join('-')
+									? 'Disabled'
+									: 'Primary'
+							}
 							className={styles.button}
 							onClick={() => {
 								setIsShowSaveModal(true);
