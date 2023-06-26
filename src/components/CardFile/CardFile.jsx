@@ -1,5 +1,4 @@
 import {
-	faDownload,
 	faEdit,
 	faEllipsisH,
 	faFileAlt,
@@ -10,9 +9,7 @@ import {
 	faVideoCamera,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Alert from '@mui/material/Alert';
 import Modal from '@mui/material/Modal';
-import Snackbar from '@mui/material/Snackbar';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -31,24 +28,16 @@ const CardFile = ({ attachment }) => {
 	const [showFormModalBerkas, setShowFormModalBerkas] = useState(false);
 	const [showFormModalDetail, setShowFormModalDetail] = useState(false);
 	const [isShowMoreSelect, setIsShowMoreSelect] = useState(false);
-	const [open, setOpen] = useState(false);
 
 	const dispatch = useDispatch();
-
-	const handleClose = (reason) => {
-		if (reason === 'clickaway') {
-			return;
-		}
-		setOpen(false);
-	};
 
 	const ref = useClickOutside(() => {
 		setIsShowMoreSelect(false);
 	});
 
 	const renderOption = (id) => {
-		const icon = [faEdit, faDownload, faListAlt, faTrashAlt];
-		const option = ['Ganti Nama Berkas', 'Unduh Berkas', 'Lihat Detail', 'Hapus Berkas'];
+		const icon = [faEdit, faListAlt, faTrashAlt];
+		const option = ['Ganti Nama Berkas', 'Lihat Detail', 'Hapus Berkas'];
 
 		return (
 			<>
@@ -88,20 +77,14 @@ const CardFile = ({ attachment }) => {
 									id: 3,
 									option: renderOption(3),
 								},
-								{
-									id: 4,
-									option: renderOption(4),
-								},
 							],
 						}}
 						handleSelected={(id) => {
 							if (id === 1) {
 								setShowFormModalBerkas(true);
 							} else if (id === 2) {
-								setOpen(true);
-							} else if (id === 3) {
 								setShowFormModalDetail(true);
-							} else if (id === 4) {
+							} else if (id === 3) {
 								setShowDeleteModal(true);
 							}
 						}}
@@ -170,18 +153,6 @@ const CardFile = ({ attachment }) => {
 			<Modal open={showFormModalDetail} onClose={() => setShowFormModalDetail(false)}>
 				<ModalDetail attachment={attachment} />
 			</Modal>
-			<Snackbar
-				autoHideDuration={5000}
-				open={open}
-				onClose={handleClose}
-				anchorOrigin={{
-					vertical: 'bottom',
-					horizontal: 'right',
-				}}>
-				<Alert severity="info" variant="filled" icon={false} onClose={handleClose}>
-					Hehe... Untuk saat ini belum bisa diunduh ya...
-				</Alert>
-			</Snackbar>
 		</>
 	);
 };

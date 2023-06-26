@@ -103,9 +103,8 @@
 	color: #616161 !important;
 	margin-top: 1em;
 	margin-bottom: 1em;
-	width: 100%;
-	display: flex;
-	justify-content: flex-end;
+	width: fit-content;
+	align-self: flex-end;
 	transition: all 0.3s ease-in-out;
 	text-decoration: none !important;
 }

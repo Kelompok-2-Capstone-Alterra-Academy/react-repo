@@ -118,7 +118,9 @@ export default function Profile({ className }) {
 									key={index}
 									className={styles.menuItem}
 									onClick={() => {
-										navigate(item.link);
+										index == 2
+											? window.open('https://wa.me/+6288888888888', '_blank')
+											: navigate(item.link);
 									}}>
 									<div>
 										<FontAwesomeIcon icon={item.icon} className={styles.menuIcon} />
