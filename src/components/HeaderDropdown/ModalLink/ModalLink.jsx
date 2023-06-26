@@ -1,10 +1,15 @@
-import { faCheckCircle, faRotateRight, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
+import {
+	faCheckCircle,
+	faInfoCircle,
+	faRotateRight,
+	faXmarkCircle,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
+import { Button } from '../..';
 import { postAttachment } from '../../../clients';
-import { Button } from '../../../components';
 import { addAttachment } from '../../../redux/actions/attachmentActions';
 import styles from '../ModalLink/ModalLink.module.css';
 
@@ -54,6 +59,7 @@ const ModalLink = ({ closeFunction, folderId }) => {
 						<span className={styles.label}>Nama Video</span>
 						<input
 							required
+							id="videoNameInput"
 							className={styles.input}
 							type="text"
 							placeholder="Masukkan Nama Video"
@@ -65,6 +71,7 @@ const ModalLink = ({ closeFunction, folderId }) => {
 						<span className={styles.label}>Deskripsi Video</span>
 						<textarea
 							className={styles.input}
+							id="videoDescriptionInput"
 							placeholder="Masukkan Deskripsi Video"
 							value={description}
 							onChange={(e) => setDescription(e.target.value)}
@@ -75,6 +82,7 @@ const ModalLink = ({ closeFunction, folderId }) => {
 						<div className={styles.inputCheckingContainer}>
 							<input
 								required
+								id="videoLinkInput"
 								className={styles.inputChecking}
 								type="text"
 								placeholder="Masukkan Link Video"
@@ -105,6 +113,10 @@ const ModalLink = ({ closeFunction, folderId }) => {
 								)}
 							</div>
 						</div>
+						<span className={styles.helpText}>
+							<FontAwesomeIcon icon={faInfoCircle} className={styles.helpTextIcon} />
+							Contoh link youtube yang valid: https://www.youtube.com/watch?v=xxxxxxxxxxx
+						</span>
 					</div>
 				</form>
 			</div>

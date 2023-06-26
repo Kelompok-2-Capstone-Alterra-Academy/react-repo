@@ -1,4 +1,9 @@
-import { faCheckCircle, faRotateRight, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
+import {
+	faCheckCircle,
+	faInfoCircle,
+	faRotateRight,
+	faXmarkCircle,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -11,6 +16,7 @@ import styles from './FormModal.module.css';
 export default function FormModal({ onClose }) {
 	const [form, setForm] = useState({
 		attachment_name: '',
+		description: '',
 		attachment_source: '',
 	});
 	const [formValidation, setFormValidation] = useState(false);
@@ -68,47 +74,69 @@ export default function FormModal({ onClose }) {
 				</>
 			) : (
 				<>
-					<span className={styles.headerTitle}>Membuat Kuis</span>
+					<span className={styles.headerTitle}>Form Membuat Quiz</span>
 					<div className={styles.content}>
 						<form className={styles.form}>
-							<input
-								className={styles.formInput}
-								type="text"
-								placeholder="Nama Kuis"
-								value={form.attachment_name}
-								onChange={(e) => setForm({ ...form, attachment_name: e.target.value })}
-							/>
-							<div className={styles.gFormInput}>
+							<div className={styles.formGroup}>
+								<span className={styles.label}>Nama Quiz</span>
 								<input
-									className={styles.formInput}
+									className={styles.input}
 									type="text"
-									placeholder="Link G-Form"
-									value={form.attachment_source}
-									onChange={(e) => {
-										setForm({ ...form, attachment_source: e.target.value });
-										setIsValidGForm(false);
-										setIsCheckingGForm(false);
-									}}
+									placeholder="Masukkan Nama Quiz"
+									value={form.attachment_name}
+									onChange={(e) => setForm({ ...form, attachment_name: e.target.value })}
 								/>
-								<div className={styles.checkingIconContainer}>
-									{!isCheckingGForm && !checkingGFormLoading && (
-										<FontAwesomeIcon
-											icon={faRotateRight}
-											className={styles.checkingIcon}
-											onClick={handleClickCheckingGForm}
-										/>
-									)}
-									{!isCheckingGForm && checkingGFormLoading && (
-										<FontAwesomeIcon icon={faRotateRight} className={styles.checkingIcon} spin />
-									)}
+							</div>
+							<div className={styles.formGroup}>
+								<span className={styles.label}>Deskripsi Quiz</span>
+								<textarea
+									className={styles.input}
+									placeholder="Masukkan Deskripsi Quiz"
+									value={form.description}
+									onChange={(e) => setForm({ ...form, description: e.target.value })}
+								/>
+							</div>
+							<div className={styles.formGroup}>
+								<span className={styles.label}>Link G-Form</span>
+								<div className={styles.inputCheckingContainer}>
+									<input
+										className={styles.inputChecking}
+										type="text"
+										placeholder="Masukkan Link G-Form"
+										value={form.attachment_source}
+										onChange={(e) => {
+											setForm({ ...form, attachment_source: e.target.value });
+											setIsValidGForm(false);
+											setIsCheckingGForm(false);
+										}}
+									/>
+									<div className={styles.checkingIconContainer}>
+										{!isCheckingGForm && !checkingGFormLoading && (
+											<FontAwesomeIcon
+												icon={faRotateRight}
+												className={styles.checkingIcon}
+												onClick={handleClickCheckingGForm}
+											/>
+										)}
+										{!isCheckingGForm && checkingGFormLoading && (
+											<FontAwesomeIcon icon={faRotateRight} className={styles.checkingIcon} spin />
+										)}
 
-									{!isValidGForm && isCheckingGForm && (
-										<FontAwesomeIcon icon={faXmarkCircle} className={styles.checkingErrorIcon} />
-									)}
-									{isValidGForm && isCheckingGForm && (
-										<FontAwesomeIcon icon={faCheckCircle} className={styles.checkingSuccessIcon} />
-									)}
+										{!isValidGForm && isCheckingGForm && (
+											<FontAwesomeIcon icon={faXmarkCircle} className={styles.checkingErrorIcon} />
+										)}
+										{isValidGForm && isCheckingGForm && (
+											<FontAwesomeIcon
+												icon={faCheckCircle}
+												className={styles.checkingSuccessIcon}
+											/>
+										)}
+									</div>
 								</div>
+								<span className={styles.helpText}>
+									<FontAwesomeIcon icon={faInfoCircle} className={styles.helpTextIcon} />
+									Contoh link google form yang valid: https://docs.google.com/forms/d/e/xxxxxxxxx
+								</span>
 							</div>
 						</form>
 					</div>
@@ -118,6 +146,7 @@ export default function FormModal({ onClose }) {
 							onClick={() => {
 								setForm({
 									attachment_name: '',
+									description: '',
 									attachment_source: '',
 								});
 								onClose();

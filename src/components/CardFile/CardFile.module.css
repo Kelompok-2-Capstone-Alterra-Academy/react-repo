@@ -54,6 +54,7 @@
 	font-weight: 400;
 	font-size: 12px;
 	text-align: center;
+	word-break: break-all;
 }
 
 .moreSelect {

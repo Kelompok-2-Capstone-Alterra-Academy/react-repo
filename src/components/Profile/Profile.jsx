@@ -13,7 +13,7 @@ import { LoopCircleLoading } from 'react-loadingg';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { getUser } from '../../clients';
+import { getUser, logout } from '../../clients';
 import { useClickOutside } from '../../hooks';
 import { setUser } from '../../redux/actions/userActions';
 import { truncateString } from '../../utilities/string';
@@ -118,7 +118,9 @@ export default function Profile({ className }) {
 									key={index}
 									className={styles.menuItem}
 									onClick={() => {
-										navigate(item.link);
+										index == 2
+											? window.open('https://wa.me/+6288888888888', '_blank')
+											: navigate(item.link);
 									}}>
 									<div>
 										<FontAwesomeIcon icon={item.icon} className={styles.menuIcon} />
@@ -127,7 +129,23 @@ export default function Profile({ className }) {
 								</div>
 							))}
 						</div>
-						<div className={styles.logoutContainer}>
+						<div
+							className={styles.logoutContainer}
+							onClick={() => {
+								logout()
+									.then((res) => {
+										toast.success(res.data.message, {
+											position: toast.POSITION.TOP_RIGHT,
+										});
+										document.cookie = 'token=;';
+										navigate('/login');
+									})
+									.catch((err) => {
+										toast.error(err.response.data.message, {
+											position: toast.POSITION.TOP_RIGHT,
+										});
+									});
+							}}>
 							<div>
 								<span className={styles.logoutTitle}>Logout</span>
 							</div>

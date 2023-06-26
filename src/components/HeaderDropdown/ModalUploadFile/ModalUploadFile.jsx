@@ -1,4 +1,9 @@
-import { faCheckCircle, faRotateRight, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
+import {
+	faCheckCircle,
+	faInfoCircle,
+	faRotateRight,
+	faXmarkCircle,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -21,12 +26,12 @@ const ModalUploadFile = ({ closeFunction, folderId }) => {
 	const [isValidFile, setIsValidFile] = useState(false);
 
 	useEffect(() => {
-		if (link !== '' && isValidFile) {
+		if (attachment && link !== '' && isValidFile) {
 			setFormValidation(true);
 		} else {
 			setFormValidation(false);
 		}
-	}, [link, isValidFile]);
+	}, [link, isValidFile, attachment]);
 
 	const checkFileExistence = (url) => {
 		const regex = /https?:\/\/(?:docs)\.google\.com\/(?:document)\/d\/([a-zA-Z0-9-_]+)/i;
@@ -52,6 +57,7 @@ const ModalUploadFile = ({ closeFunction, folderId }) => {
 					<span className={styles.label}>Nama Document</span>
 					<input
 						required
+						id="documentNameInput"
 						className={styles.input}
 						type="text"
 						placeholder="Masukkan Nama Document"
@@ -63,6 +69,7 @@ const ModalUploadFile = ({ closeFunction, folderId }) => {
 					<span className={styles.label}>Deskripsi Document</span>
 					<textarea
 						className={styles.input}
+						id="documentDescriptionInput"
 						placeholder="Masukkan Deskripsi Document"
 						value={description}
 						onChange={(e) => setDescription(e.target.value)}
@@ -73,6 +80,7 @@ const ModalUploadFile = ({ closeFunction, folderId }) => {
 					<div className={styles.inputCheckingContainer}>
 						<input
 							required
+							id="documentLinkInput"
 							className={styles.inputChecking}
 							type="text"
 							placeholder="Masukkan Link Document"
@@ -103,6 +111,10 @@ const ModalUploadFile = ({ closeFunction, folderId }) => {
 							)}
 						</div>
 					</div>
+					<span className={styles.helpText}>
+						<FontAwesomeIcon icon={faInfoCircle} className={styles.helpTextIcon} />
+						Contoh link google docs yang valid: https://docs.google.com/document/d/xxxxxx
+					</span>
 				</div>
 			</div>
 			<div className={styles.footer}>

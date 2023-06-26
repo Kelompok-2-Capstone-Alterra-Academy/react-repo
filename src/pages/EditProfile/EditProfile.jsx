@@ -11,7 +11,6 @@ import styles from './EditProfile.module.css';
 
 export default function EditProfile() {
 	const [name, setName] = useState('');
-	const [role, setRole] = useState('');
 	const [email, setEmail] = useState('');
 	const [phoneNumber, setPhoneNumber] = useState('');
 	const [gender, setGender] = useState('');
@@ -27,63 +26,104 @@ export default function EditProfile() {
 	const defaultImage =
 		'http://www.listercarterhomes.com/wp-content/uploads/2013/11/dummy-image-square.jpg';
 
-	const handleSubmit = async (e) => {
-		setLoadingEdit(true);
-		e.preventDefault();
-		putUser({
-			id: currentUser.ID,
-			data: {
-				name: name,
-				role: role,
-				email: email,
-				phone_number: phoneNumber,
-				gender,
-				profile: selectedImage,
-			},
-		})
-			.then((res) => {
-				toast.success(res.data.message, {
-					position: toast.POSITION.TOP_RIGHT,
-				});
-				dispatch(
-					setUser({
-						ID: currentUser.ID,
-						name: name,
-						role: role,
-						email: email,
-						phone_number: phoneNumber,
-						gender: gender,
-						profile: selectedImage,
-					})
-				);
-			})
-			.catch((err) => {
-				toast.error(err.response.data.message, {
-					position: toast.POSITION.TOP_RIGHT,
-				});
-			})
-			.finally(() => {
-				setLoadingEdit(false);
+	const checkForm = () => {
+		let flag = true;
+		if (name == '') {
+			toast.error('Nama tidak boleh kosong', {
+				position: toast.POSITION.TOP_RIGHT,
 			});
+			flag = false;
+		}
+		if (email == '') {
+			toast.error('Email tidak boleh kosong', {
+				position: toast.POSITION.TOP_RIGHT,
+			});
+			flag = false;
+		}
+		if (phoneNumber == '') {
+			toast.error('Nomor kontak tidak boleh kosong', {
+				position: toast.POSITION.TOP_RIGHT,
+			});
+			flag = false;
+		}
+		if (!/^[A-Za-z]+(?:[-\s][A-Za-z]+)*$/.test(name)) {
+			toast.error('Harap masukkan nama yang valid', {
+				position: toast.POSITION.TOP_RIGHT,
+			});
+			flag = false;
+		}
+		if (!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(email)) {
+			toast.error('Harap masukkan email yang valid', {
+				position: toast.POSITION.TOP_RIGHT,
+			});
+			flag = false;
+		}
+		if (!/^\d{10,13}$/.test(phoneNumber)) {
+			toast.error('Harap masukkan nomor kontak yang valid', {
+				position: toast.POSITION.TOP_RIGHT,
+			});
+			flag = false;
+		}
+		return flag;
+	};
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		if (checkForm()) {
+			setLoadingEdit(true);
+			putUser({
+				id: currentUser.ID,
+				data: {
+					name: name,
+					role: 'mentors',
+					email: email,
+					phone_number: phoneNumber,
+					gender,
+					profile: selectedImage,
+				},
+			})
+				.then((res) => {
+					toast.success(res.data.message, {
+						position: toast.POSITION.TOP_RIGHT,
+					});
+					dispatch(
+						setUser({
+							ID: currentUser.ID,
+							name: res.data.data.name,
+							role: 'mentors',
+							email: res.data.data.email,
+							phone_number: res.data.data.phone_number,
+							gender: res.data.data.gender,
+							profile: res.data.data.profile,
+						})
+					);
+				})
+				.catch((err) => {
+					toast.error(err.response.data.message, {
+						position: toast.POSITION.TOP_RIGHT,
+					});
+				})
+				.finally(() => {
+					setLoadingEdit(false);
+				});
+		}
 	};
 
 	const handleImageUpload = (event) => {
-		console.log('hai');
 		const file = event.target.files[0];
-		const reader = new FileReader();
+		if (!file) return;
+		if (file.type !== 'image/png' && file.type !== 'image/jpg' && file.type !== 'image/jpeg') {
+			toast.error('Harap masukkan file gambar yang valid', {
+				position: toast.POSITION.TOP_RIGHT,
+			});
+			return;
+		}
 		setImageName(file);
-
-		reader.onload = () => {
-			const base64Image = reader.result;
-			setSelectedImage(base64Image);
-		};
-
-		reader.readAsDataURL(file);
+		setSelectedImage(file);
 	};
 
 	useEffect(() => {
 		setName(currentUser?.name);
-		setRole(currentUser?.role);
 		setEmail(currentUser?.email);
 		setPhoneNumber(currentUser?.phone_number);
 		setGender(currentUser?.gender);
@@ -132,7 +172,12 @@ export default function EditProfile() {
 									/>
 								)}
 								<Button type="Primary" className={styles.buttonUpload}>
-									<input type="file" onChange={handleImageUpload} className={styles.inputFile} />
+									<input
+										type="file"
+										onChange={handleImageUpload}
+										className={styles.inputFile}
+										accept={'image/*'}
+									/>
 									<span className={styles.uploadText}>
 										{imageName?.name == null
 											? 'Upload Foto Profil'
@@ -157,7 +202,12 @@ export default function EditProfile() {
 							</div>
 							<div className={styles.formGroup}>
 								<span className={styles.label}>Role</span>
-								<input type="text" className={styles.disabledInput} disabled value={role} />
+								<input
+									type="text"
+									className={styles.disabledInput}
+									disabled
+									value={currentUser?.role}
+								/>
 							</div>
 							<div className={styles.formGroup}>
 								<span className={styles.label}>Email</span>

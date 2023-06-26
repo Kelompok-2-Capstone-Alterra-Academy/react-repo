@@ -11,6 +11,7 @@ import './index.css';
 import {
 	AboutUs,
 	Chat,
+	ComingSoon,
 	Dashboard,
 	EditProfile,
 	ForgotPassword,
@@ -57,7 +58,14 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 								</ProtectedRoute>
 							}
 						/>
-						<Route path="/income" element={<Dashboard />} />
+						<Route
+							path="/income"
+							element={
+								<ProtectedRoute>
+									<ComingSoon />
+								</ProtectedRoute>
+							}
+						/>
 						<Route
 							path="/manage-customer"
 							element={

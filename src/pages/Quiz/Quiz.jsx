@@ -1,4 +1,4 @@
-import { faPlus, faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
+import { faCircleInfo, faPlus, faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from '@mui/material/Modal';
 import { useEffect, useState } from 'react';
@@ -93,44 +93,65 @@ export default function Quiz() {
 							{quizList.map((item) => (
 								<tr key={item.ID}>
 									<td>
-										<span>{truncateString(item.attachment_name, 40)}</span>
-									</td>
-									<td span>
-										<a
-											href={item.attachment_source}
-											target="_blank"
-											rel="noreferrer"
-											className={styles.preview}>
-											<span>Lihat Preview</span>
-											<FontAwesomeIcon icon={faUpRightFromSquare} className={styles.previewIcon} />
-										</a>
+										<div className={styles.tableBodyCellName}>
+											<span>{truncateString(item.attachment_name, 40)}</span>
+											<div id="contentDescription" className={styles.contentDescription}>
+												<FontAwesomeIcon
+													id="toolTipIcon"
+													icon={faCircleInfo}
+													className={styles.toolTip}
+												/>
+												<span id="contentDescriptionText" className={styles.contentDescriptionText}>
+													{item.description || 'Tidak ada deskripsi'}
+												</span>
+											</div>
+										</div>
 									</td>
 									<td>
-										<OutlineTag
-											type={item.status == 'draft' ? 'Yellow' : 'Green'}
-											className={styles.tag}>
-											{item.status}
-										</OutlineTag>
+										<div className={styles.tableBodyCellLink}>
+											<a
+												href={item.attachment_source}
+												target="_blank"
+												rel="noreferrer"
+												className={styles.preview}>
+												<span>Lihat Preview</span>
+												<FontAwesomeIcon
+													icon={faUpRightFromSquare}
+													className={styles.previewIcon}
+												/>
+											</a>
+										</div>
 									</td>
-									<td className={styles.actionButtonContainer}>
-										<Button
-											type={item.status == 'draft' ? 'Primary' : 'Secondary'}
-											onClick={() => {
-												setSelectedPublishQuiz(item);
-												setShowPublishModal(true);
-											}}
-											className={styles.actionButton}>
-											{item.status == 'draft' ? 'Terbitkan' : 'Tarik Kembali'}
-										</Button>
-										<Button
-											type="Danger"
-											onClick={() => {
-												setSelectedDeleteQuiz(item);
-												setShowDeleteModal(true);
-											}}
-											className={styles.actionButton}>
-											Hapus
-										</Button>
+									<td>
+										<div className={styles.tableBodyCellStatus}>
+											<OutlineTag
+												type={item.status == 'draft' ? 'Yellow' : 'Green'}
+												className={styles.tag}>
+												{item.status.toUpperCase()}
+											</OutlineTag>
+										</div>
+									</td>
+									<td>
+										<div className={styles.tableBodyCellButton}>
+											<Button
+												type={item.status == 'draft' ? 'Primary' : 'Secondary'}
+												onClick={() => {
+													setSelectedPublishQuiz(item);
+													setShowPublishModal(true);
+												}}
+												className={styles.actionButton}>
+												{item.status == 'draft' ? 'Terbitkan' : 'Tarik Kembali'}
+											</Button>
+											<Button
+												type="Danger"
+												onClick={() => {
+													setSelectedDeleteQuiz(item);
+													setShowDeleteModal(true);
+												}}
+												className={styles.actionButton}>
+												Hapus
+											</Button>
+										</div>
 									</td>
 								</tr>
 							))}

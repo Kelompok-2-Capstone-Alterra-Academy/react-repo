@@ -1,7 +1,6 @@
-import { faChevronDown, faChevronUp, faFilter } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faChevronUp, faFilter, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Box } from '@material-ui/core';
-import { MailOutline, Search, WhatsApp } from '@mui/icons-material';
+import { MailOutline, WhatsApp } from '@mui/icons-material';
 import {
 	Backdrop,
 	Fade,
@@ -93,7 +92,6 @@ export default function ManageCustomer() {
 				.then((res) => {
 					dispatch(setCustomer(res.data.data));
 					setRowCustomer(res.data.data);
-					console.log(res, selectedCourse);
 				})
 				.catch((err) => {
 					toast.error(err.response.data.message, {
@@ -171,7 +169,6 @@ export default function ManageCustomer() {
 		}
 
 		setRowCustomer(combinedCustomers);
-		setCustomer(combinedCustomers);
 	};
 
 	const handleOpen = () => {
@@ -200,6 +197,7 @@ export default function ManageCustomer() {
 				toast.error(err.response.data.message, {
 					position: toast.POSITION.TOP_RIGHT,
 				});
+				dispatch(deleteCustomer(selectedCustomer));
 			})
 			.finally(() => {
 				setSelectedCustomer({});
@@ -259,6 +257,10 @@ export default function ManageCustomer() {
 		setRowCustomer(filteredCustomers);
 	}
 
+	useEffect(() => {
+		setRowCustomer(customers);
+	}, [customers]);
+
 	if (loadingFetchCourse || !selectedCourse) {
 		return <LoopCircleLoading size="large" color="#4161ff" />;
 	}
@@ -306,11 +308,11 @@ export default function ManageCustomer() {
 					<div className={styles.filterIconWrapper} onClick={handleOpen}>
 						<FontAwesomeIcon icon={faFilter} className={styles.filterIcon} />
 					</div>
-					<div className="relative flex items-center">
-						<Search sx={{ position: 'absolute', left: '12px', color: 'gray' }} />
+					<div className={styles.searchWrapper}>
+						<FontAwesomeIcon icon={faSearch} className={styles.searchIcon} />
 						<input
 							type="text"
-							className="w-72 rounded bg-gray-100 pl-11 pr-2 py-2.5 text-sm"
+							className={styles.searchInput}
 							placeholder="Cari nama siswa"
 							value={searchQuery}
 							onChange={handleSearchQueryChange}
@@ -329,8 +331,8 @@ export default function ManageCustomer() {
 									<TableCell>Nama Siswa</TableCell>
 									<TableCell>Kontak</TableCell>
 									<TableCell>Tanggal Masuk</TableCell>
+									<TableCell>Gender</TableCell>
 									<TableCell>Section </TableCell>
-									<TableCell>Progress</TableCell>
 									<TableCell>Tindakan</TableCell>
 								</TableRow>
 							</TableHead>
@@ -342,7 +344,9 @@ export default function ManageCustomer() {
 										<TableCell component="th" scope="row">
 											<div className="flex items-center space-x-3">
 												<img
-													src={row.profile ? row.profile : dummyImage}
+													src={
+														row.profile && row.profile != 'noimage.png' ? row.profile : dummyImage
+													}
 													alt=""
 													className="rounded-full w-16"
 												/>
@@ -382,7 +386,19 @@ export default function ManageCustomer() {
 										</TableCell>
 										<TableCell>
 											<div className="flex items-center space-x-5">
-												<Typography>{row.sectionProgress ? row.sectionProgress : '-'}</Typography>
+												{!row.gender ? (
+													<Tag type="Grey" className={styles.tag}>
+														-
+													</Tag>
+												) : row.gender == 'Laki Laki' ? (
+													<Tag type="Blue" className={styles.tag}>
+														Laki Laki
+													</Tag>
+												) : (
+													<Tag type="Red" className={styles.tag}>
+														Perempuan
+													</Tag>
+												)}
 											</div>
 										</TableCell>
 										<TableCell>
@@ -439,75 +455,53 @@ export default function ManageCustomer() {
 					},
 				}}>
 				<Fade in={open}>
-					<Box className="absolute right-1/2 top-1/3 translate-x-1/2 bg-white rounded-lg p-7">
-						<Typography
-							id="transition-modal-title"
-							variant="h5"
-							component="h2"
-							textAlign={'center'}
-							fontWeight={600}
-							mb={'36px'}>
-							Sortir Berdasarkan
-						</Typography>
+					<div className={styles.modalContainer}>
+						<span className={styles.modalTitle}>Sortir Berdasarkan</span>
 						<div>
 							<StyledToggleButtonGroup
 								value={sortByName}
 								variant="outlined"
-								onChange={(e) => handleChangeSortName(e.target.value)}
-								className="flex space-x-10">
-								<StyledToggleButton value="0" aria-label="bold">
+								onChange={(e) => handleChangeSortName(e.target.value)}>
+								<StyledToggleButton value="0" aria-label="bold" className="w-56 m-0 p-0">
 									<BiSortAZ fontSize={20} className="mr-3" /> A-Z
 								</StyledToggleButton>
-								<StyledToggleButton value="1" aria-label="italic">
+								<StyledToggleButton value="1" aria-label="italic" className="w-56 m-0 p-0">
 									<BiSortZA fontSize={20} className="mr-3" /> Z-A
 								</StyledToggleButton>
 							</StyledToggleButtonGroup>
 						</div>
-
 						<div>
 							<StyledToggleButtonGroup
 								value={sortByTime}
 								variant="outlined"
 								onChange={handleChangeSortTime}
 								className="space-x-10">
-								<StyledToggleButton value="0" aria-label="bold" className="w-52">
+								<StyledToggleButton value="0" aria-label="bold" className="w-56 m-0 p-0">
 									<BiSortAZ fontSize={20} className="mr-3" /> Terbaru
 								</StyledToggleButton>
-								<StyledToggleButton value="1" aria-label="italic" className="w-52">
+								<StyledToggleButton value="1" aria-label="italic" className="w-56 m-0 p-0">
 									<BiSortZA fontSize={20} className="mr-3" /> Terlama
 								</StyledToggleButton>
 							</StyledToggleButtonGroup>
 						</div>
-
 						<div>
 							<StyledToggleButtonGroup
 								value={sortByStatus}
 								variant="outlined"
 								onChange={handleChangeSortActive}
 								className="space-x-10">
-								<StyledToggleButton value="0" aria-label="bold" className="w-56">
+								<StyledToggleButton value="0" aria-label="bold" className="w-56 m-0 p-0">
 									<TbSortAscending2 fontSize={20} className="mr-3" /> Siswa Aktif
 								</StyledToggleButton>
-								<StyledToggleButton value="1" aria-label="italic" className="w-56">
+								<StyledToggleButton value="1" aria-label="italic" className="w-56 m-0 p-0">
 									<TbSortDescending2 fontSize={20} className="mr-3" /> Siswa Nonaktif
 								</StyledToggleButton>
 							</StyledToggleButtonGroup>
 						</div>
-						<Button
-							sx={{
-								width: '100%',
-								borderRadius: '8px',
-								fontWeight: 600,
-								bgcolor: '#2196F3',
-								mt: '10px',
-								textTransform: 'capitalize',
-								boxShadow: 'none',
-							}}
-							variant={'contained'}
-							onClick={handleClose}>
+						<Button type="Primary" onClick={handleClose} className={styles.buttonSaveFilter}>
 							Simpan Pengaturan
 						</Button>
-					</Box>
+					</div>
 				</Fade>
 			</Modal>
 		</div>

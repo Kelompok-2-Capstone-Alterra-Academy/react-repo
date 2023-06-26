@@ -1,6 +1,6 @@
 .modalContainer {
 	width: 70%;
-	height: 70%;
+	height: 90%;
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -192,7 +192,6 @@
 .modalTable td,
 .modalTable th {
 	padding: 1em;
-	border-bottom: 1px solid #e0e0e0;
 	word-wrap: break-word;
 }
 
@@ -247,8 +246,10 @@
 	border: 2px solid #1976d2;
 }
 
-.modalTableBodyRow {
+.modalTableBodyRow,
+.modalTableHead {
 	transition: all 0.2s ease-in-out;
+	border-bottom: 1px solid #e0e0e0;
 }
 
 .modalTableBodyRow:hover {
@@ -265,8 +266,11 @@
 }
 
 .authorImage {
-	width: 40px;
-	height: 40px;
+	width: 50px;
+	height: 50px;
 	border-radius: 50%;
-	margin-right: 1em;
+}
+
+.bodyTableCellDesc {
+	word-break: break-all;
 }

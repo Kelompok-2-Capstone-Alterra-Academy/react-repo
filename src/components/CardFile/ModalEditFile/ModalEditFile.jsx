@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { putAttachment } from '../../../clients';
@@ -9,21 +11,40 @@ import styles from '../ModalEditFile/ModalEditFile.module.css';
 const ModalEditFile = ({ closeFunction, attachment }) => {
 	const [file, setFile] = useState('');
 
+	const [validation, setValidation] = useState(false);
+
+	useEffect(() => {
+		setFile(attachment.attachment_name);
+	}, [attachment]);
+
+	useEffect(() => {
+		if (file !== '') {
+			setValidation(true);
+		} else {
+			setValidation(false);
+		}
+	}, [file]);
+
 	const dispatch = useDispatch();
 
 	return (
 		<div className={styles.container}>
-			<span className={styles.headerTitle}>Ubah Nama Berkas</span>
+			<span className={styles.headerTitle}>Form Edit Nama Berkas</span>
 			<div className={styles.content}>
-				<form className={styles.form}>
+				<div className={styles.formGroup}>
+					<span className={styles.label}>Nama Folder</span>
 					<input
-						className={styles.formInput}
+						className={styles.input}
 						type="text"
 						placeholder="Nama Berkas"
 						value={file}
 						onChange={(e) => setFile(e.target.value)}
 					/>
-				</form>
+					<span className={styles.helpText}>
+						<FontAwesomeIcon icon={faInfoCircle} className={styles.helpTextIcon} />
+						Field ini harus diisi
+					</span>
+				</div>
 			</div>
 			<div className={styles.footer}>
 				<Button
@@ -35,7 +56,7 @@ const ModalEditFile = ({ closeFunction, attachment }) => {
 					Batal
 				</Button>
 				<Button
-					type="Primary"
+					type={validation ? 'Primary' : 'Disabled'}
 					onClick={() =>
 						putAttachment({
 							id: attachment.ID,
@@ -44,11 +65,16 @@ const ModalEditFile = ({ closeFunction, attachment }) => {
 								attachment_name: file,
 							},
 						})
-							.then((res) => {
+							.then(() => {
 								toast.success(`Successfully update ${file}`, {
 									position: toast.POSITION.TOP_RIGHT,
 								});
-								dispatch(updateAttachment(res.data.data));
+								dispatch(
+									updateAttachment({
+										ID: attachment.ID,
+										attachment_name: file,
+									})
+								);
 							})
 							.catch((err) => {
 								toast.error(err.response.data.message, {

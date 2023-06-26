@@ -28,9 +28,10 @@ export default function Sidebar({
 	const dispatch = useDispatch();
 
 	return (
-		<div className={classNames(styles.sidebar, !show && styles.hideSidebar)}>
+		<div className={classNames(styles.sidebar, !show && styles.hideSidebar)} id="sidebar">
 			<div
 				className={styles.menuBox}
+				id="backToDashboard"
 				onClick={() => {
 					window.location.href = '/dashboard';
 				}}>
@@ -39,8 +40,11 @@ export default function Sidebar({
 			</div>
 			<div className={styles.sectionListContainer}>
 				<div className={styles.menuTitleContainer}>
-					<span className={styles.menuTitle}>Sesi Materi ({sectionList.length})</span>
+					<span className={styles.menuTitle} id="sectionTitle">
+						Sesi Materi ({sectionList.length})
+					</span>
 					<FontAwesomeIcon
+						id="addSectionIcon"
 						icon={faPlus}
 						className={styles.menuAddIcon}
 						onClick={() => {
@@ -69,6 +73,7 @@ export default function Sidebar({
 							<div className={styles.menuCourseContainer} key={section.id}>
 								<div
 									className={styles.menuCourse}
+									id={`section-${index + 1}`}
 									onClick={() => {
 										dispatch(
 											updateSection({
@@ -102,11 +107,12 @@ export default function Sidebar({
 											const contentName = content.module_name.split('-').slice(1).join('-');
 											return (
 												<div
-													key={content.id}
+													key={content.ID}
+													id={`content-${content.ID}`}
 													className={classNames(
 														styles.modulChild,
-														content.id == selectedContent.id &&
-															section.id == selectedContent.sectionId &&
+														content.ID == selectedContent.ID &&
+															section.ID == selectedContent.sectionId &&
 															styles.modulChildSelected
 													)}
 													onClick={() => {

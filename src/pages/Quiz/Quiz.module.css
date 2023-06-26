@@ -68,8 +68,13 @@
 	padding: 0.5em 0;
 }
 
-.tableBody td {
-	padding-bottom: 0.5em;
+.tableHeader th {
+	text-align: center;
+}
+
+.tableBody tr {
+	padding: 0.5em;
+	border-bottom: 1px solid #d9d9d9;
 }
 
 .tableBody span,
@@ -81,23 +86,18 @@
 
 .table th:nth-child(1),
 .table td:nth-child(1) {
-	width: 25%;
+	width: 35%;
 	word-break: break-all;
 }
 
-.table th:nth-child(4) {
-	width: 30%;
-}
-
+.table th:nth-child(4),
 .table td:nth-child(4) {
-	width: 100%;
+	width: 30%;
 }
 
 .table th:nth-child(2),
 .table td:nth-child(2) {
 	width: 20%;
-	padding: 0 1em;
-	word-break: break-all;
 }
 
 .table td:nth-child(3),
@@ -111,7 +111,7 @@
 	cursor: pointer;
 }
 
-.actionButtonContainer {
+.tableBodyCellButton {
 	width: 100%;
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
@@ -166,6 +166,54 @@
 	background-color: #d9d9d9;
 }
 
+.tableBodyCellName {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.tableBodyCellLink,
+.tableBodyCellStatus {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+}
+
 .actionButton {
+	width: 100%;
 	font-size: 14px;
+}
+
+.contentDescription {
+	position: relative;
+	cursor: pointer;
+	width: fit-content;
+	margin-left: 0.5em;
+}
+
+.contentDescriptionText {
+	white-space: pre-wrap;
+	width: 400px;
+	visibility: hidden;
+	position: absolute;
+	top: 0;
+	left: calc(100% + 1em);
+	background: #000000;
+	color: white;
+	padding: 1em;
+	border-radius: 8px;
+	opacity: 0;
+	transition: visibility 0s, opacity 0.3s;
+}
+
+.contentDescription:hover .contentDescriptionText {
+	visibility: visible;
+	opacity: 1;
+	color: white;
+	font-size: 12px;
+	font-weight: 400;
 }

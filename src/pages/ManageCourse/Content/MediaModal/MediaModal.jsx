@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { LoopCircleLoading } from 'react-loadingg';
 import { toast } from 'react-toastify';
 import { getAttachment } from '../../../../clients';
+import { truncateString } from '../../../../utilities/string';
 import styles from './MediaModal.module.css';
 
 export default function MediaModal({ show, onClose, onSubmit, data, type }) {
@@ -70,11 +71,12 @@ export default function MediaModal({ show, onClose, onSubmit, data, type }) {
 
 	return (
 		<Modal open={show} onClose={onClose}>
-			<div className={styles.modalContainer}>
-				<div className={styles.modalHeader}>
-					<div className={styles.modalTitle}>
+			<div id="modalContainer" className={styles.modalContainer}>
+				<div id="modalHeader" className={styles.modalHeader}>
+					<div id="modalTitle" className={styles.modalTitle}>
 						<div>
 							<FontAwesomeIcon
+								id="modalBackIcon"
 								icon={faArrowLeft}
 								className={selectedFolderId ? styles.modalBackIcon : styles.modalBackIconDisabled}
 								onClick={() => {
@@ -87,11 +89,21 @@ export default function MediaModal({ show, onClose, onSubmit, data, type }) {
 							/>
 							<span>Pilih File</span>
 						</div>
-						<FontAwesomeIcon icon={faXmark} className={styles.modalCloseIcon} onClick={onClose} />
+						<FontAwesomeIcon
+							id="modalCloseIcon"
+							icon={faXmark}
+							className={styles.modalCloseIcon}
+							onClick={onClose}
+						/>
 					</div>
-					<div className={styles.modalSearch}>
-						<FontAwesomeIcon icon={faSearch} className={styles.modalSearchIcon} />
+					<div id="modalSearch" className={styles.modalSearch}>
+						<FontAwesomeIcon
+							id="modalSearchIcon"
+							icon={faSearch}
+							className={styles.modalSearchIcon}
+						/>
 						<input
+							id="modalSearchInput"
 							type="text"
 							placeholder={selectedFolderId ? 'Cari nama file' : 'Cari nama folder'}
 							onChange={(e) => {
@@ -100,8 +112,9 @@ export default function MediaModal({ show, onClose, onSubmit, data, type }) {
 							value={searchedName}
 						/>
 					</div>
-					<div className={styles.modalBreadcrumb}>
+					<div id="modalBreadcrumb" className={styles.modalBreadcrumb}>
 						<span
+							id="modalBreadcrumbModul"
 							className={styles.headerGrey}
 							onClick={() => {
 								setSelectedFolderId('');
@@ -111,6 +124,7 @@ export default function MediaModal({ show, onClose, onSubmit, data, type }) {
 							Modul /{' '}
 						</span>
 						<span
+							id="modalBreadcrumbFolder"
 							className={selectedFolderName ? styles.headerGrey : styles.headerBlack}
 							onClick={() => {
 								setSelectedFolderId('');
@@ -120,31 +134,36 @@ export default function MediaModal({ show, onClose, onSubmit, data, type }) {
 							Folder dan File
 						</span>
 						{selectedFolderName && (
-							<span className={styles.headerBlack}> / {selectedFolderName}</span>
+							<span id="modalBreadcrumbSelectedFolder" className={styles.headerBlack}>
+								{' '}
+								/ {selectedFolderName}
+							</span>
 						)}
 					</div>
 				</div>
-				<div className={styles.modalContent}>
+				<div id="modalContent" className={styles.modalContent}>
 					{selectedFolderId ? (
 						loadingAttachment ? (
-							<LoopCircleLoading size="large" color="#2196f3" />
+							<LoopCircleLoading id="modalLoading" size="large" color="#2196f3" />
 						) : (
-							<table className={styles.modalTable}>
-								<thead className={styles.modalTableHead}>
+							<table id="modalTable" className={styles.modalTable}>
+								<thead id="modalTableHead" className={styles.modalTableHead}>
 									<tr>
 										<th>Pilih</th>
 										<th>Nama File</th>
+										<th>Deskripsi</th>
 										<th>Ditambahkan Oleh</th>
 									</tr>
 								</thead>
-								<tbody className={styles.modalTableBody}>
+								<tbody id="modalTableBody" className={styles.modalTableBody}>
 									{displayedAttachmentList.map((file) => {
 										if (isForVideo) {
-											if (file.type == 'video') {
+											if (file.type === 'video') {
 												return (
 													<tr key={file.ID} className={styles.modalTableBodyRow}>
 														<td>
 															<span
+																id="modalTableSelect"
 																className={styles.modalTableSelect}
 																onClick={() => {
 																	onSubmit(file);
@@ -153,9 +172,15 @@ export default function MediaModal({ show, onClose, onSubmit, data, type }) {
 															</span>
 														</td>
 														<td>{file.attachment_name}</td>
+														<td className={styles.bodyTableCellDesc}>
+															{truncateString(file.description, 100)}
+														</td>
 														<td className={styles.authorContainer}>
 															<img
-																src={`https://i.pravatar.cc/150?img=${file.ID}`}
+																src={
+																	file.folder.mentor.profile ||
+																	'http://www.listercarterhomes.com/wp-content/uploads/2013/11/dummy-image-square.jpg'
+																}
 																alt="author"
 																className={styles.authorImage}
 															/>
@@ -164,11 +189,12 @@ export default function MediaModal({ show, onClose, onSubmit, data, type }) {
 												);
 											}
 										} else {
-											if (file.type != 'video') {
+											if (file.type !== 'video') {
 												return (
 													<tr key={file.ID} className={styles.modalTableBodyRow}>
 														<td>
 															<span
+																id="modalTableSelect"
 																className={styles.modalTableSelect}
 																onClick={() => {
 																	onSubmit(file);
@@ -177,9 +203,15 @@ export default function MediaModal({ show, onClose, onSubmit, data, type }) {
 															</span>
 														</td>
 														<td>{file.attachment_name}</td>
+														<td className={styles.bodyTableCellDesc}>
+															{truncateString(file.description, 100)}
+														</td>
 														<td className={styles.authorContainer}>
 															<img
-																src={`https://i.pravatar.cc/150?img=${file.ID}`}
+																src={
+																	file.folder.mentor.profile ||
+																	'http://www.listercarterhomes.com/wp-content/uploads/2013/11/dummy-image-square.jpg'
+																}
 																alt="author"
 																className={styles.authorImage}
 															/>
@@ -193,10 +225,11 @@ export default function MediaModal({ show, onClose, onSubmit, data, type }) {
 							</table>
 						)
 					) : (
-						<div className={styles.modalContentBody}>
+						<div id="modalContentBody" className={styles.modalContentBody}>
 							{displayedFolderList.map((folder) => {
 								return (
 									<div
+										id={`modalContentCard-${folder.ID}`}
 										className={styles.modalContentCard}
 										key={folder.ID}
 										onClick={() => {
@@ -204,7 +237,11 @@ export default function MediaModal({ show, onClose, onSubmit, data, type }) {
 											setSelectedFolderName(folder.folder_name);
 											setSearchedName('');
 										}}>
-										<FontAwesomeIcon icon={faFolderOpen} className={styles.modalContentCardIcon} />
+										<FontAwesomeIcon
+											id={`modalContentCardIcon-${folder.ID}`}
+											icon={faFolderOpen}
+											className={styles.modalContentCardIcon}
+										/>
 										<span>{folder.folder_name || '-'}</span>
 									</div>
 								);

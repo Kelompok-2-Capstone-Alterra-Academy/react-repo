@@ -115,7 +115,7 @@
 	box-shadow: 0 3px 11px #0000001a, 0 3px 6px #00000026;
 }
 
-.formGroup {
+.deadlineFormGroup {
 	display: flex;
 	flex-direction: row;
 	align-items: flex-start;
@@ -256,9 +256,18 @@
 	align-items: center;
 }
 
-.addTextModalContainer {
+.addScoreModalContainer {
 	width: 50%;
-	height: 50%;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: white;
+	border-radius: 20px;
+	padding: 2em 3em;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 .addTextModalHeader {
@@ -319,4 +328,274 @@
 .contentDescriptionTitle {
 	font-size: 20px;
 	font-weight: 600;
+}
+
+.tableContainer {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	border: 1px solid #e0e0e0;
+	padding: 1em;
+	border-radius: 8px;
+}
+
+.tableHeader {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.tableTitle {
+	font-size: 22px;
+	font-weight: 600;
+	margin-right: 2em;
+}
+
+.searchWrapper {
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	width: fit-content;
+	padding: 0.75em 1em;
+	border-radius: 8px;
+	cursor: pointer;
+	width: 25%;
+	border: 2px solid #e0e0e0;
+	background: #f5f5f5;
+	margin-right: 0.5em;
+}
+
+.searchIcon {
+	width: 16px;
+	height: 16px;
+	margin-right: 0.5em;
+}
+
+.searchInput {
+	font-size: 12px;
+	font-weight: 500;
+	border: none;
+	outline: none;
+	width: 100%;
+	background-color: transparent;
+}
+
+.search::placeholder {
+	font-size: 12px;
+	font-weight: 500;
+	margin-left: 1em;
+}
+
+.table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 2em;
+}
+
+.tableHead th {
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.tableBody td {
+	font-size: 14px;
+	font-weight: 400;
+}
+
+.tableHead th,
+.tableBody td {
+	padding: 0.75em;
+	border-bottom: 1px solid #e0e0e0;
+}
+
+.tableHeaderCellNo,
+.tableBodyCellNo {
+	text-align: center;
+}
+
+.tableHeaderCellDate,
+.tableHeaderCellName,
+.tableBodyCellDate,
+.tableBodyCellName {
+	width: 20%;
+	text-align: center;
+}
+
+.tableHeaderCellFile,
+.tableHeaderCellAction,
+.tableHeaderCellScore,
+.tableHeaderCellStatus,
+.tableBodyCellFile,
+.tableBodyCellAction,
+.tableBodyCellScore,
+.tableBodyCellStatus {
+	width: 15%;
+	text-align: center;
+}
+
+.tag {
+	width: 100%;
+	padding: 0.5em;
+}
+
+.fileLink {
+	color: #2196f3;
+	text-decoration: none;
+}
+
+.fileIcon {
+	width: 16px;
+	height: 16px;
+	margin-right: 0.5em;
+}
+
+.tableButton {
+	width: 80%;
+	background: #f0faff;
+	font-size: 14px;
+	font-weight: 500;
+	border-radius: 8px;
+	padding: 0.5em 20%;
+	color: #2196f3;
+	cursor: pointer;
+	border: 1px solid #2196f3;
+	transition: all 0.2s ease-in-out;
+}
+
+.tableButton:hover {
+	background: #2196f3;
+	color: white;
+}
+
+.tableActionIcon {
+	width: 16px;
+	height: 16px;
+	margin-right: 0.5em;
+}
+
+.headerTitle {
+	font-size: 20px;
+	font-weight: 600;
+	margin-bottom: 2em;
+}
+
+.formGroup {
+	position: relative;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	margin-bottom: 1.5em;
+}
+
+.label {
+	font-size: 16px;
+	font-weight: 600;
+	color: #000000;
+	margin-bottom: 0.5em;
+}
+
+.input {
+	border-radius: 8px;
+	padding: 1em;
+	background: white;
+	box-shadow: 0 3px 11px #0000001a, 0 3px 6px #00000026;
+	outline: none;
+	width: 100%;
+	font-size: 1.5em;
+}
+
+.helpText {
+	font-size: 12px;
+	font-weight: 400;
+	color: #616161;
+	margin-top: 0.5em;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.helpTextIcon {
+	margin-right: 0.5em;
+}
+
+.tableTitleContainer {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-start;
+}
+
+.showPerPageWrapper {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.modalContentSelectContainer {
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	cursor: pointer;
+	border: 2px solid #2196f3;
+	border-radius: 8px;
+}
+
+.modalContentSelect {
+	width: 200%;
+	left: 0;
+}
+
+.modalContentSelectIcon {
+	width: 12px;
+	height: 12px;
+	margin-left: 0.5em;
+}
+
+.modalContentSelectContainer {
+	margin: 0 1em;
+	padding: 0 1em;
+}
+
+.tablePagination {
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+
+.paginationWrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	justify-content: flex-start;
+}
+
+.paginationButtonContainer {
+	display: grid;
+	grid-template-columns: 3fr 2fr 3fr;
+	grid-gap: 1em;
+	align-items: center;
+}
+
+.paginationButton {
+	font-size: 14px;
+	font-weight: 500;
+	height: 100%;
+	padding: 0.5em 1em;
+	border-radius: 8px;
+	cursor: pointer;
+	transition: all 0.2s ease-in-out;
+	width: 100%;
+}
+
+.paginationInfo {
+	font-size: 14px;
+	font-weight: 400;
+	color: #616161;
+	width: 100%;
 }

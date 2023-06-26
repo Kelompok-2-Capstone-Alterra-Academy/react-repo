@@ -82,7 +82,7 @@ const Sidebar = () => {
 							</Link>
 							<Link style={{ textDecoration: 'none' }} to="/modul" className={styles.listItem}>
 								<FontAwesomeIcon icon={faFolderOpen} className={styles.icon} />
-								<span className={styles.description}>Manage Module</span>
+								<span className={styles.description}>Module</span>
 							</Link>
 							<Link
 								style={{ textDecoration: 'none' }}

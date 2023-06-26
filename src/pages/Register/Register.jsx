@@ -280,7 +280,6 @@ const Register = () => {
 
 	const onSubmit = (data) => {
 		setLoading(true);
-		console.log(data);
 		register({
 			username: data.username,
 			email: data.email,

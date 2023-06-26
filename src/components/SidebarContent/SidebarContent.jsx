@@ -1,7 +1,13 @@
-import { faFileEdit, faFolder, faFolderOpen, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import {
+	faFileEdit,
+	faFolder,
+	faFolderOpen,
+	faInfoCircle,
+	faTrashAlt,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from '@mui/material/Modal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -14,16 +20,35 @@ import styles from '../SidebarContent/SidebarContent.module.css';
 const SidebarContent = ({ folderData, onClickFolder, selectedId }) => {
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
 	const [showEditModal, setShowEditModal] = useState(false);
-	const [deletedId, setDeletedId] = useState(null);
-	const [editedId, setEditedId] = useState(null);
+	const [validation, setValidation] = useState(false);
 
-	const [folderName, setFolderName] = useState('');
+	const [deletedId, setDeletedId] = useState(null);
+	const [editedFolder, setEditedFolder] = useState(null);
+
+	const [folderName, setNewfolderName] = useState('');
 
 	const dispatch = useDispatch();
 
 	const handleClick = (id) => {
 		onClickFolder(id);
 	};
+
+	useEffect(() => {
+		if (
+			folderName !== '' &&
+			!folderData.find((item) => item.folder_name.toLowerCase() === folderName.toLowerCase())
+		) {
+			setValidation(true);
+		} else {
+			setValidation(false);
+		}
+	}, [folderName]);
+
+	useEffect(() => {
+		if (editedFolder) {
+			setNewfolderName(editedFolder.name);
+		}
+	}, [editedFolder]);
 
 	return (
 		<div className={styles.container}>
@@ -49,7 +74,10 @@ const SidebarContent = ({ folderData, onClickFolder, selectedId }) => {
 							onClick={(e) => {
 								e.preventDefault();
 								e.stopPropagation();
-								setEditedId(data.ID);
+								setEditedFolder({
+									id: data.ID,
+									name: data.folder_name,
+								});
 								setShowEditModal(true);
 							}}
 						/>
@@ -96,29 +124,40 @@ const SidebarContent = ({ folderData, onClickFolder, selectedId }) => {
 			/>
 			<Modal open={showEditModal} onClose={() => setShowEditModal(false)}>
 				<div className={styles.modalContainer}>
-					<span className={styles.modalTitle}>Edit Nama Folder</span>
-					<input
-						type="text"
-						className={styles.formInput}
-						value={folderName}
-						placeholder="Masukkan Nama Folder"
-						onChange={(e) => setFolderName(e.target.value)}
-					/>
+					<span className={styles.modalTitle}>Form Edit Nama Folder</span>
+					<div className={styles.formGroup}>
+						<span className={styles.label}>Nama Folder</span>
+						<input
+							type="text"
+							className={styles.input}
+							value={folderName}
+							placeholder="Masukkan Nama Folder"
+							onChange={(e) => setNewfolderName(e.target.value)}
+						/>
+						<span className={styles.helpText}>
+							<FontAwesomeIcon icon={faInfoCircle} className={styles.helpTextIcon} />
+							Field ini harus diisi
+						</span>
+						<span className={styles.helpText}>
+							<FontAwesomeIcon icon={faInfoCircle} className={styles.helpTextIcon} />
+							Nama folder tidak boleh sama
+						</span>
+					</div>
 
 					<div className={styles.footer}>
 						<Button
 							type="Secondary"
 							onClick={() => {
-								setFolderName('');
+								setNewfolderName('');
 								setShowEditModal(false);
 							}}>
 							Batal
 						</Button>
 						<Button
-							type="Primary"
+							type={validation ? 'Primary' : 'Disabled'}
 							onClick={() => {
 								putFolder({
-									id: editedId,
+									id: editedFolder.id,
 									data: {
 										folder_name: folderName,
 									},
@@ -127,7 +166,12 @@ const SidebarContent = ({ folderData, onClickFolder, selectedId }) => {
 										toast.success(res.data.message, {
 											position: toast.POSITION.TOP_RIGHT,
 										});
-										dispatch(updateFolder(res.data.data));
+										dispatch(
+											updateFolder({
+												ID: editedFolder.id,
+												folder_name: folderName,
+											})
+										);
 									})
 									.catch((err) => {
 										toast.error(err.response.data.message, {
@@ -136,7 +180,7 @@ const SidebarContent = ({ folderData, onClickFolder, selectedId }) => {
 									})
 									.finally(() => {
 										setShowEditModal(false);
-										setFolderName('');
+										setNewfolderName('');
 									});
 							}}>
 							Simpan

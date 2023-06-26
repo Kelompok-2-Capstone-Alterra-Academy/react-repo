@@ -2,19 +2,11 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from '@material-ui/core';
 import { Form, Formik } from 'formik';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import * as Yup from 'yup';
-import { login } from '../../clients';
 import { Button } from '../../components';
 import styles from './ForgotPassword.module.css';
 
 export default function Login() {
-	const navigate = useNavigate();
-
-	const [showPassword, setShowPassword] = useState(false);
-
 	const initialValues = {
 		username: '',
 		password: '',
@@ -33,26 +25,6 @@ export default function Login() {
 			),
 	});
 
-	const onSubmit = (values) => {
-		login({
-			email: 'mentor.satu@gmail.com',
-			pass: '12345678',
-		})
-			.then((res) => {
-				toast.success(res.data.message, {
-					position: toast.POSITION.TOP_RIGHT,
-				});
-				const token = res.data.token;
-				document.cookie = `token=${token}; path=/;`;
-				navigate('/dashboard');
-			})
-			.catch((err) => {
-				toast.error(err.response.data.message, {
-					position: toast.POSITION.TOP_RIGHT,
-				});
-			});
-	};
-
 	return (
 		<div className={styles.container}>
 			<div className={styles.header}>
@@ -68,10 +40,7 @@ export default function Login() {
 						<span className={styles.title}>Lupa Kata Sandi?</span>
 						<span className={styles.desc}>Silahkan masukkan username untuk proses selanjutnya</span>
 					</div>
-					<Formik
-						initialValues={initialValues}
-						onSubmit={onSubmit}
-						validationSchema={validationSchema}>
+					<Formik initialValues={initialValues} validationSchema={validationSchema}>
 						{(props) => (
 							<Form className={styles.form}>
 								<div className={styles.usernameForm}>
@@ -91,7 +60,12 @@ export default function Login() {
 								<Link href="/login" className={styles.forgotPassword}>
 									<span>Kembali Login?</span>
 								</Link>
-								<Button type="Primary" className={styles.button}>
+								<Button
+									type="Primary"
+									className={styles.button}
+									onClick={() => {
+										window.open('https://wa.me/+6288888888888', '_blank');
+									}}>
 									Ajukan Perubahan Kata Sandi
 								</Button>
 							</Form>

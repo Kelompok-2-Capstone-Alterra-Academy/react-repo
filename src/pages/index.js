@@ -1,5 +1,6 @@
 export * from './AboutUs';
 export * from './Chat';
+export * from './ComingSoon';
 export * from './Dashboard';
 export * from './EditProfile';
 export * from './ForgotPassword';
